@@ -1,343 +1,185 @@
-/*==================== GOOGLE FONTS ====================*/
+/* ==================== GOOGLE FONTS ==================== */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
-/*==================== VARIABLES CSS ====================*/
+/* ==================== VARIABLES ==================== */
 :root {
-    --header-height: 3rem;
+  /* Layout */
+  --header-height: 4rem;
+  --page-gutter: clamp(16px, 5vw, 80px);      /* left/right padding that scales */
+  --section-vspace: clamp(32px, 6vw, 96px);   /* vertical section spacing */
+  --hero-top: clamp(40px, 10vw, 140px);       /* extra space under fixed header */
 
-    /*========== Colors ==========*/
-    /* Change favorite color */
-    --hue-color: 250; /*Purple 250 - Green 142 - Blue 230 - Pink 340*/
+  /* Colors */
+  --hue-color: 250;                            /* Purple 250 - Green 142 - Blue 230 - Pink 340 */
+  --first-color: hsl(var(--hue-color), 69%, 61%);
+  --first-color-second: hsl(var(--hue-color), 69%, 61%);
+  --first-color-alt: hsl(var(--hue-color), 57%, 53%);
+  --first-color-lighter: hsl(var(--hue-color), 92%, 85%);
+  --title-color: hsl(var(--hue-color), 8%, 15%);
+  --text-color: hsl(var(--hue-color), 8%, 45%);
+  --text-color-light: hsl(var(--hue-color), 8%, 65%);
+  --input-color: hsl(var(--hue-color), 70%, 96%);
+  --body-color: hsl(var(--hue-color), 60%, 99%);
+  --container-color: #fff;
+  --scroll-bar-color: hsl(var(--hue-color), 12%, 90%);
+  --scroll-thumb-color: hsl(var(--hue-color), 12%, 80%);
 
-    /* HSL color mode */
-    --first-color: hsl(var(--hue-color), 69%, 61%);
-    --first-color-second: hsl(var(--hue-color), 69%, 61%);
-    --first-color-alt: hsl(var(--hue-color), 57%, 53%);
-    --first-color-lighter: hsl(var(--hue-color), 92%, 85%);
-    --title-color: hsl(var(--hue-color), 8%, 15%);
-    --text-color: hsl(var(--hue-color), 8%, 45%);
-    --text-color-light: hsl(var(--hue-color), 8%, 65%);
-    --input-color: hsl(var(--hue-color), 70%, 96%);
-    --body-color: hsl(var(--hue-color), 60%, 99%);
-    --container-color: #fff;
-    --scroll-bar-color: hsl(var(--hue-color), 12%, 90%);
-    --scroll-thumb-color: hsl(var(--hue-color), 12%, 80%);
+  /* Typography */
+  --body-font: 'Poppins', sans-serif;
+  --big-font-size: 2rem;
+  --h1-font-size: 1.5rem;
+  --h2-font-size: 1.25rem;
+  --h3-font-size: 1.125rem;
+  --normal-font-size: .938rem;
+  --small-font-size: .813rem;
+  --smaller-font-size: .75rem;
 
-    /*========== Font and typography ==========*/
-    --body-font: 'Poppins', sans-serif;
+  /* Weights */
+  --font-medium: 500;
+  --font-semi-bold: 600;
 
-    /* .5rem = 8px, 1rem = 16px, 1.5rem = 24px ... */
-    --big-font-size: 2rem;
-    --h1-font-size: 1.5rem;
-    --h2-font-size: 1.25rem;
-    --h3-font-size: 1.125rem;
-    --normal-font-size: .938rem;
-    --small-font-size: .813rem;
-    --smaller-font-size: .75rem;
+  /* Spacing scale */
+  --mb-0-25: .25rem;
+  --mb-0-5: .5rem;
+  --mb-0-75: .75rem;
+  --mb-1: 1rem;
+  --mb-1-5: 1.5rem;
+  --mb-2: 2rem;
+  --mb-2-5: 2.5rem;
+  --mb-3: 3rem;
 
-    /*========== Font weight ==========*/
-    --font-medium: 500;
-    --font-semi-bold: 600;
-
-    /*========== Margenes Bottom ==========*/
-    /* .25rem = 4px, .5rem = 8px, .75rem = 12px ... */
-    --mb-0-25: .25rem;
-    --mb-0-5: .5rem;
-    --mb-0-75: .75rem;
-    --mb-1: 1rem;
-    --mb-1-5: 1.5rem;
-    --mb-2: 2rem;
-    --mb-2-5: 2.5rem;
-    --mb-3: 3rem;
-
-    /*========== z index ==========*/
-    --z-tooltip: 10;
-    --z-fixed: 100;
-    --z-modal: 1000;
+  /* Z-index */
+  --z-tooltip: 10;
+  --z-fixed: 100;
+  --z-modal: 1000;
 }
 
-/* Font size for large devices */
-@media screen and (min-width: 968px) {
-    :root {
-        --big-font-size: 3rem;
-        --h1-font-size: 2.25rem;
-        --h2-font-size: 1.5rem;
-        --h3-font-size: 1.25rem;
-        --normal-font-size: 1rem;
-        --small-font-size: .875rem;
-        --smaller-font-size: .813rem;
-    }
-}
-
-/*========== Variables Dark theme ==========*/
-
-
-/*========== Button Dark/Light ==========*/
-
-
-/*==================== BASE ====================*/
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: var(--header-height) 0 0 0;
-  font-family: var(--body-font);
-  font-size: var(--normal-font-size);
-  background-color: var(--body-color);
-  color: var(--text-color);
-}
-
-h1, h2, h3, h4 {
-  color: var(--title-color);
-  font-weight: var(--font-semi-bold);
-}
-
-ul {
-  list-style: none;
-}
-
-a {
-  text-decoration: none;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-/*==================== REUSABLE CSS CLASSES ====================*/
-.section {
-  padding: 2rem 0 4rem;
-}
-
-.section__title {
-  font-size: var(--h1-font-size);
-  color: var(--title-color);
-}
-
-.section__subtitle {
-  display: block;
-  font-size: var(--small-font-size);
-  margin-bottom: var(--mb-3);
-}
-
-.section__title, 
-.section__subtitle {
-  text-align: center;
-}
-
-/*==================== LAYOUT ====================*/
-.container {
-  max-width: 768px;
-  margin-left: var(--mb-1-5);
-  margin-right: var(--mb-1-5);
-}
-
-.grid {
-  display: grid;
-  gap: 1.5rem;
-}
-
-.header {
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: var(--z-fixed);
-  background-color: var(--body-color);
-  box-shadow: 0 1px 10px rgba(0,0,0,.04);
-}
-
-/* Fixed box with curved edges; image auto-fits */
-.portfolio__thumb{
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 10;            /* fixed shape; change to 4/3 or 3/2 if you prefer */
-  border-radius: 20px;
-  overflow: hidden;
-  background: #f5f6f7;              /* soft placeholder background */
-}
-
-/* ===== Portfolio grid & tags ===== */
-.portfolio .container {
-  max-width: 1100px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.portfolio__content {
-  display: flex;
-  flex-direction: column;
-  gap: .75rem;
-}
-
-.portfolio__img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 16px;
-}
-
-.portfolio__data { padding-top: .25rem; }
-
-.portfolio__title { font-size: 1.125rem; line-height: 1.25; }
-
-.portfolio__description {
-  color: var(--text-color);
-  font-size: var(--small-font-size);
-}
-
-/* hashtag chips */
-.portfolio__tags {
-  display: flex;
-  gap: .5rem;
-  flex-wrap: wrap;
-  margin: .35rem 0 .5rem;
-  font-size: var(--small-font-size);
-}
-.tag {
-  padding: .25rem .55rem;
-  border-radius: 999px;
-  background: var(--first-color-lighter);
-  color: var(--title-color);
-  border: 1px solid rgba(0,0,0,.06);
-  line-height: 1;
-}
-
-/* two-column grid on tablet/desktop */
-@media (min-width: 768px) {
-  .portfolio .container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+/* Larger type on wide screens */
+@media (min-width: 968px) {
+  :root {
+    --big-font-size: 3rem;
+    --h1-font-size: 2.25rem;
+    --h2-font-size: 1.5rem;
+    --h3-font-size: 1.25rem;
+    --normal-font-size: 1rem;
+    --small-font-size: .875rem;
+    --smaller-font-size: .813rem;
   }
 }
 
-/* Make any image fill the box and crop as needed */
-.portfolio__thumb img{
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;                 /* key part */
-  object-position: center;           /* keep center focus */
+/* ==================== BASE ==================== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: var(--header-height) 0 0 0;         /* push content below fixed header */
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+  background: var(--body-color);
+  color: var(--text-color);
 }
 
-/* Optional: hover pop */
-.portfolio__thumb:hover img{
-  transform: scale(1.02);
+h1, h2, h3, h4 { color: var(--title-color); font-weight: var(--font-semi-bold); }
+ul { list-style: none; }
+a { text-decoration: none; }
+img { max-width: 100%; height: auto; }
+
+/* ==================== LAYOUT HELPERS ==================== */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: var(--page-gutter);
+}
+.section { padding-block: var(--section-vspace); }
+.grid { display: grid; gap: 1.5rem; }
+
+/* ==================== HEADER / NAV ==================== */
+.header{
+  position: fixed; inset: 0 0 auto 0;         /* top:0; left:0; right:0 */
+  height: var(--header-height);
+  z-index: var(--z-fixed);
+  background: var(--body-color);
+  box-shadow: 0 1px 10px rgba(0,0,0,.06);
+}
+.site-nav{
+  height: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+  padding-inline: var(--page-gutter);
+}
+.brand{ font-weight: 700; color: var(--title-color); letter-spacing: .2px; }
+
+.site-menu{ display: flex; align-items: center; gap: clamp(16px, 3.2vw, 48px); }
+.nav-link{
+  position: relative; font-weight: 500;
+  color: rgba(17,17,17,.45); transition: color .2s ease;
+}
+.nav-link:hover{ color: var(--title-color); }
+.nav-link.active{ color: var(--title-color); }
+.nav-link.active::after{
+  content: ""; position: absolute; left: 0; right: 0; bottom: -8px;
+  height: 2px; border-radius: 2px; background: var(--title-color);
+}
+
+/* Mobile sizing for nav text */
+@media (max-width: 640px){
+  .site-menu{ gap: 16px; font-size: .95rem; }
+  .brand{ font-size: 1rem; }
+}
+
+/* ==================== HOME (HERO) ==================== */
+.home.section{ padding-top: calc(var(--hero-top) + var(--section-vspace)); }
+.home__data{ max-width: 1100px; }
+
+/* ==================== PORTFOLIO ==================== */
+/* Grid */
+.portfolio .container{
+  display: grid;
+  grid-template-columns: 1fr;                 /* mobile: single column */
+  gap: clamp(16px, 3vw, 32px);
+}
+@media (min-width: 768px){
+  .portfolio .container{ grid-template-columns: 1fr 1fr; gap: 2rem; }
+}
+
+/* Card content */
+.portfolio__content{ display: flex; flex-direction: column; gap: .75rem; }
+.portfolio__data{ padding-top: .25rem; }
+.portfolio__title{ font-size: 1.125rem; line-height: 1.25; }
+.portfolio__description{ color: var(--text-color); font-size: var(--small-font-size); }
+
+/* Thumbnail: fixed rounded box, any image fits */
+.portfolio__thumb{
+  position: relative; width: 100%;
+  aspect-ratio: 16 / 10; border-radius: 20px; overflow: hidden;
+  background: #f5f6f7;
+}
+.portfolio__thumb img{
+  width: 100%; height: 100%; display: block;
+  object-fit: cover; object-position: center;
   transition: transform .35s ease;
 }
+.portfolio__thumb:hover img{ transform: scale(1.02); }
 
-/* Desktop: a bit taller + larger radius if you want */
 @media (min-width: 992px){
   .portfolio__thumb{ aspect-ratio: 16 / 9; border-radius: 24px; }
 }
 
-/* === Responsive gutters & vertical spacing (append at end) === */
-:root{
-  --page-gutter: clamp(16px, 5vw, 80px);        /* L/R padding grows with screen */
-  --section-vspace: clamp(32px, 6vw, 96px);     /* top/bottom spacing per section */
-  --hero-top: clamp(40px, 10vw, 140px);         /* extra room under the fixed header */
+/* Hashtag chips */
+.portfolio__tags{
+  display: flex; gap: .5rem; flex-wrap: wrap;
+  margin: .35rem 0 .5rem; font-size: var(--small-font-size);
+}
+.tag{
+  padding: .25rem .55rem; line-height: 1; border-radius: 999px;
+  background: var(--first-color-lighter); color: var(--title-color);
+  border: 1px solid rgba(0,0,0,.06);
 }
 
-/* Centered container with fluid side padding */
-.container{
-  width: 100%;
-  max-width: 1200px;                             /* adjust if you want wider */
-  margin-inline: auto;
-  padding-inline: var(--page-gutter);
-}
+/* ==================== (Reserved sections from template) ==================== */
+/* Add/extend styles for About, Skills, Services, Contact, etc., as needed */
 
-/* Sections get fluid vertical spacing */
-.section{
-  padding-block: var(--section-vspace);
-}
-
-/* Roomier hero */
-.home.section{
-  padding-top: calc(var(--hero-top) + var(--section-vspace));
-}
-.home__data{ max-width: 1100px; }                /* keep lines readable */
-
-/* Portfolio grid with fluid gaps */
-.portfolio .container{
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(16px, 3vw, 32px);
-}
-@media (min-width: 768px){
-  .portfolio .container{ grid-template-columns: 1fr 1fr; }
-}
-
-/*==================== NAV ====================*/
-
-
-/* show menu */
-
-
-/* Active link */
-
-
-/* Change background header */
-
-
-/*==================== HOME ====================*/
-
-
-/*==================== BUTTONS ====================*/
-
-
-/*==================== ABOUT ====================*/
-
-
-/*==================== SKILLS ====================*/
-
-
-/*==================== QUALIFICATION ====================*/
-
-
-/*==================== SERVICES ====================*/
-
-
-/* Active Modal */
-
-
-/*==================== PORTFOLIO ====================*/
-
-
-/*==================== PROJECT IN MIND ====================*/
-
-
-/*==================== TESTIMONIAL ====================*/
-
-
-/*==================== CONTACT ME ====================*/
-
-
-/*==================== FOOTER ====================*/
-
-
-/*========== SCROLL UP ==========*/
-
-
-/* Show scroll */
-
-
-/*========== SCROLL BAR ==========*/
-
-
-/*==================== MEDIA QUERIES ====================*/
-/* For small devices */
-
-
-/* For medium devices */
-
-
-/* For large devices */
+/* ==================== MEDIA-QUERY SLOTS (if needed later) ==================== */
+/* For small devices  : @media (max-width: 640px){ ... }   */
+/* For medium devices : @media (min-width: 768px){ ... }   */
+/* For large devices  : @media (min-width: 992px){ ... }   */
