@@ -87,7 +87,7 @@ html {
 }
 
 body {
-  margin: 0 0 var(--header-height) 0;
+  margin: 0 0 var(--header-height) 0 0 0;
   font-family: var(--body-font);
   font-size: var(--normal-font-size);
   background-color: var(--body-color);
@@ -148,11 +148,98 @@ img {
 .header {
   width: 100%;
   position: fixed;
-  bottom: 0;
+  top: 0;
   left: 0;
   z-index: var(--z-fixed);
   background-color: var(--body-color);
+  box-shadow: 0 1px 10px rgba(0,0,0,.04);
 }
+
+/* Fixed box with curved edges; image auto-fits */
+.portfolio__thumb{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;            /* fixed shape; change to 4/3 or 3/2 if you prefer */
+  border-radius: 20px;
+  overflow: hidden;
+  background: #f5f6f7;              /* soft placeholder background */
+}
+
+/* ===== Portfolio grid & tags ===== */
+.portfolio .container {
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.portfolio__content {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+
+.portfolio__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+}
+
+.portfolio__data { padding-top: .25rem; }
+
+.portfolio__title { font-size: 1.125rem; line-height: 1.25; }
+
+.portfolio__description {
+  color: var(--text-color);
+  font-size: var(--small-font-size);
+}
+
+/* hashtag chips */
+.portfolio__tags {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+  margin: .35rem 0 .5rem;
+  font-size: var(--small-font-size);
+}
+.tag {
+  padding: .25rem .55rem;
+  border-radius: 999px;
+  background: var(--first-color-lighter);
+  color: var(--title-color);
+  border: 1px solid rgba(0,0,0,.06);
+  line-height: 1;
+}
+
+/* two-column grid on tablet/desktop */
+@media (min-width: 768px) {
+  .portfolio .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+}
+
+/* Make any image fill the box and crop as needed */
+.portfolio__thumb img{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;                 /* key part */
+  object-position: center;           /* keep center focus */
+}
+
+/* Optional: hover pop */
+.portfolio__thumb:hover img{
+  transform: scale(1.02);
+  transition: transform .35s ease;
+}
+
+/* Desktop: a bit taller + larger radius if you want */
+@media (min-width: 992px){
+  .portfolio__thumb{ aspect-ratio: 16 / 9; border-radius: 24px; }
+}
+
 
 /*==================== NAV ====================*/
 
