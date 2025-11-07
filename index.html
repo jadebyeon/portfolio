@@ -1,86 +1,184 @@
 <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <!--==================== UNICONS ====================-->
+  <!-- Icons (from the original template) -->
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" />
+
+  <!-- Swiper (template includes it; safe to keep even if not used on home) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+
+  <!-- Template main CSS -->
+  <link rel="stylesheet" href="assets/css/styles.css" />
+
+  <title>Jade Byeon — Portfolio</title>
+  <meta name="description" content="Portfolio of Jade Byeon — design thinker blending creative visual communication with data analysis." />
+</head>
+<body>
+  <!--==================== HEADER ====================-->
+  <header class="header" id="header">
+    <nav class="nav container">
+      <!-- Logo / Name (links to top) -->
+      <a href="#home" class="nav__logo">Jade&nbsp;Byeon</a>
+
+      <div class="nav__menu" id="nav-menu">
+        <ul class="nav__list grid">
+          <li class="nav__item">
+            <a href="#portfolio" class="nav__link"><i class="uil uil-apps nav__icon"></i>Work</a>
+          </li>
+          <li class="nav__item">
+            <a href="#about" class="nav__link"><i class="uil uil-user nav__icon"></i>About</a>
+          </li>
+          <li class="nav__item">
+            <a href="#contact" class="nav__link"><i class="uil uil-message nav__icon"></i>Contact</a>
+          </li>
+        </ul>
+        <i class="uil uil-times nav__close" id="nav-close" aria-label="Close menu"></i>
+      </div>
+
+      <div class="nav__btns">
+        <i class="uil uil-apps" id="nav-toggle" aria-label="Open menu"></i>
+      </div>
+    </nav>
+  </header>
+
+  <!--==================== MAIN ====================-->
+  <main class="main">
+
+    <!--==================== HOME / HERO ====================-->
+    <section class="home section" id="home">
+      <div class="home__container container grid">
+        <div class="home__data">
+          <h1 class="home__title" style="max-width: 900px;">
+            <strong>Hi, I'm Jade Byeon, a design thinker with a passion for innovative visual communication through creativity and data analysis.</strong>
+          </h1>
+          <p class="home__subtitle" style="margin-top: 1rem;">
+            <span>BA Art &amp; Design and BS Statistics @ University of Michigan</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!--==================== WORK / PORTFOLIO ====================-->
+    <section class="portfolio section" id="portfolio">
+      <h2 class="section__title">Selected Work</h2>
+      <span class="section__subtitle">Six projects</span>
+
+      <!-- 2-column grid on desktop, single column on mobile (template grid classes) -->
+      <div class="container grid" style="row-gap: 2.5rem;">
         
-        
-        <!--==================== SWIPER CSS ====================-->
-        <link rel="stylesheet" href="">
-        
-        <!--==================== CSS ====================-->
-        <link rel="stylesheet" href="">
+        <!-- Project 1 -->
+        <article class="portfolio__content">
+          <a class="portfolio__img-link" href="https://jadebyeon.github.io/portfolio/projects/telltool-branding" target="_blank" rel="noopener noreferrer">
+            <img class="portfolio__img" src="assets/img/p1.jpg" alt="TELL Tool Branding cover" />
+          </a>
+          <div class="portfolio__data">
+            <h3 class="portfolio__title">TELL Tool Branding</h3>
+            <p class="portfolio__description">Character-driven identity for a pediatric OCT assistant—approachable visuals and clinic-friendly guidelines.</p>
+          </div>
+        </article>
 
-        <title>Responsive Portfolio Website</title>
-    </head>
-    <body>
-        <!--==================== HEADER ====================-->
-        <header class="header" id="header">
-            
-        </header>
+        <!-- Project 2 -->
+        <article class="portfolio__content">
+          <a class="portfolio__img-link" href="https://jadebyeon.github.io/portfolio/projects/freshstash" target="_blank" rel="noopener noreferrer">
+            <img class="portfolio__img" src="assets/img/p2.jpg" alt="FreshStash mobile app cover" />
+          </a>
+          <div class="portfolio__data">
+            <h3 class="portfolio__title">FreshStash</h3>
+            <p class="portfolio__description">Ingredient management app—UI system and flows for recipe discovery and waste reduction.</p>
+          </div>
+        </article>
 
-        <!--==================== MAIN ====================-->
-        <main class="main">
-            <!--==================== HOME ====================-->
-            <section class="home section" id="home">
-                
-            </section>
+        <!-- Project 3 -->
+        <article class="portfolio__content">
+          <a class="portfolio__img-link" href="https://jadebyeon.github.io/portfolio/projects/insurance-marketplace" target="_blank" rel="noopener noreferrer">
+            <img class="portfolio__img" src="assets/img/p3.jpg" alt="Insurance marketplace dashboard cover" />
+          </a>
+          <div class="portfolio__data">
+            <h3 class="portfolio__title">Insurance Marketplace</h3>
+            <p class="portfolio__description">Quotes comparison dashboard—data-heavy UI simplified for rapid decision-making.</p>
+          </div>
+        </article>
 
-            <!--==================== ABOUT ====================-->
-            <section class="about section" id="about">
-                
-            </section>
+        <!-- Project 4 -->
+        <article class="portfolio__content">
+          <a class="portfolio__img-link" href="https://jadebyeon.github.io/portfolio/projects/arthropod-odyssey" target="_blank" rel="noopener noreferrer">
+            <img class="portfolio__img" src="assets/img/p4.jpg" alt="Arthropod Odyssey exhibition graphics" />
+          </a>
+          <div class="portfolio__data">
+            <h3 class="portfolio__title">The Arthropod Odyssey</h3>
+            <p class="portfolio__description">Exhibition visuals—storytelling through illustration, typography, and layout systems.</p>
+          </div>
+        </article>
 
-            <!--==================== SKILLS ====================-->
-            <section class="skills section" id="skills">
+        <!-- Project 5 -->
+        <article class="portfolio__content">
+          <a class="portfolio__img-link" href="https://jadebyeon.github.io/portfolio/projects/market-square" target="_blank" rel="noopener noreferrer">
+            <img class="portfolio__img" src="assets/img/p5.jpg" alt="Market Square branding cover" />
+          </a>
+          <div class="portfolio__data">
+            <h3 class="portfolio__title">Market Square</h3>
+            <p class="portfolio__description">Branding &amp; visual design—identity toolkit and applications for a city program.</p>
+          </div>
+        </article>
 
-            </section>
+        <!-- Project 6 -->
+        <article class="portfolio__content">
+          <a class="portfolio__img-link" href="https://jadebyeon.github.io/portfolio/projects/ami-upmc" target="_blank" rel="noopener noreferrer">
+            <img class="portfolio__img" src="assets/img/p6.jpg" alt="Ami for UPMC mobile UI cover" />
+          </a>
+          <div class="portfolio__data">
+            <h3 class="portfolio__title">Ami for UPMC</h3>
+            <p class="portfolio__description">UX/UI for community support &amp; harm reduction—service navigation and bulletin features.</p>
+          </div>
+        </article>
 
-            <!--==================== QUALIFICATION ====================-->
-            <section class="qualification section">
+      </div>
+    </section>
 
-            </section>
+    <!--==================== ABOUT ====================-->
+    <section class="about section" id="about">
+      <h2 class="section__title">About</h2>
+      <div class="about__container container grid">
+        <p class="about__description">
+          I’m a designer who blends visual storytelling with statistical thinking to create clear, human-centered experiences.
+          My work spans product UI, branding systems, and data-informed communication.
+        </p>
+      </div>
+    </section>
 
-            <!--==================== SERVICES ====================-->
-            <section class="services section" id="services">
-                
-            </section>
+    <!--==================== CONTACT ====================-->
+    <section class="contact section" id="contact">
+      <h2 class="section__title">Let’s Connect</h2>
+      <div class="contact__container container grid">
+        <p class="contact__subtitle">Email or connect with me on LinkedIn.</p>
+        <div class="home__social">
+          <a href="mailto:jadebyeon@umich.edu" class="home__social-icon" aria-label="Email">Email ↗</a>
+          <a href="https://www.linkedin.com/in/jadebyeon" target="_blank" rel="noopener noreferrer" class="home__social-icon" aria-label="LinkedIn">LinkedIn ↗</a>
+          <a href="https://github.com/jadebyeon" target="_blank" rel="noopener noreferrer" class="home__social-icon" aria-label="GitHub">GitHub ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
 
-            <!--==================== PORTFOLIO ====================-->
-            <section class="portfolio section" id="portfolio">
-                
-            </section>
+  <!--==================== FOOTER ====================-->
+  <footer class="footer">
+    <div class="footer__bg">
+      <p class="footer__copy">© Jade Byeon — 2025. All rights reserved.</p>
+    </div>
+  </footer>
 
-            <!--==================== PROJECT IN MIND ====================-->
-            <section class="project section">
+  <!-- Optional scroll-up button (kept for template compatibility) -->
+  <a href="#home" class="scrollup" id="scroll-up" aria-label="Scroll to top">
+    <i class="uil uil-arrow-up scrollup__icon"></i>
+  </a>
 
-            </section>
+  <!-- Swiper JS (kept for template compatibility) -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 
-            <!--==================== TESTIMONIAL ====================-->
-            <section class="testimonial section">
-                
-            </section>
-
-            <!--==================== CONTACT ME ====================-->
-            <section class="contact section" id="contact">
-
-            </section>
-        </main>
-
-        <!--==================== FOOTER ====================-->
-        <footer class="footer">
-         
-        </footer>
-        
-        <!--==================== SCROLL TOP ====================-->
-        
-
-        <!--==================== SWIPER JS ====================-->
-        <script src=""></script>
-
-        <!--==================== MAIN JS ====================-->
-        <script src=""></script>
-    </body>
+  <!-- Template main JS -->
+  <script src="assets/js/main.js"></script>
+</body>
 </html>
