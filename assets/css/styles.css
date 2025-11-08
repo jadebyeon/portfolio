@@ -252,25 +252,59 @@ img { max-width: 100%; height: auto; }
   font-size: clamp(16px, 1.3vw, 20px);
 }
 
-/* 4-column meta row like the reference */
+/* ===== Project detail: 4×2 meta ===== */
 .project-meta{
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display:grid;
+  grid-template-columns:repeat(4, minmax(0,1fr));
   gap: clamp(16px, 3vw, 48px);
-  margin-top: 2.25rem;
+  row-gap: clamp(12px, 2.2vw, 28px);
+  margin: clamp(20px, 3.5vw, 48px) 0 clamp(28px, 4vw, 56px);
 }
 
-.meta__label{
+.project-meta .meta-head{
   font-weight: 700;
+  font-size: clamp(0.95rem, 0.9rem + .25vw, 1.15rem); /* ~1–2 steps bigger */
   color: var(--title-color);
-  margin-bottom: .35rem;
-  font-size: clamp(16px, 1.2vw, 20px);
+  line-height: 1.25;
 }
 
-.meta__value{
+.project-meta .meta-value{
+  font-weight: 500;
   color: var(--text-color);
-  font-size: clamp(14px, 1.05vw, 18px);
+  line-height: 1.4;
 }
+
+/* Stack to 2 cols on tablets, 1 col on phones */
+@media (max-width: 900px){
+  .project-meta{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width: 560px){
+  .project-meta{ grid-template-columns: 1fr; }
+}
+
+/* ===== Typographic spacing for project pages ===== */
+/* Paragraphs: “one line space” between paragraphs */
+.project-page p{ 
+  line-height: 1.75;                   /* comfortable line height */
+  margin: 0 0 1.25em;                  /* ~one line of space after each paragraph */
+}
+
+/* Lists: ~0.8 line space between items */
+.project-page ul,
+.project-page ol{
+  margin: 0 0 1.1em 1.25em;            /* space after the list + left indent */
+}
+.project-page li{ 
+  margin-bottom: 0.8em; 
+  line-height: 1.6;
+}
+
+/* Section spacing (Design Problem, Research & Strategy, …) */
+.project-section{
+  padding-block: calc(var(--section-vspace) * 1.15);  /* ~15% more than default */
+}
+.project-section h2{
+  margin: 0 0 0.75em;
 
 /* content body rhythm */
 .project-body .prose > * + *{ margin-top: 1rem; }
@@ -286,6 +320,18 @@ img { max-width: 100%; height: auto; }
 @media (max-width: 600px){
   .project-meta{ grid-template-columns: 1fr; }
 }
+
+.project-image{
+  display:block; position:relative;
+  border-radius:16px; overflow:hidden; background:#f5f6f7;
+}
+.project-image img{
+  width:100%; height:auto; display:block;
+  transition: transform .35s ease;
+  will-change: transform;
+}
+.project-image:hover img{ transform: scale(1.03); }
+@media (min-width: 992px){ .project-image{ border-radius:24px; } }
 
 /* ==================== MEDIA-QUERY SLOTS ==================== */
 /* For small devices  : @media (max-width: 640px){ ... }   */
