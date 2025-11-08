@@ -5,49 +5,28 @@
 /* Validate if constant exists */
 // ==== NAV: active link + moving underline + smooth scroll ====
 document.addEventListener('DOMContentLoaded', () => {
-  const nav = document.querySelector('nav');                 // your top nav element
-  const links = document.querySelectorAll('.site-nav .nav-link');
-  const underline = document.querySelector('.nav-underline'); // <span class="nav-underline"></span> inside nav
-
-  // move underline under an anchor
-  const moveUnderline = (a) => {
-    if (!underline || !a) return;
-    const navBox = nav.getBoundingClientRect();
-    const aBox = a.getBoundingClientRect();
-    underline.style.width = `${aBox.width}px`;
-    underline.style.transform = `translateX(${aBox.left - navBox.left}px)`;
-  };
+  const links = Array.from(document.querySelectorAll('.site-menu .nav-link'));
+  const brand = document.querySelector('.brand'); // <span class="nav-underline"></span> inside nav
 
   // set active link by section id
-  const setActiveByHref = (href) => {
-    links.forEach(a => {
-      const isActive =
-        a.getAttribute('href') === href ||
-        (href.startsWith('#') && a.getAttribute('href') === href) ||
-        (!href.startsWith('#') && a.pathname === location.pathname);
-      a.classList.toggle('is-active', isActive);
-      if (isActive) moveUnderline(a);
-    });
+  const setActive = (targetHref) => {
+    links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === targetHref));
   };
 
-  // click → smooth scroll + active state
+  const workLink = links.find(a => a.getAttribute('href') === '#portfolio');
+  if (workLink) setActive('#portfolio');
+
+  // click handling: update active underline/color
   links.forEach(a => {
-    a.addEventListener('click', (e) => {
-      const href = a.getAttribute('href');
-      // in-page section (hash)
-      if (href && href.startsWith('#')) {
-        e.preventDefault();
-        const id = href.slice(1);
-        const target = document.getElementById(id);
-        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        history.replaceState(null, '', href);
-        setActiveByHref(href);
-      } else {
-        // full page → let the browser navigate; optional: pre-set active for instant feedback
-        setActiveByHref(href || '');
-      }
+    a.addEventListener('click', () => {
+      // If it's a hash link on this page, update active
+      const href = a.getAttribute('href') || '';
+      if (href.startsWith('#')) setActive(href);
+      // If it's a separate page (e.g., about.html/contact.html), the new page will load
+      // and its own script can set the correct active state there.
     });
   });
+});
 
   if (location.hash) {
     setActiveByHref(location.hash);
@@ -106,4 +85,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 /*==================== DARK LIGHT THEME ====================*/ 
+
 
