@@ -165,6 +165,10 @@ img { max-width: 100%; height: auto; }
 /* ==================== HOME (HERO) ==================== */
 .home.section{ padding-top: calc(var(--hero-top) + var(--section-vspace)); }
 .home__data{ max-width: 1100px; }
+.section__title{
+  text-align:center;
+  margin:0 0 1.25rem;
+}
 .section-title, .section-kicker{ text-align: center; }
 .section-title{ margin-top: 0; }
 
