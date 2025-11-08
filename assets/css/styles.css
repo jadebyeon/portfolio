@@ -246,71 +246,76 @@ img { max-width: 100%; height: auto; }
 }
 
 .project__lede{
-  margin-top: 1rem;
+  margin-top: clamp(24px, 2.5vw, 36px);
   max-width: 1000px;
   color: var(--text-color);
   font-size: clamp(16px, 1.3vw, 20px);
+  line-height: 1.9;
 }
 
 /* ===== Project detail: 4×2 meta ===== */
+/* 4 columns on desktop, 2 rows (labels row visually paired with values) */
 .project-meta{
-  display:grid;
-  grid-template-columns:repeat(4, minmax(0,1fr));
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: clamp(16px, 3vw, 48px);
-  row-gap: clamp(12px, 2.2vw, 28px);
-  margin: clamp(20px, 3.5vw, 48px) 0 clamp(28px, 4vw, 56px);
+  margin-top: clamp(24px, 3vw, 40px);
 }
 
-.project-meta .meta-head{
+.meta-label{
   font-weight: 700;
-  font-size: clamp(0.95rem, 0.9rem + .25vw, 1.15rem); /* ~1–2 steps bigger */
+  font-size: clamp(15px, 1.1vw, 18px);   /* slightly larger than body */
   color: var(--title-color);
-  line-height: 1.25;
+  margin-bottom: 8px;
 }
 
-.project-meta .meta-value{
-  font-weight: 500;
+.meta-value{
   color: var(--text-color);
-  line-height: 1.4;
+  font-size: clamp(14px, 1.05vw, 17px);
+  line-height: 1.6;
 }
 
-/* Stack to 2 cols on tablets, 1 col on phones */
+/* Tablet: two columns, items pair vertically (label above value) */
 @media (max-width: 900px){
-  .project-meta{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .project-meta{ grid-template-columns: repeat(2, 1fr); }
 }
+
+/* Phone: single column, each item stacks label then value */
 @media (max-width: 560px){
   .project-meta{ grid-template-columns: 1fr; }
 }
 
 /* ===== Typographic spacing for project pages ===== */
 /* Paragraphs: “one line space” between paragraphs */
-.project-page p{ 
-  line-height: 1.75;                   /* comfortable line height */
-  margin: 0 0 1.25em;                  /* ~one line of space after each paragraph */
+/* ==================== PROJECT PAGE TYPOGRAPHY & SPACING ==================== */
+
+/* Paragraphs: comfy line height + ~1 line space after */
+.project .project-section p{
+  line-height: 1.9;
+  margin: 0 0 1.15em;
 }
 
-/* Lists: ~0.8 line space between items */
-.project-page ul,
-.project-page ol{
-  margin: 0 0 1.1em 1.25em;            /* space after the list + left indent */
+/* Lists: slightly tighter lines + small gaps between items */
+.project .project-section ul,
+.project .project-section ol{
+  margin: 0 0 1.1em 1.25em;   /* keeps your left indent */
 }
-.project-page li{ 
-  margin-bottom: 0.8em; 
+.project .project-section li{
   line-height: 1.6;
+  margin: 0.35em 0;
 }
 
-/* Section spacing (Design Problem, Research & Strategy, …) */
-.project-section{
-  padding-block: calc(var(--section-vspace) * 1.15);  /* ~15% more than default */
+/* Triple the space between major sections */
+.project .project-section + .project-section{
+  margin-top: clamp(72px, 12vh, 180px);
 }
-.project-section h2{
-  margin: 0 0 0.75em;
 
-/* content body rhythm */
-.project-body .prose > * + *{ margin-top: 1rem; }
-.project-body .prose h3{
-  margin-top: 2rem;
-  font-size: clamp(20px, 1.6vw, 24px);
+/* Section headings: slightly larger, and double the gap to first sentence */
+.project .project-section h3{
+  font-size: clamp(20px, 2.2vw, 32px);
+  line-height: 1.2;
+  color: var(--title-color);
+  margin: 0 0 clamp(20px, 2vw, 34px);  /* bigger space under the heading */
 }
 
 /* responsive stacking for meta */
