@@ -6,8 +6,7 @@
 // ==== NAV: active link + moving underline + smooth scroll ====
 document.addEventListener('DOMContentLoaded', () => {
   const nav = document.querySelector('nav');                 // your top nav element
-  const links = document.querySelectorAll('nav a[href^="#"]');
-  const sections = [...document.querySelectorAll('section[id]')];
+  const links = document.querySelectorAll('.site-nav .nav-link');
   const underline = document.querySelector('.nav-underline'); // <span class="nav-underline"></span> inside nav
 
   // move underline under an anchor
@@ -20,26 +19,44 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // set active link by section id
-  const setActive = (id) => {
+  const setActiveByHref = (href) => {
     links.forEach(a => {
-      const active = a.getAttribute('href') === `#${id}`;
-      a.classList.toggle('is-active', active);  // CSS will make it grey
-      if (active) moveUnderline(a);
+      const isActive =
+        a.getAttribute('href') === href ||
+        (href.startsWith('#') && a.getAttribute('href') === href) ||
+        (!href.startsWith('#') && a.pathname === location.pathname);
+      a.classList.toggle('is-active', isActive);
+      if (isActive) moveUnderline(a);
     });
   };
 
   // click → smooth scroll + active state
   links.forEach(a => {
     a.addEventListener('click', (e) => {
-      e.preventDefault();
-      const id = a.getAttribute('href').slice(1);
-      const target = document.getElementById(id);
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setActive(id);
-      history.replaceState(null, '', `#${id}`);
+      const href = a.getAttribute('href');
+      // in-page section (hash)
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        const id = href.slice(1);
+        const target = document.getElementById(id);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.replaceState(null, '', href);
+        setActiveByHref(href);
+      } else {
+        // full page → let the browser navigate; optional: pre-set active for instant feedback
+        setActiveByHref(href || '');
+      }
     });
   });
 
+  if (location.hash) {
+    setActiveByHref(location.hash);
+  } else {
+    // mark current page link active (About/Contact pages)
+    setActiveByHref(location.pathname);
+  }
+});
+  
   // scroll → update active link (IntersectionObserver)
   const io = new IntersectionObserver((entries) => {
     const visible = entries
@@ -89,3 +106,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 /*==================== DARK LIGHT THEME ====================*/ 
+
