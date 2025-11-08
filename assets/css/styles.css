@@ -189,33 +189,45 @@ img { max-width: 100%; height: auto; }
 .portfolio__title{ font-size: 1.125rem; line-height: 1.25; }
 .portfolio__description{ color: var(--text-color); font-size: var(--small-font-size); }
 
-/* Thumbnail: fixed rounded box, any image fits */
-.portfolio__thumb{
-  position: relative; width: 100%;
-  aspect-ratio: 16 / 10; 
-  border-radius: 16px; 
+/* Clickable thumbnail box with fixed ratio + rounded corners */
+.portfolio__img-link{
+  display: block;
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: 16px;
   overflow: hidden;
   background: #f5f6f7;
 }
-.portfolio__thumb img{
-  width: 100%; height: 100%; display: block;
-  object-fit: cover; object-position: center;
+
+/* Image fills and crops */
+.portfolio__img{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
   transition: transform .35s ease;
-}
-.portfolio__thumb:hover img{ transform: scale(1.02); }
-@media (min-width: 992px){
-  .portfolio__thumb{ aspect-ratio: 16 / 9; border-radius: 24px; }
+  will-change: transform;
 }
 
-/* Hashtag chips */
-.portfolio__tags{
-  display: flex; gap: .5rem; flex-wrap: wrap;
-  margin: .35rem 0 .5rem; font-size: var(--small-font-size);
+/* Desktop/Laptop: subtle hover zoom */
+@media (hover: hover){
+  .portfolio__img-link:hover .portfolio__img{
+    transform: scale(1.03);   /* tweak: 1.02–1.06 */
+  }
 }
-.tag{
-  padding: .25rem .55rem; line-height: 1; border-radius: 999px;
-  background: var(--first-color-lighter); color: var(--title-color);
-  border: 1px solid rgba(0,0,0,.06);
+
+/* Larger screens: wider ratio + softer corners */
+@media (min-width: 992px){
+  .portfolio__img-link{
+    aspect-ratio: 16 / 9;
+    border-radius: 24px;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .portfolio__img{ transition: none; }
 }
 
 /* ==================== MEDIA-QUERY SLOTS ==================== */
