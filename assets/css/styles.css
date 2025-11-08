@@ -111,56 +111,15 @@ img { max-width: 100%; height: auto; }
   background: var(--body-color);
   box-shadow: 0 1px 10px rgba(0,0,0,.06);
 }
-.site-nav{
-  height: 100%;
-  display: flex; align-items: center; justify-content: space-between;
-  padding-inline: var(--page-gutter);
-}
-.brand{ font-weight: 700; color: var(--title-color); letter-spacing: .2px; }
+.site-nav { position: relative; display: flex; align-items: center; justify-content: space-between; }
+.site-menu { display: flex; gap: 2rem; list-style: none; margin: 0; padding: 0; }
+.site-menu .nav-link { color: #0f0f14; text-decoration: none; }
+.site-menu .nav-link.is-active { color: #7a7a7a; } /* grey when active */
 
-.site-menu{ display: flex; align-items: center; gap: clamp(16px, 3.2vw, 48px); }
-.nav-link{
-  position: relative; font-weight: 500;
-  color: rgba(17,17,17,.45); transition: color .2s ease;
+.nav-underline{
+  position:absolute; left:0; bottom:-6px; height:2px; width:0;
+  background: currentColor; transition: transform .25s ease, width .25s ease;
 }
-.nav-link:hover{ color: var(--title-color); }
-.nav-link.active{ color: var(--title-color); }
-.nav-link.active::after{
-  content: ""; position: absolute; left: 0; right: 0; bottom: -8px;
-  height: 2px; border-radius: 2px; background: var(--title-color);
-}
-
-.nav a {
-  position: relative;
-  text-decoration: none;
-  color: #0f0f10;             /* default dark */
-  transition: color .2s ease;
-}
-
-.nav a.active {
-  color: #888;                /* “turn grey” when active */
-}
-
-/* underline that moves to the active item */
-.nav a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -6px;               /* space under text */
-  height: 3px;
-  border-radius: 2px;
-  background: transparent;    /* hidden by default */
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform .25s ease, background .25s ease;
-}
-
-.nav a.active::after {
-  background: currentColor;   /* uses the grey of the active link */
-  transform: scaleX(1);
-}
-
 
 /* Mobile sizing for nav text */
 @media (max-width: 640px){
