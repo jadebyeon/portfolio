@@ -96,6 +96,7 @@ img { max-width: 100%; height: auto; }
 
 .section-title {
   text-align: center;
+  margin: 0 0 1.25rem;
 }
 
 /* Optional: tighten spacing if you like */
