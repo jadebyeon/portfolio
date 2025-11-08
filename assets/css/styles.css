@@ -94,6 +94,15 @@ img { max-width: 100%; height: auto; }
 .section { padding-block: var(--section-vspace); }
 .grid { display: grid; gap: 1.5rem; }
 
+.section-title {
+  text-align: center;
+}
+
+/* Optional: tighten spacing if you like */
+.section-title + p { 
+  text-align: center; 
+}
+
 /* ==================== HEADER / NAV ==================== */
 .header{
   position: fixed; inset: 0 0 auto 0;         /* top:0; left:0; right:0 */
@@ -120,6 +129,38 @@ img { max-width: 100%; height: auto; }
   content: ""; position: absolute; left: 0; right: 0; bottom: -8px;
   height: 2px; border-radius: 2px; background: var(--title-color);
 }
+
+.nav a {
+  position: relative;
+  text-decoration: none;
+  color: #0f0f10;             /* default dark */
+  transition: color .2s ease;
+}
+
+.nav a.active {
+  color: #888;                /* “turn grey” when active */
+}
+
+/* underline that moves to the active item */
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;               /* space under text */
+  height: 3px;
+  border-radius: 2px;
+  background: transparent;    /* hidden by default */
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .25s ease, background .25s ease;
+}
+
+.nav a.active::after {
+  background: currentColor;   /* uses the grey of the active link */
+  transform: scaleX(1);
+}
+
 
 /* Mobile sizing for nav text */
 @media (max-width: 640px){
@@ -157,12 +198,12 @@ img { max-width: 100%; height: auto; }
 .portfolio__thumb img{
   width: 100%; height: 100%; display: block;
   object-fit: cover; object-position: center;
-  transition: transform .35s ease;
+  transition: transform .3s ease;
 }
-.portfolio__thumb:hover img{ transform: scale(1.02); }
-
+.portfolio__thumb:hover img{ transform: scale(1.01); }
 @media (min-width: 992px){
-  .portfolio__thumb{ aspect-ratio: 16 / 9; border-radius: 24px; }
+  .portfolio__thumb{ aspect-ratio: 16 / 9; 
+                    border-radius: 24px; }
 }
 
 /* Hashtag chips */
