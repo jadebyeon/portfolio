@@ -5,12 +5,13 @@
 :root {
   /* Layout */
   --header-height: 72px;
-  --page-gutter: clamp(16px, 5vw, 80px);      /* left/right padding that scales */
-  --section-vspace: clamp(32px, 6vw, 96px);   /* vertical section spacing */
-  --hero-top: clamp(40px, 10vw, 140px);       /* extra space under fixed header */
+  --page-gutter: clamp(16px, 5vw, 80px);
+  --section-vspace: clamp(32px, 6vw, 96px);
+  /* a bit more top space (like the reference hero) */
+  --hero-top: clamp(72px, 14vh, 160px);
 
   /* Colors */
-  --hue-color: 250;                            /* Purple 250 - Green 142 - Blue 230 - Pink 340 */
+  --hue-color: 250;
   --first-color: hsl(var(--hue-color), 69%, 61%);
   --first-color-second: hsl(var(--hue-color), 69%, 61%);
   --first-color-alt: hsl(var(--hue-color), 57%, 53%);
@@ -70,9 +71,11 @@
 /* ==================== BASE ==================== */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
+/* make in-page anchors land below the fixed header */
+html { scroll-padding-top: var(--header-height); }
 
 body {
-  margin: var(--header-height) 0 0 0;         /* push content below fixed header */
+  margin: var(--header-height) 0 0 0;     /* keep content below fixed header */
   font-family: var(--body-font);
   font-size: var(--normal-font-size);
   background: var(--body-color);
@@ -98,43 +101,53 @@ img { max-width: 100%; height: auto; }
   text-align: center;
   margin: 0 0 1.25rem;
 }
-
-/* Optional: tighten spacing if you like */
-.section-title + p { 
-  text-align: center; 
-}
+/* optional supporting text center */
+.section-title + p { text-align: center; }
 
 /* ==================== HEADER / NAV ==================== */
 .header{
-  position: fixed; inset: 0 0 auto 0;         /* top:0; left:0; right:0 */
+  position: fixed; inset: 0 0 auto 0;
   height: var(--header-height);
   z-index: var(--z-fixed);
   background: var(--body-color);
   box-shadow: 0 1px 10px rgba(0,0,0,.06);
 }
 
-.brand{
-  color: var(--title-color);           /* always black */
-  font-weight: 700;
-  letter-spacing: .2px;
-  text-decoration: none;               /* never gets the moving underline */
+.site-nav{
+  height: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+  padding-inline: var(--page-gutter);
 }
 
-.site-nav { position: relative; display: flex; align-items: center; justify-content: space-between; }
+/* Left brand: always black, never underlined */
+.brand{
+  color: var(--title-color) !important;
+  font-weight: 700;
+  letter-spacing: .2px;
+  text-decoration: none;
+}
+
+/* Right menu: horizontal row */
+.site-menu{
+  display: flex; align-items: center;
+  gap: clamp(16px, 3.2vw, 48px);
+  margin: 0; padding: 0;
+}
+
+/* default: grey, hover: black; active: black + underline */
 .site-menu .nav-link{
   position: relative;
-  text-decoration: none;
-  color: rgba(17,17,17,.45);           /* default grey */
+  font-weight: 600;
+  color: rgba(17,17,17,.45);
   transition: color .2s ease;
+  text-decoration: none;
 }
 .site-menu .nav-link:hover{ color: var(--title-color); }
 .site-menu .nav-link.active{ color: var(--title-color); }
 
-/* moving underline appears only on the active right-side link */
 .site-menu .nav-link::after{
   content: "";
-  position: absolute;
-  left: 0; right: 0; bottom: -8px;
+  position: absolute; left: 0; right: 0; bottom: -8px;
   height: 2px; border-radius: 2px;
   background: currentColor;
   transform: scaleX(0);
@@ -152,19 +165,14 @@ img { max-width: 100%; height: auto; }
 /* ==================== HOME (HERO) ==================== */
 .home.section{ padding-top: calc(var(--hero-top) + var(--section-vspace)); }
 .home__data{ max-width: 1100px; }
-
-.section-title,
-.section-kicker{
-  text-align: center;
-}
-/* optional: keep the same top spacing as before — we only align text */
+.section-title, .section-kicker{ text-align: center; }
 .section-title{ margin-top: 0; }
 
 /* ==================== PORTFOLIO ==================== */
 /* Grid */
 .portfolio .container{
   display: grid;
-  grid-template-columns: 1fr;                 /* mobile: single column */
+  grid-template-columns: 1fr;
   gap: clamp(16px, 3vw, 32px);
 }
 @media (min-width: 768px){
@@ -180,7 +188,9 @@ img { max-width: 100%; height: auto; }
 /* Thumbnail: fixed rounded box, any image fits */
 .portfolio__thumb{
   position: relative; width: 100%;
-  aspect-ratio: 16 / 10; border-radius: 16px; overflow: hidden;
+  aspect-ratio: 16 / 10; 
+  border-radius: 16px; 
+  overflow: hidden;
   background: #f5f6f7;
 }
 .portfolio__thumb img{
@@ -190,8 +200,7 @@ img { max-width: 100%; height: auto; }
 }
 .portfolio__thumb:hover img{ transform: scale(1.02); }
 @media (min-width: 992px){
-  .portfolio__thumb{ aspect-ratio: 16 / 9; 
-                    border-radius: 24px; }
+  .portfolio__thumb{ aspect-ratio: 16 / 9; border-radius: 24px; }
 }
 
 /* Hashtag chips */
@@ -205,10 +214,7 @@ img { max-width: 100%; height: auto; }
   border: 1px solid rgba(0,0,0,.06);
 }
 
-/* ==================== (Reserved sections from template) ==================== */
-/* Add/extend styles for About, Skills, Services, Contact, etc., as needed */
-
-/* ==================== MEDIA-QUERY SLOTS (if needed later) ==================== */
+/* ==================== MEDIA-QUERY SLOTS ==================== */
 /* For small devices  : @media (max-width: 640px){ ... }   */
 /* For medium devices : @media (min-width: 768px){ ... }   */
 /* For large devices  : @media (min-width: 992px){ ... }   */
