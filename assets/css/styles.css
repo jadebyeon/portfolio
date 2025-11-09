@@ -406,6 +406,14 @@ img { max-width: 100%; height: auto; }
   margin: 0.35em 0;               /* comfortable gap between list items */
 }
 
+/* Project pages: no body offset; header offset handled by <main> */
+.project-page { margin-top: 0; }
+.project-page .main { padding-top: var(--header-height); }
+
+/* Make sure the hero isn’t adding its own top gap */
+.project-page .project-hero.section { padding-top: 0; margin-top: 0; }
+.project-page .hero-media { margin-top: 0; }
+
 /* Optional: if you have any paragraphs not wrapped in .project-section,
    keep them nicely spaced too */
 .project p { line-height: 1.85; margin: 0 0 1.1em; }
