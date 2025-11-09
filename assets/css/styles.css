@@ -339,8 +339,8 @@ img { max-width: 100%; height: auto; }
 /* Triple the gap *between* consecutive sections */
 .project .project-section + .project-section{
   margin-top: clamp(72px, 12vh, 180px);
-  padding-top: clamp(32px, 4vh, 56px);
-  border-top: 1px solid rgba(0,0,0,.06);
+  padding-top: 0;
+  border-top: none;
 }
 
 /* Paragraphs: comfy line height + ~1 line of space after */
@@ -358,7 +358,11 @@ img { max-width: 100%; height: auto; }
 }
 
 /* ---- List fixes (override the global 'ul { list-style: none }') ---- */
-.project .project-section ul,
+.project .project-section ul{
+  list-style: disc inside;
+  margin: 0 0 1.15em;
+  padding-left: 0.5em;                      /* nudge text off the bullet */
+}
 .project .project-section ol{
   list-style-position: inside;   /* bullet starts inside the text box */
   list-style-type: disc;         /* or decimal for <ol> below */
@@ -369,7 +373,7 @@ img { max-width: 100%; height: auto; }
 
 .project .project-section li{
   line-height: 1.9;              /* match paragraph line-height */
-  margin: 0.6em 0;               /* comfortable gap between list items */
+  margin: 0.35em 0;               /* comfortable gap between list items */
 }
 
 /* Optional: if you have any paragraphs not wrapped in .project-section,
