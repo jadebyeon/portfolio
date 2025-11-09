@@ -437,7 +437,10 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 :root { --block-gap: clamp(16px, 2.2vw, 28px); }
 
 /* Kill the big padding that was pushing the lede down */
-.project-intro.section { padding-top: 0 !important; }
+.project-intro.section { 
+  padding-top: 0;
+  padding-bottom: 0;
+}
 
 /* Give the hero a single, small bottom gap */
 .hero-media { margin: 0 auto var(--block-gap) !important; }
@@ -446,10 +449,10 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 .project__lede { margin: 0 0 var(--block-gap); }
 
 /* Meta grid starts after the same gap */
-.project-meta { margin-top: var(--block-gap) !important; }
+.project-meta { margin-top: 0; }
 
 /* If you keep this selector, make sure it doesn't re-add extra space */
-.project-hero + .project-intro { margin-top: 0 !important; }
+.project-hero + .project-intro { margin-top: 0; padding-bottom: 0; }
 
 
 /* ==================== MEDIA-QUERY SLOTS ==================== */
