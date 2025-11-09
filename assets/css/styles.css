@@ -9,6 +9,7 @@
   --section-vspace: clamp(32px, 6vw, 96px);
   /* a bit more top space (like the reference hero) */
   --hero-top: clamp(72px, 14vh, 160px);
+  
 
   /* Colors */
   --hue-color: 250;
@@ -431,6 +432,25 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 .project-image:hover img{ transform: scale(1.03); }
 @media (min-width: 992px){ .project-image{ border-radius:24px; } }
+
+/* ---- Tighten hero → lede and match lede → meta ---- */
+:root { --block-gap: clamp(16px, 2.2vw, 28px); }
+
+/* Kill the big padding that was pushing the lede down */
+.project-intro.section { padding-top: 0 !important; }
+
+/* Give the hero a single, small bottom gap */
+.hero-media { margin: 0 auto var(--block-gap) !important; }
+
+/* Space under the lede equals the same gap */
+.project__lede { margin: 0 0 var(--block-gap); }
+
+/* Meta grid starts after the same gap */
+.project-meta { margin-top: var(--block-gap) !important; }
+
+/* If you keep this selector, make sure it doesn't re-add extra space */
+.project-hero + .project-intro { margin-top: 0 !important; }
+
 
 /* ==================== MEDIA-QUERY SLOTS ==================== */
 /* For small devices  : @media (max-width: 640px){ ... }   */
