@@ -260,11 +260,11 @@ img { max-width: 100%; height: auto; }
   line-height: 1.9;
 }
 
+.main{ padding-top: var(--header-height); }
 /* --- Project hero banner --- */
 .project-hero.section{
   padding-block-start: 0;   /* kill the top padding from .section */
-  padding-top: 0; 
-  margin-top: calc(var(--header-height) * -1);
+  padding-top: 0;
 }
 
 .project-intro.section { 
@@ -272,11 +272,11 @@ img { max-width: 100%; height: auto; }
 }
 
 .project-hero + .project-intro{
-  margin-top: clamp(24px, 3vw, 48px);
+   margin-top: clamp(12px, 1.6vw, 20px);
 }
 
 .header{ z-index: var(--z-fixed); }     /* already high, but explicit */
-.hero-media{ position: relative; z-index: 0; }
+.hero-media{ margin: 0 auto clamp(16px, 2vw, 28px); }
 .hero-overlay{
   position: absolute; inset: 0;
   display: grid; place-content: center;
