@@ -289,34 +289,51 @@ img { max-width: 100%; height: auto; }
 /* Paragraphs: “one line space” between paragraphs */
 /* ==================== PROJECT PAGE TYPOGRAPHY & SPACING ==================== */
 
-/* Paragraphs: comfy line height + ~1 line space after */
+/* Give each project section its own internal vertical padding */
+.project .project-section{
+  padding-block: calc(var(--section-vspace) * 1.7);   /* bigger than default */
+}
+
+/* Triple the gap *between* consecutive sections */
+.project .project-section + .project-section{
+  margin-top: clamp(72px, 12vh, 180px);
+}
+
+/* Paragraphs: comfy line height + ~1 line of space after */
 .project .project-section p{
   line-height: 1.9;
   margin: 0 0 1.15em;
 }
 
-/* Lists: slightly tighter lines + small gaps between items */
-.project .project-section ul,
+/* Headings: larger and double gap before first sentence */
+.project .project-section h2,
+.project .project-section h3{
+  font-size: clamp(22px, 2.4vw, 34px);
+  line-height: 1.2;
+  color: var(--title-color);
+  margin: 0 0 clamp(20px, 2vw, 34px);   /* “double” gap under heading */
+}
+
+/* ---- List fixes (override the global 'ul { list-style: none }') ---- */
+.project .project-section ul{
+  list-style: disc;
+  padding-left: 1.25em;          /* indent bullets */
+  margin: 0 0 1.1em;             /* space after list */
+}
 .project .project-section ol{
-  margin: 0 0 1.1em 1.25em;   /* keeps your left indent */
+  list-style: decimal;
+  padding-left: 1.25em;
+  margin: 0 0 1.1em;
 }
 .project .project-section li{
   line-height: 1.6;
-  margin: 0.35em 0;
+  margin: 0.35em 0;              /* ~0.8 line space between items */
 }
 
-/* Triple the space between major sections */
-.project .project-section + .project-section{
-  margin-top: clamp(72px, 12vh, 180px);
-}
+/* Optional: if you have any paragraphs not wrapped in .project-section,
+   keep them nicely spaced too */
+.project p { line-height: 1.85; margin: 0 0 1.1em; }
 
-/* Section headings: slightly larger, and double the gap to first sentence */
-.project .project-section h3{
-  font-size: clamp(20px, 2.2vw, 32px);
-  line-height: 1.2;
-  color: var(--title-color);
-  margin: 0 0 clamp(20px, 2vw, 34px);  /* bigger space under the heading */
-}
 
 /* responsive stacking for meta */
 @media (max-width: 1024px){
