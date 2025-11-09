@@ -317,19 +317,18 @@ img { max-width: 100%; height: auto; }
 }
 
 /* ---- List fixes (override the global 'ul { list-style: none }') ---- */
-.project .project-section ul{
-  list-style: disc outside;
-  padding-left: 1.25em;          /* indent bullets */
-  margin: 0 0 1.1em;             /* space after list */
-}
+.project .project-section ul,
 .project .project-section ol{
-  list-style: decimal outside;
-  padding-left: 1.25em;
-  margin: 0 0 1.1em;
+  list-style-position: inside;   /* bullet starts inside the text box */
+  list-style-type: disc;         /* or decimal for <ol> below */
+  padding-left: 0;               /* no extra indent (inside already indents) */
+  margin: 0 0 1.15em;            /* same after-space as paragraphs */
 }
+.project .project-section ol{ list-style-type: decimal; }
+
 .project .project-section li{
-  line-height: 1.6;
-  margin: 0.35em 0;              /* ~0.8 line space between items */
+  line-height: 1.9;              /* match paragraph line-height */
+  margin: 0.6em 0;               /* comfortable gap between list items */
 }
 
 /* Optional: if you have any paragraphs not wrapped in .project-section,
