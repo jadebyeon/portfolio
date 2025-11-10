@@ -669,114 +669,56 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 
 /* ---------- Visual 3-column (scoped) ---------- */
-
-/* scope: kill .prose defaults inside this figure only */
-.prose .figure-80.visual-3col figure,
-.prose .figure-80.visual-3col img,
-.prose .figure-80.visual-3col figcaption { margin: 0 !important; }
-
-/* container size like your other 80% figures */
-.figure-80.visual-3col{
-  width: min(80vw, 1400px);
-  margin: clamp(16px, 2vw, 28px) auto var(--block-gap, 32px);
-}
-
-/* 3 equal columns */
-.figure-80.visual-3col .visual-grid{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(12px, 1.6vw, 24px);
-}
-
-/* each column */
-.figure-80.visual-3col .vcell{
-  display: flex;
-  flex-direction: column;
-  margin: 0;  /* beat .prose figure margin */
-}
-
-/* single authoritative height for the image block */
-:root{ --visual-h: clamp(420px, 48vh, 560px); }
-
-.figure-80.visual-3col .media{
-  width: 100%;
-  height: var(--visual-h);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* image fills the block, never crops */
-.figure-80.visual-3col .media img{
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-}
-
-/* tight, consistent caption spacing */
-.figure-80.visual-3col .col-caption{
-  min-height: 3.2em; /* ≈ up to 2 lines */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-size: clamp(12px, .9vw, 14px);
-  color: var(--text-color-light);
-  margin: clamp(6px, .8vw, 10px) 0 0 !important;  /* beat .prose */
-}
-
-/* responsive collapse */
-@media (max-width: 1024px){
-  .figure-80.visual-3col .visual-grid{ grid-template-columns: 1fr 1fr; }
-}
-@media (max-width: 640px){
-  .figure-80.visual-3col .visual-grid{ grid-template-columns: 1fr; }
-  :root{ --visual-h: clamp(320px, 44vh, 480px); } /* optional smaller blocks */
-}
-
-//* Applications figure (same 80% cap style) */
+/* Figure container: same 80% cap as your other sections */
 .figure-80.apps-figure{
   width: min(80vw, 1400px);
   margin: clamp(16px, 2vw, 28px) auto var(--block-gap, 32px);
 }
 
-/* 3 columns max, equal row heights; no outlines or captions */
+/* 3-col grid, airy gaps */
 .apps-grid{
   --gap: clamp(12px, 1.6vw, 24px);
-  --app-row-h: clamp(280px, 44vh, 520px);  /* row height = same for items in a row */
+  --app-row-h: clamp(300px, 44vh, 520px); /* SAME height per row for every card */
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--gap);
 }
 
-.app-cell{
-  height: var(--app-row-h);    /* every cell in the row gets this height */
+/* Rounded cards like logo-sketches (no visible border) */
+.app-card{
+  height: var(--app-row-h);          /* keeps all cards same height per row */
+  background: #f3f4f6;
+  border-radius: 24px;               /* rounded rectangle */
+  padding: clamp(10px, 1.2vw, 16px); /* breathing room so images never kiss edge */
   display: flex;
   align-items: center;
   justify-content: center;
-  /* no background, no border, so the image reads as the block */
+  overflow: hidden;                  /* keeps rounded corners clean */
 }
 
-.app-cell img{
+/* Image behaves like the content itself; no crop, no zoom-in */
+.app-card img{
   width: 100%;
   height: 100%;
-  object-fit: contain;         /* keeps full image (no crop/zoom-in) */
+  object-fit: contain;               /* full artwork preserved */
   display: block;
 }
 
-/* Responsive: 2 columns then 1 column, keeping the per-row equal height */
+/* Make extra-wide assets occupy two columns on desktop/tablet */
+.app-card.span-2{ grid-column: span 2; }
+
+/* Responsive steps */
 @media (max-width: 1024px){
   .apps-grid{ grid-template-columns: repeat(2, 1fr); }
+  .app-card.span-2{ grid-column: span 2; } /* still spans entire row */
 }
 @media (max-width: 640px){
   .apps-grid{
     grid-template-columns: 1fr;
-    --app-row-h: clamp(240px, 48vh, 460px);
+    --app-row-h: clamp(240px, 48vh, 460px); /* keep rows balanced on mobile */
   }
+  .app-card.span-2{ grid-column: span 1; }
 }
-
-
 
 /* ==================== MEDIA-QUERY SLOTS ==================== */
 /* For small devices  : @media (max-width: 640px){ ... }   */
