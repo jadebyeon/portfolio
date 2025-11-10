@@ -668,80 +668,124 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   .logo-cell{ min-height: 180px; }
 }
 
-/* container capped to 80% and centered like the rest */
+/* ---------- Visual 3-column (scoped) ---------- */
+
+/* scope: kill .prose defaults inside this figure only */
+.prose .figure-80.visual-3col figure,
+.prose .figure-80.visual-3col img,
+.prose .figure-80.visual-3col figcaption { margin: 0 !important; }
+
+/* container size like your other 80% figures */
 .figure-80.visual-3col{
   width: min(80vw, 1400px);
   margin: clamp(16px, 2vw, 28px) auto var(--block-gap, 32px);
 }
 
-/* 3 clean columns, no boxes/outline; gap keeps them airy */
-.visual-grid{
+/* 3 equal columns */
+.figure-80.visual-3col .visual-grid{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: clamp(12px, 1.6vw, 24px);
 }
 
-/* each column = image block + its caption underneath */
-.vcell{
-  margin: 0;
+/* each column */
+.figure-80.visual-3col .vcell{
   display: flex;
   flex-direction: column;
+  margin: 0;  /* beat .prose figure margin */
 }
 
-/* the “block” is only the image area; no borders/backgrounds */
-.vcell .media{
+/* single authoritative height for the image block */
+:root{ --visual-h: clamp(420px, 48vh, 560px); }
+
+.figure-80.visual-3col .media{
   width: 100%;
-  /* a flexible, screen-filling height that won’t force cropping */
-  height: clamp(260px, 46vh, 520px);
+  height: var(--visual-h);
   display: flex;
   align-items: center;
   justify-content: center;
-  /* no background/outline so the image visually touches the edges */
 }
 
-/* ensure the image fills the block without cropping */
-.vcell .media img{
+/* image fills the block, never crops */
+.figure-80.visual-3col .media img{
   width: 100%;
   height: 100%;
-  object-fit: contain; /* show full artwork; never crop */
+  object-fit: contain;
   display: block;
 }
 
-/* captions outside the image block */
-.col-caption{
-  margin: 8px 0 var(--block-gap);
-  font-size: clamp(12px, .9vw, 14px);
-  color: var(--text-color-light);
-  text-align: center;
-}
-
-/* responsive breakdown */
-@media (max-width: 1024px){
-  .visual-grid{ grid-template-columns: 1fr 1fr; }
-}
-@media (max-width: 640px){
-  .visual-grid{ grid-template-columns: 1fr; }
-  .vcell .media{ height: clamp(220px, 44vh, 460px); }
-}
-
-/* --- Force equal image-block heights across all 3 columns --- */
-:root{
-  --visual-h: clamp(420px, 48vh, 560px);   /* one shared height */
-}
-
-.figure-80.visual-3col .media{
-  height: var(--visual-h);                 /* same for all */
-}
-
-/* --- Normalize caption block height so total column heights match --- */
-/* enough room for up to 2 lines; tweak if you later shorten/lengthen */
+/* tight, consistent caption spacing */
 .figure-80.visual-3col .col-caption{
-  min-height: 3.4em;                       /* equalizes total column height */
+  min-height: 3.2em; /* ≈ up to 2 lines */
   display: flex;
-  align-items: center;                     /* vertically center single-line captions */
+  align-items: center;
   justify-content: center;
   text-align: center;
+  font-size: clamp(12px, .9vw, 14px);
+  color: var(--text-color-light);
+  margin: clamp(6px, .8vw, 10px) 0 0 !important;  /* beat .prose */
 }
+
+/* responsive collapse */
+@media (max-width: 1024px){
+  .figure-80.visual-3col .visual-grid{ grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px){
+  .figure-80.visual-3col .visual-grid{ grid-template-columns: 1fr; }
+  :root{ --visual-h: clamp(320px, 44vh, 480px); } /* optional smaller blocks */
+}
+
+/* ===== Applications grid (max 3 cols, no cropping) ===== */
+.apps-figure { margin-top: clamp(12px, 2vw, 28px); }
+.apps-figure .apps-grid{
+  max-width: 80vw;               /* cap to 80% of screen */
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(14px, 1.6vw, 24px);
+}
+
+/* cards keep a consistent look without boxing the image itself */
+.app.card{
+  margin: 0;
+  padding: clamp(10px, 1vw, 14px);
+  border-radius: 16px;
+  background: #f6f7f9;           /* subtle tile surface (not a hard box edge) */
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* images fill tile width, preserve aspect (no crop) */
+.app img{
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;           /* just in case a height is ever set */
+}
+
+/* column span helpers for wide assets */
+.app.span-2{ grid-column: span 2; }
+
+/* captions outside the image, centered */
+.app figcaption{
+  text-align: center;
+  color: var(--text-color, #6b7280);
+  font-size: .95rem;
+  margin-top: clamp(6px, .8vw, 10px);
+}
+
+/* Responsive: 2 cols on medium, 1 col on small */
+@media (max-width: 1100px){
+  .apps-figure .apps-grid{ grid-template-columns: repeat(2, 1fr); }
+  .app.span-2{ grid-column: span 2; }
+}
+@media (max-width: 640px){
+  .apps-figure .apps-grid{ grid-template-columns: 1fr; }
+  .app.span-2{ grid-column: span 1; }
+}
+
 
 
 /* ==================== MEDIA-QUERY SLOTS ==================== */
