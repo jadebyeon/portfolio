@@ -372,12 +372,12 @@ img { max-width: 100%; height: auto; }
 
 /* Give each project section its own internal vertical padding */
 .project .project-section{
-  padding-block: calc(var(--section-vspace) * 1.7);   /* bigger than default */
+    padding-block: calc(var(--section-vspace) * 0.85);
 }
 
 /* Triple the gap *between* consecutive sections */
 .project .project-section + .project-section{
-  margin-top: clamp(72px, 12vh, 180px);
+  margin-top: clamp(36px, 6vh, 90px);
   padding-top: 0;
   border-top: none;
 }
@@ -697,8 +697,6 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 
 /* shared image-block height */
-:root{ --visual-h: clamp(420px, 48vh, 560px); }
-
 .figure-80.visual-3col .media{
   width: 100%;
   height: var(--visual-h);
@@ -717,15 +715,16 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 
 /* captions centered & tight spacing (overrides .prose figcaption) */
 .figure-80.visual-3col .col-caption{
-  min-height: 3.2em;
+  margin: 8px 0 var(--block-gap) !important;
+  min-height: 0;                 /* remove extra vertical padding */
   display: flex !important;
   align-items: center;
   justify-content: center;
   text-align: center !important;
-  font-size: clamp(12px, .9vw, 14px);
-  color: var(--text-color-light);
-  margin: clamp(6px, .8vw, 10px) 0 0 !important;
 }
+
+:root{ --visual-h: clamp(420px, 48vh, 560px); }
+
 
 /* responsive collapse */
 @media (max-width: 1024px){
