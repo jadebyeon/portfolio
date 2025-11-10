@@ -511,52 +511,66 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 
 
-/* Max 80% width, centered */
-.w-80{ width:min(80vw,1400px); margin-inline:auto; }
+/* width cap + centering for your figure wrapper */
+.w-80 {
+  max-width: min(1200px, 80vw);
+  margin-left: auto;
+  margin-right: auto;
+}
 
-/* 3 columns; first column stacks two items */
+/* ====== 3-column sketches (80% screen cap, equalized, no crop) ====== */
 .logo-sketches{
-  display:grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: clamp(10px,1.2vw,18px);
-  /* set a consistent column height so col-1's two items split it evenly */
-  height: clamp(320px, 45vw, 560px);
+  /* cap to 80% of screen and center via .w-80 wrapper */
+  margin: clamp(8px, 1.2vw, 16px) auto 0;
+
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);
+  gap: clamp(12px, 1.6vw, 24px);
+
+  /* give rows real height so items never collapse */
+  grid-auto-rows: minmax(220px, 1fr);
+  align-items: stretch;
 }
 
-.col-stack{
-  display:grid;
-  grid-template-rows: 1fr 1fr;       /* two equal cells in column 1 */
-  gap: clamp(10px,1.2vw,18px);
+/* column 1 = stack of two images (grid is sturdier than flex here) */
+.logo-sketches .col-stack{
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: clamp(12px, 1.6vw, 24px);
+  min-height: 0; /* allow shrinking without overflow */
 }
 
-/* image frames */
-.sketch{ 
-  margin:0; border-radius:12px; background:#f6f7f8; 
-  display:flex; align-items:center; justify-content:center; 
-  overflow:hidden; 
+/* each block (single or stacked) fills its grid cell */
+.logo-sketches .sketch{
+  min-height: 0;  /* critical so children can shrink */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
 }
 
-/* show full image (no crop) */
-.sketch img{
-  max-width:100%;
-  max-height:100%;
-  object-fit: contain;
-  display:block;
+/* show ORIGINAL image (no cropping) and scale inside the box */
+.logo-sketches .sketch img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;  /* preserve original aspect ratio */
+  display: block;
 }
 
-/* caption */
-.logo-sketches-figure{ margin-top: clamp(12px,1.8vw,20px); }
-.figure-caption{
-  margin-top:.5rem; text-align:center;
-  font-size: clamp(12px,.95vw,14px); color:var(--text-color);
-  letter-spacing:.02em; text-transform:lowercase;
+/* Responsive fallbacks */
+@media (max-width: 1024px){
+  .logo-sketches{ grid-template-columns: minmax(0,1fr) minmax(0,1fr); }
 }
-
-/* responsive */
-@media (max-width: 880px){
-  .logo-sketches{ grid-template-columns: 1fr; height:auto; }
-  .col-stack{ grid-template-rows: auto; }
-  .sketch img{ width:100%; height:auto; }
+@media (max-width: 560px){
+  .logo-sketches{ grid-template-columns: 1fr; }
+  .logo-sketches{ grid-auto-rows: minmax(240px, auto); }
+  .logo-sketches .col-stack{
+    grid-template-rows: auto auto; /* let the stacked images size naturally */
+  }
 }
 
 /* Shared utility to cap width at 80% of viewport and center */
@@ -653,37 +667,57 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   .logo-cell{ min-height: 180px; }
 }
 
-/* ---------- 3) VISUAL SYSTEM 3-COLUMN GRID (equal block heights) ---------- */
-.vsd-3{
-  display: grid;
+/* 3-up grid */
+.vis-3col{
+  display:grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: clamp(16px, 2.4vw, 28px);
-  align-items: stretch;
-}
-.vsd-3 .block{
-  margin: 0;
-  padding: clamp(12px, 1.4vw, 20px);
-  background: #f3f4f6;
-  border-radius: 20px;
-  display: grid;
-  grid-template-rows: 1fr auto;        /* image area + caption */
-  min-height: clamp(320px, 34vw, 420px);
-}
-.vsd-3 .block img{
-  width: 100%; height: 100%;
-  object-fit: contain;                 /* fill the block without cropping */
-  display: block;
-}
-.block-caption{
-  text-align: center;
-  color: var(--text-color);
-  font-size: clamp(.92rem, 1.2vw, 1.05rem);
-  margin-top: clamp(8px, .8vw, 12px);
+  gap: clamp(16px, 3vw, 32px);
+  max-width: min(1200px, 80vw);    /* = “max 80% of screen” */
+  margin: 0 auto;
 }
 
-@media (max-width: 980px){
-  .vsd-3{ grid-template-columns: 1fr; }
-  .vsd-3 .block{ min-height: 300px; }
+/* card + media area */
+.vis-card{
+  margin:0;
+  background:#f3f4f6;
+  border-radius:24px;
+  padding: clamp(10px, 1.2vw, 14px);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+.vis-card-media{
+  flex:1;
+  min-height: clamp(240px, 28vw, 420px);   /* same block height across row */
+  border-radius:16px;
+  overflow:hidden;
+}
+
+/* fill the whole block (like your reference) */
+.vis-card-media img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit: cover;       /* fills the block */
+  object-position: center; /* keeps focus centered */
+}
+
+/* captions UNDER each block */
+.vis-cap{
+  text-align:center;
+  color: var(--text-color);
+  font-size: clamp(.95rem, 1.2vw, 1.15rem);
+  margin: clamp(10px, 1.2vw, 14px) 0 4px;
+}
+
+/* responsive: 2 cols → 1 col */
+@media (max-width: 920px){
+  .vis-3col{ grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px){
+  .vis-3col{ grid-template-columns: 1fr; }
+  .vis-card-media{ min-height: 240px; } /* keep them substantial on phones */
 }
 
 /* ==================== MEDIA-QUERY SLOTS ==================== */
