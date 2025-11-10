@@ -669,34 +669,34 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 
 /* ---------- Visual 3-column (scoped) ---------- */
-/* ---------- Visual 3-column (scoped) ---------- */
+/* --- kill .prose figure/figcaption behaviors INSIDE this component --- */
+.prose .figure-80.visual-3col :is(figure, figcaption, img, p){
+  margin: 0 !important;
+}
+.figure-80.visual-3col figcaption{
+  display: block;  /* neutral baseline before we flex it below */
+}
 
-/* scope: kill .prose defaults inside this figure only */
-.prose .figure-80.visual-3col figure,
-.prose .figure-80.visual-3col img,
-.prose .figure-80.visual-3col figcaption { margin: 0 !important; }
-
-/* container size like your other 80% figures */
+/* container */
 .figure-80.visual-3col{
   width: min(80vw, 1400px);
   margin: clamp(16px, 2vw, 28px) auto var(--block-gap, 32px);
 }
 
-/* 3 equal columns */
+/* 3 equal columns — force grid on the wrapper */
 .figure-80.visual-3col .visual-grid{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0,1fr)) !important;
   gap: clamp(12px, 1.6vw, 24px);
 }
 
-/* each column */
+/* each column (your figure.vcell) must be flex, not table/block */
 .figure-80.visual-3col .vcell{
-  display: flex;
+  display: flex !important;
   flex-direction: column;
-  margin: 0;  /* beat .prose figure margin */
 }
 
-/* single authoritative height for the image block */
+/* shared image-block height */
 :root{ --visual-h: clamp(420px, 48vh, 560px); }
 
 .figure-80.visual-3col .media{
@@ -707,7 +707,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   justify-content: center;
 }
 
-/* image fills the block, never crops */
+/* images fill without cropping */
 .figure-80.visual-3col .media img{
   width: 100%;
   height: 100%;
@@ -715,25 +715,25 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   display: block;
 }
 
-/* tight, consistent caption spacing */
+/* captions centered & tight spacing (overrides .prose figcaption) */
 .figure-80.visual-3col .col-caption{
-  min-height: 3.2em; /* ≈ up to 2 lines */
-  display: flex;
+  min-height: 3.2em;
+  display: flex !important;
   align-items: center;
   justify-content: center;
-  text-align: center;
+  text-align: center !important;
   font-size: clamp(12px, .9vw, 14px);
   color: var(--text-color-light);
-  margin: clamp(6px, .8vw, 10px) 0 0 !important;  /* beat .prose */
+  margin: clamp(6px, .8vw, 10px) 0 0 !important;
 }
 
 /* responsive collapse */
 @media (max-width: 1024px){
-  .figure-80.visual-3col .visual-grid{ grid-template-columns: 1fr 1fr; }
+  .figure-80.visual-3col .visual-grid{ grid-template-columns: 1fr 1fr !important; }
 }
 @media (max-width: 640px){
-  .figure-80.visual-3col .visual-grid{ grid-template-columns: 1fr; }
-  :root{ --visual-h: clamp(320px, 44vh, 480px); } /* optional smaller blocks */
+  .figure-80.visual-3col .visual-grid{ grid-template-columns: 1fr !important; }
+  :root{ --visual-h: clamp(320px, 44vh, 480px); }
 }
 
 
