@@ -9,6 +9,7 @@
   --section-vspace: clamp(32px, 6vw, 96px);
   /* a bit more top space (like the reference hero) */
   --hero-top: clamp(72px, 14vh, 160px);
+  --visual-h: clamp(420px, 48vh, 560px);
   
 
   /* Colors */
@@ -581,7 +582,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 
 /* Small, subtle caption */
 .figure-caption {
-  margin-top: .5rem;
+  margin: 8px 0 var(--block-gap);
   font-size: clamp(12px, .9vw, 14px);
   color: var(--text-color-light);
   text-align: center;
@@ -655,10 +656,10 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 
 /* row captions centered between rows */
 .row-caption{
-  text-align: center;
-  color: var(--text-color);
-  font-size: .95rem;
   margin: 8px 0 var(--block-gap);
+  font-size: clamp(12px, .9vw, 14px);
+  color: var(--text-color-light);
+  text-align: center;
 }
 
 /* Small screens: stack each row to one column so nothing gets squeezed away */
@@ -708,10 +709,10 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 
 /* captions outside the image block */
 .col-caption{
-  margin-top: clamp(6px, .8vw, 10px);
+  margin: 8px 0 var(--block-gap);
+  font-size: clamp(12px, .9vw, 14px);
+  color: var(--text-color-light);
   text-align: center;
-  color: var(--text-color, #6b7280);
-  font-size: clamp(.95rem, 1.05vw, 1.05rem);
 }
 
 /* responsive breakdown */
@@ -721,6 +722,25 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 @media (max-width: 640px){
   .visual-grid{ grid-template-columns: 1fr; }
   .vcell .media{ height: clamp(220px, 44vh, 460px); }
+}
+
+/* --- Force equal image-block heights across all 3 columns --- */
+:root{
+  --visual-h: clamp(420px, 48vh, 560px);   /* one shared height */
+}
+
+.figure-80.visual-3col .media{
+  height: var(--visual-h);                 /* same for all */
+}
+
+/* --- Normalize caption block height so total column heights match --- */
+/* enough room for up to 2 lines; tweak if you later shorten/lengthen */
+.figure-80.visual-3col .col-caption{
+  min-height: 3.4em;                       /* equalizes total column height */
+  display: flex;
+  align-items: center;                     /* vertically center single-line captions */
+  justify-content: center;
+  text-align: center;
 }
 
 
