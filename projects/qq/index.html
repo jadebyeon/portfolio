@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+  <link rel="stylesheet" href="../../assets/css/styles.css"/>
+  <title>ICML 2025 Tutorial — Human-Centered Diffusion</title>
+</head>
+<body class="project-page">
+  <!-- Header -->
+  <header class="header" id="header">
+    <nav class="site-nav container">
+      <a href="../../index.html" class="brand" aria-label="Home">Jade Byeon</a>
+      <ul class="site-menu">
+        <li><a class="nav-link active" href="../../index.html#portfolio">Work</a></li>
+        <li><a class="nav-link" href="../../about.html">About</a></li>
+        <li><a class="nav-link" href="../../contact.html">Contact</a></li>
+        <li><a class="nav-link" href="../../assets/pdf/Jade_Resume.pdf" target="_blank" rel="noopener">Resume</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="main project">
+    <!-- Hero -->
+    <section class="project-hero section">
+      <div class="hero-media">
+        <!-- Replace with your actual hero image -->
+        <img src="../../assets/img/icml_hero.png" alt="ICML Tutorial Website hero">
+        <div class="hero-overlay">
+          <h1 class="hero-title">ICML 2025 Tutorial Website</h1>
+          <p class="hero-subtitle">Designing Human-Centered Access to Diffusion-Model Theory</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Intro -->
+    <section class="project-intro section">
+      <div class="container">
+        <p class="project__lede">
+          I designed and shipped a conference-neutral tutorial site that helps ICML attendees quickly grasp three pillars—Generalization, Efficiency, and Controllability—and jump straight to slides, videos, and code. The work translates dense research into a scan-friendly structure with clear navigation, responsive layout, and accessible interaction patterns.
+        </p>
+
+        <!-- Meta -->
+        <div class="project-meta">
+          <div class="meta-item">
+            <div class="meta-label">My Role</div>
+            <div class="meta-value">UX/UI Designer &amp; Front-End Implementer</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Organization</div>
+            <div class="meta-value">ICML 2025 Tutorial (Q. Qu · Y. Chen · L. Shen)</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Timeline</div>
+            <div class="meta-value">May 2025 – Present</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Focus</div>
+            <div class="meta-value">IA, Navigation, Accessibility, Responsiveness, Resource Surfacing</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Design Problem -->
+    <section class="project-section">
+      <div class="container prose">
+        <h3>Design Problem</h3>
+        <p>
+          Existing materials (proposal, papers, scattered links) were hard to navigate for newcomers and time-boxed attendees. Users needed a concise orientation layer, consistent structure across the three parts, and at-point-of-need access to artifacts—without school-specific branding and without reading long PDFs first.
+        </p>
+      </div>
+    </section>
+
+    <!-- Research & Strategy -->
+    <section class="project-section">
+      <div class="container prose">
+        <h3>Research &amp; Strategy</h3>
+        <p><strong>Grounding in content.</strong> I began by reading the tutorial proposal and key papers (generalization, efficiency, controllability) and watching recommended tutorials to internalize how diffusion models work. I distilled each part into plain-language notes and identified one “anchor” figure per part (e.g., RP/GL, sampler convergence, low-rank controllability) to communicate the core idea at a glance.</p>
+        <p><strong>Presentation choices through iteration.</strong> I tested alternative ways to sequence concepts and figures (landing overview → part pages → resources) and ran regular check-ins with Prof. Qu to validate which images, captions, and copy length best supported quick comprehension for ICML attendees.</p>
+        <p><strong>Learning-by-building with mentorship.</strong> This was my first time coding a website and using GitHub. I set up a minimal HTML/CSS/JS scaffold and deployed via GitHub Pages with hands-on help from PhD collaborators (Siyi, Huijie) for repo setup, asset optimization, and anchor navigation. Their feedback also informed accessibility tweaks (contrast, spacing) and responsive breakpoints.</p>
+      </div>
+
+      <!-- Three pillar anchors (reuse visual-3col styles) -->
+      <figure class="figure-80 visual-3col">
+        <div class="visual-grid">
+          <figure class="vcell">
+            <div class="media">
+              <img src="../../assets/img/icml_generalization.png" alt="Anchor figure — Generalization">
+            </div>
+            <figcaption class="col-caption">Generalization — risk &amp; principle (RP/GL)</figcaption>
+          </figure>
+          <figure class="vcell">
+            <div class="media">
+              <img src="../../assets/img/icml_efficiency.png" alt="Anchor figure — Efficiency">
+            </div>
+            <figcaption class="col-caption">Efficiency — sampler &amp; convergence</figcaption>
+          </figure>
+          <figure class="vcell">
+            <div class="media">
+              <img src="../../assets/img/icml_controllability.png" alt="Anchor figure — Controllability">
+            </div>
+            <figcaption class="col-caption">Controllability — low-rank control</figcaption>
+          </figure>
+        </div>
+      </figure>
+    </section>
+
+    <!-- System Development -->
+    <section class="project-section">
+      <div class="container prose">
+        <h3>System Development</h3>
+
+        <h4>Web Structure &amp; Prototype (Figma)</h4>
+        <ul>
+          <li>Built a component-based, responsive prototype (sidebar nav, schedule, per-section resources) with interactive hover/active states and anchor scroll.</li>
+          <li>Explored three navigation variants (fixed sidebar, slide-out drawer, icon rail); selected fixed sidebar for constant orientation and quick jumps.</li>
+          <li>Authored concise landing copy + one key figure per part to support progressive disclosure.</li>
+        </ul>
+
+        <h4>Resource Surfacing &amp; Schedule</h4>
+        <ul>
+          <li>Converted vague durations into exact clock times; added inline resource buttons per part to reduce pogo-sticking.</li>
+          <li>Established a compact “References” accordion to keep pages scannable.</li>
+        </ul>
+
+        <h4>Implementation (GitHub)</h4>
+        <ul>
+          <li>Converted approved prototype to semantic HTML/CSS/JS, optimized SVG/PNG, added Open Graph metadata, and deployed on GitHub Pages.</li>
+          <li>Documented handoff (README, tokens, asset map) for easy maintenance.</li>
+        </ul>
+      </div>
+
+      <!-- Optional: 2-up figure for schedule + site map (uses two-up-figure styles) -->
+      <figure class="two-up-figure">
+        <div class="two-up-grid">
+          <div class="two-up-tile">
+            <img src="../../assets/img/icml_sitemap.png" alt="Site map / IA">
+          </div>
+          <div class="two-up-tile">
+            <img src="../../assets/img/icml_schedule.png" alt="Schedule layout">
+          </div>
+        </div>
+        <figcaption class="figure-caption">Information architecture and schedule framing</figcaption>
+      </figure>
+    </section>
+
+    <!-- Deliverables -->
+    <section class="project-section">
+      <div class="container prose">
+        <h3>Deliverables</h3>
+        <ul>
+          <li>Interactive Figma prototype</li>
+          <li>Design system (tokens, components, variants)</li>
+          <li>Production static site (HTML/CSS/JS)</li>
+          <li>Asset set &amp; README</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Reflection -->
+    <section class="project-section">
+      <div class="container prose">
+        <h3>Reflection</h3>
+        <p>
+          Centering findability and learnability—not just visuals—reduced time-to-resource and supported varied expertise levels. The Figma→GitHub pipeline preserved intent from components to code, improving how people interact with complex ML content. Next iteration: add a lightweight Mechanistic Interpretability subsection with reproducible mini-demos to deepen engagement without adding cognitive load.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__bg">
+      <p class="footer__copy">© Jade Byeon — 2025. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>
