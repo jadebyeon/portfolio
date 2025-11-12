@@ -233,6 +233,34 @@ img { max-width: 100%; height: auto; }
   .portfolio__img{ transition: none; }
 }
 
+/* Mint/turquoise accent for title hover */
+:root{
+  --mint-color: hsl(168, 68%, 44%);   /* tweak if you want it lighter/darker */
+}
+
+/* Title link: default same as headings; hover = mint */
+.portfolio__title a,
+.portfolio__title-link{
+  color: var(--title-color);
+  text-decoration: none;
+  transition: color .2s ease;
+}
+
+.portfolio__title a:hover,
+.portfolio__title a:focus-visible,
+.portfolio__title-link:hover,
+.portfolio__title-link:focus-visible{
+  color: var(--mint-color);
+  outline: none;
+}
+
+/* Optional: give keyboard users a subtle focus ring on the title link */
+.portfolio__title-link:focus-visible{
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--mint-color) 35%, transparent);
+  border-radius: 4px;
+}
+
+
 /* ==================== Project: TELL-Tool ==================== */
 /* ===== PROJECT PAGE ===== */
 .project-hero.section{
