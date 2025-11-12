@@ -847,36 +847,59 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 .apps-grid .app-card.contain img{ object-fit: contain; background:#f3f4f6; }
 
 /* ==================== Project: UU Arts ==================== */
-/* ---- 2-up graph tiles (full-bleed, can zoom to fit) ---- */
-.two-up-figure { margin-top: var(--block-gap); }
+/* ---- 2-up graph tiles (no crop, keep original aspect, rounded, equal height) ---- */
 
+/* container spacing like your other 80% figures */
+.two-up-figure{
+  max-width: min(1200px, 80vw);
+  margin: var(--block-gap) auto;
+}
+
+/* side-by-side grid */
 .two-up-grid{
-  display: grid;
+  display: grid !important;
   grid-template-columns: 1fr 1fr;
   gap: clamp(12px, 2vw, 24px);
 }
 
+/* single authoritative height for both tiles */
+:root{ --two-up-h: clamp(280px, 42vh, 520px); }
+
+/* the tile is only a rounded frame that clips the image */
 .two-up-tile{
-  position: relative;
-  aspect-ratio: 16 / 9;        /* set the tile shape; tweak if you want taller */
+  height: var(--two-up-h) !important;  /* equal height per row */
   border-radius: 16px;
-  overflow: hidden;             /* keeps the rounded corners */
-  background: #f3f4f6;          /* subtle card bg while image loads */
+  overflow: hidden;                     /* keeps rounded corners clean */
+  background: none;                     /* no gray card bg */
+  line-height: 0;                       /* removes inline-image gap */
 }
 
-.two-up-tile img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;            /* fill the tile; allows zoom/crop to fit */
+/* image fills available space, NEVER crops; touches edges of the frame */
+.two-up-tile > img{
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;       /* preserve original aspect */
+  object-position: center !important;
   display: block;
-  transform: translateZ(0);     /* prevents blurring on some GPUs */
 }
 
-/* stack vertically on small screens */
+/* captions, if any, outside the tiles (consistent with your other figures) */
+.two-up-figure .figure-caption{
+  margin: 8px 0 var(--block-gap);
+  text-align: center;
+  color: var(--text-color-light);
+  font-size: clamp(12px, .9vw, 14px);
+}
+
+/* stack on small screens */
 @media (max-width: 680px){
   .two-up-grid{ grid-template-columns: 1fr; }
-  .two-up-tile{ aspect-ratio: 16 / 10; }   /* a touch taller on phones */
+  :root{ --two-up-h: clamp(240px, 44vh, 460px); }
 }
+
+/* Kill any inherited prose/figure spacing inside this component */
+.prose .two-up-figure :is(figure, figcaption, img){ margin: 0 !important; }
+
 
 /* Kill any prose defaults inside this figure */
 .single-tile-figure,
