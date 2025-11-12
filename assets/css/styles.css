@@ -213,6 +213,14 @@ img { max-width: 100%; height: auto; }
   will-change: transform;
 }
 
+.portfolio__img--contain { 
+  object-fit: contain !important;   /* prevent crop/zoom */
+}
+
+/* give the contain area a subtle backdrop so empty bands look clean */
+.thumb { 
+  background: #f5f6f7; 
+}
 /* Desktop/Laptop: subtle hover zoom */
 @media (hover: hover){
   .portfolio__img-link:hover .portfolio__img{
