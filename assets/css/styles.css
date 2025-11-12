@@ -233,6 +233,7 @@ img { max-width: 100%; height: auto; }
   .portfolio__img{ transition: none; }
 }
 
+/* ==================== Project: TELL-Tool ==================== */
 /* ===== PROJECT PAGE ===== */
 .project-hero.section{
   /* same generous top spacing as home */
@@ -816,6 +817,64 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 
 /* If you ever want a specific tile NOT to crop, add class 'contain' to that app-card */
 .apps-grid .app-card.contain img{ object-fit: contain; background:#f3f4f6; }
+
+/* ==================== Project: UU Arts ==================== */
+/* ---- 2-up graph tiles (full-bleed, can zoom to fit) ---- */
+.two-up-figure { margin-top: var(--block-gap); }
+
+.two-up-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(12px, 2vw, 24px);
+}
+
+.two-up-tile{
+  position: relative;
+  aspect-ratio: 16 / 9;        /* set the tile shape; tweak if you want taller */
+  border-radius: 16px;
+  overflow: hidden;             /* keeps the rounded corners */
+  background: #f3f4f6;          /* subtle card bg while image loads */
+}
+
+.two-up-tile img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;            /* fill the tile; allows zoom/crop to fit */
+  display: block;
+  transform: translateZ(0);     /* prevents blurring on some GPUs */
+}
+
+/* stack vertically on small screens */
+@media (max-width: 680px){
+  .two-up-grid{ grid-template-columns: 1fr; }
+  .two-up-tile{ aspect-ratio: 16 / 10; }   /* a touch taller on phones */
+}
+
+/* ---- Single full-bleed tile (cropping allowed), capped at 80% width ---- */
+.single-tile-figure{
+  margin: var(--block-gap) auto;           /* matches other figures */
+}
+
+.single-tile{
+  position: relative;
+  aspect-ratio: 16 / 9;                    /* tweak if you want taller/shorter */
+  border-radius: 16px;
+  overflow: hidden;                        /* keeps rounded corners crisp */
+  background: #f3f4f6;                     /* subtle while image loads */
+}
+
+.single-tile img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;                        /* fill tile; zoom/crop permitted */
+  display: block;
+}
+
+/* (Optional) phone: slightly taller tile for readability */
+@media (max-width: 640px){
+  .single-tile{ aspect-ratio: 16 / 10; }
+}
+
 
 /* ==================== MEDIA-QUERY SLOTS ==================== */
 /* For small devices  : @media (max-width: 640px){ ... }   */
