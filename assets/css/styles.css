@@ -878,20 +878,32 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   .two-up-tile{ aspect-ratio: 16 / 10; }   /* a touch taller on phones */
 }
 
-/* ---- Single full-bleed tile (cropping allowed), capped at 80% width ---- */
+/* Kill any prose defaults inside this figure */
+.prose .single-tile-figure :is(img, figure){ margin:0 !important; }
+
+/* Single tile container */
 .single-tile{
-  height: auto;            /* let the image set the height (no cropping) */
-  padding: 0;              /* image touches the edges */
-  background: none;        /* remove gray card bg */
-  border-radius: 24px;     /* rounded rectangle corners */
-  overflow: hidden;                  /* subtle while image loads */
+  display:block;
+  padding:0;
+  background:none;
+  border-radius:24px;
+  overflow:hidden;       /* clip to rounded corners */
+  line-height:0;         /* removes inline-gap around the image */
 }
 
-.single-tile img{
-  display: block;
-  width: 100%;
-  height: auto;            /* preserve aspect ratio, no zoom-in */
-  object-fit: contain; 
+/* Image: keep original aspect, fill width, no crop, rounded corners */
+.single-tile > img{
+  display:block;
+  width:100%;
+  height:auto;           /* preserves aspect ratio */
+  object-fit: contain !important;  /* beat any global cover rules */
+  border-radius:inherit;           /* ensure rounded corners show */
+}
+
+/* Make caption spacing match other figures tightly */
+.single-tile-figure .figure-caption{
+  margin: 8px 0 var(--block-gap, 16px) !important;
+  text-align:center;
 }
 
 /* ==================== MEDIA-QUERY SLOTS ==================== */
