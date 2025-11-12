@@ -879,10 +879,6 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 
 /* ---- Single full-bleed tile (cropping allowed), capped at 80% width ---- */
-.single-tile-figure{
-  margin: var(--block-gap) auto;           /* matches other figures */
-}
-
 .single-tile{
   height: auto;            /* let the image set the height (no cropping) */
   padding: 0;              /* image touches the edges */
