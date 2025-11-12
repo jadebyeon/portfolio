@@ -787,6 +787,25 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   .app-card.span-2{ grid-column: span 1; }
 }
 
+/* Full-bleed tiles for Applications grid */
+.apps-grid .app-card{
+  border-radius: 24px;
+  padding: 0;                 /* remove inner gutter so image can touch edges */
+  overflow: hidden;           /* clip to rounded corners */
+  background: transparent;    /* no gray card bg since image fills tile */
+}
+
+.apps-grid .app-card img{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;          /* fill tile; allow zoom/crop as needed */
+  object-position: center;
+}
+
+/* If you ever want a specific tile NOT to crop, add class 'contain' to that app-card */
+.apps-grid .app-card.contain img{ object-fit: contain; background:#f3f4f6; }
+
 /* ==================== MEDIA-QUERY SLOTS ==================== */
 /* For small devices  : @media (max-width: 640px){ ... }   */
 /* For medium devices : @media (min-width: 768px){ ... }   */
