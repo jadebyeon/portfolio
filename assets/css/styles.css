@@ -879,33 +879,40 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 
 /* Kill any prose defaults inside this figure */
-.prose .single-tile-figure :is(img, figure){ margin:0 !important; }
+.single-tile-figure,
+.single-tile {
+  aspect-ratio: auto !important;
+  height: auto !important;
+}
 
-/* Single tile container */
+/* Container: just a rounded frame that clips the image edges */
 .single-tile{
   display:block;
   padding:0;
   background:none;
   border-radius:24px;
   overflow:hidden;       /* clip to rounded corners */
-  line-height:0;         /* removes inline-gap around the image */
+  line-height:0;         /* kill inline image gap */
 }
 
-/* Image: keep original aspect, fill width, no crop, rounded corners */
+/* Strong, scoped reset to beat any global "cover" rules */
 .single-tile > img{
   display:block;
-  width:100%;
-  height:auto;           /* preserves aspect ratio */
-  object-fit: contain !important;  /* beat any global cover rules */
-  border-radius:inherit;           /* ensure rounded corners show */
+  width:100% !important;
+  height:auto !important;              /* preserve original aspect */
+  object-fit: contain !important;      /* never crop */
+  object-position:center !important;
+  border-radius:0;                     /* corners come from the wrapper */
 }
 
-/* Make caption spacing match other figures tightly */
+/* In case .prose adds margins around figure/img/caption */
+.prose .single-tile-figure :is(img, figure, figcaption){
+  margin:0 !important;
+}
 .single-tile-figure .figure-caption{
-  margin: 8px 0 var(--block-gap, 16px) !important;
+  margin:8px 0 var(--block-gap,16px) !important;
   text-align:center;
 }
-
 /* ==================== MEDIA-QUERY SLOTS ==================== */
 /* For small devices  : @media (max-width: 640px){ ... }   */
 /* For medium devices : @media (min-width: 768px){ ... }   */
