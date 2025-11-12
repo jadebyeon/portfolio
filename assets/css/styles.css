@@ -803,6 +803,17 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   object-position: center;
 }
 
+.apps-grid .app-card.span-2{
+  background: #f3f4f6;   /* soft backdrop for the empty bands */
+  padding: 0;            /* keep edges clean */
+  overflow: hidden;      /* preserve rounded corners */
+}
+
+.apps-grid .app-card.span-2 img{
+  object-fit: contain;   /* show whole image */
+  background: transparent;
+}
+
 /* If you ever want a specific tile NOT to crop, add class 'contain' to that app-card */
 .apps-grid .app-card.contain img{ object-fit: contain; background:#f3f4f6; }
 
