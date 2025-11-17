@@ -870,43 +870,44 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 .apps-grid .app-card.contain img{ object-fit: contain; background:#f3f4f6; }
 
 /* ==================== Project: UU Arts ==================== */
-/* ---- 2-up graph tiles (no crop, keep original aspect, rounded, equal height) ---- */
+/* ---- 2-up tiles: no crop, keep original aspect, rounded ---- */
 
-/* container spacing like your other 80% figures */
 .two-up-figure{
   max-width: min(1200px, 80vw);
   margin: var(--block-gap) auto;
 }
 
-/* side-by-side grid */
+/* 2 columns; rows auto-size to the tallest item in that row */
 .two-up-grid{
   display: grid !important;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(12px, 2vw, 24px);
+  align-items: stretch;      /* grid items fill row height */
 }
 
-/* single authoritative height for both tiles */
-:root{ --two-up-h: clamp(280px, 42vh, 520px); }
-
-/* the tile is only a rounded frame that clips the image */
+/* Each tile stretches to the row height; acts as a rounded frame */
 .two-up-tile{
-  height: var(--two-up-h) !important;  /* equal height per row */
+  display: flex;             /* center the image inside */
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;              /* stretch to the grid row height */
   border-radius: 16px;
-  overflow: hidden;                     /* keeps rounded corners clean */
-  background: none;                     /* no gray card bg */
-  line-height: 0;                       /* removes inline-image gap */
+  overflow: hidden;          /* clean rounded corners */
+  background: none;          /* no card bg */
+  line-height: 0;            /* remove inline image gap */
 }
 
-/* image fills available space, NEVER crops; touches edges of the frame */
+/* Image keeps original aspect; no crop; touches left/right edges */
 .two-up-tile > img{
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: contain !important;       /* preserve original aspect */
-  object-position: center !important;
+  width: 100%;
+  height: auto;              /* preserve aspect ratio */
+  object-fit: contain;       /* never crop */
+  object-position: center;
   display: block;
 }
 
-/* captions, if any, outside the tiles (consistent with your other figures) */
+/* Caption */
 .two-up-figure .figure-caption{
   margin: 8px 0 var(--block-gap);
   text-align: center;
@@ -914,10 +915,9 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   font-size: clamp(12px, .9vw, 14px);
 }
 
-/* stack on small screens */
+/* Stack on small screens */
 @media (max-width: 680px){
   .two-up-grid{ grid-template-columns: 1fr; }
-  :root{ --two-up-h: clamp(240px, 44vh, 460px); }
 }
 
 /* Kill any inherited prose/figure spacing inside this component */
