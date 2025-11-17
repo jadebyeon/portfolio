@@ -246,6 +246,21 @@ img { max-width: 100%; height: auto; }
   --mint-color: hsl(168, 68%, 44%);   /* tweak if you want it lighter/darker */
 }
 
+/* Mint underlined external link that doesn't change after visit */
+.ext-link-mint{
+  color: var(--mint-color) !important;
+  text-decoration: underline;
+  text-decoration-color: var(--mint-color);
+  text-underline-offset: 3px;
+}
+.ext-link-mint:visited,
+.ext-link-mint:hover,
+.ext-link-mint:active,
+.prose .ext-link-mint,
+.prose .ext-link-mint:visited{
+  color: var(--mint-color) !important;   /* keep mint even after click */
+}
+
 /* Title link: default same as headings; hover = mint */
 .portfolio__title a,
 .portfolio__title-link{
