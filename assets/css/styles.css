@@ -1046,6 +1046,62 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   display: block;
 }
 
+/* ====== 5-up tiles: no crop, keep original aspect, rounded ====== */
+
+.five-up-figure{
+  max-width: min(1200px, 90vw);
+  margin: var(--block-gap) auto;
+}
+
+/* 5 columns; row height driven by tallest image */
+.five-up-grid{
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(12px, 1.6vw, 24px);
+  align-items: stretch;   /* all tiles share row height */
+  grid-auto-rows: auto;   /* row height = tallest item */
+}
+
+/* Each tile is a rounded frame */
+.five-up-tile{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  line-height: 0;         /* remove inline img gap */
+}
+
+/* Image keeps original aspect; never cropped */
+.five-up-tile > img{
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;    /* preserve aspect ratio */
+  object-position: center;
+  display: block;
+}
+
+/* Responsive: collapse columns on small screens (optional) */
+@media (max-width: 900px){
+  .five-up-grid{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 600px){
+  .five-up-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 420px){
+  .five-up-grid{
+    grid-template-columns: 1fr;
+  }
+}
+
 
 .video-wrapper{
   position: relative;
