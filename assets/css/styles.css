@@ -959,6 +959,56 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   margin:8px 0 var(--block-gap,16px) !important;
   text-align:center;
 }
+
+/* ==================== Project: Turbo ==================== */
+/* 2 equal-height columns, gap between them */
+.two-col-2-3-grid{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(12px, 2vw, 24px);
+  align-items: stretch;          /* columns same height */
+}
+
+/* Each column is a flex column whose children share height */
+.two-col-2-3-col{
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.6vw, 24px);
+}
+
+/* Make tiles fill available column height equally */
+.two-col-2-3-col .two-up-tile{
+  flex: 1 1 0;                   /* 2 tiles = 50/50, 3 tiles = 33/33/33 */
+}
+
+/* You already have this, but included for clarity: rounded frame + no crop */
+.two-up-tile{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  background: none;
+  line-height: 0;
+}
+
+.two-up-tile > img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;           /* preserve original aspect ratio, no crop */
+  object-position: center;
+  display: block;
+}
+
+/* Mobile: stack columns */
+@media (max-width: 680px){
+  .two-col-2-3-grid{
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ==================== MEDIA-QUERY SLOTS ==================== */
 /* For small devices  : @media (max-width: 640px){ ... }   */
 /* For medium devices : @media (min-width: 768px){ ... }   */
