@@ -27,7 +27,7 @@
     <section class="project-hero section">
       <div class="hero-media">
         <!-- Replace with your actual hero image -->
-        <img src="../../assets/img/qq_website.png" alt="Turbo: Fitness App for Motivation Through Metrics">
+        <img src="../../assets/img/turbo_mockup.png" alt="Turbo: Fitness App for Motivation Through Metrics">
         <div class="hero-overlay">
           <h1 class="hero-title">Turbo: Fitness App</h1>
           <p class="hero-subtitle">Motivating Consistency Through Personalized Progress, Gamification, and Emotional Feedback</p>
@@ -46,7 +46,7 @@
         <div class="project-meta">
           <div class="meta-item">
             <div class="meta-label">My Role</div>
-            <div class="meta-value">UX/UI Designer, Interaction Designer, Visual System Lead</div>
+            <div class="meta-value">UX/UI Designer, Figma Prototyper, Visual System Lead</div>
           </div>
           <div class="meta-item">
             <div class="meta-label">Timeline</div>
@@ -69,7 +69,10 @@
       <div class="container prose">
         <h3>Design Problem</h3>
         <p>
-          Many fitness apps overwhelm users with raw data, unclear metrics, and impersonal experiences, which leads to disengagement. Our users needed an app that clearly communicated progress, encouraged consistency through emotional design (e.g., streaks), and made fitness feel achievable and enjoyable. The challenge was to design a mobile experience that balances data clarity, usability, and emotional motivation.
+          Most fitness apps track data, but fail to keep users engaged. Our user research revealed that people often abandon apps due to overwhelming layouts, unclear progress indicators, and a lack of motivation. They want fitness tools that not only show numbers but make progress feel rewarding.
+        </p>
+        <p>
+          Our challenge was to design a fitness tracking app interface that clearly communicates personal achievement while fostering emotional engagement, encouraging users to stick with healthy routines.
         </p>
       </div>
     </section>
@@ -99,28 +102,42 @@
                 <li>Select Workout → Live Session → Instructions Swipe</li>
               </ul>
       </div>
-      <figure class="figure-80 single-tile-figure">
-        <div class="single-tile">
-          <img src="../../assets/img/oct_Character Design.jpg" alt="Character Design Board">
+      <figure class="two-up-figure two-col-2-3-figure">
+        <div class="two-col-2-3-grid">
+          <!-- LEFT COLUMN (2 stacked) -->
+          <div class="two-col-2-3-col">
+            <figure class="two-up-tile">
+              <img src="../../assets/img/turbo_8sketch1.png" alt="sketch">
+            </figure>
+            <figure class="two-up-tile">
+              <img src="../../assets/img/turbo_8sketch.png" alt="sketch">
+            </figure>
+          </div>
+          <!-- RIGHT COLUMN (3 stacked) -->
+          <div class="two-col-2-3-col">
+            <figure class="two-up-tile">
+              <img src="../../assets/img/turbo_prototype3.jpg" alt="Workout Plan & Exercise Videos">
+            </figure>
+            <figure class="two-up-tile">
+              <img src="../../assets/img/turbo_prototype2.jpg" alt="Real Time Feedback & Exercise Form">
+            </figure>
+            <figure class="two-up-tile">
+              <img src="../../assets/img/turbo_prototype1.jpg" alt="Progress Form">
+            </figure>
+          </div>
         </div>
-        <figcaption class="figure-caption">character design board created with team</figcaption>
+        <figcaption class="figure-caption"> sketches</figcaption>
       </figure>
       <figure class="figure-80 two-up-figure">
         <div class="two-up-grid">
           <figure class="two-up-tile">
-            <img src="../../assets/img/oct_Optic.jpg" alt="Optic Character Design">
+            <img src="../../assets/img/turbo_persona.png" alt="Persona">
           </figure>
           <figure class="two-up-tile">
-            <img src="../../assets/img/oct_SAM the Ranger.jpg" alt="SAM the Ranger Character Design">
-          </figure>
-          <figure class="two-up-tile">
-            <img src="../../assets/img/oct_A-Eye.jpg" alt="A-Eye Character Design">
-          </figure>
-          <figure class="two-up-tile">
-            <img src="../../assets/img/oct_cheeze.jpg" alt="Cheeze Character Design">
+            <img src="../../assets/img/turbo_map.png" alt="Map">
           </figure>
         </div>
-        <figcaption class="figure-caption">character designs for four selected characters created with team</figcaption>
+        <figcaption class="figure-caption">persona</figcaption>
       </figure>
     </section>
 
@@ -128,33 +145,54 @@
     <section class="project-section">
       <div class="container prose">
         <h3>System Development</h3>
-
-        <h4>Progress Summary & Feedback</h4>
+        <p>This was a visual prototyping project built entirely in Figma. We designed and iterated on a system of high-fidelity mobile screens focused on clarity, motivation, and ease of use.</p>
+        <h4>Key Screens</h4>
         <ul>
-          <li>Designed a progress dashboard combining daily steps, calories, and heart rate, with a circular progress meter.</li>
-          <li>Integrated weekly trend graphs for users to reflect on historical consistency.</li>
-          <li>Developed a drag-up menu with a streak tracker (“Keep it up—5 days!”) and supportive mascot to build routine momentum.</li>
+          <li><strong>Daily Summary:</strong> Circular step tracker, calorie & heart rate metrics, clear completion percentage, and motivational streak tracker with a mascot</li>
+          <li><strong>Weekly Overview:</strong> Three-panel summary comparing "This Week", "Last Week", and "Previous Week" with a clean line graph and contextual feedback</li>
+          <li><strong>Workout Interface:</strong> Real-time timer, swipeable instructions, and “Next Workout” previews were all built with a consistent component style</li>
         </ul>
 
-        <h4>Workout Interface</h4>
+        <h4>Iteration Based on Testing</h4>
+        <p>We tested the Figma prototype from users (survey + guided navigation tasks)</p>
         <ul>
-          <li>Created a “Live Workout” screen with real-time feedback, timer, and “Next” flow.</li>
-          <li>Swipable instructions below the video for clarity on movement and safety.</li>
+          <li>95% located the Daily Summary in less than 15 seconds</li>
+          <li>Common feedbacks were: "Make streaks more visible,” "label calories and steps more clearly, and "completion % is easier to understand than ‘conversion’”</li>
           <li>Visual consistency across cards (e.g., same rounded UI treatment, color-coded workout types).</li>
         </ul>
-
-        <h4>Iteration Through Feedback</h4>
+        <p>We responded by:</p>
         <ul>
-          <li>Usability testing with 10 users showed a 95% task completion rate for navigating to daily summaries.</li>
-          <li>Based on feedback, we moved the streak tracker higher up, made the mascot more prominent, and simplified calorie/step text display.</li>
-          <li>Replaced “conversion %” label with “completion %” to avoid jargon confusion.</li>
+          <li>Moving the streak tracker to the top of the Summary page</li>
+          <li>Rewording labels for clarity</li>
+          <li>Simplifying layout spacing and hierarchy</li>
         </ul>
       </div>
+      <figure class="five-up-figure">
+        <div class="five-up-grid">
+          <figure class="five-up-tile">
+            <img src="../../assets/img/turbo_lowfidelity1.png" alt="Prototype 1">
+          </figure>
+          <figure class="five-up-tile">
+            <img src="../../assets/img/turbo_lowfidelity2.png" alt="Prototype 2">
+          </figure>
+          <figure class="five-up-tile">
+            <img src="../../assets/img/turbo_lowfidelity3.png" alt="Prototype 3">
+          </figure>
+          <figure class="five-up-tile">
+            <img src="../../assets/img/turbo_lowfidelity4.png" alt="Prototype 4">
+          </figure>
+          <figure class="five-up-tile">
+            <img src="../../assets/img/turbo_lowfidelity4.5.png" alt="Prototype 5">
+          </figure>
+        </div>
+        <figcaption class="figure-caption">Before</figcaption>
+      </figure>
+
       <figure class="figure-80 single-tile-figure">
         <div class="single-tile">
-          <img src="../../assets/img/oct_storyboard.png" alt="SAM the Ranger Storyboard">
+          <img src="../../assets/img/turbo_mockup2.png" alt="Final Screens">
         </div>
-        <figcaption class="figure-caption">SAM the Ranger Storyboard</figcaption>
+        <figcaption class="figure-caption">After</figcaption>
       </figure>
 
     <!-- Deliverables -->
@@ -162,12 +200,7 @@
       <div class="container prose">
         <h3>Deliverables</h3>
         <ul>
-          <li>
-            <a class="ext-link-mint" href="https://icml-2025-tutorial.github.io/diffusion-models/"
-               target="_blank" rel="noopener">
-              ICML 2025 Tutorial
-            </a>
-          </li>
+          <li>Figma Prototype</li>
         </ul>
       </div>
     </section>
