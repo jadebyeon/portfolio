@@ -962,94 +962,46 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 
 /* ==================== Project: Turbo ==================== */
 /* 2 equal-height columns, gap between them */
+/* 2 columns side by side */
 .two-col-2-3-grid{
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(12px, 2vw, 24px);
-  align-items: stretch;          /* columns same height */
+  column-gap: clamp(16px, 2vw, 32px);
+  align-items: flex-start;
 }
 
-/* Each column is a flex column whose children share height */
+/* each column stacks its tiles vertically */
 .two-col-2-3-col{
   display: flex;
   flex-direction: column;
-  gap: clamp(12px, 1.6vw, 24px);
 }
 
-/* Make tiles fill available column height equally */
-.two-col-2-3-col .two-up-tile{
-  flex: 1 1 0;                   /* 2 tiles = 50/50, 3 tiles = 33/33/33 */
+/* LEFT column: normal vertical gap */
+.two-col-2-3-col.col-left{
+  row-gap: clamp(16px, 1.8vw, 28px);
 }
 
-/* You already have this, but included for clarity: rounded frame + no crop */
-.two-up-tile{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
+/* RIGHT column: smaller vertical gap so column height matches left */
+.two-col-2-3-col.col-right{
+  row-gap: clamp(8px, 1.0vw, 16px);  /* tweak these numbers to fine-tune */
+}
+
+/* tiles: rounded frames, but let height be driven by the image */
+.two-col-2-3-grid .two-up-tile{
+  margin: 0;
+  padding: 0;
   border-radius: 16px;
-  overflow: hidden;
-  background: none;
+  overflow: hidden;    /* just for rounded corners */
+  background: #fff;
   line-height: 0;
-}
-
-.two-up-tile > img{
-  width: 100%;
-  height: 100%;
-  object-fit: contain;           /* preserve original aspect ratio, no crop */
-  object-position: center;
   display: block;
 }
 
-/* Mobile: stack columns */
-@media (max-width: 680px){
-  .two-col-2-3-grid{
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ====== 5-up tiles: no crop, keep original aspect, rounded ====== */
-/* overall 2-column grid */
-.two-col-2-3-grid{
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: clamp(12px, 1.6vw, 24px);  /* space between columns */
-}
-
-/* each column stacks images vertically */
-.two-col-2-3-col{
-  display: flex;
-  flex-direction: column;
-}
-
-/* LEFT column gap (more vertical space) */
-.two-col-2-3-col.col-left{
-  gap: clamp(16px, 1.6vw, 24px);
-}
-
-/* RIGHT column gap (smaller vertical space to match height) */
-.two-col-2-3-col.col-right{
-  gap: clamp(6px, 0.7vw, 12px);  /* tweak these numbers until bottoms line up */
-}
-
-/* tiles: rounded frames */
-.two-up-tile{
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* IMPORTANT: show full original image, no cropping/zooming */
+.two-col-2-3-grid .two-up-tile img{
   width: 100%;
-  border-radius: 16px;
-  overflow: hidden;
-  background: #fff;
-  line-height: 0;
-}
-
-/* images: keep original aspect, no crop/zoom */
-.two-up-tile img{
-  width: 100%;
-  height: auto;         /* keeps aspect ratio; no forced stretching */
-  object-fit: contain;  /* just in case */
+  height: auto;        /* <- DO NOT use height: 100% here */
+  object-fit: contain; /* keep aspect ratio; no crop */
   display: block;
 }
 
