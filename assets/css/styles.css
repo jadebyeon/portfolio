@@ -961,50 +961,69 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 
 /* ==================== Project: Turbo ==================== */
-/* 2 equal-height columns, gap between them */
-/* 2 columns side by side */
 .two-col-2-3-grid{
+  /* width is whatever your container gives it (no 80% cap forced) */
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr 1fr;
   column-gap: clamp(16px, 2vw, 32px);
-  align-items: flex-start;
+  align-items: stretch;
+  /* shared knobs */
+  --gap: clamp(12px, 1.4vw, 20px);
+  --col-h: clamp(480px, 70vh, 900px);   /* total height target per column */
 }
 
-/* each column stacks its tiles vertically */
+/* each column becomes a fixed-height stack */
 .two-col-2-3-col{
   display: flex;
   flex-direction: column;
+  gap: var(--gap);
+  height: var(--col-h);
+  min-height: 0; /* prevent overflow quirks */
 }
 
-/* LEFT column: normal vertical gap */
-.two-col-2-3-col.col-left{
-  row-gap: clamp(16px, 1.8vw, 28px);
+/* tell CSS how many tiles are in the column (HTML adds data-count) */
+.two-col-2-3-col[data-count="2"] .two-up-tile{
+  /* H = (col-h - total-gaps) / 2 */
+  height: calc((var(--col-h) - var(--gap)) / 2);
+}
+.two-col-2-3-col[data-count="3"] .two-up-tile{
+  /* H = (col-h - total-gaps) / 3 */
+  height: calc((var(--col-h) - (2 * var(--gap))) / 3);
 }
 
-/* RIGHT column: smaller vertical gap so column height matches left */
-.two-col-2-3-col.col-right{
-  row-gap: clamp(8px, 1.0vw, 16px);  /* tweak these numbers to fine-tune */
-}
-
-/* tiles: rounded frames, but let height be driven by the image */
+/* tiles: rounded frames; images keep original aspect */
 .two-col-2-3-grid .two-up-tile{
   margin: 0;
   padding: 0;
   border-radius: 16px;
-  overflow: hidden;    /* just for rounded corners */
-  background: #fff;
-  line-height: 0;
+  overflow: hidden;        /* keeps rounded corners clean */
+  background: #fff;        /* optional, remove if you want no card bg */
+  line-height: 0;          /* kill inline-img gap */
   display: block;
 }
 
-/* IMPORTANT: show full original image, no cropping/zooming */
+/* IMPORTANT: preserve aspect, no crop or zoom */
 .two-col-2-3-grid .two-up-tile img{
   width: 100%;
-  height: auto;        /* <- DO NOT use height: 100% here */
-  object-fit: contain; /* keep aspect ratio; no crop */
+  height: 100%;
+  object-fit: contain;     /* show whole image; letterbox if needed */
   display: block;
 }
 
+/* Stack on small screens */
+@media (max-width: 700px){
+  .two-col-2-3-grid{
+    grid-template-columns: 1fr;
+    /* optionally let columns grow with content on mobile */
+    --col-h: auto;
+  }
+  .two-col-2-3-col{
+    height: auto;
+  }
+  .two-col-2-3-col .two-up-tile{
+    height: auto;
+  }
+}
 /* ====== 5-up tiles: no crop, keep original aspect, rounded ====== */
 
 .five-up-figure{
