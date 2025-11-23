@@ -967,34 +967,41 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   margin: var(--block-gap) auto;
 }
 
-:root{ --three-up-h: clamp(220px, 36vh, 420px); } /* shared tile height */
+/* one shared tile height for the whole row */
+:root { --three-up-h: clamp(220px, 36vh, 420px); }
 
 .three-up-grid{
   display: grid;
   grid-template-columns: repeat(3, minmax(0,1fr));
   gap: clamp(12px, 1.8vw, 24px);
-  align-items: stretch;                  /* tiles fill the row height */
+  align-items: stretch;
+  grid-auto-rows: var(--three-up-h);   /* << all items get same row height */
 }
 
 .three-up-tile{
-  height: var(--three-up-h);
+  height: 100%;                        /* fill the grid row */
   border-radius: 16px;
-  overflow: hidden;                      /* clean rounded edges */
-  background: #fff;                      /* subtle card background (optional) */
-  line-height: 0;                        /* remove inline-image gap */
+  overflow: hidden;
+  background: #fff;
+  line-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.three-up-tile > img{
-  width: 100%;
-  height: 100%;
-  object-fit: contain;                   /* keep original aspect, no crop */
+/* Beat any global `.prose img { height:auto; }` */
+.three-up-figure .three-up-tile > img{
+  width: 100% !important;
+  height: 100% !important;             /* << enforce equal visual height */
+  object-fit: contain;                 /* keep original aspect, no crop */
+  object-position: center;
   display: block;
 }
 
-/* Responsive: 2 columns on tablets, 1 on phones */
+/* If this sits inside .prose, neutralize default margins */
+.prose .three-up-figure :is(figure, img, figcaption){ margin: 0 !important; }
+
+/* Responsive */
 @media (max-width: 1024px){
   .three-up-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
 }
@@ -1002,9 +1009,6 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   .three-up-grid{ grid-template-columns: 1fr; }
   :root{ --three-up-h: clamp(200px, 36vh, 360px); }
 }
-
-/* If this figure sits inside a .prose container, neutralize default margins */
-.prose .three-up-figure :is(figure, img, figcaption){ margin: 0 !important; }
 
 /* ====== 5-up tiles: no crop, keep original aspect, rounded ====== */
 
