@@ -961,52 +961,53 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 
 /* ==================== Project: Turbo ==================== */
-/* ===== TURBO: 3-up row (equal height, rounded, no crop) ===== */
+/* ===== TURBO: 3-up row — same size, full-bleed (zoom OK) ===== */
 .three-up-figure{
   max-width: min(1200px, 80vw);
   margin: var(--block-gap) auto;
 }
 
-/* one shared tile height for the whole row */
-:root { --three-up-h: clamp(220px, 36vh, 420px); }
+/* one shared tile height; tweak as you like */
+:root { --three-up-h: clamp(240px, 38vh, 420px); }
 
 .three-up-grid{
   display: grid;
   grid-template-columns: repeat(3, minmax(0,1fr));
-  gap: clamp(12px, 1.8vw, 24px);
-  align-items: stretch;
-  /* remove content-driven row sizing */
-  /* grid-auto-rows: var(--three-up-h);  <-- delete this line if present */
+  gap: clamp(12px, 1.6vw, 24px);
+  align-items: stretch;                 /* each tile fills the row height */
 }
 
 .three-up-tile{
-  height: var(--three-up-h);            /* <- explicit, equal height */
+  height: var(--three-up-h);
   border-radius: 16px;
-  overflow: hidden;
-  background: #fff;
+  overflow: hidden;                     /* keep rounded corners clean */
+  background: none;
   line-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+/* FORCE full-bleed: no white space, same visual size */
 .three-up-figure .three-up-tile > img{
   width: 100% !important;
-  height: 100% !important;              /* fill the tile’s height */
-  object-fit: contain !important;       /* keep original aspect, no crop */
+  height: 100% !important;
+  object-fit: cover !important;         /* allows zoom/crop to fill */
   object-position: center;
   display: block;
 }
 
-/* Responsive */
+/* responsive */
 @media (max-width: 1024px){
   .three-up-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
 }
 @media (max-width: 640px){
   .three-up-grid{ grid-template-columns: 1fr; }
-  :root{ --three-up-h: clamp(200px, 36vh, 360px); }
+  :root { --three-up-h: clamp(220px, 36vh, 360px); }
 }
 
+/* neutralize any prose defaults inside */
+.prose .three-up-figure :is(figure, figcaption, img){ margin: 0 !important; }
 /* ====== 5-up tiles: no crop, keep original aspect, rounded ====== */
 
 .five-up-figure{
