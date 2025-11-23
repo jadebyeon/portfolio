@@ -961,57 +961,50 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 
 /* ==================== Project: Turbo ==================== */
-/* ---- 3-up tiles: no crop, keep original aspect, rounded ---- */
+/* ===== TURBO: 3-up row (equal height, rounded, no crop) ===== */
 .three-up-figure{
   max-width: min(1200px, 80vw);
   margin: var(--block-gap) auto;
 }
 
-/* 3 columns; rows auto-size to the tallest item in that row */
+:root{ --three-up-h: clamp(220px, 36vh, 420px); } /* shared tile height */
+
 .three-up-grid{
-  display: grid !important;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(12px, 2vw, 24px);
-  align-items: stretch;      /* grid items fill row height */
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: clamp(12px, 1.8vw, 24px);
+  align-items: stretch;                  /* tiles fill the row height */
 }
 
-/* Each tile stretches to the row height; acts as a rounded frame */
 .three-up-tile{
-  display: flex;             /* center image inside */
+  height: var(--three-up-h);
+  border-radius: 16px;
+  overflow: hidden;                      /* clean rounded edges */
+  background: #fff;                      /* subtle card background (optional) */
+  line-height: 0;                        /* remove inline-image gap */
+  display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;              /* stretch to row height */
-  border-radius: 16px;
-  overflow: hidden;          /* clean rounded corners */
-  background: none;          /* no card bg */
-  line-height: 0;            /* remove inline image gap */
 }
 
-/* Image keeps original aspect; no crop; touches left/right edges */
 .three-up-tile > img{
   width: 100%;
-  height: auto;              /* preserve aspect ratio */
-  object-fit: contain;       /* never crop */
-  object-position: center;
+  height: 100%;
+  object-fit: contain;                   /* keep original aspect, no crop */
   display: block;
 }
 
-/* Caption */
-.three-up-figure .figure-caption{
-  margin: 8px 0 var(--block-gap);
-  text-align: center;
-  color: var(--text-color-light);
-  font-size: clamp(12px, .9vw, 14px);
-}
-
-/* Responsive: 2 cols on tablet, 1 col on mobile */
+/* Responsive: 2 columns on tablets, 1 on phones */
 @media (max-width: 1024px){
   .three-up-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
 }
-@media (max-width: 680px){
+@media (max-width: 640px){
   .three-up-grid{ grid-template-columns: 1fr; }
+  :root{ --three-up-h: clamp(200px, 36vh, 360px); }
 }
+
+/* If this figure sits inside a .prose container, neutralize default margins */
+.prose .three-up-figure :is(figure, img, figcaption){ margin: 0 !important; }
 
 /* ====== 5-up tiles: no crop, keep original aspect, rounded ====== */
 
