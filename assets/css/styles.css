@@ -975,11 +975,12 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   grid-template-columns: repeat(3, minmax(0,1fr));
   gap: clamp(12px, 1.8vw, 24px);
   align-items: stretch;
-  grid-auto-rows: var(--three-up-h);   /* << all items get same row height */
+  /* remove content-driven row sizing */
+  /* grid-auto-rows: var(--three-up-h);  <-- delete this line if present */
 }
 
 .three-up-tile{
-  height: 100%;                        /* fill the grid row */
+  height: var(--three-up-h);            /* <- explicit, equal height */
   border-radius: 16px;
   overflow: hidden;
   background: #fff;
@@ -989,17 +990,13 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   justify-content: center;
 }
 
-/* Beat any global `.prose img { height:auto; }` */
 .three-up-figure .three-up-tile > img{
   width: 100% !important;
-  height: 100% !important;             /* << enforce equal visual height */
-  object-fit: contain;                 /* keep original aspect, no crop */
+  height: 100% !important;              /* fill the tile’s height */
+  object-fit: contain !important;       /* keep original aspect, no crop */
   object-position: center;
   display: block;
 }
-
-/* If this sits inside .prose, neutralize default margins */
-.prose .three-up-figure :is(figure, img, figcaption){ margin: 0 !important; }
 
 /* Responsive */
 @media (max-width: 1024px){
