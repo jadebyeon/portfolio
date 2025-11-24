@@ -961,6 +961,99 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 
 /* ==================== Project: Turbo ==================== */
+/* ===== 2-col: equal height, no crop, rounded; widths may differ ===== */
+.two-col-fit-figure{
+  max-width: min(1200px, 80vw);
+  margin: var(--block-gap) auto;
+}
+
+/* shared height for both tiles (tweak as needed) */
+:root{ --pair-h: clamp(300px, 46vh, 560px); }
+
+.two-col-fit{
+  --gap: clamp(12px, 2vw, 24px);
+  display: flex;
+  gap: var(--gap);
+  align-items: center;     /* vertical centering while they size */
+}
+
+/* the tile is a rounded “frame” that clips the image’s corners */
+.pair-tile{
+  height: var(--pair-h);          /* <-- equal height */
+  max-width: calc(50% - var(--gap)/2);   /* prevent overflow; widths may differ */
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;               /* optional subtle card bg */
+  line-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* image fills vertically, keeps aspect ratio; no cropping */
+.pair-tile > img{
+  height: 100%;
+  width: auto;                    /* width derives from aspect ratio */
+  object-fit: contain;            /* never crop */
+  display: block;
+}
+
+/* stack on small screens */
+@media (max-width: 760px){
+  .two-col-fit{ flex-direction: column; }
+  .pair-tile{ max-width: 100%; }
+}
+/* ===== 2-up paired tiles (equal height, no crop, rounded) ===== */
+.paired-figure{
+  max-width: min(1200px, 90vw);
+  margin: var(--block-gap) auto;
+}
+
+/* one shared height for both columns; tweak per section if needed */
+:root{ --pair-h: clamp(360px, 50vh, 680px); }
+
+.paired-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(12px, 2vw, 24px);
+  align-items: stretch;            /* tiles fill the row height */
+}
+
+.paired-tile{
+  height: var(--pair-h);           /* makes both columns same height */
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;                /* subtle card; change/remove as needed */
+  line-height: 0;                  /* remove inline-img gap */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* keep original aspect; fill height; width adapts (no crop) */
+.paired-tile > img{
+  height: 100%;
+  width: auto;
+  object-fit: contain;             /* never crop */
+  display: block;
+}
+
+/* Dark “mat board” variant like your reference */
+.paired-figure.dark{
+  background: #1f2937;             /* near-slate */
+  border-radius: 24px;
+  padding: clamp(12px, 2vw, 24px);
+}
+
+/* mobile: stack columns; keep a slightly smaller shared height */
+@media (max-width: 700px){
+  .paired-grid{ grid-template-columns: 1fr; }
+  :root{ --pair-h: clamp(260px, 44vh, 520px); }
+}
+
+/* neutralize any prose defaults if this sits in .prose */
+.prose .paired-figure :is(figure, img, figcaption){ margin: 0 !important; }
+
 /* ===== TURBO: 3-up row — same size, full-bleed (zoom OK) ===== */
 .three-up-figure{
   max-width: min(1200px, 80vw);
