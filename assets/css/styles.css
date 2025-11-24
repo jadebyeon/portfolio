@@ -1054,53 +1054,48 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 /* neutralize any prose defaults if this sits in .prose */
 .prose .paired-figure :is(figure, img, figcaption){ margin: 0 !important; }
 
-/* ===== TURBO: 3-up row — same size, full-bleed (zoom OK) ===== */
-.three-up-figure{
-  max-width: min(1200px, 80vw);
+/* ===== Two-column stacked gallery (equal column height, no crop) ===== */
+.figure-80.paired-stacks{
+  max-width: min(1200px, 90vw);
   margin: var(--block-gap) auto;
 }
 
-/* one shared tile height; tweak as you like */
-:root { --three-up-h: clamp(240px, 38vh, 420px); }
-
-.three-up-grid{
+.paired-stacks .paired-grid{
   display: grid;
-  grid-template-columns: repeat(3, minmax(0,1fr));
-  gap: clamp(12px, 1.6vw, 24px);
-  align-items: stretch;                 /* each tile fills the row height */
+  grid-template-columns: 1fr 1fr;             /* two columns */
+  gap: clamp(12px, 2vw, 24px);                /* gap between columns */
+  align-items: stretch;                        /* columns same height */
 }
 
-.three-up-tile{
-  height: var(--three-up-h);
-  border-radius: 16px;
-  overflow: hidden;                     /* keep rounded corners clean */
-  background: none;
-  line-height: 0;
+/* Each column: flex stack that stretches to full row height */
+.paired-stacks .paired-col{
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;              /* fill column height */
+  gap: var(--col-gap, 12px);                   /* min gap for this column */
+  height: 100%;                                /* stretch with the grid */
 }
 
-/* FORCE full-bleed: no white space, same visual size */
-.three-up-figure .three-up-tile > img{
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;         /* allows zoom/crop to fill */
-  object-position: center;
+/* Tiles are just rounded frames; images keep aspect, no crop */
+.paired-stacks .stack-tile{
+  margin: 0;
+  border-radius: 16px;
+  overflow: hidden;                            /* rounded corners visible */
+  line-height: 0;
+}
+
+.paired-stacks .stack-tile > img{
+  width: 100%;
+  height: auto;                                /* preserve aspect ratio */
+  object-fit: contain;                         /* never crop */
   display: block;
 }
 
-/* responsive */
-@media (max-width: 1024px){
-  .three-up-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
-}
-@media (max-width: 640px){
-  .three-up-grid{ grid-template-columns: 1fr; }
-  :root { --three-up-h: clamp(220px, 36vh, 360px); }
+/* Mobile: stack columns */
+@media (max-width: 720px){
+  .paired-stacks .paired-grid{ grid-template-columns: 1fr; }
 }
 
-/* neutralize any prose defaults inside */
-.prose .three-up-figure :is(figure, figcaption, img){ margin: 0 !important; }
 /* ====== 5-up tiles: no crop, keep original aspect, rounded ====== */
 
 .five-up-figure{
