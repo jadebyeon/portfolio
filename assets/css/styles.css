@@ -1054,59 +1054,80 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 /* neutralize any prose defaults if this sits in .prose */
 .prose .paired-figure :is(figure, img, figcaption){ margin: 0 !important; }
 
-/* ===== Two-column “stagger” stack (no crop, rounded, equal column height) ===== */
-
-.figure-80.two-col-stagger-figure{
-  max-width: min(1200px, 80vw);
+/* ============== 2v3 Equal-Height Stacks (no crop) ============== */
+.stacks-2v3-figure{
+  max-width: min(1200px, 90vw);
   margin: var(--block-gap) auto;
 }
 
-/* Tune these if you want a different balance */
-.two-col-stagger{
-  --col1: 1fr;          /* left column width */
-  --col2: .86fr;        /* right column width (a bit narrower so it ends up same height) */
-  --gap-x: clamp(10px, 1.2vw, 16px);
+/* shared vertical gap for BOTH columns */
+:root { --stack-gap: clamp(14px, 1.8vw, 22px); }
 
+.stacks-2v3{
   display: grid;
-  grid-template-columns: var(--col1) var(--col2);
-  gap: var(--gap-x);
-  align-items: stretch;                 /* columns stretch to same row height */
+  grid-template-columns: 1fr 1fr;     /* widths will auto-adjust by content */
+  gap: var(--stack-gap);
+  align-items: stretch;               /* both columns same total height */
 }
 
-/* Each column is a flex stack that distributes extra space between tiles */
-.two-col-stagger .col{
-  --v-gap: clamp(8px, 1vw, 14px);       /* default vertical gap */
+/* each column is a vertical flex stack with the same gap */
+.stacks-2v3 .stack{
   display: flex;
   flex-direction: column;
-  justify-content: space-between;       /* fill column height with even-ish gaps */
-  gap: var(--v-gap);
-  min-height: 0;
+  gap: var(--stack-gap);
 }
 
-/* Optionally tighten the right column’s gaps a touch */
-.two-col-stagger .col.right{ --v-gap: clamp(6px, .8vw, 12px); }
+/* Lock the row heights by count so the two columns match total height:
+   - 2 items: each gets 1/2 of the column height minus one gap
+   - 3 items: each gets 1/3 of the column height minus two gaps        */
+.stacks-2v3 .col-2 .stack-tile{
+  height: calc( (100% - var(--stack-gap)) / 2 );
+}
+.stacks-2v3 .col-3 .stack-tile{
+  height: calc( (100% - 2 * var(--stack-gap)) / 3 );
+}
 
-/* Tile: rounded frame; image fills available width, keeps aspect */
-.two-col-stagger .tile{
+/* rounded “frames” that clip the image */
+.stacks-2v3 .stack-tile{
   border-radius: 16px;
-  overflow: hidden;
+  overflow: hidden;                   /* clean rounded edges */
+  background: #fff;                   /* optional white card */
   line-height: 0;
-  background: #fff;                     /* optional subtle card bg */
 }
 
-.two-col-stagger .tile img{
+/* CRITICAL: show full image, no crop, touch edges */
+.stacks-2v3 .stack-tile > img{
   width: 100%;
-  height: auto;                          /* keep original aspect; no crop */
-  object-fit: contain;                   /* belt & suspenders */
+  height: 100%;
+  object-fit: contain !important;     /* never crop; overrides any 'cover' */
+  object-position: center;
   display: block;
+  transform: translateZ(0);           /* avoids GPU blur on Safari */
 }
 
-/* Responsive: stack on phones */
-@media (max-width: 680px){
-  .two-col-stagger{
-    grid-template-columns: 1fr;
-  }
+/* Caption */
+.stacks-2v3-figure .figure-caption{
+  margin: 8px 0 var(--block-gap);
+  text-align: center;
+  color: var(--text-color-light);
+  font-size: clamp(12px, .9vw, 14px);
 }
+
+/* Responsive: stack columns on small screens */
+@media (max-width: 720px){
+  .stacks-2v3{ grid-template-columns: 1fr; }
+  /* on phones, keep visible proportions with a bit taller tiles */
+  .stacks-2v3 .col-2 .stack-tile{ height: calc( (100% - var(--stack-gap)) / 2 ); }
+  .stacks-2v3 .col-3 .stack-tile{ height: calc( (100% - 2 * var(--stack-gap)) / 3 ); }
+}
+
+/* ---- Fix for prior components that used 'object-fit: cover' ---- */
+.three-up-tile > img,
+.two-up-tile > img,
+.single-tile img {
+  object-fit: contain !important; /* ensure no crop leaks in */
+}
+
 
 /* ====== 5-up tiles: no crop, keep original aspect, rounded ====== */
 
