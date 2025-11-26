@@ -1125,46 +1125,48 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   border: 0;
 }
 
-/* ================= 2-up paired tiles (Flexible Width/Height, Fill Tile) ================= */
+/* ================= 2-up paired tiles (Flexible, No Crop) ================= */
 .paired-figure{
   max-width: min(1200px, 90vw);
   margin: var(--block-gap) auto;
 }
 
 .paired-grid{
-  display: flex; /* Enables flexible width and equal height */
+  display: flex;
   gap: clamp(12px, 2vw, 24px);
-  align-items: stretch; /* CRITICAL: Tiles stretch to the height of the tallest item */
-  height: auto;
+  align-items: stretch; /* row height is shared */
 }
 
+/* each tile’s width/height will be set inline by JS */
 .paired-tile{
-  /* Width is now controlled by an inline 'style' or specific class in HTML (see below) */
-  /* Remove: flex: 1; */ 
-  height: 100%; /* Tile inherits the stretched height from the grid */
+  margin: 0;
+  padding: 0;
   border-radius: 16px;
   overflow: hidden;
   line-height: 0;
+  flex: 0 0 auto; /* prevent weird flex reflow; width comes from JS */
 }
 
 .paired-figure .paired-tile > img{
   width: 100%;
   height: 100%;
-  object-fit: cover !important; /* Image fills the entire tile; allows cropping */
-  object-position: center;
   display: block;
+  /* no object-fit needed: JS makes tile match image aspect ratio */
 }
 
-/* ... mobile media query remains the same ... */
-/* mobile: stack columns */
+/* mobile: stack columns, let images use natural ratio */
 @media (max-width: 700px){
   .paired-grid{
-    display: grid; 
+    display: grid;
     grid-template-columns: 1fr;
-    height: auto;
   }
-  .paired-tile{ 
-    height: auto; /* When stacked, the tile height is determined by the image's aspect ratio */
+  .paired-tile{
+    height: auto !important;
+    flex: 1 1 auto !important;
+  }
+  .paired-figure .paired-tile > img{
+    width: 100%;
+    height: auto;
   }
 }
 
