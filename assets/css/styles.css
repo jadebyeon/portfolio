@@ -1492,6 +1492,26 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
     grid-template-columns: 1fr;
   }
 }
+/* About page hero image: small, same column width as text */
+.about__hero-img{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about__hero-img img{
+  max-width: 360px;       /* controls how small the image is */
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* optional: tighten spacing a bit on wide screens */
+@media (min-width: 768px){
+  .home__container{
+    align-items: center;
+  }
+}
 
 /* (keeps your earlier rules for columns/tiles/heights as-is) */
 
