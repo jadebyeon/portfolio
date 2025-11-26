@@ -283,6 +283,51 @@ img { max-width: 100%; height: auto; }
   border-radius: 4px;
 }
 
+/* ========== Project pager (prev / next) ========== */
+
+.project-pager {
+  padding: 3rem 0 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  margin-top: 3rem;
+}
+
+.project-pager__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.project-pager__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  text-decoration: none;
+  color: var(--text-color);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.project-pager__link i {
+  font-size: 1.2rem;
+}
+
+.project-pager__link:hover {
+  color: var(--first-color);
+}
+
+@media (max-width: 640px) {
+  .project-pager__inner {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .project-pager__link {
+    font-size: 0.9rem;
+  }
+}
 
 /* ==================== Project: TELL-Tool ==================== */
 /* ===== PROJECT PAGE ===== */
