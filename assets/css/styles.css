@@ -284,27 +284,25 @@ img { max-width: 100%; height: auto; }
 }
 
 
-/*==================== FOOTER – LET'S TALK BLOCK ====================*/
+/*==================== FOOTER – LET'S TALK ====================*/
 
 .footer {
-  background-color: #f3f4f6;                 /* light cool gray */
+  background-color: #f3f4f6;                /* light cool gray tint */
   margin-top: clamp(4rem, 8vw, 6rem);
-  padding: clamp(3rem, 6vw, 5rem) 0 2.75rem;
+  padding: clamp(3rem, 6vw, 5rem) 0 3rem;
   color: #111827;
 }
 
 .footer__inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
+  /* .container already sets max-width + side padding */
 }
 
-/* top row */
+/* ---------- top row (headline + back to top) ---------- */
 
 .footer__top {
   display: flex;
-  align-items: flex-start;
   justify-content: space-between;
+  align-items: flex-start;
   gap: 2.5rem;
   margin-bottom: clamp(2rem, 4vw, 3rem);
 }
@@ -321,17 +319,18 @@ img { max-width: 100%; height: auto; }
   color: #4b5563;
 }
 
+/* big ghost "LET'S TALK" text */
 .footer__title {
   margin: 0;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-size: clamp(3rem, 10vw, 6rem);
+  font-size: clamp(4rem, 18vw, 9rem);
   line-height: 0.9;
-  color: rgba(15, 23, 42, 0.08);            /* big light text */
+  color: rgba(15, 23, 42, 0.06);            /* very light gray */
 }
 
-/* back-to-top */
+/* BACK TO TOP pill + circle on the right */
 
 .footer__back {
   display: inline-flex;
@@ -353,8 +352,8 @@ img { max-width: 100%; height: auto; }
   width: 44px;
   height: 44px;
   border-radius: 999px;
-  border: 1px solid #111827;
-  background-color: #ffffff;
+  background-color: #3f3f46;
+  color: #ffffff;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -364,49 +363,55 @@ img { max-width: 100%; height: auto; }
   font-size: 1.2rem;
 }
 
-/* bottom row */
+/* ---------- bottom row (buttons + credits) ---------- */
 
 .footer__bottom {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   gap: 2rem;
   flex-wrap: wrap;
+  margin-top: clamp(1.75rem, 3vw, 2.5rem);
 }
 
+/* pill button row */
 .footer__links {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 1.1rem;
 }
 
-/* pill buttons */
-
+/* pill buttons – same vibe as reference */
 .footer__btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 0.8rem 2.1rem;
-  border-radius: 999px;
-  border: 1px solid #111827;
+  border-radius: 999px;                       /* rounded rectangle / pill */
+  border: 1px solid #d4d4d8;                 /* light gray outline */
   background-color: #ffffff;
   color: #111827;
-  font-size: 0.95rem;
-  text-decoration: none;
-  transition: background-color 0.2s ease, color 0.2s ease,
-              transform 0.15s ease, box-shadow 0.15s ease;
-  border-width: 1.4px;
+  font-size: 0.9rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .footer__btn:hover {
   background-color: var(--mint-color);
-  color: #ffffff;
+  border-color: #10b981;
+  color: #064e3b;
   transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.15);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.18);
 }
 
+/* credits bottom-right */
 .footer__meta {
   text-align: right;
   font-size: 0.9rem;
@@ -417,12 +422,12 @@ img { max-width: 100%; height: auto; }
   margin: 0;
 }
 
-/* hide old floating scroll-up, since back-to-top lives in footer now */
+/* hide old floating scroll-up button, if present */
 .scrollup {
   display: none !important;
 }
 
-/* Responsive footer layout */
+/* ---------- responsive tweaks ---------- */
 
 @media (max-width: 768px) {
   .footer__top {
@@ -445,7 +450,7 @@ img { max-width: 100%; height: auto; }
   }
 
   .footer__title {
-    font-size: clamp(2.5rem, 12vw, 4rem);
+    font-size: clamp(3rem, 16vw, 4.5rem);
   }
 }
 
