@@ -1131,10 +1131,11 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   margin: var(--block-gap) auto;
 }
 
-/* Remove fixed height: :root{ --pair-h: clamp(360px, 50vh, 680px); } */
+/* --- Fixed Height Variable REMOVED --- */
+/* (We rely on the tallest content to set the height) */
 
 .paired-grid{
-  display: flex; /* Use flexbox for flexible width and equal height */
+  display: flex; /* CRITICAL: Use flexbox for flexible width and equal height */
   gap: clamp(12px, 2vw, 24px);
   align-items: stretch; /* CRITICAL: Ensures tiles stretch to the height of the tallest item */
   height: auto;
@@ -1142,11 +1143,10 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 
 .paired-tile{
   /* The flex property determines how the tile grows/shrinks */
-  /* This value can be adjusted (e.g., flex: 2 1 auto; for the first tile to be wider) 
-     but 'flex: 1' makes them distribute width equally by default. 
-     The final width will be a compromise determined by the image sizes. */
   flex: 1; 
-  height: auto; /* Height is determined by the content and shared via align-items: stretch */
+  /* CRITICAL FIX: The height MUST be 100% to inherit the stretched height 
+     from the .paired-grid (due to align-items: stretch) */
+  height: 100%; 
   border-radius: 16px;
   overflow: hidden;
   background: none;
@@ -1169,8 +1169,15 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
     height: auto;
   }
   .paired-tile{ 
-    /* You might define a minimum height here if needed, e.g., min-height: 250px; */
+    /* CRITICAL FIX for mobile: Since the grid stacks, height is no longer shared. 
+       We must let the image define the tile height here, which means 
+       the image's aspect ratio will dictate the height of the stacked tile. */
     height: auto; 
+  }
+  .paired-figure .paired-tile > img{
+    /* In stacked view, allow the image to set the height while filling the width */
+    height: auto; 
+    object-fit: cover !important; 
   }
 }
 
