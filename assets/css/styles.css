@@ -1440,62 +1440,48 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   }
 }
 
-/* --- 2v3 stacks: same width as persona figure, shorter overall --- */
+/* --- 2v3 stacks: same width as persona figure, auto height, no crop --- */
 
-/* knobs just for the stack */
+/* small gap between tiles */
 :root{
   --stack-gap: clamp(10px, 1.2vw, 16px);
-  --stack-h: clamp(320px, 40vh, 440px);  /* a bit shorter to avoid crowding */
-  --stack-col1: 1.1fr;
-  --stack-col2: 0.9fr;
 }
 
-/* keep the SAME width as other figure-80 figures */
+/* same width + horizontal position as other figure-80 figures */
 .figure-80.stacks-2v3-figure{
-  max-width: min(1200px, 80vw);          /* match .two-col-fit-figure */
+  max-width: min(1200px, 80vw);   /* matches .figure-80 & .two-col-fit-figure */
   width: 100%;
-  margin: var(--block-gap) auto;         /* same vertical spacing */
-  overflow: hidden;                      /* no spill outside the box */
+  margin: var(--block-gap) auto;  /* same vertical spacing as persona figure */
 }
 
-/* 2v3 layout */
+/* two columns; height is auto (no fixed vh height) */
 .stacks-2v3{
   display: grid;
-  grid-template-columns: var(--stack-col1) var(--stack-col2);
+  grid-template-columns: 1.1fr 0.9fr;  /* left column slightly wider, like before */
   column-gap: var(--stack-gap);
-  align-items: stretch;
-  height: var(--stack-h);                  /* shared total height, now shorter */
+  align-items: flex-start;
 }
 
-/* each column is a vertical stack with the SAME vertical gap */
+/* each column is a vertical stack of images */
 .stacks-2v3 .stack{
   display: flex;
   flex-direction: column;
   gap: var(--stack-gap);
-  height: 100%;
 }
 
-/* compute tile heights so the two columns match total height */
-.stacks-2v3 .col-2 .stack-tile{
-  height: calc((100% - var(--stack-gap)) / 2);
-}
-.stacks-2v3 .col-3 .stack-tile{
-  height: calc((100% - 2 * var(--stack-gap)) / 3);
-}
-
-/* rounded tiles that clip the image */
+/* rounded tiles; height driven by image aspect ratio */
 .stacks-2v3 .stack-tile{
   border-radius: 16px;
   overflow: hidden;
-  background: none;
+  background: #ffffff;
   line-height: 0;
 }
 
-/* fill the tile (no white space); crop as needed */
+/* images scale down, keep ratio, never crop */
 .stacks-2v3-figure .stack-tile > img{
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
   object-position: center;
   display: block;
 }
@@ -1504,11 +1490,6 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 @media (max-width: 720px){
   .stacks-2v3{
     grid-template-columns: 1fr;
-    height: auto;
-    row-gap: var(--stack-gap);
-  }
-  .stacks-2v3 .stack{
-    height: calc(var(--stack-h) * 0.7);
   }
 }
 
