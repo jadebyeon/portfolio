@@ -1139,6 +1139,37 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 /* If you ever want a specific tile NOT to crop, add class 'contain' to that app-card */
 .apps-grid .app-card.contain img{ object-fit: contain; background:#f3f4f6; }
 
+/* Deliverables link: same color as body text, mint on hover */
+.project-section .prose ul li a.nav-link{
+  color: inherit;             /* match other list items */
+  font-weight: inherit;
+  text-transform: none;
+  letter-spacing: normal;
+  padding: 0;
+  border-bottom: none;
+}
+
+.project-section .prose ul li a.nav-link:hover{
+  color: #13c4a3;             /* mint hover */
+}
+
+/* Project deliverable links: normal text color, mint on hover */
+.project-section .prose ul li a.nav-link,
+.project-section .prose ul li a.ext-link-mint {
+  color: inherit;            /* same as surrounding text */
+  font-weight: inherit;
+  text-transform: none;
+  letter-spacing: normal;
+  padding: 0;
+  border-bottom: none;
+}
+
+/* Hover state: mint */
+.project-section .prose ul li a.nav-link:hover,
+.project-section .prose ul li a.ext-link-mint:hover {
+  color: #13c4a3;            /* mint */
+}
+
 /* ==================== Project: UU Arts ==================== */
 /* ---- 2-up tiles: no crop, keep original aspect, rounded ---- */
 
