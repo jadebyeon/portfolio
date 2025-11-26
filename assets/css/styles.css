@@ -1513,6 +1513,27 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   }
 }
 
+/* smooth scroll for in-page anchors */
+html {
+  scroll-behavior: smooth;
+}
+
+/* base nav link style */
+.site-menu .nav-link {
+  color: #6b7280;                   /* grey */
+  text-decoration: none;
+  padding-bottom: 0.2rem;
+  border-bottom: 2px solid transparent;
+  transition: color 0.25s ease,     /* grey -> black */
+              border-color 0.25s ease;
+}
+
+/* active state (black + underline) */
+.site-menu .nav-link.active {
+  color: #111827;                   /* black */
+  border-color: #111827;
+}
+
 /* (keeps your earlier rules for columns/tiles/heights as-is) */
 
 /* ==================== MEDIA-QUERY SLOTS ==================== */
