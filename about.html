@@ -26,7 +26,7 @@
 
     <!-- Right: horizontal menu -->
     <ul class="site-menu">
-      <li><a class="nav-link" href="index.html/#portfolio">Work</a></li>
+      <li><a class="nav-link" href="index.html#portfolio">Work</a></li>
       <li><a class="nav-link active" href="about.html">About</a></li>
       <li><a class="nav-link" href="contact.html">Contact</a></li>
       <li><a class="nav-link" href="assets/pdf/Jade_Resume.pdf" target="_blank" rel="noopener">Resume</a></li>
@@ -36,25 +36,38 @@
 
   <!--==================== MAIN ====================-->
   <main class="main">
-
-    <!--==================== HOME / HERO ====================-->
+  <!--==================== ABOUT HERO ====================-->
     <section class="home section" id="home">
       <div class="home__container container grid">
+        <!-- LEFT: text -->
         <div class="home__data">
           <h1 class="home__title" style="max-width: 900px;">About Me</h1>
+
+          <!-- first line as its own paragraph -->
           <p class="home__subtitle" style="margin-top: 1rem;">
-            <span><strong>Hi, I'm Jade Byeon.</strong>I design at the intersection of evidence and expression, believing that motivation is a measurable design outcome. With a dual background in Art & Design and Statistics, I translate complex data into emotionally engaging, high-fidelity experiences—owning the full cycle from research and strategy to robust, gamified systems that build lasting habits.</span>
+            <strong>Hi, I'm Jade Byeon.</strong>
           </p>
-          <p class="home__subtitle" style="margin-top: 1rem;">
-            <span>I was born in Korea and have studied in China, Singapore, and the United States, which shapes my sensitivity to diverse users and contexts. I’m currently exploring how persuasive technology and physical-digital systems can be designed ethically for better human–technology interaction.</span>
+
+          <!-- second sentence in a new paragraph -->
+          <p class="home__subtitle" style="margin-top: 0.75rem;">
+            I design at the intersection of evidence and expression, believing that motivation is a measurable design outcome. With a dual background in Art &amp; Design and Statistics, I translate complex data into emotionally engaging, high-fidelity experiences—owning the full cycle from research and strategy to robust, gamified systems that build lasting habits.
           </p>
+
           <p class="home__subtitle" style="margin-top: 1rem;">
-            <span><strong>When I’m not designing</strong></span>
-            <span>You’ll find me watching films, listening to music, or reading.</span>
+            I was born in Korea and have studied in China, Singapore, and the United States, which shapes my sensitivity to diverse users and contexts. I’m currently exploring how persuasive technology and physical-digital systems can be designed ethically for better human–technology interaction.
+          </p>
+
+          <!-- split "When I'm not..." into two paragraphs -->
+          <p class="home__subtitle" style="margin-top: 1rem;">
+            <strong>When I’m not designing</strong>
+          </p>
+          <p class="home__subtitle" style="margin-top: 0.75rem;">
+            You’ll find me watching films, listening to music, or reading.
           </p>
         </div>
 
-         <div class="home__img about__hero-img">
+        <!-- RIGHT: image (same grid row as text) -->
+        <div class="home__img about__hero-img">
           <img
             src="assets/img/Linkedin_Profile Photo.JPG"
             alt="Jade Byeon"
