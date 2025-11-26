@@ -63,6 +63,65 @@ document.querySelectorAll('.footer__back').forEach(function (link) {
   });
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+  const footer = document.getElementById("footer");
+  const contactLink = document.querySelector('.site-menu .nav-link[href="#footer"]');
+  const workLink = document.querySelector('.site-menu .nav-link[href="#portfolio"]');
+
+  if (!footer || !contactLink) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // Footer in view → highlight Contact
+          contactLink.classList.add("active");
+          if (workLink) workLink.classList.remove("active");
+        } else {
+          // Footer out of view → go back to Work as default active
+          contactLink.classList.remove("active");
+          if (workLink) workLink.classList.add("active");
+        }
+      });
+    },
+    {
+      threshold: 0.35, // ~35% of footer visible
+    }
+  );
+
+  observer.observe(footer);
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const footer = document.getElementById("footer");
+  const contactLink = document.querySelector('.site-menu .nav-link[href="#footer"]');
+  const workLink = document.querySelector('.site-menu .nav-link[href="#portfolio"]');
+
+  if (!footer || !contactLink) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // Footer in view → highlight Contact
+          contactLink.classList.add("active");
+          if (workLink) workLink.classList.remove("active");
+        } else {
+          // Footer out of view → go back to Work as default active
+          contactLink.classList.remove("active");
+          if (workLink) workLink.classList.add("active");
+        }
+      });
+    },
+    {
+      threshold: 0.35, // ~35% of footer visible
+    }
+  );
+
+  observer.observe(footer);
+});
+
+
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -164,6 +223,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 /*==================== DARK LIGHT THEME ====================*/ 
+
 
 
 
