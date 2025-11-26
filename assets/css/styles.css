@@ -1003,131 +1003,6 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   .two-col-fit{ flex-direction: column; }
   .pair-tile{ max-width: 100%; }
 }
-/* ===== 2-up paired tiles (equal height, no crop, rounded) ===== */
-.paired-figure{
-  max-width: min(1200px, 90vw);
-  margin: var(--block-gap) auto;
-}
-
-/* one shared height for both columns; tweak per section if needed */
-:root{ --pair-h: clamp(360px, 50vh, 680px); }
-
-.paired-grid{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(12px, 2vw, 24px);
-  align-items: stretch;            /* tiles fill the row height */
-}
-
-.paired-tile{
-  height: var(--pair-h);           /* makes both columns same height */
-  border-radius: 16px;
-  overflow: hidden;
-  background: #fff;                /* subtle card; change/remove as needed */
-  line-height: 0;                  /* remove inline-img gap */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* keep original aspect; fill height; width adapts (no crop) */
-.paired-tile > img{
-  height: 100%;
-  width: auto;
-  object-fit: contain;             /* never crop */
-  display: block;
-}
-
-/* Dark “mat board” variant like your reference */
-.paired-figure.dark{
-  background: #1f2937;             /* near-slate */
-  border-radius: 24px;
-  padding: clamp(12px, 2vw, 24px);
-}
-
-/* mobile: stack columns; keep a slightly smaller shared height */
-@media (max-width: 700px){
-  .paired-grid{ grid-template-columns: 1fr; }
-  :root{ --pair-h: clamp(260px, 44vh, 520px); }
-}
-
-/* neutralize any prose defaults if this sits in .prose */
-.prose .paired-figure :is(figure, img, figcaption){ margin: 0 !important; }
-
-/* ============== 2v3 Equal-Height Stacks (no crop) ============== */
-.stacks-2v3-figure{
-  max-width: min(1200px, 90vw);
-  margin: var(--block-gap) auto;
-}
-
-/* shared vertical gap for BOTH columns */
-:root { --stack-gap: clamp(14px, 1.8vw, 22px); }
-
-.stacks-2v3{
-  display: grid;
-  grid-template-columns: 1fr 1fr;     /* widths will auto-adjust by content */
-  gap: var(--stack-gap);
-  align-items: stretch;               /* both columns same total height */
-}
-
-/* each column is a vertical flex stack with the same gap */
-.stacks-2v3 .stack{
-  display: flex;
-  flex-direction: column;
-  gap: var(--stack-gap);
-}
-
-/* Lock the row heights by count so the two columns match total height:
-   - 2 items: each gets 1/2 of the column height minus one gap
-   - 3 items: each gets 1/3 of the column height minus two gaps        */
-.stacks-2v3 .col-2 .stack-tile{
-  height: calc( (100% - var(--stack-gap)) / 2 );
-}
-.stacks-2v3 .col-3 .stack-tile{
-  height: calc( (100% - 2 * var(--stack-gap)) / 3 );
-}
-
-/* rounded “frames” that clip the image */
-.stacks-2v3 .stack-tile{
-  border-radius: 16px;
-  overflow: hidden;                   /* clean rounded edges */
-  background: #fff;                   /* optional white card */
-  line-height: 0;
-}
-
-/* CRITICAL: show full image, no crop, touch edges */
-.stacks-2v3 .stack-tile > img{
-  width: 100%;
-  height: 100%;
-  object-fit: contain !important;     /* never crop; overrides any 'cover' */
-  object-position: center;
-  display: block;
-  transform: translateZ(0);           /* avoids GPU blur on Safari */
-}
-
-/* Caption */
-.stacks-2v3-figure .figure-caption{
-  margin: 8px 0 var(--block-gap);
-  text-align: center;
-  color: var(--text-color-light);
-  font-size: clamp(12px, .9vw, 14px);
-}
-
-/* Responsive: stack columns on small screens */
-@media (max-width: 720px){
-  .stacks-2v3{ grid-template-columns: 1fr; }
-  /* on phones, keep visible proportions with a bit taller tiles */
-  .stacks-2v3 .col-2 .stack-tile{ height: calc( (100% - var(--stack-gap)) / 2 ); }
-  .stacks-2v3 .col-3 .stack-tile{ height: calc( (100% - 2 * var(--stack-gap)) / 3 ); }
-}
-
-/* ---- Fix for prior components that used 'object-fit: cover' ---- */
-.three-up-tile > img,
-.two-up-tile > img,
-.single-tile img {
-  object-fit: contain !important; /* ensure no crop leaks in */
-}
-
 
 /* ====== 5-up tiles: no crop, keep original aspect, rounded ====== */
 
@@ -1185,53 +1060,50 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   }
 }
 
-/* ===== 3-col fit: same height, no crop, rounded ===== */
-.three-col-fit-figure{
-  max-width: min(1200px, 80vw);
+/* === 3-col same-height, no-crop, rounded === */
+:root{ --fit-h: clamp(260px, 38vh, 420px); }   /* tweak tile height */
+
+.figure-80.three-col-fit-figure{
+  max-width: min(1300px, 90vw);
   margin: var(--block-gap) auto;
 }
 
-/* shared tile height for all three images */
-:root{ --fit3-h: clamp(260px, 42vh, 520px); }
-
 .three-col-fit{
-  display: flex;
-  gap: clamp(12px, 1.8vw, 24px);
-  align-items: stretch;          /* tiles share the same height */
-  justify-content: center;       /* center the row in the figure */
-  flex-wrap: nowrap;             /* keep them on one row (until responsive) */
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(12px, 2vw, 28px);
+  align-items: stretch;                      /* equal tile heights in row */
 }
 
-.three-col-fit .fit-tile{
-  height: var(--fit3-h);
+.fit-tile{
+  height: var(--fit-h);
   border-radius: 16px;
-  overflow: hidden;              /* clean rounded corners */
-  background: none;
-  line-height: 0;
+  overflow: hidden;                          /* clean rounded edges */
+  background: #fff;                          /* letterbox color */
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 auto;                /* width is dictated by the image aspect */
+  line-height: 0;                            /* kill inline-img gap */
 }
 
-/* image fills vertically, preserves aspect (no crop), can be wider if landscape */
-.three-col-fit .fit-tile > img{
-  height: 100%;
-  width: auto;                   /* <- keeps original aspect ratio */
-  object-fit: contain;           /* never crop */
+/* Keep original aspect; never crop */
+.fit-tile > img{
+  max-height: 100% !important;
+  max-width: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  object-position: center;
   display: block;
 }
 
-/* Responsive: allow wrapping to 2 then 1 column while keeping equal height */
-@media (max-width: 1024px){
-  .three-col-fit{ flex-wrap: wrap; }
+/* Responsive: 2 columns on tablets, 1 on phones */
+@media (max-width: 980px){
+  .three-col-fit{ grid-template-columns: repeat(2, minmax(0,1fr)); }
 }
-@media (max-width: 720px){
-  :root{ --fit3-h: clamp(220px, 40vh, 420px); }
-  .three-col-fit{ gap: clamp(10px, 2vw, 16px); }
-}
-@media (max-width: 560px){
-  :root{ --fit3-h: clamp(200px, 38vh, 360px); }
+@media (max-width: 640px){
+  .three-col-fit{ grid-template-columns: 1fr; }
+  :root{ --fit-h: clamp(220px, 36vh, 360px); }
 }
 
 
@@ -1253,7 +1125,122 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   border: 0;
 }
 
+/* ================= 2-up paired tiles (fill tile, rounded) ================= */
+.paired-figure{
+  max-width: min(1200px, 90vw);
+  margin: var(--block-gap) auto;
+}
 
+/* one shared height for both columns */
+:root{ --pair-h: clamp(360px, 50vh, 680px); }
+
+.paired-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(12px, 2vw, 24px);
+  align-items: stretch;
+  height: var(--pair-h);                 /* columns share the same height */
+}
+
+.paired-tile{
+  height: 100%;                          /* each tile fills column height */
+  border-radius: 16px;
+  overflow: hidden;
+  background: none;
+  line-height: 0;
+}
+
+.paired-figure .paired-tile > img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover !important;          /* fill tile; no white space */
+  object-position: center;
+  display: block;
+}
+
+/* mobile: stack columns */
+@media (max-width: 700px){
+  .paired-grid{
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .paired-tile{ height: var(--pair-h); }
+}
+
+
+/* ============== 2v3 Stacks (fill tile, first column wider) ============== */
+.stacks-2v3-figure{
+  max-width: min(1200px, 90vw);
+  margin: var(--block-gap) auto;
+}
+
+/* knobs */
+:root{
+  --stack-gap: clamp(14px, 1.8vw, 22px);        /* one consistent vertical gap */
+  --stack-h: clamp(520px, 62vh, 900px);         /* shared total height */
+  --stack-col1: 1.15fr;                         /* first column wider */
+  --stack-col2: 0.85fr;
+}
+
+.stacks-2v3{
+  display: grid;
+  grid-template-columns: var(--stack-col1) var(--stack-col2);
+  column-gap: var(--stack-gap);
+  align-items: stretch;
+  height: var(--stack-h);                       /* both columns same height */
+}
+
+/* each column is a vertical stack with the SAME vertical gap */
+.stacks-2v3 .stack{
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack-gap);
+  height: 100%;
+}
+
+/* compute tile heights so the two columns match total height */
+.stacks-2v3 .col-2 .stack-tile{                 /* column with 2 images */
+  height: calc((100% - var(--stack-gap)) / 2);
+}
+.stacks-2v3 .col-3 .stack-tile{                 /* column with 3 images */
+  height: calc((100% - 2 * var(--stack-gap)) / 3);
+}
+
+/* rounded tiles that clip the image */
+.stacks-2v3 .stack-tile{
+  border-radius: 16px;
+  overflow: hidden;
+  background: none;
+  line-height: 0;
+}
+
+/* fill the tile (no white space); keep ratio */
+.stacks-2v3-figure .stack-tile > img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover !important;                 /* fill tile; allow zoom */
+  object-position: center;
+  display: block;
+}
+
+/* captions */
+.stacks-2v3-figure .figure-caption{
+  margin: 8px 0 var(--block-gap);
+  text-align: center;
+  color: var(--text-color-light);
+  font-size: clamp(12px, .9vw, 14px);
+}
+
+/* responsive: stack columns; preserve per-column tile heights */
+@media (max-width: 720px){
+  .stacks-2v3{
+    grid-template-columns: 1fr;
+    height: auto;
+    row-gap: var(--stack-gap);
+  }
+  /* when stacked, keep pleasant heights */
+  .stacks-2v3 .stack{ height: var(--stack-h); }
+}
 
 /* ==================== MEDIA-QUERY SLOTS ==================== */
 /* For small devices  : @media (max-width: 640px){ ... }   */
