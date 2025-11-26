@@ -1440,26 +1440,30 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   }
 }
 
-/* ============== 2v3 Stacks (fill tile, first column wider) ============== */
-.stacks-2v3-figure{
-  max-width: min(1200px, 90vw);
+/* --- 2v3 stacks: same width as persona figure, shorter overall --- */
+
+/* knobs just for the stack */
+:root{
+  --stack-gap: clamp(10px, 1.2vw, 16px);   /* slightly tighter gap */
+  --stack-h: clamp(360px, 45vh, 520px);    /* smaller overall height */
+  --stack-col1: 1.1fr;                     /* first column a bit wider */
+  --stack-col2: 0.9fr;
+}
+
+/* use the same width as other figure-80 figures */
+.figure-80.stacks-2v3-figure{
+  /* figure-80 already centers it; we just inherit that width */
+  max-width: inherit;
   margin: var(--block-gap) auto;
 }
 
-/* knobs */
-:root{
-  --stack-gap: clamp(14px, 1.8vw, 22px);        /* one consistent vertical gap */
-  --stack-h: clamp(520px, 62vh, 900px);         /* shared total height */
-  --stack-col1: 1.15fr;                         /* first column wider */
-  --stack-col2: 0.85fr;
-}
-
+/* 2v3 layout */
 .stacks-2v3{
   display: grid;
   grid-template-columns: var(--stack-col1) var(--stack-col2);
   column-gap: var(--stack-gap);
   align-items: stretch;
-  height: var(--stack-h);                       /* both columns same height */
+  height: var(--stack-h);                  /* shared total height, now shorter */
 }
 
 /* each column is a vertical stack with the SAME vertical gap */
@@ -1471,10 +1475,10 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 
 /* compute tile heights so the two columns match total height */
-.stacks-2v3 .col-2 .stack-tile{                 /* column with 2 images */
+.stacks-2v3 .col-2 .stack-tile{
   height: calc((100% - var(--stack-gap)) / 2);
 }
-.stacks-2v3 .col-3 .stack-tile{                 /* column with 3 images */
+.stacks-2v3 .col-3 .stack-tile{
   height: calc((100% - 2 * var(--stack-gap)) / 3);
 }
 
@@ -1486,54 +1490,25 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   line-height: 0;
 }
 
-/* fill the tile (no white space); keep ratio */
+/* fill the tile (no white space); crop as needed */
 .stacks-2v3-figure .stack-tile > img{
   width: 100%;
   height: 100%;
-  object-fit: cover !important;                 /* fill tile; allow zoom */
+  object-fit: cover;
   object-position: center;
   display: block;
 }
 
-/* captions */
-.stacks-2v3-figure .figure-caption{
-  margin: 8px 0 var(--block-gap);
-  text-align: center;
-  color: var(--text-color-light);
-  font-size: clamp(12px, .9vw, 14px);
-}
-
-/* responsive: stack columns; preserve per-column tile heights */
+/* responsive: stack columns on small screens */
 @media (max-width: 720px){
   .stacks-2v3{
     grid-template-columns: 1fr;
     height: auto;
     row-gap: var(--stack-gap);
   }
-  /* when stacked, keep pleasant heights */
-  .stacks-2v3 .stack{ height: var(--stack-h); }
-}
-
-/* --- keep layout exactly as before, but prevent overlap with text --- */
-.stacks-2v3-figure{
-  /* it’s a standalone block that clears any floated content above it */
-  display: block;
-  clear: both;
-  margin: var(--block-gap) auto;
-  position: relative;
-  isolation: isolate;        /* new stacking context so nothing sits on top */
-  z-index: 1;                /* ensure it paints above background elements */
-}
-
-/* give a little extra breathing room when it follows prose */
-.prose * + .stacks-2v3-figure{
-  margin-top: clamp(24px, 4vw, 56px);
-}
-
-/* if any headings above are sticky/absolute, keep the figure below them */
-.stacks-2v3-figure .stacks-2v3{
-  position: relative;
-  z-index: 1;
+  .stacks-2v3 .stack{
+    height: calc(var(--stack-h) * 0.7);
+  }
 }
 
 /* (keeps your earlier rules for columns/tiles/heights as-is) */
