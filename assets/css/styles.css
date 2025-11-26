@@ -1518,22 +1518,46 @@ html {
   scroll-behavior: smooth;
 }
 
-/* base nav link style */
+/* ---------- HEADER NAV ---------- */
+
+.site-menu {
+  list-style: none;
+  display: flex;
+  gap: 3rem;                 /* adjust spacing between items if you like */
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
 .site-menu .nav-link {
-  color: #6b7280;                   /* grey */
+  position: relative;
+  color: #6b7280;            /* grey */
   text-decoration: none;
+  font-weight: 500;
   padding-bottom: 0.2rem;
-  border-bottom: 2px solid transparent;
-  transition: color 0.25s ease,     /* grey -> black */
-              border-color 0.25s ease;
+  transition: color 0.25s ease;
 }
 
-/* active state (black + underline) */
+/* single underline that animates in */
+.site-menu .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.4rem;
+  width: 0;
+  height: 2px;
+  background-color: #111827; /* black */
+  transition: width 0.25s ease;
+}
+
+/* active state: black text + full-width underline */
 .site-menu .nav-link.active {
-  color: #111827;                   /* black */
-  border-color: #111827;
+  color: #111827;
 }
 
+.site-menu .nav-link.active::after {
+  width: 100%;
+}
 /* (keeps your earlier rules for columns/tiles/heights as-is) */
 
 /* ==================== MEDIA-QUERY SLOTS ==================== */
