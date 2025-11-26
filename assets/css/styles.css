@@ -1125,35 +1125,43 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   border: 0;
 }
 
-/* ================= 2-up paired tiles (fill tile, rounded) ================= */
+/* ================= 2-up paired tiles (flexible ratio, same height) ================= */
 .paired-figure{
   max-width: min(1200px, 90vw);
   margin: var(--block-gap) auto;
 }
 
-/* one shared height for both columns */
-:root{ --pair-h: clamp(360px, 50vh, 680px); }
+/* * 1. Remove the fixed height variable --pair-h 
+ * :root{ --pair-h: clamp(360px, 50vh, 680px); } 
+ */
 
 .paired-grid{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex; /* Use flexbox to easily align items and make them the same height */
+  /* grid-template-columns: 1fr 1fr;  -- Remove this */
   gap: clamp(12px, 2vw, 24px);
-  align-items: stretch;
-  height: var(--pair-h);                 /* columns share the same height */
+  align-items: stretch; /* Ensures tiles stretch to the height of the tallest item */
+  /* height: var(--pair-h); -- Remove this */
+  height: auto;
 }
 
 .paired-tile{
-  height: 100%;                          /* each tile fills column height */
+  height: auto; /* Allow height to be determined by content */
+  flex-grow: 1; /* Allows the tiles to share the available horizontal space */
   border-radius: 16px;
   overflow: hidden;
-  background: none;
+  background: #f0f0f0; /* Optional: Add a subtle background color for the tile */
   line-height: 0;
+  
+  /* Container setup to handle the image ratio */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .paired-figure .paired-tile > img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover !important;          /* fill tile; no white space */
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* CRITICAL: Prevents cropping and maintains aspect ratio */
   object-position: center;
   display: block;
 }
@@ -1161,12 +1169,23 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 /* mobile: stack columns */
 @media (max-width: 700px){
   .paired-grid{
+    display: grid; /* Revert to a simple grid layout for stacking */
     grid-template-columns: 1fr;
     height: auto;
   }
-  .paired-tile{ height: var(--pair-h); }
-}
+  
+  .paired-tile{ 
+    height: auto; /* No fixed height in mobile view */
+    /* You might want to remove the fixed height setting from the original CSS: 
+    height: var(--pair-h); */
+  }
 
+  /* Optional: If you want tiles to stack but maintain their intrinsic height */
+  .paired-figure .paired-tile > img{
+    width: 100%;
+    height: auto;
+  }
+}
 
 /* ============== 2v3 Stacks (fill tile, first column wider) ============== */
 .stacks-2v3-figure{
