@@ -1125,38 +1125,31 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   border: 0;
 }
 
-/* ================= 2-up paired tiles (flexible ratio, fill tile, same height) ================= */
+/* ================= 2-up paired tiles (Flexible Height & Width, Fill Tile) ================= */
 .paired-figure{
-  max-width: min(1200px, 90vw);
+  max-width: min(1200px, 90vw); /* Uses viewport width (vw) for flexible max-width */
   margin: var(--block-gap) auto;
 }
 
-/* --- Fixed Height Variable REMOVED --- */
-/* (We rely on the tallest content to set the height) */
-
 .paired-grid{
-  display: flex; /* CRITICAL: Use flexbox for flexible width and equal height */
-  gap: clamp(12px, 2vw, 24px);
-  align-items: stretch; /* CRITICAL: Ensures tiles stretch to the height of the tallest item */
-  height: auto;
+  display: flex; 
+  gap: clamp(12px, 2vw, 24px); /* Uses viewport width (vw) for flexible gap */
+  align-items: stretch; /* CRITICAL: Ensures tiles share the height of the tallest image */
+  height: auto; /* IMPORTANT: Height is derived from content, not a fixed number */
 }
 
 .paired-tile{
-  /* The flex property determines how the tile grows/shrinks */
   flex: 1; 
-  /* CRITICAL FIX: The height MUST be 100% to inherit the stretched height 
-     from the .paired-grid (due to align-items: stretch) */
-  height: 100%; 
+  height: 100%; /* Tile inherits the stretched height from the grid */
   border-radius: 16px;
   overflow: hidden;
-  background: none;
   line-height: 0;
 }
 
 .paired-figure .paired-tile > img{
   width: 100%;
   height: 100%;
-  object-fit: cover !important; /* CRITICAL: Fills the entire tile; will crop the image */
+  object-fit: cover !important; /* Image fills the flexible tile area */
   object-position: center;
   display: block;
 }
@@ -1164,20 +1157,12 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 /* mobile: stack columns */
 @media (max-width: 700px){
   .paired-grid{
-    display: grid; /* Revert to a simple grid layout for stacking */
+    display: grid; 
     grid-template-columns: 1fr;
     height: auto;
   }
   .paired-tile{ 
-    /* CRITICAL FIX for mobile: Since the grid stacks, height is no longer shared. 
-       We must let the image define the tile height here, which means 
-       the image's aspect ratio will dictate the height of the stacked tile. */
-    height: auto; 
-  }
-  .paired-figure .paired-tile > img{
-    /* In stacked view, allow the image to set the height while filling the width */
-    height: auto; 
-    object-fit: cover !important; 
+    height: auto; /* When stacked, the tile height is determined by the image's aspect ratio */
   }
 }
 
