@@ -1125,44 +1125,48 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   border: 0;
 }
 
-/* ================= 2-up paired tiles (Flexible, No Crop) ================= */
+/* ========== 2-up paired tiles – same height, no crop, no empty space ========== */
+
 .paired-figure{
-  max-width: min(1200px, 90vw);
   margin: var(--block-gap) auto;
+  text-align: center;            /* keeps caption centered */
 }
 
+/* shrink-to-fit row that’s just as wide as its images */
 .paired-grid{
-  display: flex;
+  display: inline-flex;
   gap: clamp(12px, 2vw, 24px);
-  align-items: stretch; /* row height is shared */
+  align-items: flex-start;
 }
 
-/* each tile’s width/height will be set inline by JS */
+/* override inline flex="1"/"2" so width comes only from aspect ratio */
 .paired-tile{
   margin: 0;
   padding: 0;
   border-radius: 16px;
   overflow: hidden;
   line-height: 0;
-  flex: 0 0 auto; /* prevent weird flex reflow; width comes from JS */
+  flex: 0 0 auto !important;     /* important beats inline flex values */
 }
 
+/* KEY PART:
+   – same height for both images in the row
+   – width auto → preserves original aspect ratio
+   – tile exactly matches the image → no crop, no empty space
+*/
 .paired-figure .paired-tile > img{
-  width: 100%;
-  height: 100%;
   display: block;
-  /* no object-fit needed: JS makes tile match image aspect ratio */
+  height: clamp(260px, 40vw, 420px);  /* shared row height, responsive */
+  width: auto;
 }
 
-/* mobile: stack columns, let images use natural ratio */
+/* Mobile: stack and just use full width */
 @media (max-width: 700px){
   .paired-grid{
-    display: grid;
-    grid-template-columns: 1fr;
+    display: block;
   }
-  .paired-tile{
-    height: auto !important;
-    flex: 1 1 auto !important;
+  .paired-tile + .paired-tile{
+    margin-top: clamp(12px, 2vw, 24px);
   }
   .paired-figure .paired-tile > img{
     width: 100%;
