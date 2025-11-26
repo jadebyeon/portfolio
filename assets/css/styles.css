@@ -1125,43 +1125,38 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   border: 0;
 }
 
-/* ================= 2-up paired tiles (flexible ratio, same height) ================= */
+/* ================= 2-up paired tiles (flexible ratio, fill tile, same height) ================= */
 .paired-figure{
   max-width: min(1200px, 90vw);
   margin: var(--block-gap) auto;
 }
 
-/* * 1. Remove the fixed height variable --pair-h 
- * :root{ --pair-h: clamp(360px, 50vh, 680px); } 
- */
+/* Remove fixed height: :root{ --pair-h: clamp(360px, 50vh, 680px); } */
 
 .paired-grid{
-  display: flex; /* Use flexbox to easily align items and make them the same height */
-  /* grid-template-columns: 1fr 1fr;  -- Remove this */
+  display: flex; /* Use flexbox for flexible width and equal height */
   gap: clamp(12px, 2vw, 24px);
-  align-items: stretch; /* Ensures tiles stretch to the height of the tallest item */
-  /* height: var(--pair-h); -- Remove this */
+  align-items: stretch; /* CRITICAL: Ensures tiles stretch to the height of the tallest item */
   height: auto;
 }
 
 .paired-tile{
-  height: auto; /* Allow height to be determined by content */
-  flex-grow: 1; /* Allows the tiles to share the available horizontal space */
+  /* The flex property determines how the tile grows/shrinks */
+  /* This value can be adjusted (e.g., flex: 2 1 auto; for the first tile to be wider) 
+     but 'flex: 1' makes them distribute width equally by default. 
+     The final width will be a compromise determined by the image sizes. */
+  flex: 1; 
+  height: auto; /* Height is determined by the content and shared via align-items: stretch */
   border-radius: 16px;
   overflow: hidden;
-  background: #f0f0f0; /* Optional: Add a subtle background color for the tile */
+  background: none;
   line-height: 0;
-  
-  /* Container setup to handle the image ratio */
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .paired-figure .paired-tile > img{
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain; /* CRITICAL: Prevents cropping and maintains aspect ratio */
+  width: 100%;
+  height: 100%;
+  object-fit: cover !important; /* CRITICAL: Fills the entire tile; will crop the image */
   object-position: center;
   display: block;
 }
@@ -1173,17 +1168,9 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
     grid-template-columns: 1fr;
     height: auto;
   }
-  
   .paired-tile{ 
-    height: auto; /* No fixed height in mobile view */
-    /* You might want to remove the fixed height setting from the original CSS: 
-    height: var(--pair-h); */
-  }
-
-  /* Optional: If you want tiles to stack but maintain their intrinsic height */
-  .paired-figure .paired-tile > img{
-    width: 100%;
-    height: auto;
+    /* You might define a minimum height here if needed, e.g., min-height: 250px; */
+    height: auto; 
   }
 }
 
