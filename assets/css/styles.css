@@ -216,12 +216,21 @@ img { max-width: 100%; height: auto; }
   grid-template-columns: 1fr;
   gap: clamp(16px, 3vw, 32px);
 }
+
 @media (min-width: 768px){
-  .portfolio .container{ grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .portfolio .container{
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* two equal columns */
+    gap: 2rem;
+  }
 }
 
-/* Card content */
-.portfolio__content{ display: flex; flex-direction: column; gap: .75rem; }
+/* allow cards to shrink inside the grid cell */
+.portfolio__content{
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;                 /* <— important so tags can’t force width */
+}
 .portfolio__data{ padding-top: .25rem; }
 .portfolio__title{ font-size: 1.125rem; line-height: 1.25; }
 .portfolio__description{ color: var(--text-color); font-size: var(--small-font-size); }
@@ -317,6 +326,32 @@ img { max-width: 100%; height: auto; }
   border-radius: 4px;
 }
 
+.portfolio__tags{
+  list-style: none;
+  padding-left: 0;
+  margin: 0.75rem 0;
+  display: flex;
+  flex-wrap: wrap;              /* <— was nowrap / overflow-x */
+  gap: 0.45rem 0.6rem;
+}
+
+.portfolio__tags .tag{
+  --mint-outline: #13c4a3;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  border: 1.2px solid var(--mint-outline);
+  background-color: #ffffff;
+  color: #4b5563;
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;          /* tag text stays on a single line */
+  line-height: 1;
+}
 
 /*==================== FOOTER – LET'S TALK ====================*/
 
