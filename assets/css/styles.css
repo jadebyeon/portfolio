@@ -368,7 +368,7 @@ img { max-width: 100%; height: auto; }
 
 /* hover state – mint */
 .footer__back:hover {
-  color: #ffffff;                      /* dark mint text */
+  color: #064e3b;                     /* dark mint text */
 }
 
 .footer__back:hover .footer__back-circle {
