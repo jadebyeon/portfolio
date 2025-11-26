@@ -1444,16 +1444,18 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 
 /* knobs just for the stack */
 :root{
-  --stack-gap: clamp(10px, 1.2vw, 16px);   /* slightly tighter gap */
-  --stack-h: clamp(360px, 45vh, 520px);    /* smaller overall height */
-  --stack-col1: 1.1fr;                     /* first column a bit wider */
+  --stack-gap: clamp(10px, 1.2vw, 16px);
+  --stack-h: clamp(320px, 40vh, 440px);  /* a bit shorter to avoid crowding */
+  --stack-col1: 1.1fr;
   --stack-col2: 0.9fr;
 }
 
-/* use the same width as other figure-80 figures */
+/* keep the SAME width as other figure-80 figures */
 .figure-80.stacks-2v3-figure{
-  max-width: min(1200px, 80vw);   /* same as .figure-80 / two-col-fit-figure */
-  margin: var(--block-gap) auto;  /* centered with same vertical spacing */
+  max-width: min(1200px, 80vw);          /* match .two-col-fit-figure */
+  width: 100%;
+  margin: var(--block-gap) auto;         /* same vertical spacing */
+  overflow: hidden;                      /* no spill outside the box */
 }
 
 /* 2v3 layout */
