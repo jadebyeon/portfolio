@@ -325,9 +325,10 @@ img { max-width: 100%; height: auto; }
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-size: clamp(4rem, 18vw, 9rem);
+  font-size: clamp(3.8rem, 11vw, 7rem);
   line-height: 0.9;
-  color: rgba(15, 23, 42, 0.06);            /* very light gray */
+  color: rgba(15, 23, 42, 0.06);  
+  white-space: nowrap;   /* very light gray */
 }
 
 /* BACK TO TOP pill + circle on the right */
@@ -342,6 +343,8 @@ img { max-width: 100%; height: auto; }
   letter-spacing: 0.16em;
   color: #111827;
   white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.2s ease;
 }
 
 .footer__back-label {
@@ -361,6 +364,17 @@ img { max-width: 100%; height: auto; }
 
 .footer__back-circle i {
   font-size: 1.2rem;
+}
+
+/* hover state – mint */
+.footer__back:hover {
+  color: #ffffff;                      /* dark mint text */
+}
+
+.footer__back:hover .footer__back-circle {
+  background-color: var(--mint-color);          /* mint fill (same as buttons) */
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.18);
+  transform: translateY(-1px);
 }
 
 /* ---------- bottom row (buttons + credits) ---------- */
@@ -406,7 +420,7 @@ img { max-width: 100%; height: auto; }
 .footer__btn:hover {
   background-color: var(--mint-color);
   border-color: #10b981;
-  color: #064e3b;
+  color: #ffffff;
   transform: translateY(-1px);
   box-shadow: 0 8px 18px rgba(15, 23, 42, 0.18);
 }
@@ -451,6 +465,7 @@ img { max-width: 100%; height: auto; }
 
   .footer__title {
     font-size: clamp(3rem, 16vw, 4.5rem);
+    white-space: normal;  
   }
 }
 
