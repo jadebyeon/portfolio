@@ -51,6 +51,22 @@ document.addEventListener('DOMContentLoaded', () => {
   if (initialId) setActive(initialId);
 });
 
+/* Smooth scroll for footer back buttons */
+document.querySelectorAll('.footer__back[data-target]').forEach(function (link) {
+  link.addEventListener('click', function (e) {
+    var targetId = link.getAttribute('data-target');
+    var targetEl = document.getElementById(targetId);
+    if (!targetEl) return;
+
+    e.preventDefault(); // in case template JS blocks default anchors
+
+    targetEl.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  });
+});
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   const grids = Array.from(document.querySelectorAll(".paired-figure .paired-grid"));
@@ -151,6 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 /*==================== DARK LIGHT THEME ====================*/ 
+
 
 
 
