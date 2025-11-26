@@ -1242,6 +1242,30 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   .stacks-2v3 .stack{ height: var(--stack-h); }
 }
 
+/* --- keep layout exactly as before, but prevent overlap with text --- */
+.stacks-2v3-figure{
+  /* it’s a standalone block that clears any floated content above it */
+  display: block;
+  clear: both;
+  margin: var(--block-gap) auto;
+  position: relative;
+  isolation: isolate;        /* new stacking context so nothing sits on top */
+  z-index: 1;                /* ensure it paints above background elements */
+}
+
+/* give a little extra breathing room when it follows prose */
+.prose * + .stacks-2v3-figure{
+  margin-top: clamp(24px, 4vw, 56px);
+}
+
+/* if any headings above are sticky/absolute, keep the figure below them */
+.stacks-2v3-figure .stacks-2v3{
+  position: relative;
+  z-index: 1;
+}
+
+/* (keeps your earlier rules for columns/tiles/heights as-is) */
+
 /* ==================== MEDIA-QUERY SLOTS ==================== */
 /* For small devices  : @media (max-width: 640px){ ... }   */
 /* For medium devices : @media (min-width: 768px){ ... }   */
