@@ -1452,9 +1452,8 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 
 /* use the same width as other figure-80 figures */
 .figure-80.stacks-2v3-figure{
-  /* figure-80 already centers it; we just inherit that width */
-  max-width: inherit;
-  margin: var(--block-gap) auto;
+  max-width: min(1200px, 80vw);   /* same as .figure-80 / two-col-fit-figure */
+  margin: var(--block-gap) auto;  /* centered with same vertical spacing */
 }
 
 /* 2v3 layout */
