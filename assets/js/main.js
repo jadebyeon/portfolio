@@ -51,6 +51,72 @@ document.addEventListener('DOMContentLoaded', () => {
   if (initialId) setActive(initialId);
 });
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const grids = Array.from(document.querySelectorAll(".paired-figure .paired-grid"));
+  if (!grids.length) return;
+
+  function layoutGrid(grid) {
+    const tiles = Array.from(grid.querySelectorAll(".paired-tile"));
+    const imgs  = tiles.map(t => t.querySelector("img")).filter(Boolean);
+    if (!imgs.length) return;
+
+    const isMobile = window.innerWidth <= 700;
+    if (isMobile) {
+      // let CSS handle stacked layout
+      tiles.forEach(tile => {
+        tile.style.height   = "";
+        tile.style.flex     = "";
+        tile.style.flexBasis = "";
+      });
+      return;
+    }
+
+    const width = grid.clientWidth;
+    if (!width) return;
+
+    const gapPx = parseFloat(getComputedStyle(grid).gap) || 0;
+    const aspects = imgs.map(img => {
+      const ar = img.naturalWidth && img.naturalHeight
+        ? img.naturalWidth / img.naturalHeight
+        : 1;
+      return ar;
+    });
+
+    const aspectSum = aspects.reduce((a, b) => a + b, 0);
+    const totalGap  = gapPx * (imgs.length - 1);
+    const rowHeight = (width - totalGap) / aspectSum; // common height
+
+    tiles.forEach((tile, i) => {
+      const tileWidth = rowHeight * aspects[i];
+      tile.style.height = rowHeight + "px";
+      tile.style.flex   = "0 0 " + tileWidth + "px";
+    });
+  }
+
+  function layoutAll() {
+    grids.forEach(layoutGrid);
+  }
+
+  // wait for images to load so naturalWidth/Height are available
+  const promises = [];
+  grids.forEach(grid => {
+    grid.querySelectorAll("img").forEach(img => {
+      if (img.complete && img.naturalWidth) return;
+      promises.push(new Promise(resolve => {
+        img.addEventListener("load", resolve, { once: true });
+        img.addEventListener("error", resolve, { once: true });
+      }));
+    });
+  });
+
+  Promise.all(promises).then(() => {
+    layoutAll();
+    window.addEventListener("resize", layoutAll);
+  });
+});
+</script>
+
 
 /*===== MENU HIDDEN =====*/
 /* Validate if constant exists */
@@ -85,5 +151,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 /*==================== DARK LIGHT THEME ====================*/ 
+
 
 
