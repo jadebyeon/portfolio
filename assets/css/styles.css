@@ -87,34 +87,39 @@ body {
 h1, h2, h3, h4 { color: var(--title-color); font-weight: var(--font-semi-bold); }
 .site-menu{ list-style: none; }
 /* portfolio tags container */
+/* portfolio tags container */
 .portfolio__tags{
   list-style: none;
   padding-left: 0;
-  margin: 0.75rem 0;                 /* equal space above & below tags row */
+  margin: 0.6rem 0 0.4rem;
   display: flex;
-  flex-wrap: nowrap;
-  gap: 0.45rem 0.6rem;
-  overflow-x: auto;  
+  flex-wrap: nowrap;         /* stay on one line */
+  gap: 0.25rem 0.4rem;       /* tighter gaps so they fit */
+  overflow-x: visible;       /* don't grow the card / no scrolling */
 }
 
 /* pill-style tag (no hover effect) */
 .portfolio__tags .tag{
-  --mint-outline: #13c4a3;           /* mint outline color */
+  --mint-outline: #13c4a3;   /* mint outline color */
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.55rem 1.35rem;          /* same padding top & bottom */
+
+  /* smaller padding so three tags fit inside half-width cards */
+  padding: 0.32rem 0.8rem;
+
   border-radius: 999px;
-  border: 1.3px solid var(--mint-outline);
+  border: 1.2px solid var(--mint-outline);
   background-color: #ffffff;
-  color: #111827;
-  font-size: 0.5rem;
-  letter-spacing: 0.14em;
+
+  color: #4b5563;            /* requested text color */
+  font-size: 0.62rem;        /* smaller font */
+  letter-spacing: 0.12em;    /* a bit tighter than before */
   text-transform: uppercase;
-  white-space: wrap;
+  white-space: nowrap;       /* keep each tag itself on one line */
   text-decoration: none;
-  line-height: 1;                    /* keeps text vertically centered */
+  line-height: 1;            /* vertical centering */
 }
 a { text-decoration: none; }
 img { max-width: 100%; height: auto; }
