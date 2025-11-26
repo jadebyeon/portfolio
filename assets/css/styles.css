@@ -520,6 +520,10 @@ img { max-width: 100%; height: auto; }
   align-items: center;
 }
 
+.project-pager__next{
+  margin-left: auto;
+}
+
 .project-pager__link {
   display: inline-flex;
   align-items: center;
