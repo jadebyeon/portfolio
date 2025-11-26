@@ -1492,27 +1492,38 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
     grid-template-columns: 1fr;
   }
 }
-/* About page hero image: small, same column width as text */
-.about__hero-img{
-  display: flex;
-  justify-content: center;
+/* ===== About page hero: text + photo side-by-side ===== */
+.about-grid{
+  display: grid; /* already set by .grid, but safe to repeat */
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr);
+  column-gap: clamp(2.5rem, 5vw, 4rem);
   align-items: center;
 }
 
+/* photo on the right */
+.about__hero-img{
+  justify-self: end;
+}
+
+/* keep photo small, same visual weight as text column */
 .about__hero-img img{
-  max-width: 360px;       /* controls how small the image is */
+  max-width: 360px;
   width: 100%;
   height: auto;
+  border-radius: 24px;
   display: block;
 }
 
-/* optional: tighten spacing a bit on wide screens */
-@media (min-width: 768px){
-  .home__container{
-    align-items: center;
+/* Mobile: stack text above image again */
+@media (max-width: 900px){
+  .about-grid{
+    grid-template-columns: 1fr;
+    row-gap: 2.5rem;
+  }
+  .about__hero-img{
+    justify-self: center;
   }
 }
-
 /* smooth scroll for in-page anchors */
 html {
   scroll-behavior: smooth;
