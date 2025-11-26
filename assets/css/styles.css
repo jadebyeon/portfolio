@@ -283,6 +283,173 @@ img { max-width: 100%; height: auto; }
   border-radius: 4px;
 }
 
+
+/*==================== FOOTER – LET'S TALK BLOCK ====================*/
+
+.footer {
+  background-color: #f3f4f6;                 /* light cool gray */
+  margin-top: clamp(4rem, 8vw, 6rem);
+  padding: clamp(3rem, 6vw, 5rem) 0 2.75rem;
+  color: #111827;
+}
+
+.footer__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* top row */
+
+.footer__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2.5rem;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.footer__headline {
+  max-width: 640px;
+}
+
+.footer__eyebrow {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #4b5563;
+}
+
+.footer__title {
+  margin: 0;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: clamp(3rem, 10vw, 6rem);
+  line-height: 0.9;
+  color: rgba(15, 23, 42, 0.08);            /* big light text */
+}
+
+/* back-to-top */
+
+.footer__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  color: #111827;
+  white-space: nowrap;
+}
+
+.footer__back-label {
+  margin-top: 0.1rem;
+}
+
+.footer__back-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid #111827;
+  background-color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer__back-circle i {
+  font-size: 1.2rem;
+}
+
+/* bottom row */
+
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* pill buttons */
+
+.footer__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 2.1rem;
+  border-radius: 999px;
+  border: 1px solid #111827;
+  background-color: #ffffff;
+  color: #111827;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease,
+              transform 0.15s ease, box-shadow 0.15s ease;
+  border-width: 1.4px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.footer__btn:hover {
+  background-color: var(--mint-color);
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.15);
+}
+
+.footer__meta {
+  text-align: right;
+  font-size: 0.9rem;
+  color: #4b5563;
+}
+
+.footer__meta p {
+  margin: 0;
+}
+
+/* hide old floating scroll-up, since back-to-top lives in footer now */
+.scrollup {
+  display: none !important;
+}
+
+/* Responsive footer layout */
+
+@media (max-width: 768px) {
+  .footer__top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer__back {
+    align-self: flex-end;
+  }
+
+  .footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer__meta {
+    text-align: left;
+    margin-top: 1rem;
+  }
+
+  .footer__title {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+  }
+}
+
+
 /* ========== Project pager (prev / next) ========== */
 
 .project-pager {
