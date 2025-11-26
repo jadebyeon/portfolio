@@ -315,7 +315,7 @@ img { max-width: 100%; height: auto; }
 }
 
 .project-pager__link:hover {
-  color: var(--first-color);
+  color: var(--mint-color);
 }
 
 @media (max-width: 640px) {
