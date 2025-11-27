@@ -289,6 +289,9 @@ img { max-width: 100%; height: auto; }
   --mint-color: hsl(168, 68%, 44%);   /* tweak if you want it lighter/darker */
 }
 
+.text-mint{
+  color: var(--mint-color);              /* or var(--accent-color) if you have one */
+}
 /* Mint underlined external link that doesn't change after visit */
 .ext-link-mint{
   color: var(--mint-color) !important;
