@@ -125,19 +125,18 @@ h1, h2, h3, h4, h5,
 }
 
 .home__title {
-  font-size: clamp(2.2rem, 5vw, 4rem) !important;
-  line-height: 1.08 !important;
+  font-family: "ClashGrotesk", "Inter", sans-serif;
+  font-size: clamp(3rem, 5.6vw, 5.4rem);
+  font-weight: 500; /* Medium */
+  line-height: 1.1;
   letter-spacing: -0.025em;
-  font-weight: 600;
-  max-width: 100% !important;
+  max-width: 12.5ch;
+  color: #1f1f29;
+  text-wrap: balance;
 }
 
-.home__subtitle {
-  font-size: clamp(0.85rem, 1.1vw, 0.95rem);
-  font-family: var(--body-font);
-  color: var(--text-color);
-  margin-top: 1.25rem;
-  line-height: 1.7;
+.text-mint {
+  font-weight: 600; /* Semibold */
 }
 .site-menu{ list-style: none; }
 /* portfolio tags container */
