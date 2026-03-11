@@ -129,8 +129,8 @@ h1, h2, h3, h4, h5,
   font-size: clamp(3rem, 5.6vw, 5.4rem);
   font-weight: 500; /* Medium */
   line-height: 1.1;
-  letter-spacing: -0.025em;
-  max-width: 12.5ch;
+  letter-spacing: -0.012em;
+  max-width: 13ch;
   color: #1f1f29;
   text-wrap: balance;
 }
@@ -2049,12 +2049,18 @@ html {
 }
 
 .portfolio__title {
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  color: var(--title-color);
   margin: 0;
-  line-height: 1.2;
+  font-family: "ClashGrotesk", "Inter", sans-serif;
+  font-size: clamp(1.5rem, 1.8vw, 1.9rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: #1f1f29;
+}
+
+.portfolio__title-link {
+  color: inherit;
+  text-decoration: none;
 }
 
 .portfolio__title a,
