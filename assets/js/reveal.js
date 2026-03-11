@@ -46,23 +46,23 @@ document.addEventListener("DOMContentLoaded", () => {
         Array.from(document.querySelectorAll(selector))
       )
     )
-  ).filter((el) => {
-    if (!el) return false;
-    if (el.classList.contains("reveal-up")) return false;
-    return true;
-  });
+  ).filter(Boolean);
 
   if (!targets.length) return;
 
+  const staggerMatch =
+    "h1, h2, h3, h4, p, ul, ol, figure, .meta-item, .portfolio__content, .two-up-tile, .single-tile, .paired-tile, .project__lede";
+
   targets.forEach((el) => {
-    el.classList.add("reveal-up");
+    if (!el.classList.contains("reveal-up")) {
+      el.classList.add("reveal-up");
+    }
 
     const parent = el.parentElement;
     if (!parent) return;
 
-    const siblings = Array.from(parent.children).filter(
-      (child) =>
-        child.matches("h1, h2, h3, h4, p, ul, ol, figure, .meta-item, .portfolio__content, .two-up-tile, .single-tile, .paired-tile, .project__lede")
+    const siblings = Array.from(parent.children).filter((child) =>
+      child.matches(staggerMatch)
     );
 
     const index = siblings.indexOf(el);
@@ -71,11 +71,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  const reveal = (el) => {
+    el.classList.add("is-visible");
+  };
+
+  if (!("IntersectionObserver" in window)) {
+    targets.forEach(reveal);
+    return;
+  }
+
   const observer = new IntersectionObserver(
     (entries, obs) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
+          reveal(entry.target);
           obs.unobserve(entry.target);
         }
       });
@@ -87,4 +96,13 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   targets.forEach((el) => observer.observe(el));
+
+  /* reveal anything already in the first viewport */
+  requestAnimationFrame(() => {
+    targets.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight * 0.95 && rect.bottom > 0;
+      if (inView) reveal(el);
+    });
+  });
 });
