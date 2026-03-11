@@ -127,7 +127,7 @@ h1, h2, h3, h4, h5,
 .home__title {
   font-family: "ClashGrotesk", "Inter", sans-serif;
   font-size: clamp(3rem, 5.6vw, 5.4rem);
-  font-weight: 500; /* Medium */
+  font-weight: 600; /* Medium */
   line-height: 1.1;
   letter-spacing: -0.012em;
   max-width: 13ch;
@@ -1749,8 +1749,8 @@ html {
 .persona-tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1.75rem;
+  gap: 0.4rem;
+  margin-bottom: 2.25rem;
 }
 
 .persona-tab {
@@ -1824,7 +1824,15 @@ html {
 
 /* Hero: less dead space above the tabs/headline */
 .home.section {
-  padding-top: calc(var(--hero-top) * 0.55 + var(--section-vspace));
+  padding-top: calc(var(--header-height) + clamp(3rem, 5vh, 5rem));
+  padding-bottom: clamp(3rem, 6vh, 6rem);
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+}
+
+.home__container {
+  width: 100%;
 }
 
 /* Hero title: scales fluidly with screen width */
