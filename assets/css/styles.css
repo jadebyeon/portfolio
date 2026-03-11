@@ -1787,6 +1787,82 @@ html {
     gap: 2.5rem;
   }
 }
+
+/* ===== PROBLEM / SOLUTION ROW ===== */
+.problem-solution-row {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 2.5rem;
+  align-items: start;
+  padding: 2rem 0;
+}
+
+.ps-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mint-color);
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+}
+
+.ps-text {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--title-color);
+}
+
+.ps-divider {
+  background: #e5e7eb;
+  height: 100%;
+  min-height: 80px;
+}
+
+@media (max-width: 680px) {
+  .problem-solution-row {
+    grid-template-columns: 1fr;
+  }
+  .ps-divider { display: none; }
+}
+
+/* ===== DECISION CARDS ===== */
+.decision-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.decision-card {
+  background: #f9fafb;
+  border-radius: 16px;
+  padding: 1.75rem;
+  border: 1px solid #f3f4f6;
+}
+
+.decision-num {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--mint-color);
+  margin-bottom: 0.75rem;
+}
+
+.decision-card h3 {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  color: var(--title-color);
+}
+
+.decision-card p {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--text-color);
+}
+
+@media (max-width: 900px) {
+  .decision-cards { grid-template-columns: 1fr; }
+}
 /* ==================== MEDIA-QUERY SLOTS ==================== */
 /* For small devices  : @media (max-width: 640px){ ... }   */
 /* For medium devices : @media (min-width: 768px){ ... }   */
