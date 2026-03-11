@@ -1740,6 +1740,47 @@ html {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/* ===== RESPONSIVE LAYOUT FIX ===== */
+
+/* Wider container on large screens */
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1400px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .container {
+    max-width: 1560px;
+  }
+}
+
+/* Reduce excessive side padding on large screens */
+@media (min-width: 1200px) {
+  :root {
+    --page-gutter: clamp(32px, 3vw, 60px);
+  }
+}
+
+/* Hero: less dead space above the tabs/headline */
+.home.section {
+  padding-top: calc(var(--hero-top) * 0.55 + var(--section-vspace));
+}
+
+/* Hero title: scales fluidly with screen width */
+.home__title {
+  max-width: 100% !important;
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  line-height: 1.25;
+}
+
+/* Portfolio grid: tighter gap on wide screens */
+@media (min-width: 1200px) {
+  .portfolio .container {
+    gap: 2.5rem;
+  }
+}
 /* ==================== MEDIA-QUERY SLOTS ==================== */
 /* For small devices  : @media (max-width: 640px){ ... }   */
 /* For medium devices : @media (min-width: 768px){ ... }   */
