@@ -2012,6 +2012,126 @@ html {
 .project .project-section:first-of-type {
   border-top: none;
 }
+
+/* ===== PORTFOLIO GRID REDESIGN ===== */
+
+/* Section header: left-aligned, small eyebrow style */
+.portfolio.section .section__title {
+  text-align: left;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-color-light);
+  margin-bottom: 3rem;
+}
+
+/* Grid: featured first row full-width, then 2-col below */
+.portfolio .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: clamp(3.5rem, 6vw, 6rem);
+  column-gap: 2rem;
+}
+
+
+/* Card layout */
+.portfolio__content {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Image */
+.portfolio__img-link {
+  aspect-ratio: 3 / 2;
+  border-radius: 16px;
+  overflow: hidden;
+  display: block;
+}
+
+@media (min-width: 992px) {
+  .portfolio__img-link { border-radius: 20px; }
+  .portfolio__content:first-child .portfolio__img-link { border-radius: 20px; }
+}
+
+/* Data block */
+.portfolio__data {
+  padding: 1.1rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+/* Title + year row */
+.portfolio__title-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.portfolio__title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--title-color);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.portfolio__title a,
+.portfolio__title-link {
+  color: var(--title-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.portfolio__title a:hover,
+.portfolio__title-link:hover {
+  color: var(--mint-color);
+}
+
+/* Tags: small, right-aligned, minimal */
+.portfolio__tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.3rem;
+  margin: 0;
+}
+
+.portfolio__tags .tag {
+  font-size: 0.58rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid #d1d5db;
+  background: transparent;
+  color: #9ca3af;
+  white-space: nowrap;
+}
+
+/* Description: short, one line, muted */
+.portfolio__description {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  line-height: 1.5;
+  margin: 0;
+  max-width: 480px;
+}
+
+
+/* Mobile: all single column */
+@media (max-width: 767px) {
+  .portfolio .container {
+    grid-template-columns: 1fr;
+  }
+  .portfolio__tags {
+    justify-content: flex-start;
+  }
+}
 /* ==================== MEDIA-QUERY SLOTS ==================== */
 /* For small devices  : @media (max-width: 640px){ ... }   */
 /* For medium devices : @media (min-width: 768px){ ... }   */
