@@ -1644,6 +1644,48 @@ html {
 }
 /* (keeps your earlier rules for columns/tiles/heights as-is) */
 
+/* ===== Reveal Up Animation ===== */
+.reveal-up {
+  opacity: 0;
+  transform: translate3d(0, 40px, 0) scale(0.985);
+  transition:
+    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-up.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* Optional: slightly stronger/luxury feel */
+.reveal-up.reveal-up--soft {
+  transform: translate3d(0, 28px, 0) scale(0.99);
+}
+
+/* Optional hover lift for project cards */
+.portfolio__content {
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.35s ease;
+}
+
+.portfolio__content:hover {
+  transform: translateY(-6px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-up,
+  .reveal-up.is-visible,
+  .portfolio__content,
+  .portfolio__content:hover {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
 /* ==================== MEDIA-QUERY SLOTS ==================== */
 /* For small devices  : @media (max-width: 640px){ ... }   */
 /* For medium devices : @media (min-width: 768px){ ... }   */
