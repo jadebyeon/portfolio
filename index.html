@@ -4,25 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Icons (from the original template) -->
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" />
-
-  <!-- Swiper (template includes it; safe to keep even if not used on home) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 
-  <!-- Template main CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="assets/css/styles.css" />
 
   <title>Jade Byeon — Portfolio</title>
   <meta name="description" content="Portfolio of Jade Byeon — design thinker blending creative visual communication with data analysis." />
-
   <link rel="canonical" href="https://jadebyeon.github.io/portfolio/" />
-
   <meta property="og:title" content="Jade Byeon — Portfolio" />
   <meta property="og:description" content="UX/Product Designer portfolio by Jade Byeon." />
   <meta property="og:url" content="https://jadebyeon.github.io/portfolio/" />
   <meta property="og:type" content="website" />
-  
   <meta name="twitter:card" content="summary_large_image" />
 
   <script type="application/ld+json">
@@ -31,203 +28,244 @@
     "@type":"Person",
     "name":"Jade Byeon",
     "url":"https://jadebyeon.github.io/portfolio/",
-    "sameAs":[
-      "https://www.linkedin.com/in/jadebyeon/"
-    ]
+    "sameAs":["https://www.linkedin.com/in/jadebyeon/"]
   }
   </script>
-
 </head>
 <body>
-  <!--==================== HEADER ====================-->
-  <!--==================== HEADER ====================-->
-<header class="header" id="header">
-  <nav class="site-nav container">
-    <!-- Left: name (always black) -->
-    <a href="index.html" class="brand" aria-label="Home">Jade Byeon</a>
 
-    <!-- Right: horizontal menu -->
-    <ul class="site-menu">
-      <li><a class="nav-link active" href="#portfolio">Work</a></li>
-      <li><a class="nav-link" href="about.html">About</a></li>
-      <li><a class="nav-link" href="#footer">Contact</a></li>
-      <li><a class="nav-link" href="assets/pdf/Jade_Resume.pdf" target="_blank" rel="noopener">Resume</a></li>
-    </ul>
-  </nav>
-</header>
+  <header class="header" id="header">
+    <nav class="site-nav container">
+      <a href="index.html" class="brand" aria-label="Home">Jade Byeon</a>
+      <ul class="site-menu">
+        <li><a class="nav-link active" href="#portfolio">Work</a></li>
+        <li><a class="nav-link" href="about.html">About</a></li>
+        <li><a class="nav-link" href="#footer">Contact</a></li>
+        <li><a class="nav-link" href="assets/pdf/Jade_Resume.pdf" target="_blank" rel="noopener">Resume</a></li>
+      </ul>
+    </nav>
+  </header>
 
-  <!--==================== MAIN ====================-->
   <main class="main">
 
-    <!--==================== HOME / HERO ====================-->
     <section class="home section" id="home">
-        <div class="home__container container grid">
-          <div class="home__data">
-      
-            <!-- Persona switcher tabs -->
+      <div class="home__container container grid">
+        <div class="home__data">
+
           <div class="persona-tabs" role="tablist" aria-label="View intro for different audiences">
-            <button class="persona-tab active" data-persona="anyone" role="tab" aria-selected="true">For Anyone</button>
-            <button class="persona-tab" data-persona="recruiters" role="tab" aria-selected="false">Recruiters</button>
-            <button class="persona-tab" data-persona="ux" role="tab" aria-selected="false">UX Designers</button>
-            <button class="persona-tab" data-persona="designers" role="tab" aria-selected="false">Product Designers</button>
-            <button class="persona-tab" data-persona="engineers" role="tab" aria-selected="false">Engineers</button>
-            <button class="persona-tab" data-persona="personal" role="tab" aria-selected="false">Off the Clock</button>
+            <button class="persona-tab active" data-persona="anyone"   role="tab" aria-selected="true">For Anyone</button>
+            <button class="persona-tab" data-persona="recruiters"      role="tab" aria-selected="false">Recruiters</button>
+            <button class="persona-tab" data-persona="ux"              role="tab" aria-selected="false">UX Designers</button>
+            <button class="persona-tab" data-persona="designers"       role="tab" aria-selected="false">Product Designers</button>
+            <button class="persona-tab" data-persona="engineers"       role="tab" aria-selected="false">Engineers</button>
+            <button class="persona-tab" data-persona="personal"        role="tab" aria-selected="false">Off the Clock</button>
           </div>
-          
+
           <div class="persona-content">
-          
+
             <div class="persona-panel active" data-persona="anyone">
               <h1 class="home__title">
                 Hi, I am Jade Byeon, <span class="text-mint">a design thinker</span> with a passion for innovative visual communication through creativity and data analysis.
               </h1>
               <p class="home__subtitle">BA Art &amp; Design and BS Statistics @ University of Michigan</p>
             </div>
-          
+
             <div class="persona-panel" data-persona="recruiters">
               <h1 class="home__title">
                 UX/Product Designer graduating May 2026 — <span class="text-mint">Figma-first, research-led,</span> and ready to contribute from day one.
               </h1>
-              <p class="home__subtitle">BA Art &amp; Design + BS Statistics @ University of Michigan</p>
+              <p class="home__subtitle">BA Art &amp; Design + BS Statistics @ University of Michigan · No sponsorship needed · OPT-ready</p>
             </div>
-          
+
             <div class="persona-panel" data-persona="ux">
               <h1 class="home__title">
                 I design from <span class="text-mint">empathy and evidence</span> — user interviews, usability testing, journey maps, and data before any solution.
               </h1>
               <p class="home__subtitle">Surveys · Personas · Usability testing · Statistics in R &amp; Python · WCAG accessibility · Research-to-prototype, end-to-end</p>
             </div>
-          
+
             <div class="persona-panel" data-persona="designers">
               <h1 class="home__title">
                 I lead with <span class="text-mint">process before pixels</span> — pain points and system thinking before I ever open a frame.
               </h1>
               <p class="home__subtitle">Component libraries in Figma · Design systems · Iterative, feedback-driven workflow · High-fidelity prototyping</p>
             </div>
-          
+
             <div class="persona-panel" data-persona="engineers">
               <h1 class="home__title">
                 I speak your language — <span class="text-mint">HTML, CSS, JS,</span> and a working understanding of how design translates to code.
               </h1>
-              <p class="home__subtitle">Stats in R &amp; Python · I hand off specs, not surprises</p>
+              <p class="home__subtitle">Familiar with Angular · Stats in R &amp; Python · I hand off specs, not surprises</p>
             </div>
-          
+
             <div class="persona-panel" data-persona="personal">
               <h1 class="home__title">
                 When I'm not designing, I'm watching films, <span class="text-mint">losing myself in a book,</span> or finding new music that perfectly fits the mood.
               </h1>
               <p class="home__subtitle">Born in Korea · Studied in China, Singapore &amp; Michigan · Always curious, always making something</p>
             </div>
-          
-          </div>
-          
-          </div>
+
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-    <!--==================== WORK / PORTFOLIO ====================-->
     <section class="portfolio section" id="portfolio">
       <h2 class="section__title">Projects</h2>
-      <p class="section-kicker"></p>
+      <div class="container">
 
-      <!-- 2-column grid on desktop, single column on mobile (template grid classes) -->
-      <div class="container grid" style="row-gap: 2.5rem;">
-        
-        <!-- P1 -->
+        <article class="portfolio__content reveal-up">
+          <a class="portfolio__img-link" href="https://jadebyeon.github.io/portfolio/projects/ootd">
+            <img class="portfolio__img" src="assets/img/ootd:mockup.png" alt="Wearby OOTD Diary Companion">
+          </a>
+          <div class="portfolio__data">
+            <div class="portfolio__title-row">
+              <h3 class="portfolio__title"><a class="portfolio__title-link" href="https://jadebyeon.github.io/portfolio/projects/ootd">Wearby</a></h3>
+              <p class="portfolio__tags">
+                <span class="tag">UX/UI Design</span>
+                <span class="tag">Design Systems</span>
+                <span class="tag">Accessibility</span>
+              </p>
+            </div>
+            <p class="portfolio__description">A playful OOTD diary companion — from concept to prototype</p>
+          </div>
+        </article>
 
-    <!-- Example: Wearby (featured — first card, no changes needed to article tag) -->
-      
-  </div>
-</section>
+        <article class="portfolio__content reveal-up">
+          <a class="portfolio__img-link" href="https://jadebyeon.github.io/portfolio/projects/telltool-branding">
+            <img class="portfolio__img" src="assets/img/TELL_Poster Mockup.png" alt="TELL Tool Branding">
+          </a>
+          <div class="portfolio__data">
+            <div class="portfolio__title-row">
+              <h3 class="portfolio__title"><a class="portfolio__title-link" href="https://jadebyeon.github.io/portfolio/projects/telltool-branding">TELL Tool Branding</a></h3>
+              <p class="portfolio__tags">
+                <span class="tag">Branding</span>
+                <span class="tag">Visual Identity</span>
+                <span class="tag">Social Design</span>
+              </p>
+            </div>
+            <p class="portfolio__description">Visual identity for inclusive family communication</p>
+          </div>
+        </article>
 
-<!--==================== FOOTER ====================-->
-<footer class="footer" id="footer">
-  <div class="container footer__inner">
-    <!-- Top row: LET'S TALK + Back to top -->
-    <div class="footer__top">
-      <div class="footer__headline">
-        <p class="footer__eyebrow">NICE TO MEET YOU!</p>
-        <h2 class="footer__title">LET’S TALK</h2>
+        <article class="portfolio__content reveal-up">
+          <a class="portfolio__img-link" href="https://jadebyeon.github.io/portfolio/projects/uu-arts">
+            <img class="portfolio__img" src="assets/img/uu_logo.png" alt="University Unions Arts Initiative">
+          </a>
+          <div class="portfolio__data">
+            <div class="portfolio__title-row">
+              <h3 class="portfolio__title"><a class="portfolio__title-link" href="https://jadebyeon.github.io/portfolio/projects/uu-arts">University Unions Arts</a></h3>
+              <p class="portfolio__tags">
+                <span class="tag">Systems Design</span>
+                <span class="tag">UX Design</span>
+                <span class="tag">Data-Driven UX</span>
+              </p>
+            </div>
+            <p class="portfolio__description">Designing systems for campus arts engagement</p>
+          </div>
+        </article>
+
+        <article class="portfolio__content reveal-up">
+          <a class="portfolio__img-link" href="https://jadebyeon.github.io/portfolio/projects/oct">
+            <img class="portfolio__img" src="assets/img/oct_hero.png" alt="Pediatric Eye Exam Robot">
+          </a>
+          <div class="portfolio__data">
+            <div class="portfolio__title-row">
+              <h3 class="portfolio__title"><a class="portfolio__title-link" href="https://jadebyeon.github.io/portfolio/projects/oct">Pediatric Robot Character</a></h3>
+              <p class="portfolio__tags">
+                <span class="tag">HRI</span>
+                <span class="tag">Qualitative Research</span>
+                <span class="tag">Design for Health</span>
+              </p>
+            </div>
+            <p class="portfolio__description">Emotionally supportive interaction design for children in clinical robotics</p>
+          </div>
+        </article>
+
+        <article class="portfolio__content reveal-up">
+          <a class="portfolio__img-link thumb" href="https://jadebyeon.github.io/portfolio/projects/qq">
+            <img class="portfolio__img portfolio__img--contain" src="assets/img/qq_icml_logo.png" alt="ICML 2025 Tutorial Website">
+          </a>
+          <div class="portfolio__data">
+            <div class="portfolio__title-row">
+              <h3 class="portfolio__title"><a class="portfolio__title-link" href="https://jadebyeon.github.io/portfolio/projects/qq">ICML 2025 Tutorial Website</a></h3>
+              <p class="portfolio__tags">
+                <span class="tag">UX/UI</span>
+                <span class="tag">Info Architecture</span>
+                <span class="tag">Responsive Web</span>
+              </p>
+            </div>
+            <p class="portfolio__description">Human-centered access to diffusion-model theory</p>
+          </div>
+        </article>
+
+        <article class="portfolio__content reveal-up">
+          <a class="portfolio__img-link" href="https://jadebyeon.github.io/portfolio/projects/turbo">
+            <img class="portfolio__img" src="assets/img/turbo_hand mockup.png" alt="Turbo Fitness App">
+          </a>
+          <div class="portfolio__data">
+            <div class="portfolio__title-row">
+              <h3 class="portfolio__title"><a class="portfolio__title-link" href="https://jadebyeon.github.io/portfolio/projects/turbo">Fitness App — UX Research</a></h3>
+              <p class="portfolio__tags">
+                <span class="tag">Motivational Design</span>
+                <span class="tag">Mobile UX</span>
+                <span class="tag">Usability Testing</span>
+              </p>
+            </div>
+            <p class="portfolio__description">Helping users build long-term fitness motivation</p>
+          </div>
+        </article>
+
+        <article class="portfolio__content reveal-up">
+          <a class="portfolio__img-link" href="https://jadebyeon.github.io/portfolio/projects/hanok">
+            <img class="portfolio__img" src="assets/img/hanok_poster mockup.png" alt="HANOK">
+          </a>
+          <div class="portfolio__data">
+            <div class="portfolio__title-row">
+              <h3 class="portfolio__title"><a class="portfolio__title-link" href="https://jadebyeon.github.io/portfolio/projects/hanok">HANOK</a></h3>
+              <p class="portfolio__tags">
+                <span class="tag">Branding</span>
+                <span class="tag">Visual Identity</span>
+                <span class="tag">Illustration</span>
+              </p>
+            </div>
+            <p class="portfolio__description">Reinterpreting Korean folk tales through modern visual identity</p>
+          </div>
+        </article>
+
       </div>
+    </section>
 
-      <a href="#home" class="footer__back" data-target="home">
-        <span class="footer__back-label">BACK TO TOP</span>
-        <span class="footer__back-circle">
-          <i class="uil uil-arrow-up" aria-hidden="true"></i>
-        </span>
-      </a>
+  </main>
+
+  <footer class="footer" id="footer">
+    <div class="container footer__inner">
+      <div class="footer__top">
+        <div class="footer__headline">
+          <p class="footer__eyebrow">NICE TO MEET YOU!</p>
+          <h2 class="footer__title">LET'S TALK</h2>
+        </div>
+        <a href="#home" class="footer__back">
+          <span class="footer__back-label">BACK TO TOP</span>
+          <span class="footer__back-circle"><i class="uil uil-arrow-up" aria-hidden="true"></i></span>
+        </a>
+      </div>
+      <div class="footer__bottom">
+        <div class="footer__links">
+          <a href="mailto:jade03bjy@gmail.com" class="footer__btn" aria-label="Email">Email</a>
+          <a href="https://www.linkedin.com/in/jadebyeon/" target="_blank" rel="noopener noreferrer" class="footer__btn" aria-label="LinkedIn">LinkedIn</a>
+          <a href="https://www.instagram.com/b._.jade/" target="_blank" rel="noopener noreferrer" class="footer__btn" aria-label="Instagram">Instagram</a>
+        </div>
+        <div class="footer__meta">
+          <p>Design and Developed by Jade Byeon</p>
+          <p>© 2026</p>
+        </div>
+      </div>
     </div>
+  </footer>
 
-    <!-- Bottom row: buttons + credits -->
-    <div class="footer__bottom">
-      <div class="footer__links">
-        <a href="mailto:jbyeon@umich.edu"
-           class="footer__btn"
-           aria-label="Email">
-          Email
-        </a>
-        <a href="https://www.linkedin.com/in/jadebyeon/"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="footer__btn"
-           aria-label="LinkedIn">
-          LinkedIn
-        </a>
-        <a href="https://www.instagram.com/b._.jade/"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="footer__btn"
-           aria-label="Instagram">
-          Instagram
-        </a>
-      </div>
-
-      <div class="footer__meta">
-        <p>Design and Developed by Jade Byeon</p>
-        <p>© 2025</p>
-      </div>
-    </div>
-  </div>
-</footer>
-
-  <!-- Swiper JS (kept for template compatibility) -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-
-  <!-- Template main JS -->
   <script src="assets/js/main.js"></script>
   <script src="assets/js/reveal.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
