@@ -61,17 +61,71 @@
 
     <!--==================== HOME / HERO ====================-->
     <section class="home section" id="home">
-      <div class="home__container container grid">
-        <div class="home__data">
-          <h1 class="home__title" style="max-width: 900px;">
-            <strong>Hi, I am Jade Byeon, <span class="text-mint">a design thinker</span> with a passion for innovative visual communication through creativity and data analysis.</strong>
-          </h1>
-          <p class="home__subtitle" style="margin-top: 1rem;">
-            <span>BA Art &amp; Design and BS Statistics @ University of Michigan</span>
-          </p>
+        <div class="home__container container grid">
+          <div class="home__data">
+      
+            <!-- Persona switcher tabs -->
+            <!-- Persona switcher tabs -->
+          <div class="persona-tabs" role="tablist" aria-label="View intro for different audiences">
+            <button class="persona-tab active" data-persona="anyone" role="tab" aria-selected="true">For Anyone</button>
+            <button class="persona-tab" data-persona="recruiters" role="tab" aria-selected="false">Recruiters</button>
+            <button class="persona-tab" data-persona="ux" role="tab" aria-selected="false">UX Designers</button>
+            <button class="persona-tab" data-persona="designers" role="tab" aria-selected="false">Product Designers</button>
+            <button class="persona-tab" data-persona="engineers" role="tab" aria-selected="false">Engineers</button>
+          </div>
+          
+          <!-- Hero text panels -->
+          <div class="persona-content">
+          
+            <div class="persona-panel active" data-persona="anyone">
+              <h1 class="home__title" style="max-width: 900px;">
+                <strong>Hi, I am Jade Byeon, <span class="text-mint">a design thinker</span> with a passion for innovative visual communication through creativity and data analysis.</strong>
+              </h1>
+              <p class="home__subtitle" style="margin-top: 1rem;">
+                BA Art &amp; Design and BS Statistics @ University of Michigan
+              </p>
+            </div>
+          
+            <div class="persona-panel" data-persona="recruiters">
+              <h1 class="home__title" style="max-width: 900px;">
+                <strong>Junior UX/Product Designer graduating May 2026 — <span class="text-mint">Figma-first, research-led,</span> and ready to contribute from day one.</strong>
+              </h1>
+              <p class="home__subtitle" style="margin-top: 1rem;">
+                Dual BA Art &amp; Design + BS Statistics @ University of Michigan · No sponsorship needed · OPT-ready
+              </p>
+            </div>
+          
+            <div class="persona-panel" data-persona="ux">
+              <h1 class="home__title" style="max-width: 900px;">
+                <strong>I design from <span class="text-mint">empathy and evidence</span> — user interviews, usability testing, journey maps, and data before any solution.</strong>
+              </h1>
+              <p class="home__subtitle" style="margin-top: 1rem;">
+                Surveys · Personas · Usability testing · Statistics background in R &amp; Python · WCAG accessibility · Research-to-prototype, end-to-end
+              </p>
+            </div>
+          
+            <div class="persona-panel" data-persona="designers">
+              <h1 class="home__title" style="max-width: 900px;">
+                <strong>I lead with <span class="text-mint">process before pixels</span> — pain points and system thinking before I ever open a frame.</strong>
+              </h1>
+              <p class="home__subtitle" style="margin-top: 1rem;">
+                Component libraries in Figma · Design systems · Iterative, feedback-driven workflow · High-fidelity prototyping
+              </p>
+            </div>
+          
+            <div class="persona-panel" data-persona="engineers">
+              <h1 class="home__title" style="max-width: 900px;">
+                <strong>I speak your language — <span class="text-mint">HTML, CSS, JS,</span> and a working understanding of how design translates to code.</strong>
+              </h1>
+              <p class="home__subtitle" style="margin-top: 1rem;">
+                Familiar with Angular · Stats background in R &amp; Python · I hand off specs, not surprises
+              </p>
+            </div>
+          
+          </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
     <!--==================== WORK / PORTFOLIO ====================-->
     <section class="portfolio section" id="portfolio">
@@ -280,6 +334,7 @@
   <script src="assets/js/main.js"></script>
 </body>
 </html>
+
 
 
 
