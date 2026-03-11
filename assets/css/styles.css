@@ -1,5 +1,36 @@
 /* ==================== GOOGLE FONTS ==================== */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+
+@font-face {
+  font-family: 'ClashGrotesk';
+  src: url('../fonts/ClashGrotesk-Extralight.otf') format('opentype');
+  font-weight: 200; font-display: swap;
+}
+@font-face {
+  font-family: 'ClashGrotesk';
+  src: url('../fonts/ClashGrotesk-Light.otf') format('opentype');
+  font-weight: 300; font-display: swap;
+}
+@font-face {
+  font-family: 'ClashGrotesk';
+  src: url('../fonts/ClashGrotesk-Regular.otf') format('opentype');
+  font-weight: 400; font-display: swap;
+}
+@font-face {
+  font-family: 'ClashGrotesk';
+  src: url('../fonts/ClashGrotesk-Medium.otf') format('opentype');
+  font-weight: 500; font-display: swap;
+}
+@font-face {
+  font-family: 'ClashGrotesk';
+  src: url('../fonts/ClashGrotesk-Semibold.otf') format('opentype');
+  font-weight: 600; font-display: swap;
+}
+@font-face {
+  font-family: 'ClashGrotesk';
+  src: url('../fonts/ClashGrotesk-Bold.otf') format('opentype');
+  font-weight: 700; font-display: swap;
+}
 
 /* ==================== VARIABLES ==================== */
 :root {
@@ -28,7 +59,8 @@
   --scroll-thumb-color: hsl(var(--hue-color), 12%, 80%);
 
   /* Typography */
-  --body-font: 'Poppins', sans-serif;
+  --body-font: 'Inter', system-ui, sans-serif;
+  --display-font: 'ClashGrotesk', sans-serif;
   --big-font-size: 2rem;
   --h1-font-size: 1.5rem;
   --h2-font-size: 1.25rem;
@@ -85,6 +117,28 @@ body {
 }
 
 h1, h2, h3, h4 { color: var(--title-color); font-weight: var(--font-semi-bold); }
+
+h1, h2, h3, h4, h5,
+.home__title, .brand, .hero-title,
+.footer__title, .project__title, .portfolio__title {
+  font-family: var(--display-font);
+}
+
+.home__title {
+  font-size: clamp(2.2rem, 5vw, 4rem) !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+  max-width: 100% !important;
+}
+
+.home__subtitle {
+  font-size: clamp(0.85rem, 1.1vw, 0.95rem);
+  font-family: var(--body-font);
+  color: var(--text-color);
+  margin-top: 1.25rem;
+  line-height: 1.7;
+}
 .site-menu{ list-style: none; }
 /* portfolio tags container */
 /* portfolio tags container */
@@ -1786,82 +1840,6 @@ html {
   .portfolio .container {
     gap: 2.5rem;
   }
-}
-
-/* ===== PROBLEM / SOLUTION ROW ===== */
-.problem-solution-row {
-  display: grid;
-  grid-template-columns: 1fr 1px 1fr;
-  gap: 2.5rem;
-  align-items: start;
-  padding: 2rem 0;
-}
-
-.ps-label {
-  font-size: 0.75rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--mint-color);
-  font-weight: 600;
-  margin-bottom: 0.6rem;
-}
-
-.ps-text {
-  font-size: 1.05rem;
-  line-height: 1.7;
-  color: var(--title-color);
-}
-
-.ps-divider {
-  background: #e5e7eb;
-  height: 100%;
-  min-height: 80px;
-}
-
-@media (max-width: 680px) {
-  .problem-solution-row {
-    grid-template-columns: 1fr;
-  }
-  .ps-divider { display: none; }
-}
-
-/* ===== DECISION CARDS ===== */
-.decision-cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-top: 1.5rem;
-}
-
-.decision-card {
-  background: #f9fafb;
-  border-radius: 16px;
-  padding: 1.75rem;
-  border: 1px solid #f3f4f6;
-}
-
-.decision-num {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: var(--mint-color);
-  margin-bottom: 0.75rem;
-}
-
-.decision-card h3 {
-  font-size: 1rem;
-  margin-bottom: 0.75rem;
-  color: var(--title-color);
-}
-
-.decision-card p {
-  font-size: 0.9rem;
-  line-height: 1.7;
-  color: var(--text-color);
-}
-
-@media (max-width: 900px) {
-  .decision-cards { grid-template-columns: 1fr; }
 }
 
 /* ===== PROBLEM / SOLUTION ROW — REVISED ===== */
