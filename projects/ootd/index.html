@@ -25,295 +25,186 @@
 
   <main class="main project">
 
-    <!-- Hero -->
-    <section class="project-hero section">
-      <div class="hero-media">
-        <img src="../../assets/img/ootd:mockup.png" alt="Wearby: OOTD Diary Companion App">
-        <div class="hero-overlay">
-          <h1 class="hero-title">Wearby</h1>
-          <p class="hero-subtitle">A Playful OOTD Diary Companion for Daily Reflection and Emotional Well-Being</p>
+  <!-- Hero -->
+  <section class="project-hero section">
+    <div class="hero-media">
+      <img src="../../assets/img/ootd:mockup.png" alt="Wearby: OOTD Diary Companion App">
+      <div class="hero-overlay">
+        <h1 class="hero-title">Wearby</h1>
+        <p class="hero-subtitle">A Playful OOTD Diary Companion for Daily Reflection and Emotional Well-Being</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem + Solution — scannable in 5 seconds -->
+  <section class="project-intro section">
+    <div class="container">
+      <div class="problem-solution-row">
+        <div class="ps-block">
+          <p class="ps-label">The Problem</p>
+          <p class="ps-text">Daily reflection tools feel serious and effortful. Users who want gentle emotional check-ins have no tool that feels approachable, low-pressure, or fun.</p>
+        </div>
+        <div class="ps-divider" aria-hidden="true"></div>
+        <div class="ps-block">
+          <p class="ps-label">The Solution</p>
+          <p class="ps-text">A mobile companion app where dressing up a character named Ear becomes a daily ritual — turning reflection into play rather than a task.</p>
         </div>
       </div>
-    </section>
 
-    <!-- Intro -->
-    <section class="project-intro section">
-      <div class="container">
-        <p class="project__lede">
-          Wearby is an ongoing UX/UI design project that reimagines daily reflection as a small act of play. By combining outfit dress-up, a supportive companion character named Ear, and gentle journaling prompts, Wearby creates a calm emotional space where users can check in with themselves, reduce stress, and build meaning through everyday rituals. Currently in active development — the project spans end-to-end product design thinking, from research and user flow to a scalable Figma component library, design system, and WCAG-compliant accessibility standards.
-        </p>
-        <div class="project-meta">
-          <div class="meta-item">
-            <div class="meta-label">My Role</div>
-            <div class="meta-value">UX/UI Designer, Design Systems, Interaction Designer</div>
-          </div>
-          <div class="meta-item">
-            <div class="meta-label">Project</div>
-            <div class="meta-value">Individual</div>
-          </div>
-          <div class="meta-item">
-            <div class="meta-label">Timeline</div>
-            <div class="meta-value">Feb 2026 – Present</div>
-          </div>
-          <div class="meta-item">
-            <div class="meta-label">Tools Used</div>
-            <div class="meta-value">Figma, Procreate, Adobe PhotoShop, Cricut</div>
-          </div>
+      <div class="project-meta" style="margin-top: 2.5rem;">
+        <div class="meta-item">
+          <div class="meta-label">Role</div>
+          <div class="meta-value">UX/UI Designer · Design Systems · Interaction Design</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Type</div>
+          <div class="meta-value">Individual · Ongoing</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Timeline</div>
+          <div class="meta-value">Feb 2026 – Present</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Tools</div>
+          <div class="meta-value">Figma · Procreate · Adobe Photoshop · Cricut</div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Design Problem -->
-    <section class="project-section">
-      <div class="container prose">
-        <h3>Design Problem</h3>
-        <p>
-          Daily reflection tools often feel serious, effortful, or intimidating. Traditional journaling apps demand emotional labor, while fashion-tracking apps lack any meaningful well-being connection. Users who want gentle emotional check-ins are left without tools that feel approachable and low-pressure.
-        </p>
-        <p>
-          The challenge was to design a mobile experience that supports mental and emotional well-being through play — making daily reflection feel as natural and fun as dressing up a character.
-        </p>
-      </div>
-    </section>
-
-    <!-- Research & Strategy -->
-    <section class="project-section">
-      <div class="container prose">
-        <h3>Research &amp; Strategy</h3>
-
-        <h4>Well-Being Research</h4>
-        <p>Secondary research grounded the design in evidence-based insights:</p>
-        <ul>
-          <li>Play is associated with lower cortisol levels and helps buffer daily pressure <em>(American Academy of Pediatrics)</em>.</li>
-          <li>Adult playfulness supports positive emotion and resilience <em>(Frontiers in Psychology, 2022)</em>.</li>
-          <li>Playful reframing of everyday routines promotes positive affect and stress relief <em>(Proyer et al., PMC)</em>.</li>
-        </ul>
-
-        <h4>Design Goals</h4>
-        <ul>
-          <li><strong>Stress Reduction:</strong> No "right answers," short playful prompts, optional engagement.</li>
-          <li><strong>Emotional Awareness:</strong> Mood icons, imaginative questions, and quick check-ins.</li>
-          <li><strong>Reframe Routine:</strong> Dress-up as a daily ritual instead of a task.</li>
-          <li><strong>Encourage Autonomy:</strong> User chooses how much to write, draw, or interact.</li>
-        </ul>
-
-        <h4>Information Architecture</h4>
-        <ul>
-          <li>Open Diary → Meet Companion → Dress Ear → Reflect → Save Memory</li>
-          <li>Decision branch: Save Memory → Yes (Save Entry) / No (Exit without saving)</li>
-        </ul>
-      </div>
-
-      <figure class="figure-80 two-up-figure">
-        <div class="two-up-grid">
-          <figure class="two-up-tile">
-            <img src="../../assets/img/ootd:board1.png" alt="Inspiration board 1">
-          </figure>
-          <figure class="two-up-tile">
-            <img src="../../assets/img/ootd:board2.png" alt="Inspiration board 2">
-          </figure>
+  <!-- Key Design Decisions — 3 cards showing WHY -->
+  <section class="project-section">
+    <div class="container">
+      <h2>Key Design Decisions</h2>
+      <p style="color: var(--text-color); margin-bottom: 2rem;">Three choices that defined the direction — each grounded in research, not preference.</p>
+      <div class="decision-cards">
+        <div class="decision-card">
+          <p class="decision-num">01</p>
+          <h3>Play over journaling</h3>
+          <p>Research shows play lowers cortisol and supports emotional resilience in adults. Dressing up Ear creates a low-pressure emotional state where reflection happens naturally — without the intimidation of a blank page.</p>
         </div>
-        <figcaption class="figure-caption">inspiration boards</figcaption>
-      </figure>
-    </section>
-
-    <!-- User Flow -->
-    <section class="project-section">
-      <div class="container prose">
-        <h3>User Flow &amp; Accessibility</h3>
-        <p>
-          The user flow was designed horizontally to reflect UX industry standards, with WCAG accessibility considerations embedded at each screen step — not as an afterthought, but as part of the design process from the start.
-        </p>
-        <ul>
-          <li><strong>Meet Companion:</strong> Alt text for companion image.</li>
-          <li><strong>Dress Companion:</strong> Color majority not used as sole indicator; tap targets minimum 44×44px.</li>
-          <li><strong>Reflection Page:</strong> Text contrast 4.5:1 minimum; large text support.</li>
-          <li><strong>Memory Archive:</strong> Majority readable without color; alt text included.</li>
-        </ul>
-      </div>
-
-      <figure class="figure-80 single-tile-figure">
-        <div class="single-tile">
-          <img src="../../assets/img/ootd:userflow1.png" alt="Wearby user flow diagram with WCAG annotations">
+        <div class="decision-card">
+          <p class="decision-num">02</p>
+          <h3>System before screens</h3>
+          <p>The component library and design tokens were built before any UI screen. Naming every clothing component <code>Category/Type/Color</code> (e.g. <code>Tops/Hoodie/Gray</code>) made variant switching fast and consistent — every downstream decision got easier.</p>
         </div>
-        <figcaption class="figure-caption">user flow with WCAG annotations</figcaption>
-      </figure>
-    </section>
-
-    <!-- Design System -->
-    <section class="project-section">
-      <div class="container prose">
-        <h3>Design System</h3>
-        <p>
-          A scalable design system was built to ensure visual cohesion across all screens. All color tokens were verified against WCAG AA contrast standards using WebAIM Contrast Checker.
-        </p>
-
-        <h4>Color Tokens</h4>
-        <ul>
-          <li><strong>Muted Lavender</strong> — Primary · CTAs, buttons, active states</li>
-          <li><strong>Sage Green</strong> — Primary · CTAs, buttons, focused states</li>
-          <li><strong>Warm Cream</strong> — Secondary · Sub-links, filters, tabs, card backgrounds</li>
-          <li><strong>Forest Green</strong> — Secondary · Navigation active, accent</li>
-          <li><strong>Soft Peach</strong> — Secondary · Tags, highlights</li>
-          <li><strong>Charcoal</strong> — Neutral · Primary text and icons</li>
-          <li><strong>Dark Navy</strong> — Neutral · Headings, surface contrast</li>
-          <li><strong>Slate Gray</strong> — Neutral · Secondary text, disabled states</li>
-          <li><strong>White</strong> — Neutral · Backgrounds, card surfaces</li>
-        </ul>
-        <p>All color pairings meet WCAG AA minimum contrast ratio of 4.5:1 for normal text. Verified via WebAIM Contrast Checker.</p>
-
-        <h4>Typography</h4>
-        <ul>
-          <li><strong>Heading 1</strong> — Nunito ExtraBold · 48px · Letter Spacing -2% · Titles</li>
-          <li><strong>Heading 2</strong> — Nunito Bold · 32px · Letter Spacing -1% · Screen headers</li>
-          <li><strong>Body</strong> — Inter Regular · 16px · Letter Spacing 0% · General text</li>
-          <li><strong>Body Emphasis</strong> — Inter Medium · 16px · Button labels, highlights</li>
-          <li><strong>Prompt</strong> — Caveat Regular · 18px · Letter Spacing 1% · Diary entries</li>
-          <li><strong>Caption</strong> — Inter Regular · 12px · Letter Spacing 2% · Labels, dates</li>
-        </ul>
-
-        <h4>Accessibility (WCAG AA)</h4>
-        <ul>
-          <li>All text contrast ratio 4.5:1 minimum</li>
-          <li>Touch targets minimum 44×44px (WCAG 2.1 AA)</li>
-          <li>Icon size minimum 24×24px within 44×44px touch area</li>
-          <li>Color avoided using as sole meaning indicator</li>
-          <li>Majority of Icons paired with text labels</li>
-          <li>Large text support enabled across all screens</li>
-          <li>Verified via WebAIM Contrast Checker</li>
-        </ul>
-      </div>
-
-      <figure class="figure-80 single-tile-figure">
-        <div class="single-tile">
-          <img src="../../assets/img/ootd:designSystem.png" alt="Wearby design system">
+        <div class="decision-card">
+          <p class="decision-num">03</p>
+          <h3>Accessibility from the start</h3>
+          <p>WCAG AA was embedded at the user flow stage, not retrofitted. Contrast ratios, 44×44px tap targets, and label pairings were design decisions — not compliance checkboxes — making the product better for all users.</p>
         </div>
-        <figcaption class="figure-caption">design system — color tokens, typography, spacing &amp; WCAG</figcaption>
-      </figure>
-    </section>
-
-    <!-- Component Library -->
-    <section class="project-section">
-      <div class="container prose">
-        <h3>Component Library</h3>
-        <p>
-          A scalable component library was built in Figma to support the dress-up interaction system. Each clothing item was structured as a named component using hierarchical slash notation, with color variants grouped into component sets for efficient reuse across screens.
-        </p>
-        <ul>
-          <li><strong>Tops</strong> — Hoodie, T-shirt, Sweater, Coat, Puffer, Dress, Blazer, Cardigan</li>
-          <li><strong>Bottoms</strong> — Pants, Skirt, Sweats, Shorts (multiple color variants each)</li>
-          <li><strong>Accessories</strong> — Cap, Beanie, Glasses, Headphones, Socks, Shoes, Boots</li>
-        </ul>
-        <p>
-          Component naming follows the pattern <code>Category/Type/Color</code> (e.g., <code>Tops/Hoodie/Gray</code>, <code>Acc/Cap/Black</code>) enabling fast lookup and variant switching during prototyping.
-        </p>
       </div>
-      
-      <figure class="figure-80 single-tile-figure">
-        <div class="single-tile">
-          <img src="../../assets/img/ootd:component.png" alt="Wearby Figma component library">
-        </div>
-        <figcaption class="figure-caption">figma component library</figcaption>
-      </figure>
-    </section>
+    </div>
+  </section>
 
-    <!-- UI Screens -->
-    <section class="project-section">
-      <div class="container prose">
-        <h3>UI Screens <em style="font-size: 0.75em; font-weight: 400; color: var(--text-color-light);">— in progress</em></h3>
-        <p>
-          Five core screens were designed for iPhone (390×844px), each addressing a distinct moment in the daily ritual. The visual language is grounded in sage green and warm cream tones, with Ear's illustrated presence carrying emotional continuity across the flow.
-          </p>
-      
-          <h4>Splash Screen - Start</h4>
-          <p>
-            A full-bleed sage green background with a centered white arch frames Ear standing still. The app name "Wearby" appears above in dark navy with "ear" visually highlighted, introducing both the brand and the character name in a single moment before the user enters the app.
-          </p>
-      
-          <h4>Screen 1 — Welcome</h4>
-          <p>
-            A sage green header greets the user with "Welcome :)" and the prompt "What did Ear wear today?" Ear appears top-right in a compact form. Below, a large warm cream card reads "Dress Ear today. Haven't picked an outfit yet?" with a forest green "+" CTA. A thinner card below summarizes the week ("You've logged 3 outfits this week."). A Recent Memories section shows scrollable thumbnails of past outfits by date. The bottom navigation bar includes Home, Stats, Help, and Profile tabs.
-          </p>
-      
-          <h4>Screen 2 — Dress Up</h4>
-          <p>
-            Ear stands center-screen on a clean cream background, ready to be dressed. Floating action buttons on the left of Save (bookmark icon) and Reflect (pen icon) are labeled for accessibility. A bottom panel organizes clothing by category tabs: Tops, Bottoms, Outers, Acc, Shoes. Items are displayed in a 3-column grid. When an item is tapped, it immediately appears on Ear's body to demonstrate the real-time dress-up interaction. The selected item in the grid receives a soft, rounded highlight. This screen shows a white tee applied to Ear, with the grid updated to reflect the active selection state.
-          </p>
-      
-          <h4>Screen 3 — Reflection</h4>
-          <p>
-            A clean white screen titled "How was today? :)" invites the user to reflect after dressing Ear. Two speech-bubble-style input cards prompt: "One thing I'd keep from today:" and "One thing I can leave here:" — the first pre-filled with a handwritten-style note ("Had sushi with friends.") to demonstrate the Caveat font in context. Below, a "Today's Mood:" star rating row (5 stars, tap to select) rounds out the emotional check-in. At the bottom, two pill buttons sit side by side — "Skip for now" (with a skip icon) and "Save this memory!" (with a checkmark) giving users full autonomy over whether to save. Text contrast meets WCAG AA 4.5:1 across all labels and input fields.
-          </p>
-      
-          <h4>Screen 4 — Confirm</h4>
-          <p>
-            A full-bleed crumpled paper texture serves as the background, giving each saved memory a tactile, handmade quality. Ear stands dressed in the saved outfit of sunglasses, white tee, gray pants, white sneakers. The date (03/10) appears top-right. At the bottom, a card shows the day's record: mood rating (star icons, 4 out of 5) and a brief reflection note: "Had sushi with friends." written in a casual handwritten-style font.
-          </p>
-        </div>
+  <!-- Process -->
+  <section class="project-section">
+    <div class="container prose">
+      <h2>Process</h2>
 
-      <figure class="figure-80 single-tile-figure">
-        <div class="single-tile">
-          <img src="../../assets/img/ootd:screens.png" alt="Figma screens prototype">
-        </div>
-        <figcaption class="figure-caption">Screens Prototype</figcaption>
-      </figure>
-    </section>
+      <h3>Research → Design Principles</h3>
+      <p>Secondary research grounded every feature in evidence:</p>
+      <ul>
+        <li>Play lowers cortisol and buffers daily pressure <em>(American Academy of Pediatrics)</em></li>
+        <li>Adult playfulness supports positive emotion and resilience <em>(Frontiers in Psychology, 2022)</em></li>
+        <li>Playful reframing of routine promotes stress relief <em>(Proyer et al., PMC)</em></li>
+      </ul>
+      <p>This led to four design principles: reduce pressure, build emotional awareness, reframe routine as ritual, and give users full autonomy over engagement depth.</p>
+    </div>
 
-    <!-- Physical Companion -->
-    <section class="project-section">
-      <div class="container prose">
-        <h3>Physical Companion &amp; Packaging <em style="font-size: 0.75em; font-weight: 400; color: var(--text-color-light);">— in progress</em></h3>
-        <p>
-          The digital experience is designed to extend into a physical artifact. I am planning to create a pocket-sized dress-up diary with outfit stickers, background scene cards, and daily reflection prompts. The "surprise" packaging will reveal Ear alongside a curated set of sticker outfits, creating a tactile onboarding experience that mirrors the app's welcome flow. Physical production is currently in progress.
-        </p>
+    <figure class="figure-80 two-up-figure">
+      <div class="two-up-grid">
+        <figure class="two-up-tile">
+          <img src="../../assets/img/ootd:board1.png" alt="Inspiration board 1">
+        </figure>
+        <figure class="two-up-tile">
+          <img src="../../assets/img/ootd:board2.png" alt="Inspiration board 2">
+        </figure>
       </div>
-    </section>
+      <figcaption class="figure-caption">visual inspiration — rounded forms, illustration style, calm palette, sticker-book tactility</figcaption>
+    </figure>
+  </section>
 
-    <!-- Deliverables -->
-    <section class="project-section">
-      <div class="container prose">
-        <h3>Deliverables <em style="font-size: 0.75em; font-weight: 400; color: var(--text-color-light);">— in progress</em></h3>
-        <ul>
-          <li>User Flow Diagram with WCAG Annotations </li>
-          <li>Design System — Color Tokens, Typography, Spacing, Accessibility ✓</li>
-          <li>Figma Component Library — Clothing, UI Components, Variants ✓</li>
-          <li>Physical OOTD Diary Companion with Outfit Sticker Sheet ✓</li>
-          <li>Surprise Packaging Design ✓</li>
-          <li>Physical OOTD Diary Companion with Outfit Sticker Sheet <em style="color: var(--text-color-light);">— in progress</em></li>
-          <li>Surprise Packaging Design <em style="color: var(--text-color-light);">— in progress</em></li>
-          <li>
-            High-Fidelity UI Screens &amp; Figma Prototype
-            <em style="color: var(--text-color-light);">— coming soon</em>
-          </li>
-        </ul>
+  <section class="project-section">
+    <div class="container prose">
+      <h3>User Flow &amp; Information Architecture</h3>
+      <p>The flow was mapped horizontally to reflect industry standards, with WCAG accessibility considerations annotated at each step — not added at the end.</p>
+      <p style="font-style: italic; color: var(--text-color-light);">Open Diary → Meet Ear → Dress Ear → Reflect → Save Memory (or Skip)</p>
+    </div>
+    <figure class="figure-80 single-tile-figure">
+      <div class="single-tile">
+        <img src="../../assets/img/ootd:userflow1.png" alt="Wearby user flow diagram with WCAG annotations">
       </div>
-    </section>
+      <figcaption class="figure-caption">user flow with WCAG annotations at each decision point</figcaption>
+    </figure>
+  </section>
 
-    <!-- Reflection -->
-    <section class="project-section">
-      <div class="container prose">
-        <h3>Reflection <em style="font-size: 0.75em; font-weight: 400; color: var(--text-color-light);">— in progress</em></h3>
-        <p>
-          This project is still actively being built, but it has already shifted how I think about design systems. Building the component library first from naming conventions, variant logic, and token structure before touching the UI screens forced a discipline I hadn't fully practiced before. Every decision downstream became faster and more consistent because the system existed upstream.
-        </p>
-        <p>
-          Embedding WCAG from the user flow stage, rather than retrofitting it at the end, also changed my perspective. Contrast ratios, tap targets, and label pairings stopped feeling like compliance checkboxes and started feeling like design decisions. These make the product better for everyone, not just edge cases.
-        </p>
-        <p>
-          Next steps include completing the high-fidelity UI screens, building the Figma prototype with Smart Animate transitions, and exploring Figma Make to generate component code. The goal is a fully interactive prototype that communicates not just what Wearby looks like, but how it feels to use.
-        </p>
+  <section class="project-section">
+    <div class="container prose">
+      <h3>Design System</h3>
+      <p>A scalable token-based system was built before any screens were designed — ensuring visual cohesion and WCAG AA compliance across all surfaces. All color pairings verified via WebAIM Contrast Checker.</p>
+    </div>
+    <figure class="figure-80 single-tile-figure">
+      <div class="single-tile">
+        <img src="../../assets/img/ootd:designSystem.png" alt="Wearby design system">
       </div>
-    </section>
+      <figcaption class="figure-caption">design system — color tokens, typography scale, spacing &amp; WCAG compliance</figcaption>
+    </figure>
+  </section>
 
-    <nav class="project-pager">
-      <div class="container project-pager__inner">
-        <a class="project-pager__link project-pager__next" href="../telltool-branding">
-          <span>Next Project</span>
-          <i class="uil uil-arrow-right" aria-hidden="true"></i>
-        </a>
+  <section class="project-section">
+    <div class="container prose">
+      <h3>Component Library</h3>
+      <p>Every clothing item was structured as a named Figma component using hierarchical slash notation (<code>Category/Type/Color</code>), with color variants grouped into component sets. This enabled fast lookup and consistent variant switching across all screens.</p>
+    </div>
+    <figure class="figure-80 single-tile-figure">
+      <div class="single-tile">
+        <img src="../../assets/img/ootd:component.png" alt="Wearby Figma component library">
       </div>
-    </nav>
-  </main>
+      <figcaption class="figure-caption">figma component library — naming conventions, variant sets, component anatomy</figcaption>
+    </figure>
+  </section>
+
+  <!-- UI Screens -->
+  <section class="project-section">
+    <div class="container prose">
+      <h2>UI Screens <em style="font-size: 0.8em; font-weight: 400; color: var(--text-color-light);">— in progress</em></h2>
+      <p>Five core screens designed for iPhone (390×844px). The visual language uses sage green and warm cream, with Ear's presence carrying emotional continuity across the flow.</p>
+    </div>
+    <figure class="figure-80 single-tile-figure">
+      <div class="single-tile">
+        <img src="../../assets/img/ootd:screens.png" alt="Wearby UI screens prototype">
+      </div>
+      <figcaption class="figure-caption">screens — Splash · Welcome · Dress Up · Reflection · Confirm Memory</figcaption>
+    </figure>
+  </section>
+
+  <!-- Physical Companion -->
+  <section class="project-section">
+    <div class="container prose">
+      <h2>Physical Companion <em style="font-size: 0.8em; font-weight: 400; color: var(--text-color-light);">— in progress</em></h2>
+      <p>The digital experience extends into a pocket-sized physical diary with outfit stickers, background scene cards, and daily reflection prompts. Surprise packaging reveals Ear alongside a curated sticker set — mirroring the app's welcome flow as a tactile onboarding experience.</p>
+    </div>
+  </section>
+
+  <!-- Reflection -->
+  <section class="project-section">
+    <div class="container prose">
+      <h2>Reflection</h2>
+      <p>Building the component library before touching any UI screen forced a discipline I hadn't fully practiced before. Every downstream decision became faster because the system existed upstream. Embedding WCAG from the user flow stage — rather than retrofitting it — also changed my perspective: contrast ratios and tap targets stopped feeling like compliance and started feeling like design decisions that make products better for everyone.</p>
+    </div>
+  </section>
+
+  <!-- Pager -->
+  <div class="project-pager">
+    <div class="project-pager__inner container">
+      <a href="../telltool-branding/index.html" class="project-pager__link project-pager__next">
+        Next Project — TELL Tool Branding <i class="uil uil-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+
+</main>
 
   <footer class="footer" id="footer">
     <div class="container footer__inner">
