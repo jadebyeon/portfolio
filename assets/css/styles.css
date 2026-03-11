@@ -1686,6 +1686,60 @@ html {
   }
 }
 
+/* ===== PERSONA SWITCHER ===== */
+.persona-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.persona-tab {
+  background: transparent;
+  border: 1.5px solid #ccc;
+  border-radius: 999px;
+  padding: 0.4rem 1.1rem;
+  font-size: 0.85rem;
+  font-family: inherit;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: 0.01em;
+}
+
+.persona-tab:hover {
+  border-color: #555;
+  color: #333;
+}
+
+.persona-tab.active {
+  background: #111;
+  border-color: #111;
+  color: #fff;
+}
+
+/* Panels */
+.persona-panel {
+  display: none;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.persona-panel.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.persona-panel.fade-in {
+  animation: personaFadeIn 0.35s ease forwards;
+}
+
+@keyframes personaFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 /* ==================== MEDIA-QUERY SLOTS ==================== */
 /* For small devices  : @media (max-width: 640px){ ... }   */
 /* For medium devices : @media (min-width: 768px){ ... }   */
