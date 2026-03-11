@@ -1,45 +1,74 @@
 document.addEventListener("DOMContentLoaded", () => {
   const selectors = [
-    /* home / hero */
+    /* home */
     ".home__data > *",
     ".section-kicker",
     ".section-title",
+    ".section__title",
 
     /* portfolio cards */
     ".portfolio__content",
 
+    /* about / general content */
+    "main section .container > h1",
+    "main section .container > h2",
+    "main section .container > h3",
+    "main section .container > h4",
+    "main section .container > p",
+    "main section .container > ul",
+    "main section .container > ol",
+    "main section .container > .project-meta",
+    "main section .container > .about__info",
+    "main section .container > .about__buttons",
+    "main section .container > .about__data",
+    "main section .container > .about__content",
+
     /* project pages */
     ".project-hero .hero-overlay > *",
-    ".project-intro .project__lede",
+    ".project__lede",
     ".project-meta .meta-item",
-    ".project .project-section",
-    ".project .figure-80"
-  ].join(", ");
+    ".project-section .prose > *",
+    ".project-section .figure-80",
+    ".project-section .two-up-grid > *",
+    ".project-section .single-tile",
+    ".project-section .paired-grid > *",
 
-  const items = Array.from(document.querySelectorAll(selectors));
-  if (!items.length) return;
+    /* figures / media across pages */
+    "figure.figure-80",
+    ".two-up-figure",
+    ".single-tile-figure",
+    ".paired-figure"
+  ];
 
-  const portfolioCards = Array.from(document.querySelectorAll(".portfolio__content"));
-  const homeItems = Array.from(document.querySelectorAll(".home__data > *"));
-  const heroOverlayItems = Array.from(document.querySelectorAll(".project-hero .hero-overlay > *"));
+  const targets = Array.from(
+    new Set(
+      selectors.flatMap((selector) =>
+        Array.from(document.querySelectorAll(selector))
+      )
+    )
+  ).filter((el) => {
+    if (!el) return false;
+    if (el.classList.contains("reveal-up")) return false;
+    return true;
+  });
 
-  items.forEach((el) => {
+  if (!targets.length) return;
+
+  targets.forEach((el) => {
     el.classList.add("reveal-up");
 
-    let delay = 0;
+    const parent = el.parentElement;
+    if (!parent) return;
 
-    if (el.matches(".portfolio__content")) {
-      const i = portfolioCards.indexOf(el);
-      delay = (i % 3) * 100; // stagger by row
-    } else if (el.closest(".home__data")) {
-      const i = homeItems.indexOf(el);
-      delay = i * 120; // stagger hero text
-    } else if (el.closest(".project-hero .hero-overlay")) {
-      const i = heroOverlayItems.indexOf(el);
-      delay = i * 120;
+    const siblings = Array.from(parent.children).filter(
+      (child) =>
+        child.matches("h1, h2, h3, h4, p, ul, ol, figure, .meta-item, .portfolio__content, .two-up-tile, .single-tile, .paired-tile, .project__lede")
+    );
+
+    const index = siblings.indexOf(el);
+    if (index >= 0) {
+      el.style.transitionDelay = `${index * 90}ms`;
     }
-
-    el.style.transitionDelay = `${delay}ms`;
   });
 
   const observer = new IntersectionObserver(
@@ -53,9 +82,9 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       threshold: 0.12,
-      rootMargin: "0px 0px -8% 0px"
+      rootMargin: "0px 0px -10% 0px"
     }
   );
 
-  items.forEach((item) => observer.observe(item));
+  targets.forEach((el) => observer.observe(el));
 });
