@@ -171,6 +171,7 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener("resize", layoutAll);
   });
 });
+
 </script>
 
 
@@ -207,6 +208,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 /*==================== DARK LIGHT THEME ====================*/ 
+// ===== PERSONA SWITCHER =====
+document.addEventListener('DOMContentLoaded', () => {
+  const tabs = document.querySelectorAll('.persona-tab');
+  const panels = document.querySelectorAll('.persona-panel');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.persona;
+
+      // Update tabs
+      tabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+
+      // Update panels
+      panels.forEach(p => p.classList.remove('active', 'fade-in'));
+      const activePanel = document.querySelector(`.persona-panel[data-persona="${target}"]`);
+      if (activePanel) {
+        activePanel.classList.add('active');
+        // Trigger animation by forcing reflow
+        void activePanel.offsetWidth;
+        activePanel.classList.add('fade-in');
+      }
+    });
+  });
+});
 
 
 
