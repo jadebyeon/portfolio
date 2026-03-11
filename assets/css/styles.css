@@ -100,7 +100,7 @@ h1, h2, h3, h4 { color: var(--title-color); font-weight: var(--font-semi-bold); 
 
 /* pill-style tag (no hover effect) */
 .portfolio__tags .tag{
-  --mint-outline: #13c4a3;   /* mint outline color */
+  --mint-color: #1a7a5e;  /* mint outline color */
 
   display: inline-flex;
   align-items: center;
@@ -286,7 +286,7 @@ img { max-width: 100%; height: auto; }
 
 /* Mint/turquoise accent for title hover */
 :root{
-  --mint-color: hsl(168, 68%, 44%);   /* tweak if you want it lighter/darker */
+  --mint-color: #1a7a5e;  /* tweak if you want it lighter/darker */
 }
 
 .text-mint{
@@ -339,7 +339,7 @@ img { max-width: 100%; height: auto; }
 }
 
 .portfolio__tags .tag{
-  --mint-outline: #13c4a3;
+  --mint-outline: #1a7a5e;
 
   display: inline-flex;
   align-items: center;
@@ -2131,6 +2131,60 @@ html {
   .portfolio__tags {
     justify-content: flex-start;
   }
+}
+
+/* Blinking cursor for designers panel */
+.mint-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background: var(--mint-color);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: cursorBlink 0.9s step-end infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Prose max-width — the single biggest readability fix */
+.project-section .prose p,
+.project-section .prose ul,
+.project-section .prose ol {
+  max-width: 68ch;
+}
+
+/* Takeaway line per section */
+.section-takeaway {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--mint-color);
+  letter-spacing: 0.01em;
+  margin-bottom: 1rem;
+  max-width: 68ch;
+}
+
+/* Flow path */
+.flow-path {
+  font-style: italic;
+  color: var(--text-color-light);
+  font-size: 0.95rem;
+}
+
+/* Section subhead (below h2) */
+.section-subhead {
+  color: var(--text-color);
+  margin-bottom: 2rem;
+  max-width: 68ch;
+}
+
+/* WIP tag */
+.wip-tag {
+  font-size: 0.75em;
+  font-weight: 400;
+  color: var(--text-color-light);
 }
 /* ==================== MEDIA-QUERY SLOTS ==================== */
 /* For small devices  : @media (max-width: 640px){ ... }   */
