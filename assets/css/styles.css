@@ -2513,6 +2513,7 @@ html {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
+  width: 100%; 
 }
 .impact-card {
   background: #f8fafc;
@@ -2594,7 +2595,6 @@ html {
   flex-direction: column;
   gap: 1.5rem;
   margin-top: 1.25rem;
-  max-width: 72ch;
 }
 
 .learning-item {
