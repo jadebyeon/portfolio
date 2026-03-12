@@ -9,7 +9,7 @@
   <title>Pediatric Eye Exam Robot</title>
 </head>
 <body class="project-page">
-  <!-- Header -->
+
   <header class="header" id="header">
     <nav class="site-nav container">
       <a href="../../index.html" class="brand" aria-label="Home">Jade Byeon</a>
@@ -23,10 +23,10 @@
   </header>
 
   <main class="main project">
-    <!-- Hero -->
+
+    <!-- ① HERO -->
     <section class="project-hero section">
       <div class="hero-media">
-        <!-- Replace with your actual hero image -->
         <img src="../../assets/img/oct_banner.JPG" alt="Pediatric Eye Exam Robot">
         <div class="hero-overlay">
           <h1 class="hero-title">Pediatric Eye Exam Robot</h1>
@@ -35,157 +35,279 @@
       </div>
     </section>
 
-    <!-- Intro -->
+    <!-- ② PROBLEM + SOLUTION -->
     <section class="project-intro section">
       <div class="container">
-        <p class="project__lede">
-          As part of an interdisciplinary research team at the University of Michigan, I co-designed interaction experiences for the pediatric robot supporting Optical Coherence Tomography (OCT) eye exams. My role focused on character-driven interaction design, emotionally intelligent pre-exposure media, and analysis of patient survey data to support design decisions with real-world feedback.
-        </p>
+        <div class="problem-solution-row">
+          <div class="ps-block">
+            <p class="ps-label">The Problem</p>
+            <p class="ps-text">OCT eye exams are intimidating for children. The clinical environment, unfamiliar robotic equipment, and lack of emotional scaffolding leads to fear, low cooperation, and disrupted workflows.</p>
+          </div>
+          <div class="ps-divider" aria-hidden="true"></div>
+          <div class="ps-block">
+            <p class="ps-label">The Solution</p>
+            <p class="ps-text">A character-driven interaction system, including a named robot persona, pre-exposure animated media, and evidence-backed storyboard designed to reduce anxiety and build trust before the exam begins.</p>
+          </div>
+        </div>
 
-        <!-- Meta -->
-        <div class="project-meta">
+        <div class="project-meta" style="margin-top: 2.5rem;">
           <div class="meta-item">
-            <div class="meta-label">My Role</div>
-            <div class="meta-value">Character Design, Research & Data Analyst, Co-first Author of Paper</div>
+            <div class="meta-label">Role</div>
+            <div class="meta-value">UX Design Research Specialist</div>
           </div>
           <div class="meta-item">
-            <div class="meta-label">Organization</div>
-            <div class="meta-value">UARTS Faculty Engineering/Arts Student Teams (FEAST)</div>
+            <div class="meta-label">Team</div>
+            <div class="meta-value">UARTS Faculty Engineering/Arts Student Teams (FEAST) · Kellogg Eye Center</div>
           </div>
           <div class="meta-item">
             <div class="meta-label">Timeline</div>
-            <div class="meta-value">Nov 2024 – Present</div>
+            <div class="meta-value">Nov 2024 – Dec 2025</div>
           </div>
           <div class="meta-item">
-            <div class="meta-label">Tools Used</div>
-            <div class="meta-value">Figma, R, Excel, ACM Latex, Procreate</div>
+            <div class="meta-label">Tools</div>
+            <div class="meta-value">Figma · Miro · Procreate · R · Excel · ACM LaTeX · Canva · Promiere Pro(</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Design Problem -->
+    <!-- ③ TL;DR -->
     <section class="project-section">
-      <div class="container prose">
-        <h3>Design Problem</h3>
-        <p>
-          OCT exams often evoke fear or boredom in children due to the intimidating clinical environment and unfamiliar robotic equipment. While the robotic arm’s mechanical design was nearly complete when I joined the team, the robot’s interaction behaviors and personality were still undefined. The team needed a compelling character and UX strategy to reduce fear, boost cooperation, and support smoother clinical workflows.
-        </p>
+      <div class="container">
+        <div class="tldr-block">
+          <p class="tldr-eyebrow">TL;DR</p>
+          <p class="tldr-subhead">Interdisciplinary HRI research at UMich designing emotionally intelligent interaction for pediatric clinical robotics</p>
+          <div class="tldr-grid-2x2">
+            <div class="tldr-card">
+              <div class="tldr-card-icon tldr-card-icon--red">
+                <i class="uil uil-exclamation-triangle"></i>
+              </div>
+              <h3 class="tldr-card-label">Challenge</h3>
+              <p class="tldr-card-text">Children fear the robotic OCT device. The mechanical design was finalized but the robot had no personality, no interaction behavior, and no emotional scaffolding for young patients.</p>
+            </div>
+            <div class="tldr-card">
+              <div class="tldr-card-icon tldr-card-icon--amber">
+                <i class="uil uil-layers-alt"></i>
+              </div>
+              <h3 class="tldr-card-label">Approach</h3>
+              <p class="tldr-card-text">Character system design grounded in survey data. Four concepts tested across age groups, refined through medical staff feedback, and narrowed to one final persona: Sam the Ranger.</p>
+            </div>
+            <div class="tldr-card">
+              <div class="tldr-card-icon tldr-card-icon--mint">
+                <i class="uil uil-check-circle"></i>
+              </div>
+              <h3 class="tldr-card-label">Solution</h3>
+              <p class="tldr-card-text">A full interaction system consisting of robot persona, pre-exposure animated video, narrative storyboard, and data-backed design rationale designed to reduce first-contact anxiety.</p>
+            </div>
+            <div class="tldr-card">
+              <div class="tldr-card-icon tldr-card-icon--blue">
+                <i class="uil uil-chart-growth"></i>
+              </div>
+              <h3 class="tldr-card-label">Impact</h3>
+              <p class="tldr-card-text">Findings being synthesized into a co-authored ACM paper. Physical robot prototype in progress. Research contributes to the growing field of child-robot interaction in clinical settings.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ④ KEY DESIGN DECISIONS -->
+    <section class="project-section">
+      <div class="container">
+        <h2>Key Design Decisions</h2>
+        <p class="section-subhead">Three choices that shaped the interaction system with each grounded in research, not assumption.</p>
+        <div class="decision-cards">
+          <div class="decision-card">
+            <p class="decision-num">01</p>
+            <h3>Character over function</h3>
+            <p>The robot's mechanical capability was already defined. The missing layer was personality. A named, story-driven character (Sam) gave children a relationship to form before the exam to shift the experience from clinical procedure to familiar encounter.</p>
+          </div>
+          <div class="decision-card">
+            <p class="decision-num">02</p>
+            <h3>Age-differentiated design</h3>
+            <p>Ages 3–6 responded to gentle, animal-inspired characters emphasizing comfort. Older children preferred detective-style characters with interactive "missions." One character can't serve both so the system accounts for the developmental stage.</p>
+          </div>
+          <div class="decision-card">
+            <p class="decision-num">03</p>
+            <h3>Pre-exposure before first contact</h3>
+            <p>Pediatric media literature shows that familiarity before an event significantly reduces anxiety. The animated pre-exposure video that is designed for home and waiting room viewing creates that familiarity before the child ever sees the robot.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑤ ROBOT DEMO -->
+    <section class="project-section">
+      <div class="container">
+        <div class="section-icon-row">
+          <span class="section-icon-badge" style="background:#fee2e2;"><i class="uil uil-robot" style="color:#dc2626;"></i></span>
+          <h2 class="section-icon-title">The Robot</h2>
+        </div>
+        <p class="section-takeaway">↳ The mechanical arm was finalized as our job was giving it a soul.</p>
       </div>
       <figure class="figure-80 video-figure">
         <div class="video-wrapper">
           <iframe
-            id="oct-video"
-            src="https://player.vimeo.com/video/1138360201?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+            src="https://player.vimeo.com/video/1138360201?badge=0&autopause=0&player_id=0&app_id=58479"
             frameborder="0"
-            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            title="oct_video demo">
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+            title="OCT robot arm demo">
           </iframe>
         </div>
-        <figcaption class="figure-caption">
-          robot arm video demo
-        </figcaption>
+        <figcaption class="figure-caption">robot arm video demo</figcaption>
       </figure>
-      
-      
       <script src="https://player.vimeo.com/api/player.js"></script>
     </section>
 
-    <!-- Research & Strategy -->
+    <!-- ⑥ RESEARCH -->
     <section class="project-section">
-      <div class="container prose">
-        <h3>Research &amp; Strategy</h3>
-        <p><strong>Contextual Inquiry</strong> I began by shadowing real OCT procedures at the Kellogg Eye Center to understand the full experience from a child’s perspective. This included how long children typically waited, how they responded to the robot, and the points of emotional friction.</p>
-        <p><strong>Character System Design</strong> Our team generated multiple character concepts targeting different age-based patient responses. For example, younger children (ages 3–6) responded more positively to gentle, animal-inspired characters that emphasized familiarity and comfort, while older children preferred detective-style characters with interactive “missions” to combat boredom.</p>
-        <p><strong>Survey Deployment and Data Analysis</strong> To ground our character design decisions in real user feedback, I analyzed survey responses collected from children and families after their OCT visits. I created a suite of data visualizations that revealed key preferences in robot appearance, personality tone, and emotional impact. These insights directly shaped which character prototypes advanced to video production.</p>
-        <p><strong>Prototype Testing and Iteration</strong> After narrowing to four designs, we refined visual and behavioral elements based on medical staff feedback (e.g., adjusting materials or appearance to align with hygiene standards). I led the creation of short character showcase videos for survey testing and preference evaluation.</p>
-        <p><strong>Pre-Exposure Media Development</strong> Building on pediatric media literature, I designed a calming, narrative-based animated video introducing Sam. Intended to be played at home and in the clinic waiting area, this pre-exposure media aimed to reduce first-contact anxiety and support smoother transitions into the exam room.</p>
+      <div class="container">
+        <div class="section-icon-row">
+          <span class="section-icon-badge" style="background:#fef3c7;"><i class="uil uil-search" style="color:#d97706;"></i></span>
+          <h2 class="section-icon-title">Research &amp; Strategy</h2>
+        </div>
+        <p class="section-takeaway">↳ Four methods, one goal to find what actually makes children less afraid.</p>
+
+        <div class="principle-row">
+          <div class="principle-card">
+            <span class="principle-icon" style="background:#e0f2fe;"><i class="uil uil-eye" style="color:#0284c7;"></i></span>
+            <strong>Contextual Inquiry</strong>
+            <p>Shadowed real OCT procedures at Kellogg Eye Center by observing wait times, emotional friction points, and how children responded to the equipment in the moment.</p>
+          </div>
+          <div class="principle-card">
+            <span class="principle-icon" style="background:#fce7f3;"><i class="uil uil-smile" style="color:#db2777;"></i></span>
+            <strong>Character System Design</strong>
+            <p>Generated multiple character concepts targeting age-based responses. Four finalists were refined through medical staff feedback for hygiene and clinical compatibility.</p>
+          </div>
+          <div class="principle-card">
+            <span class="principle-icon" style="background:#d1fae5;"><i class="uil uil-chart-bar" style="color:#059669;"></i></span>
+            <strong>Survey Analysis</strong>
+            <p>Analyzed post-visit survey responses from children and families. Created data visualizations revealing character preferences, emotional states, and media response patterns.</p>
+          </div>
+        </div>
       </div>
-      <figure class="figure-80 single-tile-figure">
+    </section>
+
+    <!-- ⑦ CHARACTER DESIGN -->
+    <section class="project-section">
+      <div class="container">
+        <div class="section-icon-row">
+          <span class="section-icon-badge" style="background:#ede9fe;"><i class="uil uil-pen" style="color:#7c3aed;"></i></span>
+          <h2 class="section-icon-title">Character Design</h2>
+        </div>
+        <p class="section-takeaway">↳ Four concepts and Sam the Ranger, selected for cross-age appeal and clinical compatibility.</p>
+        <p>Each character was designed to target a different emotional register and age group. Survey data and medical staff review narrowed four designs to Sam — a ranger-style character with a mission-based narrative that works across developmental stages.</p>
+      </div>
+
+      <figure class="figure-80 single-tile-figure" style="margin-top: 1.5rem;">
         <div class="single-tile">
           <img src="../../assets/img/oct_Character Design.jpg" alt="Character Design Board">
         </div>
         <figcaption class="figure-caption">character design board created with team</figcaption>
       </figure>
-      <figure class="figure-80 two-up-figure">
-        <div class="two-up-grid">
-          <figure class="two-up-tile">
-            <img src="../../assets/img/oct_Optic.jpg" alt="Optic Character Design">
-          </figure>
-          <figure class="two-up-tile">
-            <img src="../../assets/img/oct_SAM the Ranger.jpg" alt="SAM the Ranger Character Design">
-          </figure>
-          <figure class="two-up-tile">
-            <img src="../../assets/img/oct_A-Eye.jpg" alt="A-Eye Character Design">
-          </figure>
-          <figure class="two-up-tile">
-            <img src="../../assets/img/oct_cheeze.jpg" alt="Cheeze Character Design">
-          </figure>
-        </div>
-        <figcaption class="figure-caption">character designs for four selected characters created with team</figcaption>
-      </figure>
+
+      <div class="container" style="margin-top: 1.5rem;">
+        <figure class="figure-80 two-up-figure">
+          <div class="two-up-grid">
+            <figure class="two-up-tile">
+              <img src="../../assets/img/oct_Optic.jpg" alt="Optic Character">
+            </figure>
+            <figure class="two-up-tile">
+              <img src="../../assets/img/oct_SAM the Ranger.jpg" alt="SAM the Ranger">
+            </figure>
+            <figure class="two-up-tile">
+              <img src="../../assets/img/oct_A-Eye.jpg" alt="A-Eye Character">
+            </figure>
+            <figure class="two-up-tile">
+              <img src="../../assets/img/oct_cheeze.jpg" alt="Cheeze Character">
+            </figure>
+          </div>
+          <figcaption class="figure-caption">four character finalists with Optic · Sam the Ranger · A-Eye · Cheeze</figcaption>
+        </figure>
+      </div>
     </section>
 
-    <!-- System Development -->
+    <!-- ⑧ STORYBOARD + MEDIA -->
     <section class="project-section">
-      <div class="container prose">
-        <h3>System Development</h3>
+      <div class="container">
+        <div class="section-icon-row">
+          <span class="section-icon-badge" style="background:#fce7f3;"><i class="uil uil-film" style="color:#db2777;"></i></span>
+          <h2 class="section-icon-title">Storyboard &amp; Pre-Exposure Media</h2>
+        </div>
+        <p class="section-takeaway">↳ Narrative arc designed to mirror a child's emotional journey.</p>
 
-        <h4>Storyboard with Interaction Design</h4>
-        <ul>
-          <li>Authored a two-part storyboard illustrating emotionally sensitive interactions: (1) Sam’s introduction, designed to establish trust and excitement, and (2) Sam’s farewell, which emphasizes closure and positive memory formation.</li>
-          <li>Storyboard followed a narrative arc (exposition, conflict, rising action, climax, falling action, and resolution) to reflect a child’s emotional journey.</li>
-        </ul>
-
-        <h4>Survey Visualization &amp; Insight Extraction</h4>
-        <ul>
-          <li>Generated multiple graphs and charts that summarized children’s character preferences, emotional states, and anticipated responses to pre-exposure media.</li>
-          <li>Used in internal presentations and helped the team prioritize which designs to pursue further.</li>
-        </ul>
-
-        <h4>Collaborative Academic Paper</h4>
-        <ul>
-          <li>Contributing to a forthcoming paper structured in ACM LaTeX, synthesizing findings across media design, child–robot interaction (CRI), and clinical UX research.</li>
-        </ul>
+        <div class="visual-system-specs" style="margin-top: 1.5rem;">
+          <div class="vspec-card">
+            <div class="vspec-icon-row">
+              <span class="vspec-icon" style="background:#ede9fe;"><i class="uil uil-book-open" style="color:#7c3aed;"></i></span>
+              <strong>Narrative Structure</strong>
+            </div>
+            <p>Two-part storyboard following exposition → conflict → rising action → climax → resolution. Part 1: Sam's introduction (trust + excitement). Part 2: Sam's farewell (closure + positive memory).</p>
+          </div>
+          <div class="vspec-card">
+            <div class="vspec-icon-row">
+              <span class="vspec-icon" style="background:#d1fae5;"><i class="uil uil-play-circle" style="color:#059669;"></i></span>
+              <strong>Pre-Exposure Video</strong>
+            </div>
+            <p>Calming animated video introducing Sam played at home and in clinic waiting areas. Based on pediatric media literature showing pre-familiarity significantly reduces first-contact anxiety.</p>
+          </div>
+          <div class="vspec-card">
+            <div class="vspec-icon-row">
+              <span class="vspec-icon" style="background:#fef3c7;"><i class="uil uil-file-alt" style="color:#d97706;"></i></span>
+              <strong>Academic Paper</strong>
+            </div>
+            <p>Co-first authoring a forthcoming ACM paper synthesizing findings across media design, child–robot interaction, and clinical UX research. Written in ACM LaTeX.</p>
+          </div>
+        </div>
       </div>
-      <figure class="figure-80 single-tile-figure">
+
+      <figure class="figure-80 single-tile-figure" style="margin-top: 2rem;">
         <div class="single-tile">
           <img src="../../assets/img/oct_storyboard.png" alt="SAM the Ranger Storyboard">
         </div>
-        <figcaption class="figure-caption">SAM the Ranger Storyboard</figcaption>
+        <figcaption class="figure-caption">SAM the Ranger storyboard</figcaption>
       </figure>
+    </section>
 
-    <!-- Deliverables -->
+    <!-- ⑨ DATA & DELIVERABLES -->
     <section class="project-section">
-      <div class="container prose">
-        <h3>Deliverables</h3>
-        <ul>
-          <li>Survey Analysis Results</li>
-          <li>Literature Review (in-progress)</li>
-          <li>Physical Prototype of the Robot Arm Character (in-progress)</li>
-        </ul>
-      </div>
-      <figure class="figure-80 single-tile-figure">
-        <div class="single-tile">
-          <img src="../../assets/img/oct_data analysis.png" alt="data analysis">
+      <div class="container">
+        <div class="section-icon-row">
+          <span class="section-icon-badge" style="background:#d1fae5;"><i class="uil uil-chart-bar" style="color:#059669;"></i></span>
+          <h2 class="section-icon-title">Data Analysis &amp; Deliverables</h2>
         </div>
+        <p class="section-takeaway">↳ Quantitative survey data + qualitative emotional feedback  synthesized into design decisions.</p>
+
+        <div class="deliverables-list" style="margin-top: 1.25rem;">
+          <span class="deliverable-tag"><i class="uil uil-check"></i> Survey Analysis &amp; Visualizations</span>
+          <span class="deliverable-tag"><i class="uil uil-check"></i> Character Design System</span>
+          <span class="deliverable-tag"><i class="uil uil-check"></i> Narrative Storyboard</span>
+          <span class="deliverable-tag" style="opacity:0.6;"><i class="uil uil-clock"></i> Pre-Exposure Video</span>
+          <span class="deliverable-tag" style="opacity:0.6;"><i class="uil uil-clock"></i> ACM Paper</span>
+          <span class="deliverable-tag" style="opacity:0.6;"><i class="uil uil-clock"></i> Physical Robot Prototype — continued by team</span>
+        </div>
+      </div>
+
+      <figure class="figure-80 single-tile-figure" style="margin-top: 2rem;">
+        <div class="single-tile">
+          <img src="../../assets/img/oct_data analysis.png" alt="Survey data analysis">
+        </div>
+        <figcaption class="figure-caption">survey data analysis</figcaption>
       </figure>
     </section>
 
-    <!-- Reflection -->
+    <!-- ⑩ REFLECTION -->
     <section class="project-section">
-      <div class="container prose">
-        <h3>Reflection</h3>
-        <p>
-          This project deepened my understanding of designing for pediatric healthcare, where emotional needs, ethical protocols, and clinical constraints intersect. Collecting meaningful data from young children, especially under IRB guidelines, was more complex than I expected, requiring careful survey framing and caregiver collaboration. It also taught me how to integrate quantitative insights (survey graphs) with qualitative feedback (emotional response narratives) to drive design.
-        </p>
-        <p>
-          The experience has helped me see the value of storytelling and the importance of designing systems that respect both user diversity and clinical precision.
-        </p>
+      <div class="container">
+        <div class="section-icon-row">
+          <span class="section-icon-badge" style="background:#f3f4f6;"><i class="uil uil-comment-alt-lines" style="color:#6b7280;"></i></span>
+          <h2 class="section-icon-title">Reflection</h2>
+        </div>
+        <p style="max-width: none; line-height: 1.8;">This project deepened my understanding of designing for pediatric healthcare — where emotional needs, ethical protocols, and clinical constraints intersect in ways that make every decision matter more. Collecting meaningful data from young children under IRB guidelines required careful survey framing and caregiver collaboration. It also taught me how to integrate quantitative insights with qualitative emotional narratives to drive design. The experience showed me that the most important design work isn't always visible in the final artifact — it lives in the research, the framing, and the trust you build with the people you're designing for.</p>
       </div>
     </section>
 
+    <!-- PAGER -->
     <nav class="project-pager">
       <div class="container project-pager__inner">
         <a class="project-pager__link project-pager__prev" href="../uu-arts">
@@ -198,18 +320,17 @@
         </a>
       </div>
     </nav>
+
   </main>
 
 <!--==================== FOOTER ====================-->
 <footer class="footer" id="footer">
   <div class="container footer__inner">
-    <!-- Top row: LET'S TALK + Back to top -->
     <div class="footer__top">
       <div class="footer__headline">
         <p class="footer__eyebrow">NICE TO MEET YOU!</p>
-        <h2 class="footer__title">LET’S TALK</h2>
+        <h2 class="footer__title">LET'S TALK</h2>
       </div>
-
       <a href="#top" class="footer__back">
         <span class="footer__back-label">BACK TO TOP</span>
         <span class="footer__back-circle">
@@ -217,34 +338,15 @@
         </span>
       </a>
     </div>
-
-    <!-- Bottom row: buttons + credits -->
     <div class="footer__bottom">
       <div class="footer__links">
-        <a href="mailto:jade03bjy@gmail.com"
-           class="footer__btn"
-           aria-label="Email">
-          Email
-        </a>
-        <a href="https://www.linkedin.com/in/jadebyeon/"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="footer__btn"
-           aria-label="LinkedIn">
-          LinkedIn
-        </a>
-        <a href="https://www.instagram.com/b._.jade/"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="footer__btn"
-           aria-label="Instagram">
-          Instagram
-        </a>
+        <a href="mailto:jade03bjy@gmail.com" class="footer__btn" aria-label="Email">Email</a>
+        <a href="https://www.linkedin.com/in/jadebyeon/" target="_blank" rel="noopener noreferrer" class="footer__btn" aria-label="LinkedIn">LinkedIn</a>
+        <a href="https://www.instagram.com/b._.jade/" target="_blank" rel="noopener noreferrer" class="footer__btn" aria-label="Instagram">Instagram</a>
       </div>
-
       <div class="footer__meta">
         <p>Design and Developed by Jade Byeon</p>
-        <p>© 2025</p>
+        <p>© 2026</p>
       </div>
     </div>
   </div>
