@@ -1508,7 +1508,8 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 
 /* iframe fills the frame */
-.video-wrapper iframe{
+.video-wrapper iframe,
+.video-wrapper video {
   position: absolute;
   top: 0;
   left: 0;
