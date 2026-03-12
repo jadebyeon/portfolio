@@ -9,7 +9,7 @@
   <title>ICML 2025 Tutorial — Human-Centered Diffusion</title>
 </head>
 <body class="project-page">
-  <!-- Header -->
+
   <header class="header" id="header">
     <nav class="site-nav container">
       <a href="../../index.html" class="brand" aria-label="Home">Jade Byeon</a>
@@ -23,10 +23,10 @@
   </header>
 
   <main class="main project">
-    <!-- Hero -->
+
+    <!-- HERO -->
     <section class="project-hero section">
       <div class="hero-media">
-        <!-- Replace with your actual hero image -->
         <img src="../../assets/img/qq_mockup.png" alt="ICML Tutorial Website hero">
         <div class="hero-overlay">
           <h1 class="hero-title">ICML 2025 Tutorial Website</h1>
@@ -35,26 +35,33 @@
       </div>
     </section>
 
-    <!-- Intro -->
+    <!-- PROBLEM + SOLUTION -->
     <section class="project-intro section">
       <div class="container">
-        <p class="project__lede">
-          I designed and shipped a conference-neutral tutorial site that helps ICML attendees quickly grasp three pillars—Generalization, Efficiency, and Controllability—and jump straight to slides, videos, and code. The work translates dense research into a scan-friendly structure with clear navigation, responsive layout, and accessible interaction patterns.
-        </p>
+        <div class="problem-solution-row">
+          <div class="ps-block">
+            <p class="ps-label">The Problem</p>
+            <p class="ps-text">Existing materials were scattered across PDFs, papers, and links with no clear entry point. Time-boxed ICML attendees needed a concise orientation layer without reading dense research documents first.</p>
+          </div>
+          <div class="ps-divider" aria-hidden="true"></div>
+          <div class="ps-block">
+            <p class="ps-label">The Solution</p>
+            <p class="ps-text">A conference-neutral tutorial site that distills three pillars of diffusion model research into a scan-friendly structure with clear navigation, responsive layout, and at-point-of-need access to slides, videos, and code.</p>
+          </div>
+        </div>
 
-        <!-- Meta -->
-        <div class="project-meta">
+        <div class="project-meta" style="margin-top: 2.5rem;">
           <div class="meta-item">
             <div class="meta-label">My Role</div>
             <div class="meta-value">UX/UI Designer, Front-End Implementer</div>
           </div>
           <div class="meta-item">
             <div class="meta-label">Team</div>
-            <div class="meta-value">Prof. Qing Qu, Prof. Yuxin Chen, Prof. Liyue Shen, Siyi Chen, Huijie Zhang</div>
+            <div class="meta-value">DeepThink Lab</div>
           </div>
           <div class="meta-item">
             <div class="meta-label">Timeline</div>
-            <div class="meta-value">May – Aug, 2025</div>
+            <div class="meta-value">May - Aug, 2025</div>
           </div>
           <div class="meta-item">
             <div class="meta-label">Tools Used</div>
@@ -64,72 +71,167 @@
       </div>
     </section>
 
-    <!-- Design Problem -->
+    <!-- TL;DR -->
     <section class="project-section">
-      <div class="container prose">
-        <h3>Design Problem</h3>
-        <p>
-          Existing materials (proposal, papers, scattered links) were hard to navigate for newcomers and time-boxed attendees. Users needed a concise orientation layer, consistent structure across the three parts, and at-point-of-need access to artifacts—without school-specific branding and without reading long PDFs first.
-        </p>
+      <div class="container">
+        <div class="tldr-block">
+          <p class="tldr-eyebrow">TL;DR</p>
+          <p class="tldr-subhead">Designed and shipped a tutorial website for ICML 2025 making complex diffusion model research accessible to conference attendees</p>
+          <div class="tldr-grid-2x2">
+            <div class="tldr-card">
+              <div class="tldr-card-icon tldr-card-icon--red">
+                <i class="uil uil-exclamation-triangle"></i>
+              </div>
+              <h3 class="tldr-card-label">Challenge</h3>
+              <p class="tldr-card-text">Dense research scattered across PDFs with no clear navigation. ICML attendees had no way to quickly orient themselves before or during the tutorial.</p>
+            </div>
+            <div class="tldr-card">
+              <div class="tldr-card-icon tldr-card-icon--amber">
+                <i class="uil uil-layers-alt"></i>
+              </div>
+              <h3 class="tldr-card-label">Approach</h3>
+              <p class="tldr-card-text">Content modeling first. Read the papers, distilled each of three parts into plain language, identified one anchor figure per section, then built the information architecture around scan paths.</p>
+            </div>
+            <div class="tldr-card">
+              <div class="tldr-card-icon tldr-card-icon--mint">
+                <i class="uil uil-check-circle"></i>
+              </div>
+              <h3 class="tldr-card-label">Solution</h3>
+              <p class="tldr-card-text">Responsive site with fixed sidebar navigation, progressive disclosure, and inline resource buttons per section. Designed in Figma and implemented in HTML/CSS/JS on GitHub Pages.</p>
+            </div>
+            <div class="tldr-card">
+              <div class="tldr-card-icon tldr-card-icon--blue">
+                <i class="uil uil-chart-growth"></i>
+              </div>
+              <h3 class="tldr-card-label">Impact</h3>
+              <p class="tldr-card-text">Live and publicly accessible at ICML 2025. First coded project shipped to a real research audience with academic collaborators.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- Research & Strategy -->
+    <!-- KEY DESIGN DECISIONS -->
     <section class="project-section">
-      <div class="container prose">
-        <h3>Research &amp; Strategy</h3>
-        <p><strong>Grounding in content.</strong> I began by reading the tutorial proposal and key papers (generalization, efficiency, controllability) and watching recommended tutorials to internalize how diffusion models work. I distilled each part into plain-language notes and identified one “anchor” figure per part (e.g., RP/GL, sampler convergence, low-rank controllability) to communicate the core idea at a glance.</p>
-        <p><strong>Mapping the User Experience.</strong> To ensure a clear, streamlined, and stress-free user experience, I first constructed a detailed flowmap/sitemap. This architecture and interaction design artifact was crucial for defining the site's taxonomy and structure, visualizing key user movement pathways and verifying that all critical content areas—such were efficiently accessible from the main content sections.</p>
-        <p><strong>Presentation choices through iteration.</strong> I tested alternative ways to sequence concepts and figures (landing overview → part pages → resources) and ran regular check-ins with Prof. Qu to validate which images, captions, and copy length best supported quick comprehension for ICML attendees.</p>
-        <p><strong>Learning-by-building with mentorship.</strong> This was my first time coding a website and using GitHub. I set up a minimal HTML/CSS/JS scaffold and deployed via GitHub Pages with hands-on help from PhD collaborators (Siyi, Huijie) for repo setup, asset optimization, and anchor navigation. Their feedback also informed accessibility tweaks (contrast, spacing) and responsive breakpoints.</p>
+      <div class="container">
+        <h2>Key Design Decisions</h2>
+        <p class="section-subhead">Three choices that shaped how a dense academic topic becomes scannable for a time-pressured audience.</p>
+        <div class="decision-cards">
+          <div class="decision-card">
+            <p class="decision-num">01</p>
+            <h3>Content before chrome</h3>
+            <p>Before touching Figma I read the papers and distilled each section into plain-language notes. Every navigation and layout choice followed the content structure, not the other way around.</p>
+          </div>
+          <div class="decision-card">
+            <p class="decision-num">02</p>
+            <h3>Fixed sidebar over alternatives</h3>
+            <p>Three navigation variants were tested. Fixed sidebar won because it keeps orientation visible at all times and supports quick jumps during a live tutorial session where attendees move non-linearly.</p>
+          </div>
+          <div class="decision-card">
+            <p class="decision-num">03</p>
+            <h3>One anchor figure per section</h3>
+            <p>Each of the three parts gets one key figure that communicates the core idea at a glance. Progressive disclosure handles the rest. This reduces cognitive load for newcomers while still serving depth-seekers.</p>
+          </div>
+        </div>
       </div>
-      <figure class="figure-80 single-tile-figure">
+    </section>
+
+    <!-- RESEARCH -->
+    <section class="project-section">
+      <div class="container">
+        <div class="section-icon-row">
+          <span class="section-icon-badge" style="background:#fef3c7;"><i class="uil uil-search" style="color:#d97706;"></i></span>
+          <h2 class="section-icon-title">Research and Strategy</h2>
+        </div>
+        <p class="section-takeaway">Grounding in the content before designing anything.</p>
+
+        <div class="principle-row">
+          <div class="principle-card">
+            <span class="principle-icon" style="background:#e0f2fe;"><i class="uil uil-book-reader" style="color:#0284c7;"></i></span>
+            <strong>Content Immersion</strong>
+            <p>Read the tutorial proposal and key papers across generalization, efficiency, and controllability. Distilled each into plain-language notes and identified one anchor figure per part.</p>
+          </div>
+          <div class="principle-card">
+            <span class="principle-icon" style="background:#fce7f3;"><i class="uil uil-sitemap" style="color:#db2777;"></i></span>
+            <strong>IA Mapping</strong>
+            <p>Built a detailed flowmap and sitemap before any wireframe. Defined the site taxonomy, user pathways, and verified all critical content was reachable from main sections.</p>
+          </div>
+          <div class="principle-card">
+            <span class="principle-icon" style="background:#d1fae5;"><i class="uil uil-repeat" style="color:#059669;"></i></span>
+            <strong>Iterative Validation</strong>
+            <p>Regular check-ins with Prof. Qu to validate image selection, caption length, and copy density against real ICML attendee needs. Shortened and simplified through multiple rounds.</p>
+          </div>
+        </div>
+      </div>
+
+      <figure class="figure-80 single-tile-figure" style="margin-top: 2rem;">
         <div class="single-tile">
           <img src="../../assets/img/qq_Flowchart.jpg" alt="Webpage Flowchart">
         </div>
         <figcaption class="figure-caption">user flowmap</figcaption>
       </figure>
+    </section>
 
-    <!-- System Development -->
+    <!-- SYSTEM DEVELOPMENT -->
     <section class="project-section">
-      <div class="container prose">
-        <h3>System Development</h3>
+      <div class="container">
+        <div class="section-icon-row">
+          <span class="section-icon-badge" style="background:#ede9fe;"><i class="uil uil-pen" style="color:#7c3aed;"></i></span>
+          <h2 class="section-icon-title">System Development</h2>
+        </div>
+        <p class="section-takeaway">From Figma prototype to shipped GitHub Pages site.</p>
 
-        <h4>Web Structure &amp; Prototype (Figma)</h4>
-        <ul>
-          <li>Built a component-based, responsive prototype (sidebar nav, schedule, per-section resources) with interactive hover/active states and anchor scroll.</li>
-          <li>Explored three navigation variants (fixed sidebar, slide-out drawer, icon rail); selected fixed sidebar for constant orientation and quick jumps.</li>
-          <li>Authored concise landing copy + one key figure per part to support progressive disclosure.</li>
-        </ul>
-
-        <h4>Resource Surfacing &amp; Schedule</h4>
-        <ul>
-          <li>Converted vague durations into exact clock times; added inline resource buttons per part to reduce pogo-sticking.</li>
-          <li>Established a compact “References” accordion to keep pages scannable.</li>
-        </ul>
-
-        <h4>Implementation (GitHub)</h4>
-        <ul>
-          <li>Converted approved prototype to semantic HTML/CSS/JS, optimized SVG/PNG, added Open Graph metadata, and deployed on GitHub Pages.</li>
-          <li>Documented handoff (README, tokens, asset map) for easy maintenance.</li>
-        </ul>
+        <div class="visual-system-specs" style="margin-top: 1.5rem;">
+          <div class="vspec-card">
+            <div class="vspec-icon-row">
+              <span class="vspec-icon" style="background:#ede9fe;"><i class="uil uil-vector-square" style="color:#7c3aed;"></i></span>
+              <strong>Figma Prototype</strong>
+            </div>
+            <p>Component-based responsive prototype with sidebar nav, schedule, and per-section resources. Interactive hover and active states with anchor scroll behavior.</p>
+          </div>
+          <div class="vspec-card">
+            <div class="vspec-icon-row">
+              <span class="vspec-icon" style="background:#d1fae5;"><i class="uil uil-schedule" style="color:#059669;"></i></span>
+              <strong>Resource Surfacing</strong>
+            </div>
+            <p>Converted vague durations into exact clock times. Added inline resource buttons per section to reduce pogo-sticking. Compact references accordion keeps pages scannable.</p>
+          </div>
+          <div class="vspec-card">
+            <div class="vspec-icon-row">
+              <span class="vspec-icon" style="background:#fef3c7;"><i class="uil uil-github" style="color:#d97706;"></i></span>
+              <strong>Implementation</strong>
+            </div>
+            <p>Converted prototype to semantic HTML/CSS/JS. Optimized assets, added Open Graph metadata, deployed on GitHub Pages. Documented handoff with README and asset map.</p>
+          </div>
+        </div>
       </div>
-      <figure class="figure-80 single-tile-figure">
+
+      <figure class="figure-80 single-tile-figure" style="margin-top: 2rem;">
         <div class="single-tile">
           <img src="../../assets/img/qq_website protocol.png" alt="Webpage Prototype">
         </div>
         <figcaption class="figure-caption">webpage prototype</figcaption>
       </figure>
+    </section>
 
-    <!-- Deliverables -->
+    <!-- DELIVERABLES -->
     <section class="project-section">
-      <div class="container prose">
-        <h3>Deliverables</h3>
-        <ul>
-          <li><a class="nav-link" href="https://icml-2025-tutorial.github.io/diffusion-models/" target="_blank" rel="noopener">ICML 2025 Tutorial ↗</a></li>
-        </ul>
+      <div class="container">
+        <div class="section-icon-row">
+          <span class="section-icon-badge" style="background:#d1fae5;"><i class="uil uil-box" style="color:#059669;"></i></span>
+          <h2 class="section-icon-title">Deliverables</h2>
+        </div>
+        <p class="section-takeaway">Designed, built, and shipped end to end.</p>
+
+        <div class="deliverables-list" style="margin-top: 1.25rem;">
+          <span class="deliverable-tag"><i class="uil uil-check"></i> Information Architecture Map</span>
+          <span class="deliverable-tag"><i class="uil uil-check"></i> Figma Prototype</span>
+          <span class="deliverable-tag"><i class="uil uil-check"></i> Responsive HTML/CSS/JS Site</span>
+          <a class="deliverable-tag deliverable-tag--link" href="https://icml-2025-tutorial.github.io/diffusion-models/" target="_blank" rel="noopener"><i class="uil uil-external-link-alt"></i> Live Site</a>
+        </div>
       </div>
-      <figure class="figure-80 single-tile-figure">
+
+      <figure class="figure-80 single-tile-figure" style="margin-top: 2rem;">
         <div class="single-tile">
           <img src="../../assets/img/qq_mockup2.jpg" alt="Webpage">
         </div>
@@ -137,19 +239,18 @@
       </figure>
     </section>
 
-    <!-- Reflection -->
+    <!-- REFLECTION -->
     <section class="project-section">
-      <div class="container prose">
-        <h3>Reflection</h3>
-        <p>
-          This project sharpened my ability to turn dense research into actionable interaction patterns under real constraints.
-          Rather than perfecting pages up front, I leaned on short review cycles with the research team to validate only what mattered—scan paths, anchor navigation, and resource discoverability—before investing in polish.
-          From an HCI lens, the biggest shift was treating “understanding” as a usability goal. I prioritized progressive disclosure, reduced cognitive load in microcopy, and tuned contrast/spacing to make the page readable on conference Wi-Fi and small screens. Collaboration with the PhD team pushed me to codify decisions as components and tokens, not one-off approach I’ll carry forward.
-          Overall, this project strengthened my habit of pairing content modeling with iterative prototyping so that the theory lands clearly for real users. 
-        </p>
+      <div class="container">
+        <div class="section-icon-row">
+          <span class="section-icon-badge" style="background:#f3f4f6;"><i class="uil uil-comment-alt-lines" style="color:#6b7280;"></i></span>
+          <h2 class="section-icon-title">Reflection</h2>
+        </div>
+        <p style="max-width: 72ch; line-height: 1.8;">This project sharpened my ability to turn dense research into actionable interaction patterns under real constraints. The biggest shift was treating understanding as a usability goal. Prioritizing progressive disclosure, reducing cognitive load in microcopy, and tuning contrast and spacing to work on conference Wi-Fi and small screens pushed me to think beyond visual polish. Collaboration with the PhD team pushed me to codify decisions as components rather than one-off choices. That habit of pairing content modeling with iterative prototyping is something I carry into every project now.</p>
       </div>
     </section>
-      
+
+    <!-- PAGER -->
     <nav class="project-pager">
       <div class="container project-pager__inner">
         <a class="project-pager__link project-pager__prev" href="../oct">
@@ -162,18 +263,17 @@
         </a>
       </div>
     </nav>
+
   </main>
 
 <!--==================== FOOTER ====================-->
 <footer class="footer" id="footer">
   <div class="container footer__inner">
-    <!-- Top row: LET'S TALK + Back to top -->
     <div class="footer__top">
       <div class="footer__headline">
         <p class="footer__eyebrow">NICE TO MEET YOU!</p>
-        <h2 class="footer__title">LET’S TALK</h2>
+        <h2 class="footer__title">LET'S TALK</h2>
       </div>
-
       <a href="#top" class="footer__back">
         <span class="footer__back-label">BACK TO TOP</span>
         <span class="footer__back-circle">
@@ -181,34 +281,15 @@
         </span>
       </a>
     </div>
-
-    <!-- Bottom row: buttons + credits -->
     <div class="footer__bottom">
       <div class="footer__links">
-        <a href="mailto:jade03bjy@gmail.com"
-           class="footer__btn"
-           aria-label="Email">
-          Email
-        </a>
-        <a href="https://www.linkedin.com/in/jadebyeon/"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="footer__btn"
-           aria-label="LinkedIn">
-          LinkedIn
-        </a>
-        <a href="https://www.instagram.com/b._.jade/"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="footer__btn"
-           aria-label="Instagram">
-          Instagram
-        </a>
+        <a href="mailto:jade03bjy@gmail.com" class="footer__btn" aria-label="Email">Email</a>
+        <a href="https://www.linkedin.com/in/jadebyeon/" target="_blank" rel="noopener noreferrer" class="footer__btn" aria-label="LinkedIn">LinkedIn</a>
+        <a href="https://www.instagram.com/b._.jade/" target="_blank" rel="noopener noreferrer" class="footer__btn" aria-label="Instagram">Instagram</a>
       </div>
-
       <div class="footer__meta">
         <p>Design and Developed by Jade Byeon</p>
-        <p>© 2025</p>
+        <p>© 2026</p>
       </div>
     </div>
   </div>
