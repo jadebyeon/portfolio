@@ -2540,6 +2540,96 @@ html {
 @media (max-width: 700px) {
   .impact-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ===== QUOTE CARDS ===== */
+.quote-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.quote-card {
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.quote-card::before {
+  content: "\201C";
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--mint-color);
+  opacity: 0.4;
+  font-family: var(--display-font);
+  display: block;
+  margin-bottom: -0.5rem;
+}
+
+.quote-card p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--title-color);
+  font-style: italic;
+  margin: 0;
+}
+
+.quote-card span {
+  font-size: 0.75rem;
+  color: var(--text-color-light);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 600px) {
+  .quote-cards { grid-template-columns: 1fr; }
+}
+
+/* ===== LEARNINGS LIST ===== */
+.learnings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1.25rem;
+  max-width: 72ch;
+}
+
+.learning-item {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+
+.learning-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #f3f4f6;
+  color: var(--mint-color);
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.learning-item strong {
+  font-size: 0.95rem;
+  color: var(--title-color);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.learning-item p {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--text-color);
+  margin: 0;
+}
 /* ==================== MEDIA-QUERY SLOTS ==================== */
 /* For small devices  : @media (max-width: 640px){ ... }   */
 /* For medium devices : @media (min-width: 768px){ ... }   */
