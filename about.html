@@ -3,107 +3,88 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Icons -->
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" />
-
-  <!-- Swiper -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
-
-  <!-- Main CSS -->
   <link rel="stylesheet" href="assets/css/styles.css" />
-
-  <title>Jade Byeon — Portfolio</title>
-  <meta
-    name="description"
-    content="Portfolio of Jade Byeon — design thinker blending creative visual communication with data analysis."
-  />
+  <title>About — Jade Byeon</title>
 </head>
 
 <body class="about-page" id="top">
-  <!--==================== HEADER ====================-->
+
   <header class="header" id="header">
     <nav class="site-nav container">
-      <!-- Left: name -->
       <a href="index.html" class="brand" aria-label="Home">Jade Byeon</a>
-
-      <!-- Right: horizontal menu -->
       <ul class="site-menu">
         <li><a class="nav-link" href="index.html#portfolio">Work</a></li>
         <li><a class="nav-link active" href="about.html">About</a></li>
         <li><a class="nav-link" href="#footer">Contact</a></li>
-        <li>
-          <a
-            class="nav-link"
-            href="assets/pdf/Jade_Resume.pdf"
-            target="_blank"
-            rel="noopener"
-          >Resume</a>
-        </li>
+        <li><a class="nav-link" href="assets/pdf/Jade_Resume.pdf" target="_blank" rel="noopener">Resume</a></li>
       </ul>
     </nav>
   </header>
 
-  <!--==================== MAIN ====================-->
   <main class="main">
-    <!--==================== ABOUT HERO ====================-->
-    <section class="home section" id="home">
-      <div class="home__container container grid about-grid">
-        <!-- LEFT: text -->
-        <div class="home__data">
-          <h1 class="home__title" style="max-width: 900px;">
-            <span class="text-mint">About Me</span>
-          </h1>
 
-          <p class="home__subtitle" style="margin-top: 1rem;">
-            <strong>Hi, I am Jade Byeon.</strong>
+    <!-- ABOUT HERO -->
+    <section class="about-hero section">
+      <div class="container about-hero__grid">
+
+        <!-- LEFT -->
+        <div class="about-hero__text">
+          <p class="about-eyebrow">About</p>
+          <h1 class="about-name">Jade Byeon</h1>
+          <p class="about-role">UX/Product Designer · Art &amp; Design + Statistics</p>
+
+          <p class="about-bio">
+            I design at the intersection of evidence and expression. With a dual background in Art &amp; Design and Statistics at the University of Michigan, I translate complex data into emotionally engaging, high-fidelity experiences — from research and strategy to scalable systems that build lasting habits.
           </p>
 
-          <p class="home__subtitle" style="margin-top: 0.75rem;">
-            I design at the intersection of evidence and expression, believing that
-            motivation is a measurable design outcome. With a dual background in Art &amp;
-            Design and Statistics, I translate complex data into emotionally engaging,
-            high-fidelity experiences—owning the full cycle process from research and
-            strategy to robust, gamified systems that build lasting habits.
+          <p class="about-bio" style="margin-top: 1rem;">
+            Born in Korea, studied in China, Singapore, and the United States. That background shapes how I think about diverse users, contexts, and the cultural assumptions embedded in design decisions.
           </p>
 
-          <p class="home__subtitle" style="margin-top: 1rem;">
-            I was born in Korea and have studied in China, Singapore, and the United
-            States, which shapes my sensitivity to diverse users and contexts. I’m
-            currently exploring how persuasive technology and physical-digital systems
-            can be designed ethically for better human–technology interaction.
-          </p>
-
-          <p class="home__subtitle" style="margin-top: 1rem;">
-            <strong>When I’m not designing</strong>
-          </p>
-
-          <p class="home__subtitle" style="margin-top: 0.75rem;">
-            You’ll find me watching films, listening to music, and reading.
-          </p>
+          <!-- Tags -->
+          <div class="about-tags">
+            <span class="about-tag">Figma</span>
+            <span class="about-tag">Design Systems</span>
+            <span class="about-tag">User Research</span>
+            <span class="about-tag">WCAG Accessibility</span>
+            <span class="about-tag">HTML/CSS/JS</span>
+            <span class="about-tag">R &amp; Python</span>
+          </div>
         </div>
 
-        <!-- RIGHT: image -->
-        <div class="home__img about__hero-img">
-          <img
-            src="assets/img/Linkedin_Profile Photo.JPG"
-            alt="Jade Byeon"
-          />
+        <!-- RIGHT -->
+        <div class="about-hero__img">
+          <img src="assets/img/Linkedin_Profile Photo.JPG" alt="Jade Byeon" />
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CURRENTLY EXPLORING -->
+    <section class="about-section section">
+      <div class="container about-two-col">
+        <div class="about-col">
+          <p class="about-col-eyebrow">Currently exploring</p>
+          <p class="about-col-text">How persuasive technology and physical-digital systems can be designed ethically for better human-technology interaction.</p>
+        </div>
+        <div class="about-col">
+          <p class="about-col-eyebrow">When I'm not designing</p>
+          <p class="about-col-text">Watching films, getting lost in a book, or finding new music that perfectly fits the mood.</p>
         </div>
       </div>
     </section>
+
   </main>
 
-  <!--==================== FOOTER ====================-->
   <footer class="footer" id="footer">
     <div class="container footer__inner">
-      <!-- Top row -->
       <div class="footer__top">
         <div class="footer__headline">
           <p class="footer__eyebrow">NICE TO MEET YOU!</p>
-          <h2 class="footer__title">LET’S TALK</h2>
+          <h2 class="footer__title">LET'S TALK</h2>
         </div>
-
         <a href="#top" class="footer__back">
           <span class="footer__back-label">BACK TO TOP</span>
           <span class="footer__back-circle">
@@ -111,48 +92,20 @@
           </span>
         </a>
       </div>
-
-      <!-- Bottom row -->
       <div class="footer__bottom">
         <div class="footer__links">
-          <a
-            href="mailto:jade03bjy@gmail.com"
-            class="footer__btn"
-            aria-label="Email"
-          >
-            Email
-          </a>
-
-          <a
-            href="https://www.linkedin.com/in/jadebyeon"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="footer__btn"
-            aria-label="LinkedIn"
-          >
-            LinkedIn
-          </a>
-
-          <a
-            href="https://www.instagram.com/b._.jade"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="footer__btn"
-            aria-label="Instagram"
-          >
-            Instagram
-          </a>
+          <a href="mailto:jade03bjy@gmail.com" class="footer__btn" aria-label="Email">Email</a>
+          <a href="https://www.linkedin.com/in/jadebyeon" target="_blank" rel="noopener noreferrer" class="footer__btn" aria-label="LinkedIn">LinkedIn</a>
+          <a href="https://www.instagram.com/b._.jade" target="_blank" rel="noopener noreferrer" class="footer__btn" aria-label="Instagram">Instagram</a>
         </div>
-
         <div class="footer__meta">
           <p>Design and Developed by Jade Byeon</p>
-          <p>© 2025</p>
+          <p>© 2026</p>
         </div>
       </div>
     </div>
   </footer>
 
-  <!--==================== SCRIPTS ====================-->
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/reveal.js"></script>
