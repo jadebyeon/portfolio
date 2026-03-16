@@ -1827,7 +1827,7 @@ html {
 .home.section {
   padding-top: calc(var(--header-height) + clamp(3rem, 5vh, 5rem));
   padding-bottom: clamp(3rem, 6vh, 6rem);
-  min-height: 80vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
 }
