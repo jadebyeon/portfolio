@@ -1896,11 +1896,11 @@ html {
 
 /* Hero: less dead space above the tabs/headline */
 .home.section {
-  padding-top: calc(var(--header-height) + clamp(1.5rem, 3vh, 2.5rem));
+  padding-top: calc(var(--header-height) + clamp(3rem, 8vh, 6rem));
   padding-bottom: clamp(2rem, 4vh, 4rem);
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .home__container {
@@ -1910,11 +1910,11 @@ html {
 
 .home__title {
   font-family: "ClashGrotesk", "Inter", sans-serif;
-  font-size: clamp(2.8rem, 5.5vw, 5.5rem) !important;
-  font-weight: 400;
+  font-size: clamp(3rem, 7.5vw, 8rem) !important;
+  font-weight: 500;
   line-height: 1.15 !important;
   letter-spacing: -0.01em;
-  max-width: 60%;
+  max-width: 100%;
   color: #1f1f29;
   text-wrap: balance;
 }
