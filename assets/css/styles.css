@@ -126,11 +126,11 @@ h1, h2, h3, h4, h5,
 
 .home__title {
   font-family: "ClashGrotesk", "Inter", sans-serif;
-  font-size: clamp(2.8rem, 7vw, 6rem) !important;
+  font-size: clamp(2.2rem, 4.2vw, 4rem) !important;
   font-weight: 700;
-  line-height: 1.05 !important;
-  letter-spacing: -0.035em;
-  max-width: 820px !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.025em;
+  max-width: 28ch !important;
   color: #1f1f29;
   text-wrap: balance;
 }
@@ -1908,11 +1908,11 @@ html {
 
 /* Hero: less dead space above the tabs/headline */
 .home.section {
+  padding-top: calc(var(--header-height) + clamp(1.5rem, 3vh, 2.5rem));
+  padding-bottom: clamp(2rem, 4vh, 4rem);
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding-top: var(--header-height);
-  padding-bottom: 0;
 }
 
 .home__container {
@@ -1923,11 +1923,11 @@ html {
 
 .home__title {
   font-family: "ClashGrotesk", "Inter", sans-serif;
-  font-size: clamp(3.2rem, 7vw, 8rem) !important;
-  font-weight: 600;
-  line-height: 1.05 !important;
-  letter-spacing: -0.03em;
-  max-width: 100% !important;
+  font-size: clamp(2.2rem, 4.2vw, 4rem) !important;
+  font-weight: 700;
+  line-height: 1.1 !important;
+  letter-spacing: -0.025em;
+  max-width: 28ch !important;
   color: #1f1f29;
   text-wrap: balance;
 }
