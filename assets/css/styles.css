@@ -124,17 +124,6 @@ h1, h2, h3, h4, h5,
   font-family: var(--display-font);
 }
 
-.home__title {
-  font-family: "ClashGrotesk", "Inter", sans-serif;
-  font-size: clamp(2.2rem, 4.2vw, 4rem) !important;
-  font-weight: 700;
-  line-height: 1.1 !important;
-  letter-spacing: -0.025em;
-  max-width: 28ch !important;
-  color: #1f1f29;
-  text-wrap: balance;
-}
-
 .text-mint {
   font-weight: 600; /* Semibold */
 }
@@ -1922,10 +1911,10 @@ html {
 
 .home__title {
   font-family: "ClashGrotesk", "Inter", sans-serif;
-  font-size: clamp(2.2rem, 4.2vw, 4rem) !important;
-  font-weight: 700;
-  line-height: 1.1 !important;
-  letter-spacing: -0.025em;
+  font-size: clamp(2.8rem, 5.5vw, 5.5rem) !important;
+  font-weight: 400;
+  line-height: 1.15 !important;
+  letter-spacing: -0.01em;
   max-width: 28ch !important;
   color: #1f1f29;
   text-wrap: balance;
