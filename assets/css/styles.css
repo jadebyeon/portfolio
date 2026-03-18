@@ -36,7 +36,7 @@
 :root {
   /* Layout */
   --header-height: 72px;
-  --page-gutter: clamp(16px, 5vw, 80px);
+  --page-gutter: clamp(24px, 3vw, 48px);
   --section-vspace: clamp(32px, 6vw, 96px);
   /* a bit more top space (like the reference hero) */
   --hero-top: clamp(72px, 14vh, 160px);
@@ -1897,12 +1897,12 @@ html {
 /* Hero: less dead space above the tabs/headline */
 .home.section {
   padding-top: calc(var(--header-height) + clamp(1rem, 2vh, 1.5rem));
-  padding-bottom: clamp(1.5rem, 3vh, 2.5rem);
-  min-height: 85vh;          /* 화면의 85% → 아래 15%에 project 살짝 노출 */
-  max-height: 92vh;          /* 너무 커지는 것 방지 */
+  padding-bottom: clamp(2.5rem, 5vh, 4rem);
+  min-height: 82vh;          /* 화면의 85% → 아래 15%에 project 살짝 노출 */
+  max-height: 88vh;          /* 너무 커지는 것 방지 */
   display: flex;
   flex-direction: column;
-  justify-content: center;  /* 텍스트 수직 중앙 */
+  justify-content: flex-end;  /* 텍스트 수직 중앙 */
   box-sizing: border-box;
 }
 
@@ -2724,6 +2724,20 @@ html {
 }
 @media (max-width: 600px) {
   .user-context-row { grid-template-columns: 1fr; }
+}
+
+/* portfolio card — name / description / tags 순서 */
+.portfolio__title-row {
+  display: contents; /* wrapper 제거 효과 */
+}
+
+.portfolio__tags {
+  justify-content: flex-start;
+  margin-top: 0.4rem;
+}
+
+.portfolio__tags .tag {
+  border-radius: 20px;
 }
 /* ==================== MEDIA-QUERY SLOTS ==================== */
 /* For small devices  : @media (max-width: 640px){ ... }   */
