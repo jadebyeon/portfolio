@@ -2705,6 +2705,23 @@ html {
   color: var(--text-color);
   margin: 0;
 }
+
+.user-context-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 4vw, 4rem);
+  padding-top: 2rem;
+  border-top: 1px solid #e5e7eb;
+}
+.user-context-text {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--text-color);
+  margin-top: 0.5rem;
+}
+@media (max-width: 600px) {
+  .user-context-row { grid-template-columns: 1fr; }
+}
 /* ==================== MEDIA-QUERY SLOTS ==================== */
 /* For small devices  : @media (max-width: 640px){ ... }   */
 /* For medium devices : @media (min-width: 768px){ ... }   */
