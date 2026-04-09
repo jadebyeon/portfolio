@@ -1916,15 +1916,26 @@ html {
 
 .home__title {
   font-family: "ClashGrotesk", "Inter", sans-serif;
-  /* Responsive scale: mobile ~1.8rem → 13" laptop ~3.5rem → iMac 27" ~6rem
-     4.5vw ensures it keeps growing on large screens instead of capping early */
-  font-size: clamp(1.8rem, 4.5vw, 6rem);
+  /* Font size: mobile ~1.8rem → 13" laptop ~3rem → large screens cap at 4rem
+     4rem cap은 container(1200px)와 비율 유지하기 위함 */
+  font-size: clamp(1.8rem, 3.6vw, 4rem);
   font-weight: 500;
-  line-height: 1.12 !important;
+  line-height: 1.15 !important;
   letter-spacing: -0.01em;
-  /* max-width 제거 — container(1200px) 풀 너비 사용해서 portfolio 카드와 x-align */
+  /* Width: 부모 container(1200px)의 약 60% 
+     → 작은 화면에선 자동으로 100%까지 늘어나고, 
+        큰 화면에선 container의 60%에서 멈춤 */
+  width: 100%;
+  max-width: 60%;
   color: #1f1f29;
   text-wrap: balance;
+}
+
+/* 모바일/태블릿에선 풀 너비 사용 (60%면 너무 좁음) */
+@media (max-width: 900px) {
+  .home__title {
+    max-width: 100%;
+  }
 }
 
 .home__subtitle {
