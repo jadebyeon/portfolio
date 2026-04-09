@@ -1998,6 +1998,9 @@ html {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+  height: auto;          /* ← 추가: 고정 height 제거 */
+  min-height: 0;         /* ← 추가 */
+  overflow: visible;  
 }
 
 .decision-num {
@@ -2515,6 +2518,10 @@ html {
   margin: 0;
   line-height: 1.5;
 }
+@media (max-width: 1000px) {
+  .testing-cards { grid-template-columns: repeat(2, 1fr); }  /* ← 추가 */
+}
+
 @media (max-width: 700px) {
   .testing-cards { grid-template-columns: repeat(2, 1fr); }
 }
@@ -2745,7 +2752,7 @@ html {
   display: flex;
   gap: 1.5rem;
   align-items: flex-start;
-  max-width: 72ch;
+  max-width: 100%;
 }
 .story-step-num {
   font-size: 0.7rem;
@@ -2820,9 +2827,10 @@ html {
   margin: 0;
   line-height: 1.6;
 }
-@media (max-width: 600px) {
+@media (max-width: 860px) {
   .persona-pair { grid-template-columns: 1fr; }
   .story-step { flex-direction: column; gap: 0.5rem; }
+  .iteration-body { grid-template-columns: 1fr; }
 }
 /* ==================== MEDIA-QUERY SLOTS ==================== */
 /* For small devices  : @media (max-width: 640px){ ... }   */
