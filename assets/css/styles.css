@@ -2026,7 +2026,10 @@ html {
   margin: 0;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
+  .decision-cards { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
   .decision-cards { grid-template-columns: 1fr; }
 }
 
@@ -2831,6 +2834,30 @@ html {
   .persona-pair { grid-template-columns: 1fr; }
   .story-step { flex-direction: column; gap: 0.5rem; }
   .iteration-body { grid-template-columns: 1fr; }
+}
+
+/* ===== SECTION INTRO TEXT — FULL WIDTH ===== */
+/* Subhead/intro text above full-width components (cards, grids, story-steps)
+   should span the same width as those components, not be constrained to 68ch */
+.decision-cards-section .section-subhead,
+.decision-cards-section > p,
+.story-section .section-subhead,
+.story-section > p,
+.project-section:has(.decision-cards) .section-subhead,
+.project-section:has(.decision-cards) > p:not(.prose p),
+.project-section:has(.story-step) .section-subhead,
+.project-section:has(.story-step) > p,
+.project-section:has(.decision-cards) .prose p,
+.project-section:has(.story-step) .prose p {
+  max-width: none;
+}
+
+/* Story step bodies shouldn't be constrained either */
+.story-step,
+.story-step-body,
+.story-step-body p {
+  max-width: none;
+  width: 100%;
 }
 /* ==================== MEDIA-QUERY SLOTS ==================== */
 /* For small devices  : @media (max-width: 640px){ ... }   */
