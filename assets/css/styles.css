@@ -1897,12 +1897,15 @@ html {
 /* Hero: less dead space above the tabs/headline */
 .home.section {
   padding-top: calc(var(--header-height) + clamp(1rem, 2vh, 1.5rem));
-  padding-bottom: clamp(2.5rem, 5vh, 4rem);
-  min-height: 78vh;          /* 화면의 85% → 아래 15%에 project 살짝 노출 */
-  max-height: 76vh;          /* 너무 커지는 것 방지 */
+  padding-bottom: clamp(2rem, 4vh, 3rem);
+  /* body가 이미 header-height만큼 margin-top 있으니까,
+     hero 자체 높이는 (viewport - header)의 일부만 차지해야 함.
+     calc로 header 빼주고 나머지의 ~80%만 사용 → portfolio 카드 윗부분 peek */
+  min-height: calc(88vh - var(--header-height));
+  max-height: calc(88vh - var(--header-height));
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;  /* 텍스트 수직 중앙 */
+  justify-content: flex-start;
   box-sizing: border-box;
 }
 
@@ -1913,11 +1916,13 @@ html {
 
 .home__title {
   font-family: "ClashGrotesk", "Inter", sans-serif;
-  font-size: clamp(1.8rem, 3.8vw, 3.6rem)
+  /* Responsive: ~45vw base, min 1.8rem (mobile), max 6rem (iMac)
+     → small laptop ~3.5rem, 13" ~4rem, 27" iMac ~6rem */
+  font-size: clamp(1.8rem, 4.5vw, 6rem);
   font-weight: 500;
   line-height: 1.12 !important;
   letter-spacing: -0.01em;
-  max-width: 26ch;
+  /* max-width 제거 — portfolio grid와 같은 container 너비 사용 */
   color: #1f1f29;
   text-wrap: balance;
 }
