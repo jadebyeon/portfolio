@@ -1916,19 +1916,19 @@ html {
 
 .home__title {
   font-family: "ClashGrotesk", "Inter", sans-serif;
-  /* Responsive: ~45vw base, min 1.8rem (mobile), max 6rem (iMac)
-     → small laptop ~3.5rem, 13" ~4rem, 27" iMac ~6rem */
+  /* Responsive scale: mobile ~1.8rem → 13" laptop ~3.5rem → iMac 27" ~6rem
+     4.5vw ensures it keeps growing on large screens instead of capping early */
   font-size: clamp(1.8rem, 4.5vw, 6rem);
   font-weight: 500;
   line-height: 1.12 !important;
   letter-spacing: -0.01em;
-  /* max-width 제거 — portfolio grid와 같은 container 너비 사용 */
+  /* max-width 제거 — container(1200px) 풀 너비 사용해서 portfolio 카드와 x-align */
   color: #1f1f29;
   text-wrap: balance;
 }
 
 .home__subtitle {
-  font-size: clamp(0.9rem, 1.2vw, 1rem);
+  font-size: clamp(0.9rem, 1.1vw, 1.25rem);
   color: var(--text-color-light);
   margin-top: 1.5rem !important;
   letter-spacing: 0.01em;
@@ -2264,7 +2264,6 @@ html {
 .section-subhead {
   color: var(--text-color);
   margin-bottom: 2rem;
-  max-width: 68ch;
 }
 
 /* WIP tag */
