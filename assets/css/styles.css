@@ -1911,20 +1911,15 @@ html {
 
 .home__container {
   width: 100%;
-  max-width: 100%;
 }
 
 .home__title {
   font-family: "ClashGrotesk", "Inter", sans-serif;
-  /* Font size: mobile ~1.8rem → 13" laptop ~3rem → large screens cap at 4rem
-     4rem cap은 container(1200px)와 비율 유지하기 위함 */
   font-size: clamp(1.8rem, 3.6vw, 4rem);
   font-weight: 500;
   line-height: 1.15 !important;
   letter-spacing: -0.01em;
-  /* Width: 부모 container(1200px)의 약 60% 
-     → 작은 화면에선 자동으로 100%까지 늘어나고, 
-        큰 화면에선 container의 60%에서 멈춤 */
+  /* 이제 부모가 1200px container니까 60%는 ~720px max = 카드와 비율 맞음 */
   width: 100%;
   max-width: 60%;
   color: #1f1f29;
