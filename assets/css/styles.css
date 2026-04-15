@@ -2869,10 +2869,6 @@ html {
   max-width: none;
   width: 100%;
 }
-.home__container,
-.portfolio .container {
-  outline: 2px solid red !important;
-}
 /* ==================== MEDIA-QUERY SLOTS ==================== */
 /* For small devices  : @media (max-width: 640px){ ... }   */
 /* For medium devices : @media (min-width: 768px){ ... }   */
