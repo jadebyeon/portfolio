@@ -87,6 +87,9 @@
   --z-tooltip: 10;
   --z-fixed: 100;
   --z-modal: 1000;
+
+  --grid-line-color: rgba(26, 122, 94, 0.12);
+  --grid-line-width: 1px;
 }
 
 /* Larger type on wide screens */
@@ -2868,6 +2871,60 @@ html {
 .story-step-body p {
   max-width: none;
   width: 100%;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+
+  /* 12 columns: gutter on both edges + 11 internal lines */
+  --cols: 12;
+  --gutter: var(--page-gutter); /* inherits your existing 24–48px gutter */
+
+  background-image:
+    /* left edge line */
+    linear-gradient(to right, var(--grid-line-color) var(--grid-line-width), transparent var(--grid-line-width)),
+    /* right edge line */
+    linear-gradient(to left,  var(--grid-line-color) var(--grid-line-width), transparent var(--grid-line-width)),
+    /* 11 internal column dividers */
+    repeating-linear-gradient(
+      to right,
+      transparent 0px,
+      transparent calc((100% - var(--gutter) * 2) / var(--cols) - var(--grid-line-width)),
+      var(--grid-line-color) calc((100% - var(--gutter) * 2) / var(--cols) - var(--grid-line-width)),
+      var(--grid-line-color) calc((100% - var(--gutter) * 2) / var(--cols))
+    );
+
+  background-position:
+    var(--gutter) 0,
+    right var(--gutter) top 0,
+    var(--gutter) 0;
+
+  background-size:
+    var(--grid-line-width) 100%,
+    var(--grid-line-width) 100%,
+    calc(100% - var(--gutter) * 2) 100%;
+
+  background-repeat: no-repeat, no-repeat, repeat-x;
+}
+
+/* Tablet: 8 columns */
+@media (max-width: 1279px) {
+  body::before { --cols: 8; }
+}
+
+/* Mobile: 4 columns */
+@media (max-width: 767px) {
+  body::before { --cols: 4; }
+}
+
+/* All content above the grid */
+.header, .main, .home, .portfolio, .footer, .section {
+  position: relative;
+  z-index: 1;
 }
 /* ==================== MEDIA-QUERY SLOTS ==================== */
 /* For small devices  : @media (max-width: 640px){ ... }   */
