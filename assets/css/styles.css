@@ -2873,6 +2873,7 @@ html {
   width: 100%;
 }
 
+/* ==================== EDITORIAL GRID LINES ==================== */
 body::before {
   content: '';
   position: fixed;
@@ -2880,48 +2881,64 @@ body::before {
   pointer-events: none;
   z-index: 9999;
 
-  /* 12 columns: gutter on both edges + 11 internal lines */
-  --cols: 12;
-  --gutter: var(--page-gutter); /* inherits your existing 24–48px gutter */
-
   background-image:
-    /* left edge line */
-    linear-gradient(to right, var(--grid-line-color) var(--grid-line-width), transparent var(--grid-line-width)),
-    /* right edge line */
-    linear-gradient(to left,  var(--grid-line-color) var(--grid-line-width), transparent var(--grid-line-width)),
-    /* 11 internal column dividers */
+    linear-gradient(to right,  rgba(26,122,94,0.12) 1px, transparent 1px),
+    linear-gradient(to left,   rgba(26,122,94,0.12) 1px, transparent 1px),
     repeating-linear-gradient(
       to right,
       transparent 0px,
-      transparent calc((100% - var(--gutter) * 2) / var(--cols) - var(--grid-line-width)),
-      var(--grid-line-color) calc((100% - var(--gutter) * 2) / var(--cols) - var(--grid-line-width)),
-      var(--grid-line-color) calc((100% - var(--gutter) * 2) / var(--cols))
+      transparent calc((100% - 96px) / 12 - 1px),
+      rgba(26,122,94,0.12) calc((100% - 96px) / 12 - 1px),
+      rgba(26,122,94,0.12) calc((100% - 96px) / 12)
     );
 
   background-position:
-    var(--gutter) 0,
-    right var(--gutter) top 0,
-    var(--gutter) 0;
+    48px 0,
+    right 48px top 0,
+    48px 0;
 
   background-size:
-    var(--grid-line-width) 100%,
-    var(--grid-line-width) 100%,
-    calc(100% - var(--gutter) * 2) 100%;
+    1px 100%,
+    1px 100%,
+    calc(100% - 96px) 100%;
 
   background-repeat: no-repeat, no-repeat, repeat-x;
 }
 
-/* Tablet: 8 columns */
 @media (max-width: 1279px) {
-  body::before { --cols: 8; }
+  body::before {
+    background-image:
+      linear-gradient(to right,  rgba(26,122,94,0.12) 1px, transparent 1px),
+      linear-gradient(to left,   rgba(26,122,94,0.12) 1px, transparent 1px),
+      repeating-linear-gradient(
+        to right,
+        transparent 0px,
+        transparent calc((100% - 64px) / 8 - 1px),
+        rgba(26,122,94,0.12) calc((100% - 64px) / 8 - 1px),
+        rgba(26,122,94,0.12) calc((100% - 64px) / 8)
+      );
+    background-position: 32px 0, right 32px top 0, 32px 0;
+    background-size: 1px 100%, 1px 100%, calc(100% - 64px) 100%;
+  }
 }
 
-/* Mobile: 4 columns */
 @media (max-width: 767px) {
-  body::before { --cols: 4; }
+  body::before {
+    background-image:
+      linear-gradient(to right,  rgba(26,122,94,0.12) 1px, transparent 1px),
+      linear-gradient(to left,   rgba(26,122,94,0.12) 1px, transparent 1px),
+      repeating-linear-gradient(
+        to right,
+        transparent 0px,
+        transparent calc((100% - 48px) / 4 - 1px),
+        rgba(26,122,94,0.12) calc((100% - 48px) / 4 - 1px),
+        rgba(26,122,94,0.12) calc((100% - 48px) / 4)
+      );
+    background-position: 24px 0, right 24px top 0, 24px 0;
+    background-size: 1px 100%, 1px 100%, calc(100% - 48px) 100%;
+  }
 }
 
-/* All content above the grid */
 .header, .main, .home, .portfolio, .footer, .section {
   position: relative;
   z-index: 1;
