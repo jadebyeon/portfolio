@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "portfolio-static",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["/Users/byeon75291/Desktop/Portfolio/portfolio/.claude/static-server.js"],
+      "port": 4174
+    }
+  ]
+}

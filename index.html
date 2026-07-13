@@ -14,10 +14,10 @@
   <link rel="stylesheet" href="assets/css/styles.css" />
 
   <title>Jade Byeon — Portfolio</title>
-  <meta name="description" content="Portfolio of Jade Byeon — design thinker blending creative visual communication with data analysis." />
+  <meta name="description" content="Portfolio of Jade Byeon — product designer working at the intersection of healthcare and data-driven UX." />
   <link rel="canonical" href="https://jadebyeon.github.io/portfolio/" />
   <meta property="og:title" content="Jade Byeon — Portfolio" />
-  <meta property="og:description" content="UX/Product Designer portfolio by Jade Byeon." />
+  <meta property="og:description" content="Product designer working at the intersection of healthcare and data-driven UX." />
   <meta property="og:url" content="https://jadebyeon.github.io/portfolio/" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -49,7 +49,7 @@
   <main class="main">
 
     <section class="home section" id="home">
-      <div class="home__container container grid">
+      <div class="home__container container">
         <div class="home__data">
 
           <div class="persona-tabs" role="tablist" aria-label="View intro for different audiences">
@@ -58,30 +58,16 @@
             <button class="persona-tab" data-persona="designers"       role="tab" aria-selected="false">Designers</button>
           </div>
 
-          <div class="persona-content">
-
-            <div class="persona-panel active" data-persona="anyone">
-              <h1 class="home__title">
-                Hi, I am Jade, I design products that <span class="text-mint">make hard situations feel less hard.</span>
-              </h1>
-              <p class="home__subtitle">Incoming MEng Design &amp; Technology Innovation @ Duke</p>
-              <p class="home__subtitle">Previously BA Art &amp; Design + BS Statistics @ University of Michigan</p>
-            </div>
-
-            <div class="persona-panel" data-persona="recruiters">
-              <h1 class="home__title">
-                UX/Product Designer who <span class="text-mint">researches, designs, and ships</span> from caregiver surveys at a medical center to a live conference website.
-              </h1>
-              <p class="home__subtitle">Open to Product Design, UX Design &amp; PM roles</p>
-            </div>
-
-            <div class="persona-panel" data-persona="designers">
-              <h1 class="home__title">
-                Every interface is a hypothesis. <span class="text-mint">Research, iteration, and systems thinking</span> are how I test it.
-              </h1>
-              <p class="home__subtitle">Component libraries · Design systems · WCAG from the flow stage · Research-to-prototype</p>
-            </div>
-
+          <!-- Title + lines are fully driven by PERSONA_COPY in assets/js/main.js.
+               Pre-filled with the "anyone" copy so it's meaningful before JS runs. -->
+          <div class="hero-copy" id="heroCopy" aria-live="polite">
+            <h1 class="home__title" data-copy-title>
+              Hi, I'm Jade. I design products that <span class="text-mint" data-mint>make hard situations feel less hard.</span>
+            </h1>
+            <p class="home__subtitle" data-copy-line="1">Incoming MEng Design &amp; Technology Innovation @ Duke</p>
+            <p class="home__subtitle" data-copy-line="2">Previously BA Art &amp; Design + BS Statistics @ University of Michigan</p>
+            <div class="hero-chips" data-copy-chips hidden></div>
+            <a class="home__resume-link" data-copy-link href="assets/pdf/Jade_Resume.pdf" target="_blank" rel="noopener" hidden>View Résumé →</a>
           </div>
         </div>
       </div>
@@ -99,7 +85,7 @@
             <h3 class="portfolio__title">
               <a class="portfolio__title-link" href="https://jadebyeon.github.io/portfolio/projects/oct">Pediatric Eye Exam Robot</a>
             </h3>
-            <p class="portfolio__description">Reducing anxiety in pediatric robotics through trust-centered design</p>
+            <p class="portfolio__description">Reducing exam anxiety for children aged 2-12, validated with 30 caregivers at Kellogg Eye Center</p>
             <p class="portfolio__tags">
               <span class="tag">HRI</span>
               <span class="tag">Healthcare UX</span>
@@ -153,7 +139,7 @@
             <h3 class="portfolio__title">
               <a class="portfolio__title-link" href="https://jadebyeon.github.io/portfolio/projects/qq">ICML Tutorial</a>
             </h3>
-            <p class="portfolio__description">Making diffusion model research accessible to conference attendees</p>
+            <p class="portfolio__description">Making diffusion model research accessible, shipped live for ICML 2025 attendees</p>
             <p class="portfolio__tags">
               <span class="tag">Info Architecture</span>
               <span class="tag">Responsive Web</span>
@@ -257,7 +243,7 @@
           <a href="https://www.instagram.com/b._.jade/" target="_blank" rel="noopener noreferrer" class="footer__btn" aria-label="Instagram">Instagram</a>
         </div>
         <div class="footer__meta">
-          <p>Design and Developed by Jade Byeon</p>
+          <p>Designed and developed by Jade Byeon</p>
           <p>© 2026</p>
         </div>
       </div>

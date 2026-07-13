@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   const selectors = [
-    /* home */
-    ".home__data > *",
+    /* home hero (.persona-tabs / #heroCopy) is handled by the dedicated
+       load-in animation in main.js + styles.css, not this generic
+       scroll-reveal, so it's intentionally excluded here */
     ".section-kicker",
     ".section-title",
     ".section__title",

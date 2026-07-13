@@ -36,7 +36,7 @@
 :root {
   /* Layout */
   --header-height: 72px;
-  --page-gutter: clamp(24px, 3vw, 48px);
+  --page-gutter: clamp(16px, 2vw, 32px);
   --section-vspace: clamp(32px, 6vw, 96px);
   /* a bit more top space (like the reference hero) */
   --hero-top: clamp(72px, 14vh, 160px);
@@ -88,8 +88,18 @@
   --z-fixed: 100;
   --z-modal: 1000;
 
-  --grid-line-color: rgba(26, 122, 94, 0.12);
-  --grid-line-width: 1px;
+  /* Editorial content grid — shared by the hero and portfolio layouts */
+  --grid-cols: 12;
+  --grid-gap: clamp(10px, 1.2vw, 20px);
+  --container-max: 1200px;
+}
+
+/* Column count follows the same breakpoints as the container/gutter system */
+@media (max-width: 1279px) {
+  :root { --grid-cols: 6; }
+}
+@media (max-width: 767px) {
+  :root { --grid-cols: 2; }
 }
 
 /* Larger type on wide screens */
@@ -108,6 +118,11 @@
 /* ==================== BASE ==================== */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
+/* Always reserve the scrollbar's width so the viewport-relative grid
+   lines (position:fixed) and the normal-flow content (width:100%)
+   agree on how wide "the page" is — otherwise they drift apart by the
+   scrollbar's width, showing up as a mismatched rightmost column. */
+html { scrollbar-gutter: stable; }
 /* make in-page anchors land below the fixed header */
 html { scroll-padding-top: var(--header-height); }
 
@@ -172,7 +187,7 @@ img { max-width: 100%; height: auto; }
 /* ==================== LAYOUT HELPERS ==================== */
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: var(--container-max);
   margin-inline: auto;
   padding-inline: var(--page-gutter);
 }
@@ -253,17 +268,30 @@ img { max-width: 100%; height: auto; }
 .section-title{ margin-top: 0; }
 
 /* ==================== PORTFOLIO ==================== */
-/* Grid */
-.portfolio .container{
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(16px, 3vw, 32px);
+/* Less top padding than other sections — the hero is already capped
+   to ~65vh specifically so the first card row peeks into view */
+.portfolio.section {
+  padding-top: clamp(16px, 2vw, 32px);
 }
 
+/* Real grid: same --grid-cols/--grid-gap as the hero, so cards sit on
+   the same column tracks as the rest of the page. */
+.portfolio .container{
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols), 1fr);
+  column-gap: var(--grid-gap);
+  row-gap: clamp(40px, 6vw, 64px);
+}
+
+/* Mobile (2 cols): one card per row, full width */
+.portfolio__content{
+  grid-column: 1 / -1;
+}
+
+/* Tablet (8 cols) & desktop (16 cols): two cards per row, each spanning half */
 @media (min-width: 768px){
-  .portfolio .container{
-    grid-template-columns: repeat(2, minmax(0, 1fr)); /* two equal columns */
-    gap: 2rem;
+  .portfolio__content{
+    grid-column: span calc(var(--grid-cols) / 2);
   }
 }
 
@@ -1852,68 +1880,268 @@ html {
   color: #fff;
 }
 
-/* Panels */
-.persona-panel {
-  display: none;
+.home__resume-link {
+  display: inline-block;
+  margin-top: 0.75rem;
+  color: var(--mint-color);
+  font-weight: 600;
+  font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+.home__resume-link[hidden] { display: none; }
+
+/* ===== HERO TAB-SWITCH REVEAL =====
+   Click-triggered only (see main.js). Base state is fully visible —
+   safe if JS hasn't run yet. .is-exiting fades old copy out quickly;
+   .is-priming snaps new copy invisible with no transition so that
+   removing it (in main.js) animates it back in, staggered per line
+   via an inline transition-delay. */
+#heroCopy [data-copy-title],
+#heroCopy [data-copy-line],
+#heroCopy [data-copy-link] {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+#heroCopy .is-exiting {
+  transition: opacity 0.15s ease-in, transform 0.15s ease-in;
   opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  transform: translateY(-6px);
+}
+#heroCopy .is-priming {
+  transition: none;
+  opacity: 0;
+  transform: translateY(12px);
 }
 
-.persona-panel.active {
-  display: block;
+/* ---- Tab 1 (For Anyone): marker-stroke mint reveal ---- */
+[data-mint-mode="reveal"] {
+  /* inline-block gives the phrase one unified border box (even when
+     its own text wraps onto a 2nd line), so clip-path has a single
+     consistent box to animate — clip-path on a plain `inline` element
+     clips per line fragment and gets stuck once the phrase wraps. */
+  display: inline-block;
+  max-width: 100%;
+  clip-path: inset(0 100% 0 0);
+  /* delay matches the headline's own enter animation (0ms stagger,
+     0.3s duration) so the marker-stroke reveal starts once it lands */
+  transition: clip-path 0.4s ease-out 0.3s;
+}
+[data-mint-mode="reveal"].is-revealed {
+  clip-path: inset(0 0 0 0);
+}
+
+/* ---- Tab 2 (Recruiters): scramble mint + stat chips ----
+   The scramble effect is driven entirely by main.js swapping
+   textContent, so the span itself needs no extra transition — just
+   the same wrap-safe box as the reveal mode. */
+[data-mint-mode="scramble"] {
+  display: inline-block;
+  max-width: 100%;
+}
+
+.hero-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+.hero-chips[hidden] { display: none; }
+
+/* Pill styling matches .persona-tab: light border, no fill */
+.hero-chip {
+  display: inline-flex;
+  align-items: center;
+  border: 1.5px solid #ccc;
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.78rem;
+  color: #555;
+  letter-spacing: 0.01em;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+}
+.hero-chip.is-in {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ---- Tab 3 (Designers): pipeline word reveal + segmented subline ---- */
+.text-mint-word {
+  position: relative;
+  color: var(--mint-color);
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+}
+.text-mint-word.is-in {
+  opacity: 1;
+}
+/* thin underline marks a step as "done" once the next one starts */
+.text-mint-word.is-done::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  background: currentColor;
+  opacity: 0.45;
+}
+
+.pipeline-segment {
+  /* pale/unlit — clearly lighter than the line's own resting color
+     (--text-color-light) so "lighting up" reads as a real change */
+  color: #dde0e5;
+  transition: color 0.25s ease-out;
+}
+.pipeline-segment.is-lit {
+  color: var(--text-color);
+}
+.pipeline-arrow {
+  color: #dde0e5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #heroCopy [data-copy-title],
+  #heroCopy [data-copy-line],
+  #heroCopy [data-copy-link],
+  #heroCopy .is-exiting,
+  #heroCopy .is-priming {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  [data-mint-mode="reveal"] {
+    transition: none !important;
+    clip-path: inset(0 0 0 0) !important;
+  }
+  .hero-chip {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .text-mint-word {
+    transition: none !important;
+    opacity: 1 !important;
+  }
+  .pipeline-segment {
+    transition: none !important;
+    color: var(--text-color) !important;
+  }
+}
+
+/* ===== HERO LOAD-IN ANIMATION =====
+   Load-triggered only (not scroll). main.js toggles body.loaded;
+   everything else is CSS. Hidden by default so there's no flash of the
+   settled state before the animation runs; .loaded's animation uses
+   `both` fill-mode so it holds the "from" values through its own delay
+   and the "to" values after it finishes. Once main.js is confident the
+   animation has had time to finish, it adds body.is-settled, which
+   pins the resting opacity/transform explicitly (independent of the
+   animation's hold) and clears each element's inline animation so the
+   persona tab-switch transitions underneath work normally again. */
+@keyframes heroLoadIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.persona-tabs,
+#heroCopy [data-copy-title],
+#heroCopy [data-copy-line] {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+body.loaded .persona-tabs {
+  animation: heroLoadIn 0.7s ease both;
+  animation-delay: 0.1s;
+}
+body.loaded #heroCopy [data-copy-title] {
+  animation: heroLoadIn 0.7s ease both;
+  animation-delay: 0.25s;
+}
+body.loaded #heroCopy [data-copy-line] {
+  animation: heroLoadIn 0.7s ease both;
+  animation-delay: 0.4s;
+}
+
+body.is-settled .persona-tabs,
+body.is-settled #heroCopy [data-copy-title],
+body.is-settled #heroCopy [data-copy-line] {
   opacity: 1;
   transform: translateY(0);
 }
 
-.persona-panel.fade-in {
-  animation: personaFadeIn 0.35s ease forwards;
-}
-
-@keyframes personaFadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .persona-tabs,
+  #heroCopy [data-copy-title],
+  #heroCopy [data-copy-line] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  body.loaded .persona-tabs,
+  body.loaded #heroCopy [data-copy-title],
+  body.loaded #heroCopy [data-copy-line] {
+    animation: none !important;
+  }
 }
 
 /* ===== RESPONSIVE LAYOUT FIX ===== */
 
 /* Wider container on large screens */
 @media (min-width: 1400px) {
-  .container {
-    max-width: 1400px;
-  }
+  :root { --container-max: 1400px; }
 }
 
 @media (min-width: 1600px) {
-  .container {
-    max-width: 1560px;
-  }
+  :root { --container-max: 1560px; }
 }
 
 /* Reduce excessive side padding on large screens */
 @media (min-width: 1200px) {
   :root {
-    --page-gutter: clamp(32px, 3vw, 60px);
+    --page-gutter: clamp(20px, 2vw, 36px);
   }
 }
 
-/* Hero: less dead space above the tabs/headline */
+/* Hero: capped to ~65vh so the first portfolio row peeks into the
+   first viewport on a 13" laptop instead of requiring a scroll */
 .home.section {
   padding-top: calc(var(--header-height) + clamp(1rem, 2vh, 1.5rem));
-  padding-bottom: clamp(2rem, 4vh, 3rem);
-  /* body가 이미 header-height만큼 margin-top 있으니까,
-     hero 자체 높이는 (viewport - header)의 일부만 차지해야 함.
-     calc로 header 빼주고 나머지의 ~80%만 사용 → portfolio 카드 윗부분 peek */
-  min-height: calc(88vh - var(--header-height));
-  max-height: calc(88vh - var(--header-height));
+  padding-bottom: clamp(1.5rem, 3vh, 2.5rem);
+  /* no max-height: #heroCopy reserves its own min-height (main.js) to
+     fit the tallest persona's copy, so this can grow past 65vh rather
+     than clip/overlap the portfolio section on longer copy */
+  min-height: calc(65vh - var(--header-height));
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   box-sizing: border-box;
+  /* very faint depth wash behind the hero copy */
+  background-image: radial-gradient(ellipse at 20% 30%, rgba(26, 122, 94, 0.04), transparent 60%);
 }
 
+/* Full-bleed — not capped to --container-max */
 .home__container {
   width: 100%;
+  max-width: none;
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols), 1fr);
+  column-gap: var(--grid-gap);
+}
+
+.home__data {
+  grid-column: 2 / -2;
+}
+
+@media (max-width: 767px) {
+  .home__data { grid-column: 1 / -1; }
 }
 
 .home__title {
@@ -1922,36 +2150,26 @@ html {
   font-weight: 500;
   line-height: 1.15 !important;
   letter-spacing: -0.01em;
-  /* 이제 부모가 1200px container니까 60%는 ~720px max = 카드와 비율 맞음 */
+  /* fills whatever column span .home__data is placed on */
   width: 100%;
-  max-width: 60%;
   color: #1f1f29;
   text-wrap: balance;
-}
-
-/* 모바일/태블릿에선 풀 너비 사용 (60%면 너무 좁음) */
-@media (max-width: 900px) {
-  .home__title {
-    max-width: 100%;
-  }
 }
 
 .home__subtitle {
   font-size: clamp(0.9rem, 1.1vw, 1.25rem);
   color: var(--text-color-light);
-  margin-top: 1.5rem !important;
+  margin-top: 0.75rem !important;
   letter-spacing: 0.01em;
+}
+
+/* tighter gap between the two subtitle lines than title → first subtitle */
+.home__subtitle + .home__subtitle {
+  margin-top: 0.35rem !important;
 }
 
 .persona-tabs {
   margin-bottom: 1.5rem;
-}
-
-/* Portfolio grid: tighter gap on wide screens */
-@media (min-width: 1200px) {
-  .portfolio .container {
-    gap: 2.5rem;
-  }
 }
 
 /* ===== PROBLEM / SOLUTION ROW — REVISED ===== */
@@ -2116,15 +2334,6 @@ html {
   margin-bottom: 3rem;
 }
 
-/* Grid: featured first row full-width, then 2-col below */
-.portfolio .container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  row-gap: clamp(3.5rem, 6vw, 6rem);
-  column-gap: 2rem;
-}
-
-
 /* Card layout */
 .portfolio__content {
   display: flex;
@@ -2221,9 +2430,6 @@ html {
 
 /* Mobile: all single column */
 @media (max-width: 767px) {
-  .portfolio .container {
-    grid-template-columns: 1fr;
-  }
   .portfolio__tags {
     justify-content: flex-start;
   }
@@ -2282,28 +2488,93 @@ html {
   color: var(--text-color-light);
 }
 
-/* ===== SECTION ICON ROW ===== */
-.section-icon-row {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 0.75rem;
+/* ===== SECTION NUMBER + TITLE ===== */
+.section-number {
+  font-size: 0.85rem;
+  color: var(--mint-color);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin: 0 0 0.5rem;
 }
-.section-icon-badge {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.section-icon-badge i { font-size: 1.1rem; }
 .section-icon-title {
   font-size: clamp(1.4rem, 2.4vw, 1.9rem);
   font-weight: 700;
-  margin: 0;
+  margin: 0 0 0.75rem;
   letter-spacing: -0.02em;
+}
+
+/* ===== PULL QUOTE ===== */
+.pull-quote-section {
+  padding-block: clamp(3rem, 6vw, 5rem);
+}
+.pull-quote {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+.pull-quote-headline {
+  font-family: var(--display-font);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 600;
+  color: var(--title-color);
+  margin: 0 0 1.25rem;
+  line-height: 1.2;
+}
+.pull-quote-body {
+  font-size: 1rem;
+  color: var(--text-color);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ===== DESIGNING UNDER CONSTRAINTS ===== */
+.constraint-blocks {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  margin-top: 2rem;
+}
+.constraint-num {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--mint-color);
+  letter-spacing: 0.05em;
+  margin: 0 0 0.5rem;
+}
+.constraint-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--title-color);
+  margin: 0 0 1.25rem;
+}
+.constraint-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+.constraint-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  margin: 0 0 0.4rem;
+}
+.constraint-label--constraint {
+  color: var(--text-color-light);
+}
+.constraint-label--response {
+  color: var(--mint-color);
+}
+.constraint-text {
+  color: var(--text-color);
+  line-height: 1.6;
+  margin: 0;
+}
+@media (max-width: 700px) {
+  .constraint-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
 }
 
 /* ===== PRINCIPLE CARDS (Research section) ===== */
@@ -2609,6 +2880,122 @@ html {
   .iteration-item { flex-direction: column; }
 }
 
+/* ===== CHART AXIS LABELS + LEGEND (shared by the journey scrubber) ===== */
+.arc-axis-label {
+  font-size: 11px;
+  font-family: var(--body-font);
+  fill: var(--text-color-light);
+}
+.arc-x-label {
+  font-size: 11px;
+  font-family: var(--body-font);
+  fill: var(--text-color-light);
+  text-anchor: middle;
+}
+.emotional-arc-legend {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--text-color);
+}
+.arc-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.arc-legend-swatch {
+  display: inline-block;
+  width: 18px;
+  height: 3px;
+  border-radius: 2px;
+}
+.arc-legend-swatch--standard {
+  background-image: repeating-linear-gradient(to right, var(--text-color-light) 0 4px, transparent 4px 7px);
+}
+.arc-legend-swatch--sam {
+  background: #1a7a5e;
+}
+
+/* ===== JOURNEY SCRUBBER (draggable, see assets/js/main.js) ===== */
+.journey-scrubber {
+  max-width: 680px;
+  margin: 0 auto;
+}
+.journey-scrubber-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.scrubber-line {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.scrubber-line--without {
+  stroke: var(--text-color-light);
+}
+.scrubber-line--with {
+  stroke: #1a7a5e;
+}
+
+.journey-scrubber-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  margin: 1rem 0 0;
+  border-radius: 999px;
+  background: #e5e7eb;
+  outline: none;
+  touch-action: none; /* let the thumb, not the page, capture drag/touch */
+}
+.journey-scrubber-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #1a7a5e;
+  border: 3px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  cursor: grab;
+}
+.journey-scrubber-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #1a7a5e;
+  border: 3px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  cursor: grab;
+}
+.journey-scrubber-slider::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: #e5e7eb;
+}
+
+.journey-scrubber-readout {
+  margin-top: 1rem;
+  text-align: center;
+}
+.journey-scrubber-stage {
+  margin: 0 0 0.25rem;
+  font-family: var(--display-font);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--title-color);
+}
+.journey-scrubber-annotation {
+  margin: 0;
+  min-height: 1.5em;
+  font-size: 0.9rem;
+  color: var(--text-color-light);
+}
+
 /* ===== IMPACT GRID ===== */
 .impact-grid {
   display: grid;
@@ -2849,6 +3236,99 @@ html {
   .iteration-body { grid-template-columns: 1fr; }
 }
 
+/* Journey map columns: small label above each always-visible tile */
+.journey-map-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.journey-map-label {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-color-light);
+  text-align: center;
+}
+
+/* ===== CHARACTER VERDICT (badge + slide-up overlay, see assets/js/main.js) ===== */
+.character-tile {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+@media (hover: hover) {
+  .character-tile:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+  }
+}
+
+.verdict-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  padding: 0.28rem 0.65rem;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-color);
+  white-space: nowrap;
+  pointer-events: none;
+}
+.verdict-badge--priority {
+  background: rgba(26, 122, 94, 0.12);
+  border-color: #1a7a5e;
+  color: #1a7a5e;
+}
+
+.character-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.25rem;
+  overflow-y: auto;
+  background: rgba(55, 65, 81, 0.9); /* gray tint */
+  opacity: 0;
+  transform: translateY(100%);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.character-overlay--sam {
+  background: rgba(26, 122, 94, 0.88); /* mint tint */
+}
+.character-tile.is-open .character-overlay {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.character-overlay-name {
+  font-family: "ClashGrotesk", "Inter", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 0.4rem;
+}
+.character-overlay-desc {
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .character-tile,
+  .character-overlay {
+    transition: none !important;
+  }
+}
+
 /* ===== SECTION INTRO TEXT — FULL WIDTH ===== */
 /* Subhead/intro text above full-width components (cards, grids, story-steps)
    should span the same width as those components, not be constrained to 68ch */
@@ -2873,76 +3353,6 @@ html {
   width: 100%;
 }
 
-/* ==================== EDITORIAL GRID LINES ==================== */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9999;
-
-  background-image:
-    linear-gradient(to right,  rgba(26,122,94,0.12) 1px, transparent 1px),
-    linear-gradient(to left,   rgba(26,122,94,0.12) 1px, transparent 1px),
-    repeating-linear-gradient(
-      to right,
-      transparent 0px,
-      transparent calc((100% - 96px) / 12 - 1px),
-      rgba(26,122,94,0.12) calc((100% - 96px) / 12 - 1px),
-      rgba(26,122,94,0.12) calc((100% - 96px) / 12)
-    );
-
-  background-position:
-    48px 0,
-    right 48px top 0,
-    48px 0;
-
-  background-size:
-    1px 100%,
-    1px 100%,
-    calc(100% - 96px) 100%;
-
-  background-repeat: no-repeat, no-repeat, repeat-x;
-}
-
-@media (max-width: 1279px) {
-  body::before {
-    background-image:
-      linear-gradient(to right,  rgba(26,122,94,0.12) 1px, transparent 1px),
-      linear-gradient(to left,   rgba(26,122,94,0.12) 1px, transparent 1px),
-      repeating-linear-gradient(
-        to right,
-        transparent 0px,
-        transparent calc((100% - 64px) / 8 - 1px),
-        rgba(26,122,94,0.12) calc((100% - 64px) / 8 - 1px),
-        rgba(26,122,94,0.12) calc((100% - 64px) / 8)
-      );
-    background-position: 32px 0, right 32px top 0, 32px 0;
-    background-size: 1px 100%, 1px 100%, calc(100% - 64px) 100%;
-  }
-}
-
-@media (max-width: 767px) {
-  body::before {
-    background-image:
-      linear-gradient(to right,  rgba(26,122,94,0.12) 1px, transparent 1px),
-      linear-gradient(to left,   rgba(26,122,94,0.12) 1px, transparent 1px),
-      repeating-linear-gradient(
-        to right,
-        transparent 0px,
-        transparent calc((100% - 48px) / 4 - 1px),
-        rgba(26,122,94,0.12) calc((100% - 48px) / 4 - 1px),
-        rgba(26,122,94,0.12) calc((100% - 48px) / 4)
-      );
-    background-position: 24px 0, right 24px top 0, 24px 0;
-    background-size: 1px 100%, 1px 100%, calc(100% - 48px) 100%;
-  }
-}
-
-.header, .main, .home, .portfolio, .footer, .section {
-  position: relative;
-  z-index: 1;
-}
 /* ==================== MEDIA-QUERY SLOTS ==================== */
 /* For small devices  : @media (max-width: 640px){ ... }   */
 /* For medium devices : @media (min-width: 768px){ ... }   */
