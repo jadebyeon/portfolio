@@ -271,7 +271,7 @@ var PERSONA_COPY = {
     line1Mode: 'text',
     line1: 'Seeking product design & UX internships (2026–27)',
     line2: null,
-    chips: ['3 shipped projects', 'ACM co-author', '30+ research participants'],
+    chips: ['3 shipped projects', 'ARVO 2026 co-author', '30+ research participants'],
     resume: { text: 'View Résumé →', href: 'assets/pdf/Jade_Resume.pdf' }
   },
   designers: {
