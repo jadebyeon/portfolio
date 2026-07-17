@@ -2590,6 +2590,165 @@ body.is-settled #heroCopy [data-copy-line] {
   margin: 0;
 }
 
+/* ===== INTERACTION SYSTEM: SWIMLANE TIMELINE (reuses .principle-card look) ===== */
+.swimlane-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.swimlane-col {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.swimlane-stage {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--title-color);
+  margin: 0 0 0.15rem;
+}
+.swimlane-row {
+  padding: 0.5rem 0.6rem;
+  border-radius: 10px;
+}
+.swimlane-row--sam {
+  background: rgba(26, 122, 94, 0.08);
+}
+.swimlane-row-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--text-color-light);
+  margin: 0 0 0.3rem;
+}
+.swimlane-row-text {
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--text-color);
+  margin: 0;
+}
+.swimlane-caption {
+  margin-top: 1.25rem;
+  font-size: 0.85rem;
+  color: var(--text-color-light);
+  font-style: italic;
+}
+@media (max-width: 1100px) {
+  .swimlane-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .swimlane-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .swimlane-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== INTERACTION SYSTEM: FAILURE STATES TABLE ===== */
+.failure-intro {
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text-color);
+}
+.failure-assumptions {
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.8rem;
+  color: var(--text-color-light);
+}
+.failure-table-wrap {
+  width: 100%;
+  overflow-x: visible;
+}
+.failure-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.failure-table th,
+.failure-table td {
+  text-align: left;
+  padding: 0.9rem 1rem 0.9rem 0;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text-color);
+  vertical-align: top;
+}
+.failure-table th {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  color: var(--text-color-light);
+  border-bottom: 2px solid #d1d5db;
+}
+.failure-never {
+  margin-top: 2rem;
+}
+.failure-never-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--title-color);
+  margin: 0 0 0.75rem;
+}
+.failure-never-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.failure-never-list li {
+  position: relative;
+  padding-left: 1.1rem;
+  font-weight: 600;
+  color: var(--title-color);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.failure-never-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--mint-color);
+}
+@media (max-width: 720px) {
+  .failure-table thead { display: none; }
+  .failure-table, .failure-table tbody, .failure-table tr, .failure-table td {
+    display: block;
+    width: 100%;
+  }
+  .failure-table tr {
+    padding: 0.9rem 0;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .failure-table td {
+    border: none;
+    padding: 0.35rem 0;
+  }
+  .failure-table td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    color: var(--text-color-light);
+    margin-bottom: 0.2rem;
+  }
+}
+
 /* ===== PRINCIPLE CARDS (Research section) ===== */
 .principle-row {
   display: grid;
