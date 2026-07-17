@@ -2590,6 +2590,35 @@ body.is-settled #heroCopy [data-copy-line] {
   margin: 0;
 }
 
+/* ===== INTERACTION SYSTEM: PRINCIPLES STRIP ===== */
+.principles-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+.principles-strip-item {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  color: var(--title-color);
+}
+.principles-strip-sep {
+  color: var(--mint-color);
+  font-weight: 700;
+}
+.spec-link {
+  display: inline-block;
+  margin-top: 2rem;
+  color: var(--mint-color);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 /* ===== INTERACTION SYSTEM: SWIMLANE TIMELINE (reuses .principle-card look) ===== */
 .swimlane-grid {
   display: grid;
