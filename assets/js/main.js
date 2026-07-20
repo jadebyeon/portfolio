@@ -626,3 +626,114 @@ var PERSONA_COPY = {
   }
 })();
 
+/*==================== OOTD PROJECT: PHYSICAL COMPANION LIGHTBOX ====================
+  Click a thumbnail to open a centered lightbox with the full image and
+  caption; Prev/Next buttons or Left/Right arrow keys move through the
+  set (wraps), Esc/backdrop/close button closes it. Focus moves into
+  the lightbox on open, is trapped there (Tab cycles among its three
+  buttons), and returns to the triggering thumbnail on close. The only
+  motion is a ~150ms opacity fade, which resolves instantly under
+  prefers-reduced-motion via the CSS media query on .physical-lightbox;
+  the fixed CLOSE_MS timeout below matches that duration so the
+  underlying [hidden] attribute is restored right after the fade
+  finishes rather than snapping the content away mid-transition.
+  No-ops on pages without .physical-thumb. */
+(function () {
+  var CLOSE_MS = 150;
+
+  function init() {
+    var thumbs = Array.prototype.slice.call(document.querySelectorAll('.physical-thumb'));
+    var lightbox = document.getElementById('physicalLightbox');
+    if (!thumbs.length || !lightbox) return;
+
+    var img = lightbox.querySelector('.physical-lightbox-img');
+    var caption = lightbox.querySelector('.physical-lightbox-caption');
+    var closeBtn = lightbox.querySelector('.physical-lightbox-close');
+    var prevBtn = lightbox.querySelector('.physical-lightbox-prev');
+    var nextBtn = lightbox.querySelector('.physical-lightbox-next');
+    var focusable = [closeBtn, prevBtn, nextBtn];
+
+    var items = thumbs.map(function (thumb) {
+      var thumbImg = thumb.querySelector('img');
+      return { src: thumbImg.getAttribute('src'), caption: thumb.getAttribute('data-caption') || '' };
+    });
+
+    var currentIndex = 0;
+    var triggerEl = null;
+    var closeTimer = null;
+
+    function render(index) {
+      currentIndex = index;
+      img.setAttribute('src', items[index].src);
+      img.setAttribute('alt', items[index].caption);
+      caption.textContent = items[index].caption;
+    }
+
+    function onKeydown(e) {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeLightbox();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        render((currentIndex - 1 + items.length) % items.length);
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        render((currentIndex + 1) % items.length);
+      } else if (e.key === 'Tab') {
+        var first = focusable[0];
+        var last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
+
+    function openLightbox(index, trigger) {
+      triggerEl = trigger;
+      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+      render(index);
+      lightbox.hidden = false;
+      void lightbox.offsetWidth; // force layout so opacity transitions from 0 instead of jumping straight to 1
+      lightbox.classList.add('is-open');
+      document.addEventListener('keydown', onKeydown);
+      closeBtn.focus();
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('is-open');
+      document.removeEventListener('keydown', onKeydown);
+      closeTimer = setTimeout(function () {
+        lightbox.hidden = true;
+      }, CLOSE_MS);
+      if (triggerEl) triggerEl.focus();
+    }
+
+    thumbs.forEach(function (thumb, index) {
+      thumb.addEventListener('click', function () {
+        openLightbox(index, thumb);
+      });
+    });
+
+    prevBtn.addEventListener('click', function () {
+      render((currentIndex - 1 + items.length) % items.length);
+    });
+    nextBtn.addEventListener('click', function () {
+      render((currentIndex + 1) % items.length);
+    });
+
+    Array.prototype.slice.call(lightbox.querySelectorAll('[data-lightbox-close]')).forEach(function (el) {
+      el.addEventListener('click', closeLightbox);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+

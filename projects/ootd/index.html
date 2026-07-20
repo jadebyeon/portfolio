@@ -243,31 +243,37 @@
     </div>
 
     <figure class="figure-80" style="margin-top: 1.5rem;">
-      <div class="physical-gallery-lead">
-        <img src="../../assets/img/ootd-physical-hero.jpg" alt="Wearby physical companion diary">
-      </div>
-      <p class="physical-gallery-lead-caption">A pocket-sized dress-up diary, the whole system fits in one hand.</p>
-
-      <div class="physical-gallery-grid">
-        <div class="physical-gallery-tile">
-          <img src="../../assets/img/ootd-physical-dressup.jpg" alt="Dress Ear and reflect page spread">
-          <p class="physical-gallery-caption">Dress Ear, then reflect. The outfit sticker and the daily prompt share one page.</p>
-        </div>
-        <div class="physical-gallery-tile">
-          <img src="../../assets/img/ootd-physical-envelope.jpg" alt="Sealed sticker envelope">
-          <p class="physical-gallery-caption">A sealed envelope holds the sticker set, the first of two surprises, with Ear's full range of expressions.</p>
-        </div>
-        <div class="physical-gallery-tile">
-          <img src="../../assets/img/ootd-physical-qr.jpg" alt="End page QR code">
-          <p class="physical-gallery-caption">The end-page QR is the second surprise, "What if Ear lived in your phone?", the bridge to the digital companion.</p>
-        </div>
-        <div class="physical-gallery-tile">
-          <img src="../../assets/img/ootd-physical-cover.jpg" alt="Diary cover and sticker sheet">
-          <p class="physical-gallery-caption">Cover and full sticker sheet.</p>
-        </div>
+      <div class="physical-thumb-grid">
+        <button type="button" class="physical-thumb" data-caption="A pocket-sized dress-up diary, the whole system fits in one hand." aria-label="A pocket-sized dress-up diary, the whole system fits in one hand.">
+          <img src="../../assets/img/ootd-physical-hero.jpg" alt="" loading="lazy">
+        </button>
+        <button type="button" class="physical-thumb" data-caption="Dress Ear, then reflect. The outfit sticker and the daily prompt share one page." aria-label="Dress Ear, then reflect. The outfit sticker and the daily prompt share one page.">
+          <img src="../../assets/img/ootd-physical-dressup.jpg" alt="" loading="lazy">
+        </button>
+        <button type="button" class="physical-thumb" data-caption="First surprise: a sealed envelope holds the sticker set and Ear's full range of expressions." aria-label="First surprise: a sealed envelope holds the sticker set and Ear's full range of expressions.">
+          <img src="../../assets/img/ootd-physical-envelope.jpg" alt="" loading="lazy">
+        </button>
+        <button type="button" class="physical-thumb" data-caption="Second surprise: the end-page QR, &quot;What if Ear lived in your phone?&quot;, bridges to the digital companion." aria-label="Second surprise: the end-page QR, &quot;What if Ear lived in your phone?&quot;, bridges to the digital companion.">
+          <img src="../../assets/img/ootd-physical-qr.jpg" alt="" loading="lazy">
+        </button>
+        <button type="button" class="physical-thumb" data-caption="Cover and full sticker sheet." aria-label="Cover and full sticker sheet.">
+          <img src="../../assets/img/ootd-physical-cover.jpg" alt="" loading="lazy">
+        </button>
       </div>
     </figure>
   </section>
+
+  <!-- PHYSICAL COMPANION LIGHTBOX (populated by assets/js/main.js) -->
+  <div class="physical-lightbox" id="physicalLightbox" hidden role="dialog" aria-modal="true" aria-label="Physical companion image viewer">
+    <div class="physical-lightbox-backdrop" data-lightbox-close></div>
+    <div class="physical-lightbox-content">
+      <button type="button" class="physical-lightbox-close" aria-label="Close" data-lightbox-close>&times;</button>
+      <button type="button" class="physical-lightbox-prev" aria-label="Previous image">&#8592;</button>
+      <img class="physical-lightbox-img" src="" alt="">
+      <p class="physical-lightbox-caption"></p>
+      <button type="button" class="physical-lightbox-next" aria-label="Next image">&#8594;</button>
+    </div>
+  </div>
 
   <!-- REFLECTION -->
   <section class="project-section">
