@@ -737,3 +737,196 @@ var PERSONA_COPY = {
   }
 })();
 
+/*==================== MISC PAGE: RADIAL CLUSTER ====================
+  Nodes are laid out on a circle via plain JS trig (angle + radius,
+  radius read from the --cluster-radius custom property so it stays a
+  normal clamp()-based responsive value in CSS). Dragging the cluster
+  (pointer or touch) rotates the whole ring by the angle the pointer
+  swept; a small movement threshold distinguishes a drag from a tap so
+  clicking a node still navigates normally. Auto-drift is a slow,
+  constant rotation that pauses on hover/focus/touch and is skipped
+  entirely under prefers-reduced-motion. Below ~760px the CSS collapses
+  the cluster to a static list (see styles.css), so layout/drag are
+  skipped there since position:static ignores the transform anyway.
+  No-ops on pages without .misc-cluster. */
+(function () {
+  var DRAG_THRESHOLD = 6; // px of pointer travel before a press counts as a drag, not a tap
+  var DRIFT_SPEED = 0.00025; // radians per ms; slow, roughly one turn every ~4 minutes
+  var LIST_BREAKPOINT = '(max-width: 760px)';
+
+  function init() {
+    var cluster = document.getElementById('miscCluster');
+    var list = document.getElementById('miscNodeList');
+    if (!cluster || !list) return;
+
+    var nodes = Array.prototype.slice.call(list.querySelectorAll('.misc-node'));
+    if (!nodes.length) return;
+
+    var radiusProbe = cluster.querySelector('.misc-cluster-radius-probe');
+
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var listMode = window.matchMedia && window.matchMedia(LIST_BREAKPOINT).matches;
+
+    var rotationOffset = 0; // radians, accumulated from drag
+    var driftPaused = false;
+    var driftTimer = null;
+    var lastDriftTick = null;
+
+    // getComputedStyle().getPropertyValue on a custom property returns
+    // its literal clamp() text, not a resolved length, so the radius is
+    // read off a hidden probe element whose width is set to the
+    // variable in CSS (see .misc-cluster-radius-probe in styles.css).
+    function radius() {
+      if (!radiusProbe) return 0;
+      return radiusProbe.getBoundingClientRect().width;
+    }
+
+    function layout() {
+      if (listMode) return;
+      var r = radius();
+      var total = nodes.length;
+      nodes.forEach(function (node, i) {
+        var angle = (i / total) * Math.PI * 2 - Math.PI / 2 + rotationOffset;
+        var x = Math.cos(angle) * r;
+        var y = Math.sin(angle) * r;
+        node.style.transform = 'translate(-50%, -50%) translate(' + x + 'px, ' + y + 'px)';
+      });
+    }
+
+    // ---- Drag to rotate (pointer covers mouse + touch + pen) ----
+    var pointerId = null;
+    var startClientX = 0, startClientY = 0;
+    var startPointerAngle = 0, startRotation = 0;
+    var dragMoved = false;
+
+    function angleFromCenter(clientX, clientY) {
+      var rect = cluster.getBoundingClientRect();
+      var cx = rect.left + rect.width / 2;
+      var cy = rect.top + rect.height / 2;
+      return Math.atan2(clientY - cy, clientX - cx);
+    }
+
+    function onPointerMove(e) {
+      if (e.pointerId !== pointerId) return;
+      var dx = e.clientX - startClientX;
+      var dy = e.clientY - startClientY;
+      if (!dragMoved && Math.sqrt(dx * dx + dy * dy) > DRAG_THRESHOLD) {
+        dragMoved = true;
+      }
+      if (dragMoved) {
+        var currentAngle = angleFromCenter(e.clientX, e.clientY);
+        rotationOffset = startRotation + (currentAngle - startPointerAngle);
+        layout();
+      }
+    }
+
+    function onPointerUp(e) {
+      if (e.pointerId !== pointerId) return;
+      pointerId = null;
+      cluster.classList.remove('is-dragging');
+      document.removeEventListener('pointermove', onPointerMove);
+      document.removeEventListener('pointerup', onPointerUp);
+      document.removeEventListener('pointercancel', onPointerUp);
+    }
+
+    function onPointerDown(e) {
+      if (listMode || (e.button !== undefined && e.button !== 0)) return;
+      pointerId = e.pointerId;
+      startClientX = e.clientX;
+      startClientY = e.clientY;
+      startPointerAngle = angleFromCenter(e.clientX, e.clientY);
+      startRotation = rotationOffset;
+      dragMoved = false;
+      cluster.classList.add('is-dragging');
+      document.addEventListener('pointermove', onPointerMove);
+      document.addEventListener('pointerup', onPointerUp);
+      document.addEventListener('pointercancel', onPointerUp);
+    }
+
+    cluster.addEventListener('pointerdown', onPointerDown);
+
+    // Swallow the click that would otherwise fire on whatever node ends
+    // up under the pointer after a drag, so dragging never triggers a
+    // navigation; a plain tap (no movement past the threshold) still
+    // reaches the link normally.
+    cluster.addEventListener('click', function (e) {
+      if (dragMoved) {
+        e.preventDefault();
+        e.stopPropagation();
+        dragMoved = false;
+      }
+    }, true);
+
+    // ---- Optional auto-drift: slow, pausable, off under reduced motion.
+    // setInterval rather than requestAnimationFrame: rAF is suspended
+    // outright in some background/inactive-tab conditions, which would
+    // silently freeze a continuous loop like this one; setInterval
+    // keeps ticking (browsers only throttle its rate), which is all a
+    // slow drift like this needs. Rotation itself is still computed
+    // from real elapsed time (Date.now() deltas), not tick count, so
+    // the speed stays correct regardless of how often it fires. */
+    var DRIFT_INTERVAL_MS = 50;
+
+    function driftTick() {
+      var now = Date.now();
+      if (!driftPaused) {
+        if (lastDriftTick !== null) {
+          rotationOffset += (now - lastDriftTick) * DRIFT_SPEED;
+          layout();
+        }
+        lastDriftTick = now;
+      } else {
+        lastDriftTick = null;
+      }
+    }
+
+    function pauseDrift() { driftPaused = true; }
+    function resumeDrift() { driftPaused = false; }
+
+    function startDrift() {
+      if (driftTimer) return;
+      lastDriftTick = null;
+      driftTimer = setInterval(driftTick, DRIFT_INTERVAL_MS);
+    }
+    function stopDrift() {
+      if (!driftTimer) return;
+      clearInterval(driftTimer);
+      driftTimer = null;
+    }
+
+    if (!reduceMotion && !listMode) {
+      cluster.addEventListener('pointerenter', pauseDrift);
+      cluster.addEventListener('pointerleave', function () {
+        if (pointerId === null) resumeDrift();
+      });
+      cluster.addEventListener('focusin', pauseDrift);
+      cluster.addEventListener('focusout', function () {
+        if (!cluster.contains(document.activeElement)) resumeDrift();
+      });
+      cluster.addEventListener('touchstart', pauseDrift, { passive: true });
+      startDrift();
+    }
+
+    layout();
+
+    window.addEventListener('resize', function () {
+      var nowListMode = window.matchMedia && window.matchMedia(LIST_BREAKPOINT).matches;
+      if (nowListMode !== listMode) {
+        listMode = nowListMode;
+        if (listMode) {
+          stopDrift();
+        } else if (!reduceMotion) {
+          startDrift();
+        }
+      }
+      layout();
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+

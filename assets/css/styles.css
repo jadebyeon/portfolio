@@ -3129,6 +3129,173 @@ body.is-settled #heroCopy [data-copy-line] {
   .physical-lightbox { transition: none !important; }
 }
 
+/* ===== MISC CLUSTER (radial nodes on desktop, collapses to a
+   single-column list below ~760px) — see assets/js/main.js for the
+   drag-to-rotate and optional auto-drift logic. Node positions are
+   plain translate() offsets computed in JS from --cluster-radius, so
+   the radius itself stays a normal responsive CSS value here. ===== */
+.misc-cluster-section {
+  padding: clamp(2rem, 5vw, 4rem) 0 clamp(3rem, 6vw, 5rem);
+}
+.misc-cluster-intro {
+  max-width: 62ch;
+  margin: 0 auto clamp(2.5rem, 6vw, 4rem);
+  text-align: center;
+  color: var(--text-color);
+  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+  line-height: 1.65;
+}
+.misc-cluster {
+  --cluster-radius: clamp(90px, 22vw, 220px);
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+  touch-action: none;
+  cursor: grab;
+}
+.misc-cluster.is-dragging {
+  cursor: grabbing;
+}
+/* Invisible probe so JS can read --cluster-radius as a resolved pixel
+   value (getComputedStyle().getPropertyValue on a custom property
+   returns its literal clamp() text, not the computed length). */
+.misc-cluster-radius-probe {
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+  width: var(--cluster-radius);
+  height: 0;
+}
+.misc-cluster-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+.misc-cluster-center-label {
+  font-family: var(--display-font);
+  font-size: clamp(1.15rem, 2.2vw, 1.6rem);
+  font-weight: 600;
+  color: var(--title-color);
+  margin: 0;
+}
+/* IDs, not just classes: .project .project-section ul/li (further up
+   this file) outrank a single class on specificity and would otherwise
+   restore bullets and prose line-height/margin here. */
+#miscNodeList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#miscNodeList .misc-node {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  line-height: normal;
+  margin: 0;
+}
+.misc-node-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+  text-decoration: none;
+  padding: 0.35rem;
+  border-radius: 12px;
+  transition: transform 0.15s ease;
+}
+.misc-node-link:hover,
+.misc-node-link:focus-visible {
+  transform: scale(1.08);
+}
+.misc-node-link:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--mint-color) 40%, transparent);
+}
+.misc-node-thumb {
+  width: clamp(52px, 8vw, 76px);
+  height: clamp(52px, 8vw, 76px);
+  border-radius: 999px;
+  overflow: hidden;
+  background: #fff;
+  border: 1.5px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+.misc-node-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.misc-node-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--title-color);
+  white-space: nowrap;
+}
+.misc-node-desc {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .misc-node-link { transition: none !important; }
+}
+
+/* ---- Collapse to a single-column list below ~760px: required, not optional ---- */
+@media (max-width: 760px) {
+  .misc-cluster {
+    max-width: none;
+    aspect-ratio: auto;
+    touch-action: auto;
+    cursor: auto;
+  }
+  .misc-cluster-center { display: none; }
+  #miscNodeList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  #miscNodeList .misc-node {
+    position: static;
+    margin: 0;
+    transform: none !important;
+  }
+  .misc-node-link {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    gap: 1rem;
+    padding: 0.75rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+  }
+  .misc-node-link:hover,
+  .misc-node-link:focus-visible {
+    transform: none;
+  }
+  .misc-node-thumb {
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
+  }
+  .misc-node-title {
+    white-space: normal;
+  }
+  .misc-node-desc {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-color-light);
+    line-height: 1.5;
+  }
+}
+
 /* ===== ITERATION LIST ===== */
 .iteration-list {
   display: flex;
