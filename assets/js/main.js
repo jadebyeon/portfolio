@@ -263,7 +263,9 @@ var PERSONA_COPY = {
     line1: 'Incoming MEng Design & Technology Innovation @ Duke',
     line2: 'Previously BA Art & Design + BS Statistics @ University of Michigan',
     chips: null,
-    resume: null
+    resume: null,
+    revealSrc: 'assets/img/oct_hero.png',
+    revealAlt: 'Pediatric Eye Exam Robot'
   },
   recruiters: {
     titleMode: 'scramble',
@@ -272,7 +274,10 @@ var PERSONA_COPY = {
     line1: 'Seeking product design & UX internships (2026–27)',
     line2: null,
     chips: ['3 shipped projects', 'ARVO 2026 co-author', '30+ research participants'],
-    resume: { text: 'View Résumé →', href: 'assets/pdf/Jade_Resume.pdf' }
+    resume: { text: 'View Résumé →', href: 'assets/pdf/Jade_Resume.pdf' },
+    // HBOM hero asset not ready yet; stands in on Sam's image until it is.
+    revealSrc: 'assets/img/oct_hero.png',
+    revealAlt: 'HBOM'
   },
   designers: {
     titleMode: 'pipeline',
@@ -281,7 +286,9 @@ var PERSONA_COPY = {
     line1: 'mixed-methods research → design systems → front-end handoff',
     line2: 'Currently rebuilding this site in vanilla HTML/CSS/JS, one commit at a time',
     chips: null,
-    resume: null
+    resume: null,
+    revealSrc: 'assets/img/ootd:mockup.png',
+    revealAlt: 'Wearby'
   }
 };
 
@@ -309,17 +316,27 @@ var PERSONA_COPY = {
 
   // "abc [[def]] ghi" -> "abc <span class="text-mint" data-mint>def</span> ghi",
   // or, for titleMode "pipeline", each comma-separated word gets its own span.
+  // When copy.revealSrc is set, the mint phrase also carries the
+  // reveal-trigger hover/focus attributes (see HERO REVEAL STAGE below);
+  // for "pipeline" mode that means wrapping the whole run of per-word
+  // spans in one outer trigger, since there's no single mint span there.
   function renderTitleHTML(copy) {
     var t = splitTitle(copy.title);
+    var revealAttrs = copy.revealSrc
+      ? ' tabindex="0" data-reveal-src="' + escapeHTML(copy.revealSrc) + '" data-reveal-alt="' + escapeHTML(copy.revealAlt || '') + '"'
+      : '';
     if (copy.titleMode === 'pipeline') {
       var words = t.mint.split(', ');
       var wordsHTML = words.map(function (w, i) {
         return '<span class="text-mint-word" data-word="' + i + '">' + escapeHTML(w) + '</span>';
       }).join(', ');
-      return escapeHTML(t.before) + wordsHTML + escapeHTML(t.after);
+      var pipelineTrigger = copy.revealSrc
+        ? '<span class="reveal-trigger"' + revealAttrs + '>' + wordsHTML + '</span>'
+        : wordsHTML;
+      return escapeHTML(t.before) + pipelineTrigger + escapeHTML(t.after);
     }
     return escapeHTML(t.before) +
-      '<span class="text-mint" data-mint data-mint-mode="' + copy.titleMode + '">' + escapeHTML(t.mint) + '</span>' +
+      '<span class="text-mint reveal-trigger" data-mint data-mint-mode="' + copy.titleMode + '"' + revealAttrs + '>' + escapeHTML(t.mint) + '</span>' +
       escapeHTML(t.after);
   }
 
@@ -930,29 +947,59 @@ var PERSONA_COPY = {
   }
 })();
 
-/*==================== OOTD PROJECT: CHARACTER EVOLUTION TOGGLE ====================
-  "Sketches" / "Final" buttons crossfade between two stacked images via
-  opacity (see .char-evolution-img in styles.css); click-only, no hover
-  behavior. No-ops on pages without .char-evolution-frame. */
+/*==================== HERO REVEAL STAGE ====================
+  Hovering or focusing the mint-highlighted phrase in the hero shows a
+  small floating image (Sam / HBOM / Wearby, matching the active
+  persona tab) in a shared stage next to the headline. This adds
+  information rather than hiding any, with a full keyboard/focus
+  equivalent, and is hidden entirely on touch (see the
+  `@media (hover: none)` rule on .reveal-stage in styles.css) — so it's
+  exempt from this site's no-hover-dependent-interaction rule elsewhere.
+  Delegated on #heroCopy rather than bound to the trigger directly,
+  because the PERSONA SWITCHER above rebuilds the mint span's HTML (and
+  so the trigger element itself) on every tab switch. No-ops on pages
+  without .reveal-stage. */
 (function () {
   function init() {
-    var frame = document.querySelector('.char-evolution-frame');
-    if (!frame) return;
+    var heroCopy = document.getElementById('heroCopy');
+    var stage = document.querySelector('.reveal-stage');
+    if (!heroCopy || !stage) return;
 
-    var buttons = Array.prototype.slice.call(document.querySelectorAll('.char-toggle-btn'));
-    var images = Array.prototype.slice.call(frame.querySelectorAll('.char-evolution-img'));
-    if (!buttons.length || !images.length) return;
+    var stageImg = stage.querySelector('img');
+    var hideTimer = null;
 
-    buttons.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var view = btn.getAttribute('data-view');
-        buttons.forEach(function (b) {
-          b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
-        });
-        images.forEach(function (img) {
-          img.classList.toggle('is-active', img.getAttribute('data-view') === view);
-        });
-      });
+    function show(trigger) {
+      var src = trigger.getAttribute('data-reveal-src');
+      if (!src) return;
+      clearTimeout(hideTimer);
+      if (stageImg.getAttribute('src') !== src) stageImg.setAttribute('src', src);
+      stageImg.setAttribute('alt', trigger.getAttribute('data-reveal-alt') || '');
+      stage.classList.add('is-revealed');
+    }
+    function hide() {
+      hideTimer = setTimeout(function () {
+        stage.classList.remove('is-revealed');
+      }, 80);
+    }
+    function closestTrigger(el) {
+      return el && el.closest ? el.closest('.reveal-trigger') : null;
+    }
+
+    heroCopy.addEventListener('mouseover', function (e) {
+      var trigger = closestTrigger(e.target);
+      if (trigger) show(trigger);
+    });
+    heroCopy.addEventListener('mouseout', function (e) {
+      var trigger = closestTrigger(e.target);
+      var movingTo = closestTrigger(e.relatedTarget);
+      if (trigger && trigger !== movingTo) hide();
+    });
+    heroCopy.addEventListener('focusin', function (e) {
+      var trigger = closestTrigger(e.target);
+      if (trigger) show(trigger);
+    });
+    heroCopy.addEventListener('focusout', function (e) {
+      if (closestTrigger(e.target)) hide();
     });
   }
 

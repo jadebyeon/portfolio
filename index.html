@@ -63,13 +63,14 @@
                Pre-filled with the "anyone" copy so it's meaningful before JS runs. -->
           <div class="hero-copy" id="heroCopy" aria-live="polite">
             <h1 class="home__title" data-copy-title>
-              Hi, I'm Jade. I design products that <span class="text-mint" data-mint>make hard situations feel less hard.</span>
+              Hi, I'm Jade. I design products that <span class="text-mint reveal-trigger" data-mint tabindex="0" data-reveal-src="assets/img/oct_hero.png" data-reveal-alt="Pediatric Eye Exam Robot">make hard situations feel less hard.</span>
             </h1>
             <p class="home__subtitle" data-copy-line="1">Incoming MEng Design &amp; Technology Innovation @ Duke</p>
             <p class="home__subtitle" data-copy-line="2">Previously BA Art &amp; Design + BS Statistics @ University of Michigan</p>
             <div class="hero-chips" data-copy-chips hidden></div>
             <a class="home__resume-link" data-copy-link href="assets/pdf/Jade_Resume.pdf" target="_blank" rel="noopener" hidden>View Résumé →</a>
           </div>
+          <div class="reveal-stage" aria-hidden="true"><img alt=""></div>
         </div>
       </div>
     </section>
@@ -89,13 +90,31 @@
             <p class="portfolio__description">Reducing exam anxiety for children aged 2-12, validated with 30 caregivers at Kellogg Eye Center</p>
             <p class="portfolio__tags">
               <span class="tag">HRI</span>
-              <span class="tag">Healthcare UX</span>
-              <span class="tag">Research</span>
+              <span class="tag">Healthcare</span>
+              <span class="tag">UX Research</span>
             </p>
           </div>
         </article>
-        
-        <!-- 2. Wearby -->
+
+        <!-- 2. HBOM -->
+        <article class="portfolio__content reveal-up">
+          <a class="portfolio__img-link" href="https://jadebyeon.github.io/portfolio/projects/hbom">
+            <img class="portfolio__img" src="assets/img/hbom_icon.svg" alt="HBOM">
+          </a>
+          <div class="portfolio__data">
+            <h3 class="portfolio__title">
+              <a class="portfolio__title-link" href="https://jadebyeon.github.io/portfolio/projects/hbom">HBOM</a>
+            </h3>
+            <p class="portfolio__description">NVP Knowledge Hub, an internal reference shipped for product and engineering teams</p>
+            <p class="portfolio__tags">
+              <span class="tag">Design Systems</span>
+              <span class="tag">Webflow</span>
+              <span class="tag">Info Architecture</span>
+            </p>
+          </div>
+        </article>
+
+        <!-- 3. Wearby -->
         <article class="portfolio__content reveal-up">
           <a class="portfolio__img-link" href="https://jadebyeon.github.io/portfolio/projects/ootd">
             <img class="portfolio__img" src="assets/img/ootd:mockup.png" alt="Wearby">
@@ -106,14 +125,14 @@
             </h3>
             <p class="portfolio__description">Outfit logging app for emotional self-reflection</p>
             <p class="portfolio__tags">
-              <span class="tag">UX/UI Design</span>
-              <span class="tag">Design Systems</span>
+              <span class="tag">Concept</span>
               <span class="tag">End-to-end</span>
+              <span class="tag">Physical</span>
             </p>
           </div>
         </article>
 
-        <!-- 3. Misc -->
+        <!-- 4. Misc -->
         <article class="portfolio__content reveal-up">
           <a class="portfolio__img-link" href="https://jadebyeon.github.io/portfolio/projects/misc">
             <img class="portfolio__img" src="assets/img/misc_icon.svg" alt="Misc.">
