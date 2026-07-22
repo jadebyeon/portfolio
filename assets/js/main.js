@@ -930,3 +930,36 @@ var PERSONA_COPY = {
   }
 })();
 
+/*==================== OOTD PROJECT: CHARACTER EVOLUTION TOGGLE ====================
+  "Sketches" / "Final" buttons crossfade between two stacked images via
+  opacity (see .char-evolution-img in styles.css); click-only, no hover
+  behavior. No-ops on pages without .char-evolution-frame. */
+(function () {
+  function init() {
+    var frame = document.querySelector('.char-evolution-frame');
+    if (!frame) return;
+
+    var buttons = Array.prototype.slice.call(document.querySelectorAll('.char-toggle-btn'));
+    var images = Array.prototype.slice.call(frame.querySelectorAll('.char-evolution-img'));
+    if (!buttons.length || !images.length) return;
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var view = btn.getAttribute('data-view');
+        buttons.forEach(function (b) {
+          b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+        });
+        images.forEach(function (img) {
+          img.classList.toggle('is-active', img.getAttribute('data-view') === view);
+        });
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
