@@ -2171,19 +2171,20 @@ body.is-settled #heroCopy [data-copy-line] {
 
 .home__data {
   grid-column: 2 / -2;
-  position: relative; /* anchors .reveal-stage below */
 }
 
 @media (max-width: 767px) {
   .home__data { grid-column: 1 / -1; }
 }
 
-/* ===== HERO REVEAL STAGE (see assets/js/main.js) =====
-   Hovering/focusing the mint phrase reveals a small floating image;
-   click-free, adds info rather than gating it, exempt from the site's
-   no-hover-dependent-interaction rule for that reason. Hidden outright
-   on touch devices, where hover has no equivalent. */
+/* ===== HERO REVEAL IMAGE (see assets/js/main.js renderTitleHTML) =====
+   Pure CSS: hovering/focusing the mint phrase reveals a small tilted
+   image nested inside it, positioned just to its right. Adds info
+   rather than gating it, exempt from the site's no-hover-dependent-
+   interaction rule for that reason. Hidden outright on touch devices,
+   where hover has no equivalent. */
 .reveal-trigger {
+  position: relative;
   color: var(--mint-color);
   cursor: pointer;
   border-radius: 2px;
@@ -2192,42 +2193,39 @@ body.is-settled #heroCopy [data-copy-line] {
   outline: 2px solid var(--mint-color);
   outline-offset: 2px;
 }
-.reveal-stage {
+.hero-reveal-img {
   position: absolute;
-  top: clamp(-2rem, -4vw, -1rem);
-  right: clamp(0.5rem, 3vw, 3rem);
+  left: calc(100% + 1rem);
+  top: 50%;
   width: clamp(150px, 20vw, 260px);
   aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: center top;
   border-radius: 12px;
-  overflow: hidden;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.14);
   pointer-events: none;
   opacity: 0;
-  transform: scale(0.92) rotate(-2deg);
+  transform: translateY(-50%) scale(0.9) rotate(-6deg);
   transition: opacity 0.4s ease, transform 0.5s ease;
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.14);
   z-index: 5;
 }
-.reveal-stage img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.reveal-stage.is-revealed {
+.reveal-trigger:hover .hero-reveal-img,
+.reveal-trigger:focus-visible .hero-reveal-img {
   opacity: 1;
-  transform: scale(1) rotate(0);
+  transform: translateY(-50%) scale(1) rotate(-3deg);
 }
 @media (prefers-reduced-motion: reduce) {
-  .reveal-stage {
+  .hero-reveal-img {
     transition: opacity 0.2s ease;
-    transform: none;
+    transform: translateY(-50%);
   }
-  .reveal-stage.is-revealed {
-    transform: none;
+  .reveal-trigger:hover .hero-reveal-img,
+  .reveal-trigger:focus-visible .hero-reveal-img {
+    transform: translateY(-50%);
   }
 }
 @media (hover: none) {
-  .reveal-stage { display: none; }
+  .hero-reveal-img { display: none; }
 }
 
 .home__title {
@@ -2607,6 +2605,30 @@ body.is-settled #heroCopy [data-copy-line] {
   line-height: 1.2;
 }
 .pull-quote-body {
+  font-size: 1rem;
+  color: var(--text-color);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ===== MINT PULL-QUOTE (accented callout, left-aligned) ===== */
+.mint-pullquote {
+  max-width: 640px;
+  margin: 0 auto;
+  border-left: 3px solid var(--mint-color);
+  background: color-mix(in oklab, var(--mint-color) 6%, transparent);
+  border-radius: 0 12px 12px 0;
+  padding: clamp(1.5rem, 3.5vw, 2.25rem) clamp(1.5rem, 4vw, 2.5rem);
+}
+.mint-pullquote-headline {
+  font-family: var(--display-font);
+  font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+  font-weight: 700;
+  color: var(--mint-color);
+  margin: 0 0 0.85rem;
+  line-height: 1.25;
+}
+.mint-pullquote-body {
   font-size: 1rem;
   color: var(--text-color);
   line-height: 1.7;
@@ -3330,10 +3352,10 @@ body.is-settled #heroCopy [data-copy-line] {
   line-height: 1.65;
 }
 .misc-cluster {
-  --cluster-radius: clamp(90px, 22vw, 220px);
+  --cluster-radius: clamp(126px, 30.8vw, 308px);
   position: relative;
   width: 100%;
-  max-width: 640px;
+  max-width: 896px;
   aspect-ratio: 1 / 1;
   margin: 0 auto;
   touch-action: none;
@@ -3403,8 +3425,8 @@ body.is-settled #heroCopy [data-copy-line] {
   box-shadow: 0 0 0 3px color-mix(in oklab, var(--mint-color) 40%, transparent);
 }
 .misc-node-thumb {
-  width: clamp(52px, 8vw, 76px);
-  height: clamp(52px, 8vw, 76px);
+  width: clamp(73px, 11.2vw, 106px);
+  height: clamp(73px, 11.2vw, 106px);
   border-radius: 999px;
   overflow: hidden;
   background: #fff;

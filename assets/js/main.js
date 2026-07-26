@@ -274,10 +274,10 @@ var PERSONA_COPY = {
     line1: 'Seeking product design & UX internships (2026–27)',
     line2: null,
     chips: ['3 shipped projects', 'ARVO 2026 co-author', '30+ research participants'],
-    resume: { text: 'View Résumé →', href: 'assets/pdf/Jade_Resume.pdf' },
-    // HBOM hero asset not ready yet; stands in on Sam's image until it is.
-    revealSrc: 'assets/img/oct_hero.png',
-    revealAlt: 'HBOM'
+    // Résumé is already in the header nav, so no in-copy link here.
+    resume: null,
+    revealSrc: 'assets/img/hbom-hero.png',
+    revealAlt: 'NVP Knowledge Hub'
   },
   designers: {
     titleMode: 'pipeline',
@@ -316,14 +316,16 @@ var PERSONA_COPY = {
 
   // "abc [[def]] ghi" -> "abc <span class="text-mint" data-mint>def</span> ghi",
   // or, for titleMode "pipeline", each comma-separated word gets its own span.
-  // When copy.revealSrc is set, the mint phrase also carries the
-  // reveal-trigger hover/focus attributes (see HERO REVEAL STAGE below);
-  // for "pipeline" mode that means wrapping the whole run of per-word
-  // spans in one outer trigger, since there's no single mint span there.
+  // When copy.revealSrc is set, the mint phrase also becomes a
+  // .reveal-trigger carrying a nested .hero-reveal-img — a pure-CSS
+  // :hover/:focus-visible reveal, no JS involved in showing it (see
+  // .hero-reveal-img in styles.css). For "pipeline" mode that means
+  // wrapping the whole run of per-word spans in one outer trigger,
+  // since there's no single mint span there.
   function renderTitleHTML(copy) {
     var t = splitTitle(copy.title);
-    var revealAttrs = copy.revealSrc
-      ? ' tabindex="0" data-reveal-src="' + escapeHTML(copy.revealSrc) + '" data-reveal-alt="' + escapeHTML(copy.revealAlt || '') + '"'
+    var revealImg = copy.revealSrc
+      ? '<img class="hero-reveal-img" src="' + escapeHTML(copy.revealSrc) + '" alt="' + escapeHTML(copy.revealAlt || '') + '">'
       : '';
     if (copy.titleMode === 'pipeline') {
       var words = t.mint.split(', ');
@@ -331,12 +333,16 @@ var PERSONA_COPY = {
         return '<span class="text-mint-word" data-word="' + i + '">' + escapeHTML(w) + '</span>';
       }).join(', ');
       var pipelineTrigger = copy.revealSrc
-        ? '<span class="reveal-trigger"' + revealAttrs + '>' + wordsHTML + '</span>'
+        ? '<span class="reveal-trigger" tabindex="0">' + wordsHTML + revealImg + '</span>'
         : wordsHTML;
       return escapeHTML(t.before) + pipelineTrigger + escapeHTML(t.after);
     }
+    var triggerAttrs = copy.revealSrc ? ' tabindex="0"' : '';
+    // Mint text sits in its own inner span so scrambleReveal's
+    // textContent rewrites (Tab 2) never wipe out the sibling reveal
+    // image — only [data-mint] > .mint-text gets rewritten as text.
     return escapeHTML(t.before) +
-      '<span class="text-mint reveal-trigger" data-mint data-mint-mode="' + copy.titleMode + '"' + revealAttrs + '>' + escapeHTML(t.mint) + '</span>' +
+      '<span class="text-mint reveal-trigger" data-mint data-mint-mode="' + copy.titleMode + '"' + triggerAttrs + '><span class="mint-text">' + escapeHTML(t.mint) + '</span>' + revealImg + '</span>' +
       escapeHTML(t.after);
   }
 
@@ -459,7 +465,7 @@ var PERSONA_COPY = {
         void mint.offsetWidth;
         mint.classList.add('is-revealed'); // its own transition-delay does the waiting
       } else if (copy.titleMode === 'scramble') {
-        var scrambleEl = heroEl.querySelector('[data-mint]');
+        var scrambleEl = heroEl.querySelector('[data-mint] .mint-text');
         if (!scrambleEl) return;
         var finalText = scrambleEl.textContent;
         schedule(function () {
@@ -761,8 +767,10 @@ var PERSONA_COPY = {
   (pointer or touch) rotates the whole ring by the angle the pointer
   swept; a small movement threshold distinguishes a drag from a tap so
   clicking a node still navigates normally. Auto-drift is a slow,
-  constant rotation that pauses on hover/focus/touch and is skipped
-  entirely under prefers-reduced-motion. Below ~760px the CSS collapses
+  constant rotation that pauses only while the pointer or focus is
+  actually on a node (bound per node, not the cluster area, so passing
+  near a circle doesn't stop it) and is skipped entirely under
+  prefers-reduced-motion. Below ~760px the CSS collapses
   the cluster to a static list (see styles.css), so layout/drag are
   skipped there since position:static ignores the transform anyway.
   No-ops on pages without .misc-cluster. */
@@ -912,15 +920,19 @@ var PERSONA_COPY = {
     }
 
     if (!reduceMotion && !listMode) {
-      cluster.addEventListener('pointerenter', pauseDrift);
-      cluster.addEventListener('pointerleave', function () {
-        if (pointerId === null) resumeDrift();
+      // Bound per node (not the whole cluster) so drift only pauses when
+      // the pointer is actually over a circle, not merely near one.
+      nodes.forEach(function (node) {
+        node.addEventListener('pointerenter', pauseDrift);
+        node.addEventListener('pointerleave', function () {
+          if (pointerId === null) resumeDrift();
+        });
+        node.addEventListener('touchstart', pauseDrift, { passive: true });
       });
       cluster.addEventListener('focusin', pauseDrift);
       cluster.addEventListener('focusout', function () {
         if (!cluster.contains(document.activeElement)) resumeDrift();
       });
-      cluster.addEventListener('touchstart', pauseDrift, { passive: true });
       startDrift();
     }
 
@@ -937,69 +949,6 @@ var PERSONA_COPY = {
         }
       }
       layout();
-    });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-})();
-
-/*==================== HERO REVEAL STAGE ====================
-  Hovering or focusing the mint-highlighted phrase in the hero shows a
-  small floating image (Sam / HBOM / Wearby, matching the active
-  persona tab) in a shared stage next to the headline. This adds
-  information rather than hiding any, with a full keyboard/focus
-  equivalent, and is hidden entirely on touch (see the
-  `@media (hover: none)` rule on .reveal-stage in styles.css) — so it's
-  exempt from this site's no-hover-dependent-interaction rule elsewhere.
-  Delegated on #heroCopy rather than bound to the trigger directly,
-  because the PERSONA SWITCHER above rebuilds the mint span's HTML (and
-  so the trigger element itself) on every tab switch. No-ops on pages
-  without .reveal-stage. */
-(function () {
-  function init() {
-    var heroCopy = document.getElementById('heroCopy');
-    var stage = document.querySelector('.reveal-stage');
-    if (!heroCopy || !stage) return;
-
-    var stageImg = stage.querySelector('img');
-    var hideTimer = null;
-
-    function show(trigger) {
-      var src = trigger.getAttribute('data-reveal-src');
-      if (!src) return;
-      clearTimeout(hideTimer);
-      if (stageImg.getAttribute('src') !== src) stageImg.setAttribute('src', src);
-      stageImg.setAttribute('alt', trigger.getAttribute('data-reveal-alt') || '');
-      stage.classList.add('is-revealed');
-    }
-    function hide() {
-      hideTimer = setTimeout(function () {
-        stage.classList.remove('is-revealed');
-      }, 80);
-    }
-    function closestTrigger(el) {
-      return el && el.closest ? el.closest('.reveal-trigger') : null;
-    }
-
-    heroCopy.addEventListener('mouseover', function (e) {
-      var trigger = closestTrigger(e.target);
-      if (trigger) show(trigger);
-    });
-    heroCopy.addEventListener('mouseout', function (e) {
-      var trigger = closestTrigger(e.target);
-      var movingTo = closestTrigger(e.relatedTarget);
-      if (trigger && trigger !== movingTo) hide();
-    });
-    heroCopy.addEventListener('focusin', function (e) {
-      var trigger = closestTrigger(e.target);
-      if (trigger) show(trigger);
-    });
-    heroCopy.addEventListener('focusout', function (e) {
-      if (closestTrigger(e.target)) hide();
     });
   }
 
