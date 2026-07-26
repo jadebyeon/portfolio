@@ -770,9 +770,12 @@ var PERSONA_COPY = {
   constant rotation that pauses only while the pointer or focus is
   actually on a node (bound per node, not the cluster area, so passing
   near a circle doesn't stop it) and is skipped entirely under
-  prefers-reduced-motion. Below ~760px the CSS collapses
-  the cluster to a static list (see styles.css), so layout/drag are
-  skipped there since position:static ignores the transform anyway.
+  prefers-reduced-motion. A custom "View" cursor pill follows the
+  pointer while it's over a node (mouse/trackpad only), replacing the
+  default cursor there; scoped to misc nodes via .misc-cursor-pill in
+  styles.css. Below ~760px the CSS collapses the cluster to a static
+  list (see styles.css), so layout/drag are skipped there since
+  position:static ignores the transform anyway.
   No-ops on pages without .misc-cluster. */
 (function () {
   var DRAG_THRESHOLD = 6; // px of pointer travel before a press counts as a drag, not a tap
@@ -934,6 +937,27 @@ var PERSONA_COPY = {
         if (!cluster.contains(document.activeElement)) resumeDrift();
       });
       startDrift();
+    }
+
+    // ---- Custom "View" cursor pill: follows the pointer while hovering
+    // a node (mouse/trackpad only; the default cursor is hidden there
+    // via CSS). Touch is excluded since there's no hover to follow.
+    var cursorPill = document.getElementById('miscCursorPill');
+    if (cursorPill) {
+      nodes.forEach(function (node) {
+        node.addEventListener('pointerenter', function (e) {
+          if (e.pointerType === 'touch') return;
+          cursorPill.classList.add('is-visible');
+        });
+        node.addEventListener('pointermove', function (e) {
+          if (e.pointerType === 'touch') return;
+          cursorPill.style.transform = 'translate(' + (e.clientX + 16) + 'px, ' + (e.clientY + 16) + 'px)';
+        });
+        node.addEventListener('pointerleave', function (e) {
+          if (e.pointerType === 'touch') return;
+          cursorPill.classList.remove('is-visible');
+        });
+      });
     }
 
     layout();

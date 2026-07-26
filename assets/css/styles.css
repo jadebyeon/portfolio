@@ -3343,19 +3343,11 @@ body.is-settled #heroCopy [data-copy-line] {
 .misc-cluster-section {
   padding: clamp(2rem, 5vw, 4rem) 0 clamp(3rem, 6vw, 5rem);
 }
-.misc-cluster-intro {
-  max-width: 62ch;
-  margin: 0 auto clamp(2.5rem, 6vw, 4rem);
-  text-align: center;
-  color: var(--text-color);
-  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
-  line-height: 1.65;
-}
 .misc-cluster {
-  --cluster-radius: clamp(126px, 30.8vw, 308px);
+  --cluster-radius: clamp(189px, 46.2vw, 462px);
   position: relative;
   width: 100%;
-  max-width: 896px;
+  max-width: 1344px;
   aspect-ratio: 1 / 1;
   margin: 0 auto;
   touch-action: none;
@@ -3425,8 +3417,8 @@ body.is-settled #heroCopy [data-copy-line] {
   box-shadow: 0 0 0 3px color-mix(in oklab, var(--mint-color) 40%, transparent);
 }
 .misc-node-thumb {
-  width: clamp(73px, 11.2vw, 106px);
-  height: clamp(73px, 11.2vw, 106px);
+  width: clamp(110px, 16.8vw, 159px);
+  height: clamp(110px, 16.8vw, 159px);
   border-radius: 999px;
   overflow: hidden;
   background: #fff;
@@ -3452,6 +3444,46 @@ body.is-settled #heroCopy [data-copy-line] {
 }
 @media (prefers-reduced-motion: reduce) {
   .misc-node-link { transition: none !important; }
+}
+
+/* ---- Custom "View" cursor pill (see assets/js/main.js) ----
+   Replaces the default pointer with a mint pill while hovering a node;
+   scoped to misc nodes only, mouse/trackpad only. */
+@media (hover: hover) and (pointer: fine) {
+  .misc-node-link {
+    cursor: none;
+  }
+}
+.misc-cursor-pill {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--mint-color);
+  color: #fdfcf9;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 0.4rem 0.9rem 0.4rem 0.75rem;
+  border-radius: 999px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  transform: translate(-9999px, -9999px);
+  transition: opacity 0.15s ease;
+  white-space: nowrap;
+}
+.misc-cursor-pill.is-visible {
+  opacity: 1;
+}
+.misc-cursor-pill i {
+  font-size: 0.85rem;
+}
+@media (hover: none), (pointer: coarse) {
+  .misc-cursor-pill { display: none; }
 }
 
 /* ---- Collapse to a single-column list below ~760px: required, not optional ---- */

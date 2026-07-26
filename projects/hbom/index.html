@@ -9,6 +9,54 @@
   <link rel="icon" type="image/svg+xml" href="../../assets/img/favicon.svg" />
   <title>NVP Knowledge Hub — Jade Byeon</title>
   <meta name="description" content="Research, information architecture, and Webflow build of a searchable food-as-medicine resource hub for HBOM at the University of Michigan, by Jade Byeon." />
+  <style>
+    /* Page-scoped layout helpers (this case study only): pairs prose
+       with a figure instead of leaving the right half of the row blank,
+       and lays metrics out as a full-width row instead of a narrow stack. */
+    .hbom-two-col {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: clamp(1.5rem, 3vw, 2.5rem);
+      align-items: start;
+      margin-top: 1.5rem;
+    }
+    .hbom-two-col .single-tile-figure,
+    .hbom-two-col .two-up-figure {
+      margin: 0;
+      max-width: none;
+    }
+    .hbom-metrics-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(1.5rem, 3vw, 2.5rem);
+      margin-top: 1.25rem;
+    }
+    /* Full-page screenshots: height-capped (not width-stretched) so two
+       tall shots sit side by side at a size that both fit on screen at
+       once, instead of a width-based grid stretching them into an
+       unreadable, scroll-inducing pair. */
+    .hbom-mini-pair {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+      gap: clamp(1rem, 3vw, 2rem);
+      margin-top: 1.5rem;
+    }
+    .hbom-mini-pair img {
+      height: clamp(220px, 42vh, 420px);
+      width: auto;
+      max-width: 100%;
+      border-radius: 16px;
+      cursor: zoom-in;
+    }
+    @media (max-width: 760px) {
+      .hbom-two-col,
+      .hbom-metrics-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body class="project-page">
 
@@ -103,29 +151,32 @@
         <p class="section-number">01</p>
         <h2 class="section-icon-title">Research</h2>
         <p class="section-takeaway">A qualitative competitive and domain audit, not a formal usability study.</p>
-        <p style="margin-top: 0.5rem; margin-bottom: 1.5rem;">I reviewed existing food-as-medicine hubs, Tufts Food is Medicine, Healthcare x Food from the American Heart Association, and the HHS/ODPHP FAM hub, alongside narrative sites like StoryCorps and the Obama Presidency Oral History Project for tone and content organization.</p>
 
-        <div style="max-width: 560px;">
-          <p class="constraint-label constraint-label--response">Segmentation gap</p>
-          <p class="constraint-text" style="margin-bottom: 1rem;">User-type segmentation was missing from most FAM sites I reviewed, an opening for the hub to lead with Provider, Patient, and Advocate as first-class categories.</p>
-          <p class="constraint-label constraint-label--response">Fewer, better filters</p>
-          <p class="constraint-text" style="margin-bottom: 1rem;">Simple one- or two-filter systems worked best at the resource counts these hubs actually had, rather than dense filter panels built for a scale they hadn't reached.</p>
-          <p class="constraint-label constraint-label--constraint">Scannability</p>
-          <p class="constraint-text">Media-type icons made resource lists easier to scan at a glance, before a visitor commits to opening anything.</p>
+        <div class="hbom-two-col">
+          <div>
+            <p style="margin-bottom: 1.5rem;">I reviewed existing food-as-medicine hubs, Tufts Food is Medicine, Healthcare x Food from the American Heart Association, and the HHS/ODPHP FAM hub, alongside narrative sites like StoryCorps and the Obama Presidency Oral History Project for tone and content organization.</p>
+
+            <p class="constraint-label constraint-label--response">Segmentation gap</p>
+            <p class="constraint-text" style="margin-bottom: 1rem;">User-type segmentation was missing from most FAM sites I reviewed, an opening for the hub to lead with Provider, Patient, and Advocate as first-class categories.</p>
+            <p class="constraint-label constraint-label--response">Fewer, better filters</p>
+            <p class="constraint-text" style="margin-bottom: 1rem;">Simple one- or two-filter systems worked best at the resource counts these hubs actually had, rather than dense filter panels built for a scale they hadn't reached.</p>
+            <p class="constraint-label constraint-label--constraint">Scannability</p>
+            <p class="constraint-text">Media-type icons made resource lists easier to scan at a glance, before a visitor commits to opening anything.</p>
+          </div>
+
+          <figure class="two-up-figure">
+            <div class="two-up-grid">
+              <figure class="two-up-tile">
+                <img src="../../assets/img/hbom-wireframe.png" alt="Early wireframe exploration for the NVP Knowledge Hub">
+              </figure>
+              <figure class="two-up-tile">
+                <img src="../../assets/img/hbom-wireframe-resource.png" alt="Early resource-page wireframe exploration for the NVP Knowledge Hub">
+              </figure>
+            </div>
+            <figcaption class="figure-caption"><em>early wireframe exploration</em></figcaption>
+          </figure>
         </div>
       </div>
-
-      <figure class="figure-80 two-up-figure" style="margin-top: 2rem;">
-        <div class="two-up-grid">
-          <figure class="two-up-tile">
-            <img src="../../assets/img/hbom-wireframe.png" alt="Early wireframe exploration for the NVP Knowledge Hub">
-          </figure>
-          <figure class="two-up-tile">
-            <img src="../../assets/img/hbom-wireframe-resource.png" alt="Early resource-page wireframe exploration for the NVP Knowledge Hub">
-          </figure>
-        </div>
-        <figcaption class="figure-caption"><em>early wireframe exploration</em></figcaption>
-      </figure>
     </section>
 
     <!-- INTENDED SUCCESS METRICS -->
@@ -133,11 +184,20 @@
       <div class="container">
         <h2 class="section-icon-title">Intended Success Metrics</h2>
         <p class="section-takeaway">The hub hasn't launched publicly yet, so these are planned measures, not results.</p>
-        <ul style="list-style: none; padding: 0; margin: 1.25rem 0 0; display: flex; flex-direction: column; gap: 0.6rem; max-width: 640px;">
-          <li class="constraint-text"><span class="constraint-label constraint-label--response" style="display: inline;">Findability:</span> how fast a visitor reaches a relevant resource, via Webflow analytics and post-launch walkthroughs.</li>
-          <li class="constraint-text"><span class="constraint-label constraint-label--response" style="display: inline;">Return usage:</span> whether visitors come back rather than treating the hub as a one-time lookup.</li>
-          <li class="constraint-text"><span class="constraint-label constraint-label--response" style="display: inline;">Request-form volume:</span> a proxy for how incomplete the library still feels to visitors.</li>
-        </ul>
+        <div class="hbom-metrics-row">
+          <div>
+            <p class="constraint-label constraint-label--response">Findability</p>
+            <p class="constraint-text">How fast a visitor reaches a relevant resource, via Webflow analytics and post-launch walkthroughs.</p>
+          </div>
+          <div>
+            <p class="constraint-label constraint-label--response">Return usage</p>
+            <p class="constraint-text">Whether visitors come back rather than treating the hub as a one-time lookup.</p>
+          </div>
+          <div>
+            <p class="constraint-label constraint-label--response">Request-form volume</p>
+            <p class="constraint-text">A proxy for how incomplete the library still feels to visitors.</p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -214,7 +274,17 @@
       <div class="container">
         <p class="section-number">03</p>
         <h2 class="section-icon-title">Brand</h2>
-        <p>The hub matches <span class="text-mint">nutrivp.org</span> in palette, typography, and header/footer, shown in the banner above, so it reads as an extension of the existing site rather than a separate tool bolted on beside it.</p>
+        <p>The hub matches <span class="text-mint">nutrivp.org</span> in palette, typography, and header/footer, so it reads as an extension of the existing site rather than a separate tool bolted on beside it.</p>
+
+        <div class="hbom-mini-pair">
+          <a href="../../assets/img/hbom-hero.png" target="_blank" rel="noopener">
+            <img src="../../assets/img/hbom-hero.png" alt="NVP Knowledge Hub overview, matched to the nutrivp.org brand">
+          </a>
+          <a href="../../assets/img/hbom-detail.png" target="_blank" rel="noopener">
+            <img src="../../assets/img/hbom-detail.png" alt="Resource detail page, matched to the nutrivp.org brand">
+          </a>
+        </div>
+        <p class="figure-caption" style="margin-top: 0.5rem;"><em>hub overview and resource detail page, matched to the nutrivp.org brand</em></p>
       </div>
     </section>
 
