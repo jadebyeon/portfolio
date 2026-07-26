@@ -2613,6 +2613,50 @@ body.is-settled #heroCopy [data-copy-line] {
   margin: 0;
 }
 
+/* ===== HMW CALLOUT (mint-accent, left-aligned) ===== */
+.hmw-callout {
+  max-width: 720px;
+  margin: 0 auto;
+  border-left: 3px solid var(--mint-color);
+  background: color-mix(in oklab, var(--mint-color) 6%, transparent);
+  border-radius: 0 12px 12px 0;
+  padding: clamp(1.1rem, 2.5vw, 1.75rem) clamp(1.25rem, 3.5vw, 2.25rem);
+}
+.hmw-eyebrow {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--mint-color);
+  margin: 0 0 0.6rem;
+}
+.hmw-callout p {
+  font-family: var(--display-font);
+  font-size: clamp(1.25rem, 2.6vw, 1.6rem);
+  font-weight: 600;
+  color: var(--title-color);
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* ===== CASE STUDY LEAD BANNER (contained, cropped from top) ===== */
+.case-hero-banner {
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 16 / 6;
+  background: #f7f9f8;
+}
+.case-hero-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+@media (max-width: 640px) {
+  .case-hero-banner { aspect-ratio: 4 / 3; }
+}
+
 /* ===== DESIGNING UNDER CONSTRAINTS ===== */
 .constraint-blocks {
   display: flex;
