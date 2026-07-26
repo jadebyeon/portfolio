@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+  <link rel="stylesheet" href="../../assets/css/styles.css"/>
+  <link rel="icon" type="image/svg+xml" href="../../assets/img/favicon.svg" />
+  <title>NVP Knowledge Hub — Jade Byeon</title>
+  <meta name="description" content="Research, information architecture, and Webflow build of a searchable food-as-medicine resource hub for HBOM at the University of Michigan, by Jade Byeon." />
+</head>
+<body class="project-page">
+
+  <header class="header" id="header">
+    <nav class="site-nav container">
+      <a href="../../index.html" class="brand" aria-label="Home">Jade Byeon</a>
+      <ul class="site-menu">
+        <li><a class="nav-link active" href="../../index.html#portfolio">Work</a></li>
+        <li><a class="nav-link" href="../../about.html">About</a></li>
+        <li><a class="nav-link" href="#footer">Contact</a></li>
+        <li><a class="nav-link" href="../../assets/pdf/Jade_Resume.pdf" target="_blank" rel="noopener">Resume</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="main project">
+
+    <!-- HEADER -->
+    <section class="project-hero section" style="background: #f7f9f8;">
+      <div class="container" style="padding-top: clamp(3rem, 8vw, 5rem); padding-bottom: clamp(1.5rem, 4vw, 2.5rem);">
+        <h1 class="hero-title" style="color: var(--title-color);">NVP Knowledge Hub</h1>
+        <p class="hero-subtitle" style="color: var(--text-color);">A searchable food-as-medicine resource hub for patients, providers, and advocates.</p>
+      </div>
+    </section>
+
+    <section class="project-intro section">
+      <div class="container">
+        <div class="project-meta">
+          <div class="meta-item">
+            <div class="meta-label">Role</div>
+            <div class="meta-value">Design Intern (UX &rarr; Webflow build)</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Team</div>
+            <div class="meta-value">HBOM, University of Michigan</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Timeline</div>
+            <div class="meta-value">Summer 2026</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Tools</div>
+            <div class="meta-value">Figma &middot; Webflow</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OVERVIEW -->
+    <section class="project-section">
+      <div class="container">
+        <h2 class="section-icon-title">What did I do?</h2>
+        <p class="section-takeaway">I owned the hub end to end, from research through the live build.</p>
+        <p style="margin-top: 0.5rem;">I led research, information architecture, and filter logic, then designed desktop and mobile wireframes and built the searchable hub in Webflow on top of the existing <span class="text-mint">nutrivp.org</span> landing page.</p>
+      </div>
+    </section>
+
+    <!-- CONTEXT -->
+    <section class="project-section">
+      <div class="container">
+        <h2 class="section-icon-title">What is Food as Medicine (FAM)?</h2>
+        <p style="margin-top: 0.5rem;">FAM and ILOS programs let Medicaid cover food benefits, but coverage <span class="text-mint">varies by plan and by region</span>, and patients are often left to figure out what applies to them. Before this project, <span class="text-mint">nutrivp.org</span> existed only as a landing page, with no library of resources behind it.</p>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="project-section">
+      <div class="container">
+        <h2 class="section-icon-title">The Problem</h2>
+        <p style="margin-top: 0.5rem;">There was no central, filterable library of FAM resources. What existed was skewed toward providers, with few resources written for patients themselves. The question patients actually have, <span class="text-mint">what does my plan cover</span>, had nowhere to go.</p>
+      </div>
+    </section>
+
+    <!-- HMW -->
+    <section class="project-section pull-quote-section">
+      <div class="container">
+        <blockquote class="pull-quote">
+          <p class="pull-quote-headline">How might we help patients and providers find the right food-as-medicine resource, without getting lost in content meant for someone else?</p>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- RESEARCH -->
+    <section class="project-section">
+      <div class="container">
+        <p class="section-number">01</p>
+        <h2 class="section-icon-title">Research</h2>
+        <p class="section-takeaway">A qualitative competitive and domain audit, not a formal usability study.</p>
+        <p style="margin-top: 0.5rem; margin-bottom: 1.5rem;">I reviewed existing food-as-medicine hubs, Tufts Food is Medicine, Healthcare x Food from the American Heart Association, and the HHS/ODPHP FAM hub, alongside narrative sites like StoryCorps and the Obama Presidency Oral History Project for tone and content organization.</p>
+
+        <div style="max-width: 560px;">
+          <p class="constraint-label constraint-label--response">Segmentation gap</p>
+          <p class="constraint-text" style="margin-bottom: 1rem;">User-type segmentation was missing from most FAM sites I reviewed, an opening for the hub to lead with Provider, Patient, and Advocate as first-class categories.</p>
+          <p class="constraint-label constraint-label--response">Fewer, better filters</p>
+          <p class="constraint-text" style="margin-bottom: 1rem;">Simple one- or two-filter systems worked best at the resource counts these hubs actually had, rather than dense filter panels built for a scale they hadn't reached.</p>
+          <p class="constraint-label constraint-label--constraint">Scannability</p>
+          <p class="constraint-text">Media-type icons made resource lists easier to scan at a glance, before a visitor commits to opening anything.</p>
+        </div>
+      </div>
+
+      <figure class="figure-80 single-tile-figure" style="margin-top: 2rem;">
+        <div class="single-tile">
+          <img src="../../assets/img/hbom-wireframe.png" alt="Early wireframe exploration for the NVP Knowledge Hub">
+        </div>
+        <figcaption class="figure-caption"><em>early wireframe exploration</em></figcaption>
+      </figure>
+    </section>
+
+    <!-- INTENDED SUCCESS METRICS -->
+    <section class="project-section">
+      <div class="container">
+        <h2 class="section-icon-title">Intended Success Metrics</h2>
+        <p class="section-takeaway">The hub hasn't launched publicly yet, so these are the measures HBOM plans to track, not results.</p>
+        <div style="max-width: 560px; margin-top: 1.25rem;">
+          <p class="constraint-label constraint-label--response">Resource findability</p>
+          <p class="constraint-text" style="margin-bottom: 1rem;">How quickly a visitor reaches a relevant resource, to be measured through Webflow analytics and informal user walkthroughs after launch.</p>
+          <p class="constraint-label constraint-label--response">Return usage</p>
+          <p class="constraint-text" style="margin-bottom: 1rem;">Whether patients and providers come back to the hub rather than treating it as a one-time lookup.</p>
+          <p class="constraint-label constraint-label--response">Request-form submissions</p>
+          <p class="constraint-text">Volume of resource requests and suggestions submitted through the new form, a proxy for whether the library still feels incomplete to visitors.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOLUTION -->
+    <section class="project-section">
+      <div class="container">
+        <p class="section-number">02</p>
+        <h2 class="section-icon-title">Solution</h2>
+        <p class="section-takeaway">A phased, modular system built to be maintained by HBOM without a designer.</p>
+
+        <h3 style="margin-top: 2rem; margin-bottom: 0.5rem; font-size: 1.05rem; font-weight: 700; color: var(--title-color);">IA &amp; entry point</h3>
+        <p>The hub is <span class="text-mint">user-type-first</span>, splitting into Provider, Patient, and Advocate at the entry point so patients never have to wade through content written for clinicians to find their own.</p>
+
+        <h3 style="margin-top: 2rem; margin-bottom: 0.5rem; font-size: 1.05rem; font-weight: 700; color: var(--title-color);">Filter system</h3>
+        <p>Two filter panels replaced the earlier vanity filters (All, Coverage, Our Favorites): Topic (ILOS/Medicaid, FAM Overview, Condition Specific Education) and Media type (Video, PDF, Website, Digital tool). The library holds around 10 to 20 resources today, but Topic and Media type live in separate CMS Collections so the system can scale past 50 without a rebuild.</p>
+      </div>
+
+      <figure class="figure-80 single-tile-figure" style="margin-top: 1.5rem;">
+        <div class="single-tile">
+          <img src="../../assets/img/hbom-filters.png" alt="Topic and media type filter panels">
+        </div>
+        <figcaption class="figure-caption"><em>topic and media type filters</em></figcaption>
+      </figure>
+
+      <div class="container">
+        <h3 style="margin-top: 2.5rem; margin-bottom: 0.5rem; font-size: 1.05rem; font-weight: 700; color: var(--title-color);">Custom iconography</h3>
+        <p>I designed the ILOS/Medicaid and FAM icons with the client: ILOS as a prescription mark with a food element standing in for the pill, FAM as a bowl marked with a medical cross.</p>
+
+        <h3 style="margin-top: 2rem; margin-bottom: 0.5rem; font-size: 1.05rem; font-weight: 700; color: var(--title-color);">Resource card &amp; detail page</h3>
+        <p>One card design maps to a small set of CMS fields, name, type, description, tags, thumbnail, with density variants so HBOM can add resources without a designer. Thumbnails use the provider's logo where one exists, like Mom's Meals or Low Carb Jumpstart, and fall back to a PDF-preview image otherwise, as with the Understanding Medicaid Food Benefits one-pager.</p>
+      </div>
+
+      <figure class="figure-80 single-tile-figure" style="margin-top: 1.5rem;">
+        <div class="single-tile">
+          <img src="../../assets/img/hbom-detail.png" alt="Resource card and detail page">
+        </div>
+        <figcaption class="figure-caption"><em>resource card and detail page</em></figcaption>
+      </figure>
+
+      <div class="container">
+        <h3 style="margin-top: 2.5rem; margin-bottom: 0.5rem; font-size: 1.05rem; font-weight: 700; color: var(--title-color);">Request flow</h3>
+        <p>"I'm looking for something" and "I want to suggest a resource" used to be separate asks. I combined them into one toggle form, reviewed by HBOM before anything publishes.</p>
+
+        <h3 style="margin-top: 2rem; margin-bottom: 0.5rem; font-size: 1.05rem; font-weight: 700; color: var(--title-color);">Food As Medicine Topics</h3>
+        <p>A row of entry tiles gives visitors a second way in, by topic rather than by user type, for people who arrive already knowing what they're looking for.</p>
+      </div>
+
+      <figure class="figure-80 single-tile-figure" style="margin-top: 1.5rem;">
+        <div class="single-tile">
+          <img src="../../assets/img/hbom-fam-topics.png" alt="Food As Medicine Topics entry tiles">
+        </div>
+        <figcaption class="figure-caption"><em>food as medicine topics, as entry tiles</em></figcaption>
+      </figure>
+    </section>
+
+    <!-- CONSTRAINT BEAT -->
+    <section class="project-section">
+      <div class="container">
+        <div class="constraint-blocks">
+          <div class="constraint-block">
+            <h3 class="constraint-title">Video, everywhere or nowhere</h3>
+            <div class="constraint-grid">
+              <div class="constraint-col">
+                <p class="constraint-label constraint-label--constraint">Constraint</p>
+                <p class="constraint-text">Webflow wouldn't let me choose, per resource, between embedding a video and linking out. Whatever I picked had to apply identically across every resource in the library.</p>
+              </div>
+              <div class="constraint-col">
+                <p class="constraint-label constraint-label--response">My response</p>
+                <p class="constraint-text">I chose linking to the source page over embedding, for consistency across resource types and lower long-term maintenance for HBOM.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BRAND -->
+    <section class="project-section">
+      <div class="container">
+        <p class="section-number">03</p>
+        <h2 class="section-icon-title">Brand</h2>
+        <p style="margin-top: 0.5rem;">The hub matches <span class="text-mint">nutrivp.org</span> in palette, typography, and header/footer, so it reads as an extension of the existing site rather than a separate tool bolted on beside it.</p>
+      </div>
+
+      <figure class="figure-80 single-tile-figure" style="margin-top: 1.5rem;">
+        <div class="single-tile">
+          <img src="../../assets/img/hbom-hero.png" alt="NVP Knowledge Hub, matched to the nutrivp.org brand">
+        </div>
+        <figcaption class="figure-caption"><em>the hub, matched to the nutrivp.org brand</em></figcaption>
+      </figure>
+    </section>
+
+    <!-- IMPACT -->
+    <section class="project-section">
+      <div class="container">
+        <p class="section-number">04</p>
+        <h2 class="section-icon-title">Impact</h2>
+        <p class="section-takeaway">Built and handed off; public launch pending.</p>
+        <p style="margin-top: 0.5rem;">The hub is built in Webflow and handed off to HBOM. It hasn't launched publicly yet, so I'm not claiming usage numbers here, only that the system is ready for HBOM to populate and publish on their own timeline.</p>
+        <p style="margin-top: 0.75rem; color: var(--text-color-light); font-size: 0.9rem;"><em>Alongside the hub, I also produced a 30-second patient-story reel, Heart-to-Heart, for the Michigan Cardiac Rehab Network.</em></p>
+      </div>
+    </section>
+
+    <!-- REFLECTION -->
+    <section class="project-section">
+      <div class="container">
+        <h2 class="section-icon-title">Reflection</h2>
+        <div class="decision-cards">
+          <div class="decision-card">
+            <h3>Constraints</h3>
+            <p>Webflow's CMS model shaped more decisions than I expected, especially the all-or-nothing video/link choice and the need to split Categories and Media type into separate Collections early.</p>
+          </div>
+          <div class="decision-card">
+            <h3>What I'd improve</h3>
+            <p>I'd pressure-test the filter taxonomy against a larger resource set before launch, since ~10 to 20 items can hide gaps that only show up once the library grows toward 50.</p>
+          </div>
+          <div class="decision-card">
+            <h3>Next steps</h3>
+            <p>HBOM populates the remaining resource entries, reviews incoming requests through the new form, and sets a public launch date.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGER -->
+    <nav class="project-pager">
+      <div class="container project-pager__inner">
+        <a class="project-pager__link project-pager__prev" href="../oct">
+          <i class="uil uil-arrow-left" aria-hidden="true"></i>
+          <span>Previous Project</span>
+        </a>
+        <a class="project-pager__link project-pager__next" href="../ootd">
+          <span>Next Project</span>
+          <i class="uil uil-arrow-right" aria-hidden="true"></i>
+        </a>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="footer" id="footer">
+    <div class="container footer__inner">
+      <div class="footer__top">
+        <div class="footer__headline">
+          <p class="footer__eyebrow">NICE TO MEET YOU!</p>
+          <h2 class="footer__title">LET'S TALK</h2>
+        </div>
+        <a href="#top" class="footer__back">
+          <span class="footer__back-label">BACK TO TOP</span>
+          <span class="footer__back-circle">
+            <i class="uil uil-arrow-up" aria-hidden="true"></i>
+          </span>
+        </a>
+      </div>
+      <div class="footer__bottom">
+        <div class="footer__links">
+          <a href="mailto:jadebyeonj@gmail.com" class="footer__btn" aria-label="Email">Email</a>
+          <a href="https://www.linkedin.com/in/jadebyeon/" target="_blank" rel="noopener noreferrer" class="footer__btn" aria-label="LinkedIn">LinkedIn</a>
+          <a href="https://www.instagram.com/b._.jade/" target="_blank" rel="noopener noreferrer" class="footer__btn" aria-label="Instagram">Instagram</a>
+        </div>
+        <div class="footer__meta">
+          <p>Designed and developed by Jade Byeon</p>
+          <p>© 2026</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/reveal.js"></script>
+</body>
+</html>
