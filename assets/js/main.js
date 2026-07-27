@@ -1,3 +1,44 @@
+/*==================== PORTFOLIO TILE VIDEO: PLAY ON SCROLL ====================
+  Portfolio tile hero videos (.tile-media) carry no autoplay attribute;
+  playback is driven entirely from here so there's never a frozen frame
+  visible on screen. An IntersectionObserver plays a tile's video the
+  moment it enters the viewport (it loops forever from there) and pauses
+  it the moment it leaves (harmless since it's off-screen). Under
+  prefers-reduced-motion, videos are never played, so only the poster
+  ever shows. If a video's mp4 source is missing, .play() simply fails
+  silently and the poster keeps showing, no error surfaced. No-ops on
+  pages without .tile-media or without IntersectionObserver. */
+(function () {
+  function init() {
+    var videos = document.querySelectorAll('.tile-media');
+    if (!videos.length) return;
+
+    var reduceMotion = window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion || !('IntersectionObserver' in window)) return;
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var video = entry.target;
+        if (entry.isIntersecting) {
+          var playPromise = video.play();
+          if (playPromise && playPromise.catch) playPromise.catch(function () {});
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.25 });
+
+    videos.forEach(function (v) { observer.observe(v); });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
 /*==================== HERO LOAD-IN ====================
   Load-triggered only (see styles.css @keyframes heroLoadIn). Toggles
   body.loaded to start the staggered entrance animation, then once

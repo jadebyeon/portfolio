@@ -382,8 +382,9 @@ img { max-width: 100%; height: auto; }
   background: #f5f6f7;
 }
 
-/* Image fills and crops */
-.portfolio__img{
+/* Image fills and crops (.tile-media is the video equivalent, same fill/crop) */
+.portfolio__img,
+.tile-media{
   width: 100%;
   height: 100%;
   display: block;
@@ -403,8 +404,9 @@ img { max-width: 100%; height: auto; }
 }
 /* Desktop/Laptop: subtle hover zoom */
 @media (hover: hover){
-  .portfolio__img-link:hover .portfolio__img{
-    transform: scale(1.06);   /* tweak: 1.02–1.06 */
+  .portfolio__img-link:hover .portfolio__img,
+  .portfolio__img-link:hover .tile-media{
+    transform: scale(1.06);   /* tweak: 1.02-1.06 */
   }
 }
 
@@ -418,7 +420,8 @@ img { max-width: 100%; height: auto; }
 
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce){
-  .portfolio__img{ transition: none; }
+  .portfolio__img,
+  .tile-media{ transition: none; }
 }
 
 /* Mint/turquoise accent for title hover */
@@ -1603,6 +1606,35 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   border: 0;
 }
 
+/* ===== FILM FRAME (soft padded card around a Vimeo embed) =====
+   .film-frame is the light outer card; .film-embed is the rounded,
+   shadowed, responsive 16:9 box the iframe fills. Reused by both the
+   "Robot" demo and the Sam interaction concept film on the OCT page. */
+.film-frame {
+  background: #f4f4f2;
+  padding: clamp(12px, 2vw, 28px);
+  border-radius: 20px;
+}
+.film-embed {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+}
+.film-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.film-frame .figure-caption {
+  margin-top: 0.75rem;
+  margin-bottom: 0;
+}
+
 /* ========== 2-up paired tiles – same height, no crop, no empty space ========== */
 
 .paired-figure{
@@ -2461,17 +2493,13 @@ body.is-settled #heroCopy [data-copy-line] {
   gap: 0;
 }
 
-/* Image */
+/* Image (or .tile-media video, same frame either way, see below) */
 .portfolio__img-link {
   aspect-ratio: 3 / 2;
-  border-radius: 16px;
+  border-radius: 14px;
   overflow: hidden;
   display: block;
-}
-
-@media (min-width: 992px) {
-  .portfolio__img-link { border-radius: 20px; }
-  .portfolio__content:first-child .portfolio__img-link { border-radius: 20px; }
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
 /* Data block */
