@@ -159,78 +159,77 @@ document.querySelectorAll('.footer__back').forEach(function (link) {
   }
 })();
 
-/*==================== OCT PROJECT: JOURNEY SCRUBBER ====================
-  Range slider (0-100) that scrubs the two SVG polylines via
-  stroke-dasharray/stroke-dashoffset. The mint "with Sam" line is a
-  single dash the length of the reveal (solid). The gray "without Sam"
-  line rebuilds a small repeating dash/gap pattern up to the reveal
-  point each time the slider moves, so it stays visually dashed while
-  still only showing up to the current position. Works with mouse,
-  touch, and keyboard (native <input type="range">). No-ops on pages
-  without .journey-scrubber-slider. */
+/*==================== OCT PROJECT: CHARACTER BOARD CURSOR + LIGHTBOX ====
+  Hovering the character finalists board (mouse/trackpad only) hides the
+  default cursor and shows a small mint "view why" pill that follows the
+  pointer. Clicking the board opens a lightbox with all four finalists
+  shown large, reasoning always visible (no further hover/click needed
+  inside it) — except clicks on a tile itself, which still hand off to
+  the existing click-to-toggle overlay above, so that behavior stays
+  intact. Closes via the close button, backdrop click, or Esc; focus
+  moves into the lightbox on open and returns to the board on close.
+  No-ops on pages without #charFinalistsBoard. */
 (function () {
-  var STAGES = [
-    { label: 'Home', note: "Sam's video plays at home. First familiarity forms." },
-    { label: 'Waiting room', note: 'Sam appears again on the waiting room screen.' },
-    { label: 'First contact', note: "The child recognizes Sam. The robot isn't a stranger." },
-    { label: 'During exam', note: 'Sam narrates the mission. The child has a role.' },
-    { label: 'Goodbye', note: 'Sam says goodbye. The exam ends as a story, not a procedure.' }
-  ];
-  var DASH = 7;
-  var GAP = 6;
-
-  // Builds a dasharray that shows a repeating dash/gap pattern only up
-  // to `revealedLength`, then hides everything after it.
-  function dashedRevealArray(totalLength, revealedLength) {
-    if (revealedLength <= 0) return '0 ' + totalLength;
-    var segments = [];
-    var covered = 0;
-    var isDash = true;
-    while (covered < revealedLength) {
-      var unit = isDash ? DASH : GAP;
-      var seg = Math.min(unit, revealedLength - covered);
-      segments.push(seg);
-      covered += seg;
-      isDash = !isDash;
-    }
-    // whatever position comes next must render as empty so nothing
-    // beyond revealedLength shows
-    if (isDash) {
-      segments.push(0, totalLength);
-    } else {
-      segments.push(totalLength);
-    }
-    return segments.join(' ');
-  }
-
   function init() {
-    var slider = document.getElementById('journeyScrubberSlider');
-    var without = document.querySelector('.scrubber-line--without');
-    var withSam = document.querySelector('.scrubber-line--with');
-    var stageEl = document.getElementById('journeyScrubberStage');
-    var noteEl = document.getElementById('journeyScrubberAnnotation');
-    if (!slider || !without || !withSam || !stageEl || !noteEl) return;
+    var board = document.getElementById('charFinalistsBoard');
+    var pill = document.getElementById('charCursorPill');
+    var lightbox = document.getElementById('charBoardLightbox');
+    if (!board || !lightbox) return;
 
-    var withoutLength = without.getTotalLength();
-    var withLength = withSam.getTotalLength();
+    var closeBtn = lightbox.querySelector('.lightbox-close');
+    var closeTimer = null;
+    var CLOSE_MS = 150;
 
-    function render() {
-      var value = Number(slider.value);
-      var progress = value / 100;
-
-      var revealedWithout = withoutLength * progress;
-      without.style.strokeDasharray = dashedRevealArray(withoutLength, revealedWithout);
-
-      withSam.style.strokeDasharray = withLength;
-      withSam.style.strokeDashoffset = withLength * (1 - progress);
-
-      var stageIndex = Math.min(STAGES.length - 1, Math.floor(value / (100 / STAGES.length)));
-      stageEl.textContent = STAGES[stageIndex].label;
-      noteEl.textContent = STAGES[stageIndex].note;
+    if (pill) {
+      board.addEventListener('pointerenter', function (e) {
+        if (e.pointerType === 'touch') return;
+        pill.style.transform = 'translate(' + (e.clientX + 16) + 'px, ' + (e.clientY + 16) + 'px)';
+        pill.classList.add('is-visible');
+      });
+      board.addEventListener('pointermove', function (e) {
+        if (e.pointerType === 'touch') return;
+        pill.style.transform = 'translate(' + (e.clientX + 16) + 'px, ' + (e.clientY + 16) + 'px)';
+      });
+      board.addEventListener('pointerleave', function (e) {
+        if (e.pointerType === 'touch') return;
+        pill.classList.remove('is-visible');
+      });
     }
 
-    slider.addEventListener('input', render);
-    render();
+    function onKeydown(e) {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeLightbox();
+      }
+    }
+
+    function openLightbox() {
+      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+      lightbox.hidden = false;
+      void lightbox.offsetWidth; // force layout so opacity transitions from 0 instead of jumping straight to 1
+      lightbox.classList.add('is-open');
+      document.addEventListener('keydown', onKeydown);
+      if (closeBtn) closeBtn.focus();
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('is-open');
+      document.removeEventListener('keydown', onKeydown);
+      closeTimer = setTimeout(function () {
+        lightbox.hidden = true;
+      }, CLOSE_MS);
+      board.focus();
+    }
+
+    board.setAttribute('tabindex', board.getAttribute('tabindex') || '-1');
+    board.addEventListener('click', function (e) {
+      if (e.target.closest('.character-tile')) return;
+      openLightbox();
+    });
+
+    Array.prototype.slice.call(lightbox.querySelectorAll('[data-lightbox-close]')).forEach(function (el) {
+      el.addEventListener('click', closeLightbox);
+    });
   }
 
   if (document.readyState === 'loading') {
@@ -947,6 +946,10 @@ var PERSONA_COPY = {
       nodes.forEach(function (node) {
         node.addEventListener('pointerenter', function (e) {
           if (e.pointerType === 'touch') return;
+          // Position immediately on entry (not just on the next
+          // pointermove) so the pill never flashes at its off-screen
+          // default spot before the first movement tick.
+          cursorPill.style.transform = 'translate(' + (e.clientX + 16) + 'px, ' + (e.clientY + 16) + 'px)';
           cursorPill.classList.add('is-visible');
         });
         node.addEventListener('pointermove', function (e) {

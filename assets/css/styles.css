@@ -92,6 +92,13 @@
   --grid-cols: 12;
   --grid-gap: clamp(10px, 1.2vw, 20px);
   --container-max: 1200px;
+
+  /* Shared content container — aliases --container-max/--page-gutter so
+     it always matches the header nav's rendered edges (see .content-container
+     below), under names meant to be reused page-by-page without touching
+     the legacy .container every page already depends on. */
+  --content-max: var(--container-max);
+  --gutter: var(--page-gutter);
 }
 
 /* Column count follows the same breakpoints as the container/gutter system */
@@ -190,6 +197,32 @@ img { max-width: 100%; height: auto; }
   max-width: var(--container-max);
   margin-inline: auto;
   padding-inline: var(--page-gutter);
+}
+
+/* ===== SHARED CONTENT CONTAINER (reusable across pages) =====
+   Same recipe as .container, under new tokens so it can be adopted
+   page-by-page (see --content-max/--gutter above) without touching
+   .container's existing sitewide usage. Matches the header nav's edges
+   exactly since --content-max/--gutter alias the same underlying values. */
+.content-container {
+  width: 100%;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+/* Figures (figure-80's own max-width is narrower/independent) share the
+   same edges as body text once they also carry .content-container. */
+.figure-80.content-container {
+  max-width: var(--content-max);
+  padding-inline: var(--gutter);
+}
+/* Hero banner: the wrapping .content-container owns the edges/padding,
+   the media block just fills it (only applies when actually nested this
+   way, so pages that use .hero-media on its own are unaffected). */
+.content-container > .hero-media {
+  width: 100%;
+  max-width: none;
+  margin: 0;
 }
 .section { padding-block: var(--section-vspace); }
 .grid { display: grid; gap: 1.5rem; }
@@ -1683,7 +1716,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 .about-hero__grid {
   display: grid;
   grid-template-columns: 1fr 360px;
-  gap: clamp(2rem, 4vw, 4rem);
+  gap: clamp(1.5rem, 3vw, 3rem);
   align-items: center;
   width: 100%;
 }
@@ -1730,12 +1763,15 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   color: var(--text-color);
   max-width: 52ch;
 }
+.about-bio + .about-bio {
+  margin-top: 1.25rem;
+}
 
 .about-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-top: 2rem;
+  margin-top: 1.25rem;
 }
 
 .about-tag {
@@ -2774,7 +2810,7 @@ body.is-settled #heroCopy [data-copy-line] {
 /* ===== INTERACTION SYSTEM: SWIMLANE TIMELINE (reuses .principle-card look) ===== */
 .swimlane-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 1rem;
   margin-top: 2rem;
 }
@@ -3281,6 +3317,74 @@ body.is-settled #heroCopy [data-copy-line] {
   .physical-lightbox { transition: none !important; }
 }
 
+/* ===== GENERIC LIGHTBOX (reusable) =====
+   Same pattern as .physical-lightbox above, generalized: centered,
+   capped to 90vw/85vh, closes via backdrop/Esc/close button. Content
+   is open-ended (.lightbox-content), not tied to a single image. */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.lightbox[hidden] { display: none; }
+.lightbox.is-open { opacity: 1; }
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 20, 20, 0.6);
+}
+.lightbox-content {
+  position: relative;
+  z-index: 1;
+  max-width: 90vw;
+  max-height: 85vh;
+  overflow: auto;
+  background: #fff;
+  border-radius: 12px;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  box-sizing: border-box;
+}
+.lightbox-content img {
+  display: block;
+  max-width: 100%;
+  max-height: 85vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  margin: 0 auto;
+}
+.lightbox-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  color: var(--title-color);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.lightbox-close:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--mint-color) 45%, transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .lightbox { transition: none !important; }
+}
+
 /* ===== CHARACTER BEFORE/AFTER (Wearby: sketches → final) =====
    Fully static: no JS, no toggle, no drag. Side-by-side on desktop,
    stacks with the arrow rotated 90deg on narrow screens. */
@@ -3639,12 +3743,13 @@ body.is-settled #heroCopy [data-copy-line] {
   background: #1a7a5e;
 }
 
-/* ===== JOURNEY SCRUBBER (draggable, see assets/js/main.js) ===== */
-.journey-scrubber {
+/* ===== JOURNEY CHART (static, see the "Journey We Set Out to Change"
+   section in projects/oct/index.html) ===== */
+.journey-chart {
   max-width: 680px;
   margin: 0 auto;
 }
-.journey-scrubber-svg {
+.journey-chart-svg {
   display: block;
   width: 100%;
   height: auto;
@@ -3657,64 +3762,37 @@ body.is-settled #heroCopy [data-copy-line] {
 }
 .scrubber-line--without {
   stroke: var(--text-color-light);
+  stroke-dasharray: 6 5;
 }
 .scrubber-line--with {
   stroke: #1a7a5e;
 }
-
-.journey-scrubber-slider {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  height: 4px;
-  margin: 1rem 0 0;
-  border-radius: 999px;
-  background: #e5e7eb;
-  outline: none;
-  touch-action: none; /* let the thumb, not the page, capture drag/touch */
+.arc-points circle {
+  stroke: #fff;
+  stroke-width: 1.5;
 }
-.journey-scrubber-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #1a7a5e;
-  border: 3px solid #fff;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
-  cursor: grab;
+.arc-points--without circle {
+  fill: var(--text-color-light);
 }
-.journey-scrubber-slider::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #1a7a5e;
-  border: 3px solid #fff;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
-  cursor: grab;
+.arc-points--with circle {
+  fill: #1a7a5e;
 }
-.journey-scrubber-slider::-moz-range-track {
-  height: 4px;
-  border-radius: 999px;
-  background: #e5e7eb;
+/* Widest-gap annotation: First contact -> During exam */
+.arc-zone-band {
+  fill: rgba(26, 122, 94, 0.07);
 }
-
-.journey-scrubber-readout {
-  margin-top: 1rem;
-  text-align: center;
-}
-.journey-scrubber-stage {
-  margin: 0 0 0.25rem;
-  font-family: var(--display-font);
-  font-size: 1.05rem;
+.arc-zone-label {
+  font-size: 10px;
   font-weight: 600;
-  color: var(--title-color);
+  letter-spacing: 0.02em;
+  fill: #1a7a5e;
 }
-.journey-scrubber-annotation {
-  margin: 0;
-  min-height: 1.5em;
-  font-size: 0.9rem;
-  color: var(--text-color-light);
+.journey-chart-takeaway {
+  margin: 1.25rem 0 0;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--text-color);
+  line-height: 1.6;
 }
 
 /* ===== IMPACT GRID ===== */

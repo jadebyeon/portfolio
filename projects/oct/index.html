@@ -9,6 +9,112 @@
   <link rel="icon" type="image/svg+xml" href="../../assets/img/favicon.svg" />
   <title>Pediatric Eye Exam Robot — Jade Byeon</title>
   <meta name="description" content="Character design system and caregiver research for a pediatric OCT eye-exam robot at Kellogg Eye Center. Bradley-Terry preference modeling, storyboarding, and pre-exposure media by Jade Byeon." />
+  <style>
+    /* Page-scoped overrides (this page only). */
+
+    /* Designing Under Constraints: compact vertical rhythm so the
+       section reads in roughly one screen instead of forcing a scroll,
+       without touching .constraint-blocks/.constraint-grid sitewide
+       (hbom's own constraint block reuses those unchanged). */
+    #designingUnderConstraints.constraints-compact {
+      padding-block: clamp(24px, 3vw, 48px) !important;
+    }
+    #designingUnderConstraints .constraint-blocks {
+      gap: clamp(1.5rem, 2.5vw, 2rem);
+      margin-top: 1.25rem;
+    }
+    #designingUnderConstraints .constraint-title {
+      margin-bottom: 0.75rem;
+    }
+    #designingUnderConstraints .constraint-num {
+      margin-bottom: 0.35rem;
+    }
+
+    /* Character finalists board: custom "view why" cursor pill +
+       click-to-enlarge lightbox. Scoped to #charFinalistsBoard only. */
+    #charFinalistsBoard,
+    #charFinalistsBoard .character-tile {
+      cursor: none;
+    }
+    @media (hover: none), (pointer: coarse) {
+      #charFinalistsBoard,
+      #charFinalistsBoard .character-tile {
+        cursor: pointer;
+      }
+    }
+    .char-cursor-pill {
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: #1a7a5e;
+      color: #fdfcf9;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      padding: 0.4rem 0.9rem 0.4rem 0.75rem;
+      border-radius: 999px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0;
+      transform: translate(-9999px, -9999px);
+      transition: opacity 0.15s ease;
+      white-space: nowrap;
+    }
+    .char-cursor-pill.is-visible {
+      opacity: 1;
+    }
+    .char-cursor-pill i {
+      font-size: 0.85rem;
+    }
+    @media (hover: none), (pointer: coarse) {
+      .char-cursor-pill { display: none; }
+    }
+
+    /* Lightbox content: same 4 finalists, shown large with the
+       reasoning/verdict always visible (no further hover/click needed). */
+    .lightbox-char-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      width: 100%;
+    }
+    .lightbox-char-card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      text-align: left;
+    }
+    .lightbox-char-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .lightbox-char-card-body {
+      padding: 0.85rem 1rem 1rem;
+    }
+    .lightbox-char-card-name {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 0 0 0.4rem;
+      font-family: "ClashGrotesk", "Inter", sans-serif;
+      font-weight: 600;
+      color: var(--title-color);
+    }
+    .lightbox-char-card-desc {
+      margin: 0;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: var(--text-color-light);
+    }
+    @media (max-width: 640px) {
+      .lightbox-char-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body class="project-page">
 
@@ -28,18 +134,20 @@
 
     <!-- ① HERO -->
     <section class="project-hero section">
-      <div class="hero-media">
-        <img src="../../assets/img/oct_banner.JPG" alt="Pediatric Eye Exam Robot">
-        <div class="hero-overlay">
-          <h1 class="hero-title">Pediatric Eye Exam Robot</h1>
-          <p class="hero-subtitle">A 6-year-old grips her mother's hand. A mechanical arm extends toward her face. My job was to give that arm a soul before she ever walked into the room.</p>
+      <div class="content-container">
+        <div class="hero-media">
+          <img src="../../assets/img/oct_banner.JPG" alt="Pediatric Eye Exam Robot">
+          <div class="hero-overlay">
+            <h1 class="hero-title">Pediatric Eye Exam Robot</h1>
+            <p class="hero-subtitle">A 6-year-old grips her mother's hand. A mechanical arm extends toward her face. My job was to give that arm a soul before she ever walked into the room.</p>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- ② PROBLEM + SOLUTION -->
     <section class="project-intro section">
-      <div class="container">
+      <div class="content-container">
         <div class="problem-solution-row">
           <div class="ps-block">
             <p class="ps-label">The Problem</p>
@@ -75,7 +183,7 @@
 
     <!-- ④ KEY DESIGN DECISIONS -->
     <section class="project-section">
-      <div class="container">
+      <div class="content-container">
         <h2>Key Design Decisions</h2>
         <p class="section-subhead">Three choices that shaped the interaction system, each one traceable to survey data.</p>
         <div class="decision-cards">
@@ -100,11 +208,11 @@
 
     <!-- ⑤ ROBOT DEMO -->
     <section class="project-section">
-      <div class="container">
+      <div class="content-container">
         <h2 class="section-icon-title">The Robot</h2>
         <p class="section-takeaway">The hardware was done before I arrived. Everything the child would feel about it wasn't.</p>
       </div>
-      <figure class="figure-80 video-figure">
+      <figure class="figure-80 content-container video-figure">
         <div class="video-wrapper">
           <iframe
             src="https://player.vimeo.com/video/1138360201?badge=0&autopause=0&player_id=0&app_id=58479"
@@ -120,7 +228,7 @@
 
     <!-- ⑥ RESEARCH -->
     <section class="project-section">
-      <div class="container">
+      <div class="content-container">
         <p class="section-number">01</p>
         <h2 class="section-icon-title">Research &amp; Strategy</h2>
         <p class="section-takeaway">Four methods, one question: what actually makes children less afraid?</p>
@@ -168,7 +276,7 @@
       </div>
     
       <!-- Personas -->
-      <figure class="figure-80 two-up-figure" style="margin-top: 2rem;">
+      <figure class="figure-80 content-container two-up-figure" style="margin-top: 2rem;">
         <div class="two-up-grid">
           <figure class="two-up-tile">
             <img src="../../assets/img/oct_persona_age6.svg" alt="Persona: Age 6, Scared">
@@ -184,17 +292,35 @@
 
     <!-- ⑥.5 THE JOURNEY WE SET OUT TO CHANGE -->
     <section class="project-section">
-      <div class="container">
+      <div class="content-container">
         <h2 class="section-icon-title">The Journey We Set Out to Change</h2>
-        <p class="section-takeaway">Drag the slider to trace how comfort shifts across the visit, with and without Sam.</p>
+        <p class="section-takeaway">How comfort shifts across the visit, with and without Sam.</p>
 
-        <div class="journey-scrubber">
-          <svg class="journey-scrubber-svg" viewBox="0 0 640 220" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Interactive line chart of emotional comfort from anxious to comfortable across five visit stages, with and without Sam. Drag the slider below the chart to scrub through the journey.">
+        <div class="journey-chart">
+          <svg class="journey-chart-svg" viewBox="0 0 640 220" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Line chart of emotional comfort from anxious to comfortable across five visit stages. With Sam, comfort stays high throughout. Without Sam, comfort drops sharply at first contact and during the exam.">
+            <rect class="arc-zone-band" x="248" y="8" width="290" height="150"></rect>
+            <text x="393" y="22" class="arc-zone-label" text-anchor="middle">Where the exam succeeds or fails</text>
+
             <text x="4" y="26" class="arc-axis-label">Comfortable</text>
             <text x="4" y="146" class="arc-axis-label">Anxious</text>
 
             <polyline class="scrubber-line scrubber-line--without" points="30,111 175,118 320,134 465,127 610,108"></polyline>
             <polyline class="scrubber-line scrubber-line--with" points="30,105 175,92 320,72 465,56 610,40"></polyline>
+
+            <g class="arc-points arc-points--without">
+              <circle cx="30" cy="111" r="3.5"></circle>
+              <circle cx="175" cy="118" r="3.5"></circle>
+              <circle cx="320" cy="134" r="3.5"></circle>
+              <circle cx="465" cy="127" r="3.5"></circle>
+              <circle cx="610" cy="108" r="3.5"></circle>
+            </g>
+            <g class="arc-points arc-points--with">
+              <circle cx="30" cy="105" r="3.5"></circle>
+              <circle cx="175" cy="92" r="3.5"></circle>
+              <circle cx="320" cy="72" r="3.5"></circle>
+              <circle cx="465" cy="56" r="3.5"></circle>
+              <circle cx="610" cy="40" r="3.5"></circle>
+            </g>
 
             <text x="30"  y="172" class="arc-x-label">Home</text>
             <text x="175" y="172" class="arc-x-label">Waiting room</text>
@@ -203,23 +329,18 @@
             <text x="610" y="172" class="arc-x-label">Goodbye</text>
           </svg>
 
-          <input type="range" min="0" max="100" value="0" step="1" class="journey-scrubber-slider" id="journeyScrubberSlider" aria-label="Scrub through the exam journey">
-
-          <div class="journey-scrubber-readout">
-            <p class="journey-scrubber-stage" id="journeyScrubberStage">Home</p>
-            <p class="journey-scrubber-annotation" id="journeyScrubberAnnotation">Sam's video plays at home. First familiarity forms.</p>
-          </div>
-
           <div class="emotional-arc-legend">
             <span class="arc-legend-item"><span class="arc-legend-swatch arc-legend-swatch--standard"></span>Without Sam</span>
             <span class="arc-legend-item"><span class="arc-legend-swatch arc-legend-swatch--sam"></span>With Sam</span>
           </div>
+
+          <p class="journey-chart-takeaway">Without Sam, comfort collapses at first contact. With Sam, it holds, which is what makes the scan possible.</p>
         </div>
       </div>
     </section>
 
     <!-- Journey Maps -->
-    <figure class="figure-80 two-up-figure journey-maps-figure" style="margin-top: 2rem;">
+    <figure class="figure-80 content-container two-up-figure journey-maps-figure" style="margin-top: 2rem;">
       <div class="two-up-grid">
         <div class="journey-map-col">
           <p class="journey-map-label">Age 6, comfort first</p>
@@ -239,22 +360,25 @@
 
     <!-- ⑦ CHARACTER DESIGN -->
     <section class="project-section">
-      <div class="container">
+      <div class="content-container">
         <p class="section-number">02</p>
         <h2 class="section-icon-title">Character Design</h2>
         <p class="section-takeaway">Four concepts, one recommendation: Sam the Ranger, for cross-age appeal and clinical fit.</p>
         <p>Each concept targeted a different emotional register. Survey data and medical staff review narrowed the field to Sam, a mission-driven ranger who reads well across ages.</p>
       </div>
 
-      <figure class="figure-80 single-tile-figure" style="margin-top: 1.5rem;">
+      <figure class="figure-80 content-container single-tile-figure" style="margin-top: 1.5rem;">
         <div class="single-tile">
           <img src="../../assets/img/oct_character_design.jpg" alt="Character Design Board">
         </div>
         <figcaption class="figure-caption">character design board created with team</figcaption>
       </figure>
 
-      <div class="container" style="margin-top: 1.5rem;">
-        <figure class="figure-80 two-up-figure">
+      <figure class="figure-80 content-container two-up-figure" id="charFinalistsBoard" style="margin-top: 1.5rem;">
+          <div class="char-cursor-pill" id="charCursorPill" aria-hidden="true">
+            <i class="uil uil-eye"></i>
+            <span>view why</span>
+          </div>
           <div class="two-up-grid">
             <figure class="two-up-tile character-tile">
               <img src="../../assets/img/oct_Optic.jpg" alt="Optic Character">
@@ -291,12 +415,11 @@
           </div>
           <figcaption class="figure-caption">four character finalists with Optic · Sam the Ranger · A-Eye · Cheeze</figcaption>
         </figure>
-      </div>
     </section>
 
     <!-- PULL QUOTE: THE ROBOT MUST NEVER LIE -->
     <section class="project-section" style="padding-block: clamp(2rem, 4vw, 3rem);">
-      <div class="container">
+      <div class="content-container">
         <div class="mint-pullquote">
           <p class="mint-pullquote-headline">The robot must never lie.</p>
           <p class="mint-pullquote-body">One concept framed the scan as a staring contest. Children saw through it, called the robot creepy, and stopped cooperating. Sam's narrative does the opposite: the exam is real, and the child's role in it is real.</p>
@@ -306,13 +429,13 @@
 
     <!-- ⑧ STORYBOARD + MEDIA -->
     <section class="project-section">
-      <div class="container">
+      <div class="content-container">
         <p class="section-number">03</p>
         <h2 class="section-icon-title">Storyboard &amp; Pre-Exposure Media</h2>
         <p class="section-takeaway">I structured the storyboard to mirror the child's own emotional arc: Sam's introduction builds trust before the exam, and Sam's farewell closes the story with a good memory. I illustrated the pre-exposure video in Procreate for home and waiting-room viewing.</p>
       </div>
 
-      <figure class="figure-80 single-tile-figure" style="margin-top: 2rem;">
+      <figure class="figure-80 content-container single-tile-figure" style="margin-top: 2rem;">
         <div class="single-tile">
           <img src="../../assets/img/oct_storyboard.png" alt="SAM the Ranger Storyboard">
         </div>
@@ -322,21 +445,21 @@
 
     <!-- ⑨ DATA & DELIVERABLES -->
     <section class="project-section">
-      <div class="container">
+      <div class="content-container">
         <p class="section-number">04</p>
         <h2 class="section-icon-title">Data Analysis &amp; Deliverables</h2>
         <p class="section-takeaway">What the numbers said, what caregivers said, and what I did with both.</p>
         <p style="margin-top: 0.75rem; color: var(--text-color);">I built or analyzed everything below except the physical prototype, which the engineering team continued after my involvement ended.</p>
       </div>
 
-      <figure class="figure-80 single-tile-figure" style="margin-top: 2rem;">
+      <figure class="figure-80 content-container single-tile-figure" style="margin-top: 2rem;">
         <div class="single-tile">
           <img src="../../assets/img/oct_data_analysis.png" alt="Survey data analysis">
         </div>
         <figcaption class="figure-caption">survey data analysis</figcaption>
       </figure>
       <!-- Survey Results -->
-      <div class="container">
+      <div class="content-container">
         <h3 style="margin-top: 2rem; margin-bottom: 1rem; font-size: 1.1rem; font-weight: 700; color: var(--title-color);">Survey Results</h3>
         <p class="constraint-label constraint-label--constraint">Method</p>
         <p class="constraint-text" style="margin-bottom: 1rem;">30 caregivers completed a 40-question survey after viewing pre-exposure videos at Kellogg Eye Center.</p>
@@ -370,8 +493,8 @@
     </section>
 
     <!-- ⑨.5 DESIGNING UNDER CONSTRAINTS -->
-    <section class="project-section">
-      <div class="container">
+    <section class="project-section constraints-compact" id="designingUnderConstraints">
+      <div class="content-container">
         <p class="section-number">05</p>
         <h2 class="section-icon-title">Designing Under Constraints</h2>
 
@@ -424,7 +547,7 @@
 
     <!-- ⑨.65 INTERACTION SYSTEM -->
     <section class="project-section">
-      <div class="container">
+      <div class="content-container">
         <p class="section-number">06</p>
         <h2 class="section-icon-title">Interaction System</h2>
 
@@ -438,7 +561,7 @@
         <p class="section-takeaway" style="margin-top: 0.5rem;">Every behavior below traces to one of these three principles.</p>
       </div>
 
-      <figure class="figure-80 video-figure" style="margin-top: 1.5rem;">
+      <figure class="figure-80 content-container video-figure" style="margin-top: 1.5rem;">
         <div class="video-wrapper">
           <iframe
             src="https://player.vimeo.com/video/1213024532?h=72da17c541"
@@ -452,7 +575,7 @@
         <figcaption class="figure-caption">A concept film visualizing Sam's behavior specification, from first contact to graceful failure recovery. AI-accelerated production; every shot maps to a spec row.</figcaption>
       </figure>
 
-      <div class="container">
+      <div class="content-container">
         <p style="margin-top: 1.5rem;">The film above visualizes this system; the tables below define it.</p>
 
         <h3 style="margin-top: 1.5rem; margin-bottom: 0; font-size: 1.05rem; font-weight: 700; color: var(--title-color);">Interaction Specification</h3>
@@ -462,30 +585,30 @@
             <p class="swimlane-stage">Home</p>
             <div class="swimlane-row">
               <p class="swimlane-row-label">Goal</p>
-              <p class="swimlane-row-text">Reduce anticipatory anxiety.</p>
+              <p class="swimlane-row-text">Reduce anticipatory anxiety before the visit.</p>
             </div>
             <div class="swimlane-row swimlane-row--sam">
               <p class="swimlane-row-label">Sam</p>
-              <p class="swimlane-row-text">Not present.</p>
+              <p class="swimlane-row-text">Not yet present, the child meets Sam through gentle pre-exposure media first.</p>
             </div>
             <div class="swimlane-row">
               <p class="swimlane-row-label">System</p>
-              <p class="swimlane-row-text">Pre-exposure video at home.</p>
+              <p class="swimlane-row-text">Child-facing familiarity animation (watercolor) played at home.</p>
             </div>
           </div>
           <div class="swimlane-col">
             <p class="swimlane-stage">Waiting room</p>
             <div class="swimlane-row">
               <p class="swimlane-row-label">Goal</p>
-              <p class="swimlane-row-text">Reinforce familiarity.</p>
+              <p class="swimlane-row-text">Reinforce familiarity right before the exam.</p>
             </div>
             <div class="swimlane-row swimlane-row--sam">
               <p class="swimlane-row-label">Sam</p>
-              <p class="swimlane-row-text">Still hidden.</p>
+              <p class="swimlane-row-text">Still off-stage.</p>
             </div>
             <div class="swimlane-row">
               <p class="swimlane-row-label">System</p>
-              <p class="swimlane-row-text">Replays the animation.</p>
+              <p class="swimlane-row-text">The animation replays; the child recognizes Sam before entering.</p>
             </div>
           </div>
           <div class="swimlane-col">
@@ -496,33 +619,63 @@
             </div>
             <div class="swimlane-row swimlane-row--sam">
               <p class="swimlane-row-label">Sam</p>
-              <p class="swimlane-row-text">"Hi Abby! I need your help to find some animals!"</p>
+              <p class="swimlane-row-text">"Hi! I need your help to find some animals."</p>
             </div>
             <div class="swimlane-row">
               <p class="swimlane-row-label">System</p>
-              <p class="swimlane-row-text">Motion triggers greeting.</p>
+              <p class="swimlane-row-text">Motion sensing triggers the greeting.</p>
             </div>
           </div>
           <div class="swimlane-col">
-            <p class="swimlane-stage">During exam</p>
+            <p class="swimlane-stage">Calibration</p>
+            <div class="swimlane-row">
+              <p class="swimlane-row-label">Goal</p>
+              <p class="swimlane-row-text">Detect and align to the eye without pressure.</p>
+            </div>
+            <div class="swimlane-row swimlane-row--sam">
+              <p class="swimlane-row-label">Sam</p>
+              <p class="swimlane-row-text">"Let's stay super still so we don't scare them."</p>
+            </div>
+            <div class="swimlane-row">
+              <p class="swimlane-row-label">System</p>
+              <p class="swimlane-row-text">Camera head approaches; face/eye alignment (disguised OCT positioning).</p>
+            </div>
+          </div>
+          <div class="swimlane-col">
+            <p class="swimlane-stage">The game</p>
             <div class="swimlane-row">
               <p class="swimlane-row-label">Goal</p>
               <p class="swimlane-row-text">Keep the child still and engaged.</p>
             </div>
             <div class="swimlane-row swimlane-row--sam">
               <p class="swimlane-row-label">Sam</p>
-              <p class="swimlane-row-text">"You found the elephant! Great job!"</p>
+              <p class="swimlane-row-text">"Look right into my eye, I'll show you something!"</p>
             </div>
             <div class="swimlane-row">
               <p class="swimlane-row-label">System</p>
-              <p class="swimlane-row-text">Scan paired with narration.</p>
+              <p class="swimlane-row-text">Eye-gaze vocabulary game; scan captured while the child focuses.</p>
+            </div>
+          </div>
+          <div class="swimlane-col">
+            <p class="swimlane-stage">Success</p>
+            <div class="swimlane-row">
+              <p class="swimlane-row-label">Goal</p>
+              <p class="swimlane-row-text">Reward effort, leave a positive memory.</p>
+            </div>
+            <div class="swimlane-row swimlane-row--sam">
+              <p class="swimlane-row-label">Sam</p>
+              <p class="swimlane-row-text">"You found the deer! Great job!"</p>
+            </div>
+            <div class="swimlane-row">
+              <p class="swimlane-row-label">System</p>
+              <p class="swimlane-row-text">Scan paired with celebratory feedback.</p>
             </div>
           </div>
           <div class="swimlane-col">
             <p class="swimlane-stage">Goodbye</p>
             <div class="swimlane-row">
               <p class="swimlane-row-label">Goal</p>
-              <p class="swimlane-row-text">Leave a positive memory.</p>
+              <p class="swimlane-row-text">End on a warm note.</p>
             </div>
             <div class="swimlane-row swimlane-row--sam">
               <p class="swimlane-row-label">Sam</p>
@@ -550,6 +703,12 @@
             </thead>
             <tbody>
               <tr>
+                <td data-label="Situation">Child startled by Sam's approach</td>
+                <td data-label="Detection (proposed)">Sudden recoil / gaze lost as the head nears</td>
+                <td data-label="Sam's response">Stop, ease back, lower the head (apology), then one reassuring nod</td>
+                <td data-label="Escalation">Re-approach slowly; if still uneasy, pause and wait</td>
+              </tr>
+              <tr>
                 <td data-label="Situation">Child cries</td>
                 <td data-label="Detection (proposed)">Audio level</td>
                 <td data-label="Sam's response">Pause dialogue 5s, soften posture</td>
@@ -558,8 +717,8 @@
               <tr>
                 <td data-label="Situation">Child looks away</td>
                 <td data-label="Detection (proposed)">Gaze/motion tracking lost</td>
-                <td data-label="Sam's response">"Let's find the elephant!"</td>
-                <td data-label="Escalation">If no response in 10s, pause and wait</td>
+                <td data-label="Sam's response">"Let's find the deer!"</td>
+                <td data-label="Escalation">No response in 10s &rarr; pause and wait</td>
               </tr>
               <tr>
                 <td data-label="Situation">Child moves during scan</td>
@@ -568,7 +727,7 @@
                 <td data-label="Escalation">Pause scan, resume from last segment</td>
               </tr>
               <tr>
-                <td data-label="Situation">Parent or clinician speaks</td>
+                <td data-label="Situation">Adult speaks (parent/clinician)</td>
                 <td data-label="Detection (proposed)">Voice overlap</td>
                 <td data-label="Sam's response">Sam stops speaking immediately</td>
                 <td data-label="Escalation">Resume only after silence</td>
@@ -586,7 +745,7 @@
         <div class="failure-never">
           <p class="failure-never-title">Sam never</p>
           <ul class="failure-never-list">
-            <li>Sam never lies about the procedure.</li>
+            <li>Sam never lies about the procedure. (From research: a deception-based concept was rejected on trust grounds.)</li>
             <li>Sam never blocks the child's path to their parent.</li>
             <li>Sam never raises volume or speeds up when a child disengages.</li>
           </ul>
@@ -596,7 +755,7 @@
 
     <!-- ⑨.7 WHERE I LEFT IT -->
     <section class="project-section">
-      <div class="container">
+      <div class="content-container">
         <p class="section-number">07</p>
         <h2 class="section-icon-title">Where I Left It</h2>
         <p class="section-takeaway">My involvement ended December 2025. Here's what shipped, and what came after.</p>
@@ -629,7 +788,7 @@
 
     <!-- PAGER -->
     <nav class="project-pager">
-      <div class="container project-pager__inner">
+      <div class="content-container project-pager__inner">
 
         <a class="project-pager__link project-pager__next" href="../ootd">
           <span>Next Project</span>
@@ -640,6 +799,44 @@
     </nav>
 
   </main>
+
+  <!-- CHARACTER FINALISTS LIGHTBOX -->
+  <div class="lightbox" id="charBoardLightbox" hidden>
+    <div class="lightbox-backdrop" data-lightbox-close></div>
+    <div class="lightbox-content" role="dialog" aria-modal="true" aria-label="Character finalists, enlarged">
+      <button type="button" class="lightbox-close" data-lightbox-close aria-label="Close">&times;</button>
+      <div class="lightbox-char-grid">
+        <div class="lightbox-char-card">
+          <img src="../../assets/img/oct_Optic.jpg" alt="Optic Character">
+          <div class="lightbox-char-card-body">
+            <p class="lightbox-char-card-name">Optic <span class="verdict-badge">+ verdict</span></p>
+            <p class="lightbox-char-card-desc">Strongest runner-up, especially with older curious kids. The mysterious persona needs pre-exposure videos, so it stays on the roadmap.</p>
+          </div>
+        </div>
+        <div class="lightbox-char-card">
+          <img src="../../assets/img/oct_SAM_the_Ranger.jpg" alt="SAM the Ranger">
+          <div class="lightbox-char-card-body">
+            <p class="lightbox-char-card-name">Sam the Ranger <span class="verdict-badge verdict-badge--priority">★ prioritized</span></p>
+            <p class="lightbox-char-card-desc">The Bradley-Terry model predicts caregivers choose Sam head-to-head: 62% over Optic, 68% over Cheeze, 76% over A-Eye. One risk, the camera reading as a weapon, I reframed as binoculars in Sam's narrative.</p>
+          </div>
+        </div>
+        <div class="lightbox-char-card">
+          <img src="../../assets/img/oct_A-Eye.jpg" alt="A-Eye Character">
+          <div class="lightbox-char-card-body">
+            <p class="lightbox-char-card-name">A-Eye <span class="verdict-badge">+ verdict</span></p>
+            <p class="lightbox-char-card-desc">Lowest scores, and the clearest lesson. Its narrative called the scan a staring contest, children caught the lie, and that failure became the system's first principle.</p>
+          </div>
+        </div>
+        <div class="lightbox-char-card">
+          <img src="../../assets/img/oct_cheeze.jpg" alt="Cheeze Character">
+          <div class="lightbox-char-card-body">
+            <p class="lightbox-char-card-name">Cheeze <span class="verdict-badge">+ verdict</span></p>
+            <p class="lightbox-char-card-desc">Strong visuals and storytelling, with a weak signal among anxious children. A photo interaction raised privacy flags, so future versions use pre-existing imagery.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <!--==================== FOOTER ====================-->
 <footer class="footer" id="footer">
