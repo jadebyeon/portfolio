@@ -1759,6 +1759,26 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   margin-bottom: 0;
 }
 
+/* ===== HOMEPAGE TILE VIDEOS: INSET-FRAMED CARD =====
+   Same padded-card idea as .film-frame above, applied to the homepage
+   project tiles that carry a <video class="tile-media">: instead of the
+   video filling the tile edge-to-edge, it sits inset on a light card
+   with a visible gap, so it reads as a framed clip rather than a raw
+   crop-fill. Scoped to .tile-framed (added only to the video tiles,
+   not the plain-image ones) via a compound selector so it always wins
+   over .portfolio__img-link's own background/radius/shadow regardless
+   of source order. Autoplay/poster scroll-play behavior (main.js) is
+   untouched — this only changes how the video is boxed. */
+.portfolio__img-link.tile-framed {
+  background: #f4f4f2;
+  padding: clamp(10px, 1.6vw, 22px);
+  border-radius: 20px;
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.12);
+}
+.tile-framed .tile-media {
+  border-radius: 12px;
+}
+
 /* ========== 2-up paired tiles – same height, no crop, no empty space ========== */
 
 .paired-figure{
