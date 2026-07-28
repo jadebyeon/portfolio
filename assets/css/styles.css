@@ -1760,23 +1760,35 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 
 /* ===== HOMEPAGE TILE VIDEOS: INSET-FRAMED CARD =====
-   Same padded-card idea as .film-frame above, applied to the homepage
-   project tiles that carry a <video class="tile-media">: instead of the
-   video filling the tile edge-to-edge, it sits inset on a light card
-   with a visible gap, so it reads as a framed clip rather than a raw
-   crop-fill. Scoped to .tile-framed (added only to the video tiles,
-   not the plain-image ones) via a compound selector so it always wins
+   Same padded-card idea as .film-frame above, applied to all four
+   homepage project tiles (video or image): instead of the media
+   filling the tile edge-to-edge, it sits inset and centered on a
+   light card with generous whitespace, floating on its own drop
+   shadow, so it reads as a framed clip rather than a raw crop-fill.
+   Scoped to .tile-framed via a compound selector so it always wins
    over .portfolio__img-link's own background/radius/shadow regardless
-   of source order. Autoplay/poster scroll-play behavior (main.js) is
-   untouched — this only changes how the video is boxed. */
+   of source order. overflow stays hidden (inherited from the base
+   rule) so the card's aspect-ratio keeps governing its height — with
+   overflow:visible, a tile whose video has a much taller intrinsic
+   aspect ratio (e.g. hbom's portrait scroll capture) stretches the
+   whole card to fit it instead of respecting the fixed ratio, breaking
+   the grid row height. The generous padding keeps the inner shadow
+   from reading as clipped in normal use instead. Autoplay/poster
+   scroll-play behavior (main.js) is untouched — this only changes how
+   the media is boxed. */
 .portfolio__img-link.tile-framed {
   background: #f4f4f2;
-  padding: clamp(10px, 1.6vw, 22px);
+  padding: clamp(24px, 4vw, 64px);
   border-radius: 20px;
   box-shadow: 0 16px 44px rgba(0, 0, 0, 0.12);
 }
-.tile-framed .tile-media {
+.tile-framed .tile-media,
+.tile-framed .portfolio__img {
+  display: block;
+  max-width: 86%;
+  margin-inline: auto;
   border-radius: 12px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.16);
 }
 
 /* ========== 2-up paired tiles – same height, no crop, no empty space ========== */
