@@ -928,6 +928,130 @@ img { max-width: 100%; height: auto; }
 .project p { line-height: 1.85; margin: 0 0 1.1em; }
 main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 
+/* ==================== SECTION NAV (per-case rail / pill bar) ====================
+   Reusable across project pages. Drop the same three-part markup on any
+   case page — `.section-nav-layout` wrapping a `.section-nav` (an <a
+   class="section-nav__back"> plus a `.section-nav__list` of anchors) and
+   a `.section-nav-content` (everything that used to sit directly in
+   <main>) — and only the anchor list + section ids need to change per
+   case. The wrapper reuses --content-max/--gutter so the rail+content
+   pair still lines up with every other page's content-container width.
+   Scroll-spy is wired in assets/js/main.js; the scroll itself is native
+   anchor navigation + the sitewide `scroll-behavior: smooth`, so
+   keyboard use and reduced-motion both fall out for free. */
+.section-nav-layout {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(24px, 3vw, 48px);
+}
+.section-nav-content {
+  flex: 1 1 auto;
+  min-width: 0; /* let wide children (tables, etc.) scroll instead of stretching the rail's column */
+}
+.section-nav {
+  flex: 0 0 176px;
+  position: sticky;
+  top: calc(var(--header-height) + 40px);
+  align-self: flex-start;
+  max-height: calc(100vh - var(--header-height) - 64px);
+  overflow-y: auto;
+  padding-left: var(--gutter);
+}
+.section-nav__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-color-light);
+  text-decoration: none;
+}
+.section-nav__back i { font-size: 0.95rem; }
+.section-nav__back:hover,
+.section-nav__back:focus-visible { color: var(--mint-color); }
+
+.section-nav__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.section-nav__link {
+  display: block;
+  padding: 0.45rem 0 0.45rem 0.85rem;
+  border-left: 2px solid transparent;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-color-light);
+  text-decoration: none;
+  transition: color .15s ease, border-color .15s ease;
+}
+.section-nav__link:hover { color: var(--title-color); }
+.section-nav__link:focus-visible {
+  outline: 2px solid var(--mint-color);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.section-nav__link.is-active {
+  color: var(--mint-color);
+  border-left-color: var(--mint-color);
+  font-weight: 600;
+}
+
+/* Base offset so a direct link/back-forward jump also clears the fixed
+   header; the pill-bar breakpoint below adds its own extra height on
+   top of this instead of replacing it. */
+.section-nav-target { scroll-margin-top: var(--header-height); }
+
+/* Below ~1024px the rail's left gutter disappears (content-container
+   is already edge-to-edge there), so the same nav markup switches to a
+   horizontal-scroll pill strip stuck under the header instead of
+   trying to reserve column width from the case content. */
+@media (max-width: 1024px) {
+  .section-nav-layout { display: block; }
+  .section-nav__back { display: none; } /* same destination as the header's own Work link, so it's not duplicated in the pill strip */
+  .section-nav {
+    position: sticky;
+    top: var(--header-height);
+    z-index: 5;
+    width: 100%;
+    max-height: none;
+    overflow: visible;
+    padding: 0.6rem 0;
+    background: var(--body-color);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  .section-nav__list {
+    flex-direction: row;
+    gap: 0.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-inline: var(--page-gutter);
+  }
+  .section-nav__list::-webkit-scrollbar { display: none; }
+  .section-nav__item { flex: 0 0 auto; }
+  .section-nav__link {
+    padding: 0.4rem 0.9rem;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .section-nav__link.is-active {
+    background: var(--mint-color);
+    border-color: var(--mint-color);
+    color: #fff;
+  }
+  .section-nav-target { scroll-margin-top: calc(var(--header-height) + 56px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
 
 .project-image{
   display:block; position:relative;

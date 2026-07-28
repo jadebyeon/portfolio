@@ -1099,3 +1099,56 @@ var PERSONA_COPY = {
   }
 })();
 
+/*==================== SECTION NAV: SCROLL-SPY ====================
+  Reusable per-case section nav (see .section-nav-layout/.section-nav
+  in styles.css). Scrolling and keyboard access are native (plain
+  <a href="#id"> + sitewide scroll-behavior: smooth); this only tracks
+  which section is currently under the "active" band near the top of
+  the viewport and mirrors that onto the matching nav link. Works for
+  any number of .section-nav elements found on the page, so dropping
+  the same markup on hbom/ootd with a different anchor list needs no
+  JS changes here. */
+(function () {
+  function initSectionNav(nav) {
+    var links = Array.prototype.slice.call(nav.querySelectorAll('.section-nav__link'));
+    if (!links.length) return;
+
+    var sections = links
+      .map(function (link) { return document.getElementById(link.getAttribute('href').slice(1)); })
+      .filter(Boolean);
+    if (!sections.length || !('IntersectionObserver' in window)) return;
+
+    function setActive(id) {
+      links.forEach(function (link) {
+        var isActive = link.getAttribute('href') === '#' + id;
+        link.classList.toggle('is-active', isActive);
+        if (isActive) link.setAttribute('aria-current', 'true');
+        else link.removeAttribute('aria-current');
+      });
+    }
+
+    var visible = Object.create(null);
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        visible[entry.target.id] = entry.isIntersecting;
+      });
+      var topmost = sections.find(function (s) { return visible[s.id]; });
+      if (topmost) setActive(topmost.id);
+    }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+
+    sections.forEach(function (section) { observer.observe(section); });
+    setActive(sections[0].id);
+  }
+
+  function init() {
+    var navs = document.querySelectorAll('.section-nav');
+    navs.forEach(initSectionNav);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
