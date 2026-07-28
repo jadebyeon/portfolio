@@ -801,9 +801,10 @@ var PERSONA_COPY = {
 })();
 
 /*==================== MISC PAGE: RADIAL CLUSTER ====================
-  Nodes are laid out on a circle via plain JS trig (angle + radius,
-  radius read from the --cluster-radius custom property so it stays a
-  normal clamp()-based responsive value in CSS). Dragging the cluster
+  Nodes are laid out on a tilted-ellipse orbit via plain JS trig (angle
+  against a horizontal semi-axis read from the --cluster-radius custom
+  property, squeezed vertically for the Saturn-ring look; see layout()
+  below for the ellipse/depth math). Dragging the cluster
   (pointer or touch) rotates the whole ring by the angle the pointer
   swept; a small movement threshold distinguishes a drag from a tap so
   clicking a node still navigates normally. Auto-drift is a slow,
@@ -821,6 +822,9 @@ var PERSONA_COPY = {
   var DRAG_THRESHOLD = 6; // px of pointer travel before a press counts as a drag, not a tap
   var DRIFT_SPEED = 0.00025; // radians per ms; slow, roughly one turn every ~4 minutes
   var LIST_BREAKPOINT = '(max-width: 760px)';
+  var ELLIPSE_RATIO = 0.53; // vertical/horizontal, matches a ~58deg tilt (cos 58deg)
+  var SCALE_BACK = 0.72, SCALE_FRONT = 1.08; // depth-based node size (Misc page only)
+  var OPACITY_BACK = 0.55, OPACITY_FRONT = 1;
 
   function init() {
     var cluster = document.getElementById('miscCluster');
@@ -849,15 +853,28 @@ var PERSONA_COPY = {
       return radiusProbe.getBoundingClientRect().width;
     }
 
+    // Nodes sit on a tilted-ellipse orbit (Saturn-ring look) instead of
+    // a flat circle: a = horizontal semi-axis (read from CSS), b = a *
+    // ELLIPSE_RATIO for the vertical squeeze. Depth (front/back) comes
+    // straight out of the same sin(angle) used for y, so it's already
+    // in sync with position: nodes toward the bottom of the ellipse
+    // read as "close" (bigger, more opaque), nodes toward the top read
+    // as "far" (smaller, dimmer).
     function layout() {
       if (listMode) return;
-      var r = radius();
+      var a = radius();
+      var b = a * ELLIPSE_RATIO;
       var total = nodes.length;
       nodes.forEach(function (node, i) {
         var angle = (i / total) * Math.PI * 2 - Math.PI / 2 + rotationOffset;
-        var x = Math.cos(angle) * r;
-        var y = Math.sin(angle) * r;
-        node.style.transform = 'translate(-50%, -50%) translate(' + x + 'px, ' + y + 'px)';
+        var x = Math.cos(angle) * a;
+        var y = Math.sin(angle) * b;
+        var depth = (Math.sin(angle) + 1) / 2; // 0 = back, 1 = front
+        var scale = SCALE_BACK + (SCALE_FRONT - SCALE_BACK) * depth;
+        var opacity = OPACITY_BACK + (OPACITY_FRONT - OPACITY_BACK) * depth;
+        node.style.transform = 'translate(-50%, -50%) translate(' + x + 'px, ' + y + 'px) scale(' + scale + ')';
+        node.style.opacity = opacity;
+        node.style.zIndex = String(2 + Math.round(depth * 8));
       });
     }
 
@@ -1018,6 +1035,61 @@ var PERSONA_COPY = {
       }
       layout();
     });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+/*==================== MISC PAGE: HIDE-UNTIL-HOVER HEADER ====================
+  The header is hidden off-screen by default on this page (see #header
+  in styles.css there) so the cluster owns the full viewport. It slides
+  back in when the pointer is within ~60px of the top edge, when the
+  page scrolls upward, or when keyboard focus lands inside it, and
+  slides back out otherwise. Scoped by checking for #miscClusterSection
+  first, so it never touches the header on any other page. */
+(function () {
+  var REVEAL_ZONE_PX = 60;
+
+  function init() {
+    var page = document.getElementById('miscClusterSection');
+    var header = document.getElementById('header');
+    if (!page || !header) return;
+
+    function reveal() { header.classList.add('is-revealed'); }
+    function hide() {
+      if (!header.contains(document.activeElement)) {
+        header.classList.remove('is-revealed');
+      }
+    }
+
+    document.addEventListener('mousemove', function (e) {
+      if (e.clientY <= REVEAL_ZONE_PX) {
+        reveal();
+      } else if (!header.contains(document.activeElement)) {
+        hide();
+      }
+    });
+
+    header.addEventListener('focusin', reveal);
+    header.addEventListener('focusout', function () {
+      // Let focus settle on its new target before deciding whether to hide.
+      setTimeout(hide, 0);
+    });
+
+    var lastScrollY = window.scrollY;
+    window.addEventListener('scroll', function () {
+      var y = window.scrollY;
+      if (y < lastScrollY) {
+        reveal();
+      } else if (y > lastScrollY && y > REVEAL_ZONE_PX) {
+        hide();
+      }
+      lastScrollY = y;
+    }, { passive: true });
   }
 
   if (document.readyState === 'loading') {
