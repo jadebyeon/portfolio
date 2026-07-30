@@ -4278,14 +4278,14 @@ body.is-settled #heroCopy [data-copy-line] {
   text-align: center;
   padding: 1.25rem;
   overflow-y: auto;
-  background: rgba(55, 65, 81, 0.9); /* gray tint */
+  background: rgba(185, 28, 28, 0.9); /* red tint — all finalists except Sam */
   opacity: 0;
   transform: translateY(100%);
   pointer-events: none;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 .character-overlay--sam {
-  background: rgba(26, 122, 94, 0.88); /* mint tint */
+  background: rgba(26, 122, 94, 0.88); /* mint tint, Sam only */
 }
 .character-tile.is-open .character-overlay {
   opacity: 1;
