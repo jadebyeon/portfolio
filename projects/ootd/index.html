@@ -11,6 +11,20 @@
   <style>
     /* Page-scoped overrides (this page only). */
 
+    /* Intro row carries Problem / My Role / Solution (3 blocks, to
+       match oct's role-callout) instead of the shared 2-block
+       Problem/Solution recipe — extends .problem-solution-row's
+       column template just on this page rather than touching the
+       shared rule other case pages still use as-is. */
+    .project-intro .problem-solution-row {
+      grid-template-columns: 1fr 1px 1fr 1px 1fr;
+    }
+    @media (max-width: 680px) {
+      .project-intro .problem-solution-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
     /* Character Testing: center the sketches/final pair as one group,
        cap both images by height (not a stretched flex share) so they
        read as equal weight instead of leaving a huge gap either side
@@ -74,21 +88,42 @@
   </header>
 
   <main class="main project">
+    <div class="section-nav-layout">
+      <nav class="section-nav" aria-label="Section navigation">
+        <a class="section-nav__back" href="../../index.html#portfolio">
+          <i class="uil uil-arrow-left" aria-hidden="true"></i>
+          <span>Back</span>
+        </a>
+        <ul class="section-nav__list">
+          <li class="section-nav__item"><a class="section-nav__link" href="#keyDesignDecisions">Decisions</a></li>
+          <li class="section-nav__item"><a class="section-nav__link" href="#researchPrinciples">Research</a></li>
+          <li class="section-nav__item"><a class="section-nav__link" href="#userFlow">Flow</a></li>
+          <li class="section-nav__item"><a class="section-nav__link" href="#designSystem">System</a></li>
+          <li class="section-nav__item"><a class="section-nav__link" href="#componentLibrary">Components</a></li>
+          <li class="section-nav__item"><a class="section-nav__link" href="#characterTesting">Character</a></li>
+          <li class="section-nav__item"><a class="section-nav__link" href="#uiScreens">Screens</a></li>
+          <li class="section-nav__item"><a class="section-nav__link" href="#physicalCompanion">Physical</a></li>
+          <li class="section-nav__item"><a class="section-nav__link" href="#reflection">Reflection</a></li>
+        </ul>
+      </nav>
+      <div class="section-nav-content">
 
   <!-- HERO -->
   <section class="project-hero section">
-    <div class="hero-media">
-      <img src="../../assets/img/ootd:mockup.png" alt="Wearby: OOTD Diary Companion App">
-      <div class="hero-overlay">
-        <h1 class="hero-title">Wearby</h1>
-        <p class="hero-subtitle">A Playful OOTD Diary Companion for Daily Reflection and Emotional Well-Being</p>
+    <div class="content-container">
+      <div class="hero-media">
+        <img src="../../assets/img/ootd:mockup.png" alt="Wearby: OOTD Diary Companion App">
+        <div class="hero-overlay">
+          <h1 class="hero-title">Wearby</h1>
+          <p class="hero-subtitle">A Playful OOTD Diary Companion for Daily Reflection and Emotional Well-Being</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- PROBLEM + SOLUTION -->
+  <!-- PROBLEM + ROLE + SOLUTION -->
   <section class="project-intro section">
-    <div class="container">
+    <div class="content-container">
       <div class="problem-solution-row">
         <div class="ps-block">
           <p class="ps-label">The Problem</p>
@@ -96,12 +131,15 @@
         </div>
         <div class="ps-divider" aria-hidden="true"></div>
         <div class="ps-block">
+          <p class="ps-label">My Role</p>
+          <p class="ps-text">I owned this project end to end, solo: research, UX/UI design, and the physical build.</p>
+        </div>
+        <div class="ps-divider" aria-hidden="true"></div>
+        <div class="ps-block">
           <p class="ps-label">The Solution</p>
           <p class="ps-text">A mobile companion app where dressing up a character named Ear becomes a daily ritual, turning reflection into play rather than a task.</p>
         </div>
       </div>
-
-      <p style="margin-top: 1.5rem; color: var(--text-color); max-width: 640px;">I owned this project end to end, solo: research, UX/UI design, and the physical build.</p>
 
       <div class="project-meta" style="margin-top: 2.5rem;">
         <div class="meta-item">
@@ -125,7 +163,7 @@
   </section>
 
   <!-- KEY DESIGN DECISIONS -->
-  <section class="project-section">
+  <section class="project-section section-nav-target" id="keyDesignDecisions">
     <div class="container">
       <h2>Key Design Decisions</h2>
       <p class="section-subhead">Three choices that defined the direction, each grounded in research not preference.</p>
@@ -150,7 +188,7 @@
   </section>
 
   <!-- RESEARCH -->
-  <section class="project-section">
+  <section class="project-section section-nav-target" id="researchPrinciples">
     <div class="container">
       <p class="section-number">01</p>
       <h2 class="section-icon-title">Research and Design Principles</h2>
@@ -190,7 +228,7 @@
   </section>
 
   <!-- USER FLOW -->
-  <section class="project-section">
+  <section class="project-section section-nav-target" id="userFlow">
     <div class="container">
       <p class="section-number">02</p>
       <h2 class="section-icon-title">User Flow and Information Architecture</h2>
@@ -207,7 +245,7 @@
   </section>
 
   <!-- DESIGN SYSTEM -->
-  <section class="project-section">
+  <section class="project-section section-nav-target" id="designSystem">
     <div class="container">
       <p class="section-number">03</p>
       <h2 class="section-icon-title">Design System</h2>
@@ -223,7 +261,7 @@
   </section>
 
   <!-- COMPONENT LIBRARY -->
-  <section class="project-section">
+  <section class="project-section section-nav-target" id="componentLibrary">
     <div class="container">
       <p class="section-number">04</p>
       <h2 class="section-icon-title">Component Library</h2>
@@ -239,7 +277,7 @@
   </section>
 
   <!-- CHARACTER TESTING -->
-  <section class="project-section">
+  <section class="project-section section-nav-target" id="characterTesting">
     <div class="container">
       <p class="section-number">05</p>
       <h2 class="section-icon-title">Character Testing</h2>
@@ -286,7 +324,7 @@
   </section>
 
   <!-- UI SCREENS -->
-  <section class="project-section">
+  <section class="project-section section-nav-target" id="uiScreens">
     <div class="container">
       <p class="section-number">06</p>
       <h2 class="section-icon-title">UI Screens</h2>
@@ -302,7 +340,7 @@
   </section>
 
   <!-- PHYSICAL COMPANION -->
-  <section class="project-section">
+  <section class="project-section section-nav-target" id="physicalCompanion">
     <div class="container">
       <p class="section-number">07</p>
       <h2 class="section-icon-title">Physical Companion</h2>
@@ -343,7 +381,7 @@
   </div>
 
   <!-- REFLECTION -->
-  <section class="project-section">
+  <section class="project-section section-nav-target" id="reflection">
     <div class="container">
       <p class="section-number">08</p>
       <h2 class="section-icon-title">Reflection</h2>
@@ -369,17 +407,15 @@
   <!-- PAGER -->
   <nav class="project-pager">
     <div class="project-pager__inner container">
-        <a class="project-pager__link project-pager__prev" href="../oct">
+        <a class="project-pager__link project-pager__prev" href="../hbom">
           <i class="uil uil-arrow-left" aria-hidden="true"></i>
           <span>Previous Project</span>
         </a>
-      
-      <a href="../uu-arts/index.html" class="project-pager__link project-pager__next">
-        Next Project <i class="uil uil-arrow-right"></i>
-      </a>
     </div>
   </nav>
 
+      </div>
+    </div>
   </main>
 
   <footer class="footer" id="footer">
