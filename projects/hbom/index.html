@@ -10,52 +10,9 @@
   <title>NVP Knowledge Hub — Jade Byeon</title>
   <meta name="description" content="Research, information architecture, and Webflow build of a searchable food-as-medicine resource hub for HBOM at the University of Michigan, by Jade Byeon." />
   <style>
-    /* Page-scoped layout helpers (this case study only): pairs prose
-       with a figure instead of leaving the right half of the row blank,
-       and lays metrics out as a full-width row instead of a narrow stack. */
-    .hbom-two-col {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: clamp(1.5rem, 3vw, 2.5rem);
-      align-items: start;
-      margin-top: 1.5rem;
-    }
-    .hbom-two-col .single-tile-figure,
-    .hbom-two-col .two-up-figure {
-      margin: 0;
-      max-width: none;
-    }
-    .hbom-metrics-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: clamp(1.5rem, 3vw, 2.5rem);
-      margin-top: 1.25rem;
-    }
-    /* Full-page screenshots: height-capped (not width-stretched) so two
-       tall shots sit side by side at a size that both fit on screen at
-       once, instead of a width-based grid stretching them into an
-       unreadable, scroll-inducing pair. */
-    .hbom-mini-pair {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: flex-start;
-      gap: clamp(1rem, 3vw, 2rem);
-      margin-top: 1.5rem;
-    }
-    .hbom-mini-pair img {
-      height: clamp(220px, 42vh, 420px);
-      width: auto;
-      max-width: 100%;
-      border-radius: 16px;
-      cursor: zoom-in;
-    }
-    @media (max-width: 760px) {
-      .hbom-two-col,
-      .hbom-metrics-row {
-        grid-template-columns: 1fr;
-      }
-    }
+    /* No page-scoped overrides needed — this page now reuses shared
+       classes only (section-nav, content-container, ps-block,
+       hmw-callout, mint-pullquote, figure-80/single-tile/two-up). */
   </style>
 </head>
 <body class="project-page">
@@ -73,24 +30,51 @@
   </header>
 
   <main class="main project">
+    <div class="section-nav-layout">
+      <nav class="section-nav" aria-label="Section navigation">
+        <a class="section-nav__back" href="../../index.html#portfolio">
+          <i class="uil uil-arrow-left" aria-hidden="true"></i>
+          <span>Back</span>
+        </a>
+        <ul class="section-nav__list">
+          <li class="section-nav__item"><a class="section-nav__link" href="#research">Research</a></li>
+          <li class="section-nav__item"><a class="section-nav__link" href="#designDecisions">Decisions</a></li>
+          <li class="section-nav__item"><a class="section-nav__link" href="#assumptions">Assumptions</a></li>
+          <li class="section-nav__item"><a class="section-nav__link" href="#theBuild">Build</a></li>
+          <li class="section-nav__item"><a class="section-nav__link" href="#impact">Impact</a></li>
+        </ul>
+      </nav>
+      <div class="section-nav-content">
 
-    <!-- HEADER -->
-    <section class="project-hero section" style="background: #f7f9f8;">
-      <div class="container" style="padding-top: clamp(3rem, 8vw, 5rem); padding-bottom: clamp(1.5rem, 4vw, 2.5rem);">
-        <h1 class="hero-title" style="color: var(--title-color);">NVP Knowledge Hub</h1>
-        <p class="hero-subtitle" style="color: var(--text-color);">A searchable food-as-medicine resource hub for patients, providers, and advocates.</p>
-      </div>
-      <figure class="figure-80" style="margin-top: 0;">
-        <div class="case-hero-banner">
-          <img src="../../assets/img/hbom-hero.png" alt="NVP Knowledge Hub, the built search and filter view">
+    <!-- HERO -->
+    <section class="project-hero section">
+      <div class="content-container">
+        <div class="hero-media">
+          <img src="../../assets/img/hbom-hero.png" alt="NVP Knowledge Hub search and filter view">
+          <div class="hero-overlay">
+            <h1 class="hero-title">NVP Knowledge Hub</h1>
+            <p class="hero-subtitle">A searchable food-as-medicine resource hub for patients, providers, and advocates.</p>
+          </div>
         </div>
-        <figcaption class="figure-caption"><em>the hub's search and filter view, live in Webflow</em></figcaption>
-      </figure>
+      </div>
     </section>
 
+    <!-- PROBLEM + ROLE -->
     <section class="project-intro section">
-      <div class="container">
-        <div class="project-meta">
+      <div class="content-container">
+        <div class="problem-solution-row">
+          <div class="ps-block">
+            <p class="ps-label">The Problem</p>
+            <p class="ps-text">No central, filterable resource library existed. What did exist skewed toward providers, leaving patients' own question, what does my plan cover, with nowhere to go.</p>
+          </div>
+          <div class="ps-divider" aria-hidden="true"></div>
+          <div class="ps-block">
+            <p class="ps-label">My Role</p>
+            <p class="ps-text">I owned the hub end to end for HBOM's food-as-medicine (FAM) program, which lets Medicaid cover nutrition benefits: research, IA, filter logic, wireframes, and the Webflow build.</p>
+          </div>
+        </div>
+
+        <div class="project-meta" style="margin-top: 2.5rem;">
           <div class="meta-item">
             <div class="meta-label">Role</div>
             <div class="meta-value">Design Intern (UX &rarr; Webflow build)</div>
@@ -111,218 +95,121 @@
       </div>
     </section>
 
-    <!-- OVERVIEW -->
-    <section class="project-section">
-      <div class="container">
-        <h2 class="section-icon-title">What did I do?</h2>
-        <p>I owned the hub end to end: research, IA, filter logic, wireframes, and the Webflow build on top of the existing <span class="text-mint">nutrivp.org</span> landing page.</p>
-      </div>
-    </section>
-
-    <!-- CONTEXT -->
-    <section class="project-section">
-      <div class="container">
-        <h2 class="section-icon-title">What is Food as Medicine (FAM)?</h2>
-        <p>FAM and ILOS let Medicaid cover food benefits, but coverage <span class="text-mint">varies by plan and region</span>, and <span class="text-mint">nutrivp.org</span> was only a landing page, with no resource library behind it.</p>
-      </div>
-    </section>
-
-    <!-- PROBLEM -->
-    <section class="project-section">
-      <div class="container">
-        <h2 class="section-icon-title">The Problem</h2>
-        <p>No central, filterable library existed. What did exist skewed toward providers, leaving the question patients actually have, <span class="text-mint">what does my plan cover</span>, with nowhere to go.</p>
-      </div>
-    </section>
-
     <!-- HMW -->
     <section class="project-section" style="padding-block: clamp(2rem, 4vw, 3rem);">
-      <div class="container">
+      <div class="content-container">
         <div class="hmw-callout">
           <p class="hmw-eyebrow">How might we</p>
-          <p>Help patients and providers find the right food-as-medicine resource, without getting lost in content meant for someone else?</p>
+          <p>make FAM resources easy to find, easy to trust, and easy to act on, for providers, patients, and advocates alike?</p>
         </div>
       </div>
     </section>
 
     <!-- RESEARCH -->
-    <section class="project-section">
-      <div class="container">
+    <section class="project-section section-nav-target" id="research">
+      <div class="content-container">
         <p class="section-number">01</p>
-        <h2 class="section-icon-title">Research</h2>
-        <p class="section-takeaway">A qualitative competitive and domain audit, not a formal usability study.</p>
+        <h2 class="section-icon-title">Research &amp; the Insight</h2>
+        <p class="section-takeaway">A qualitative audit, not a formal usability study.</p>
+        <p>I reviewed Tufts Food is Medicine, the HHS/ODPHP FAM hub, StoryCorps, and the American Heart Association's Healthcare x Food site for tone and structure.</p>
+        <p style="margin-top: 1rem;"><strong>The gap:</strong> no FAM site segmented by user type, click behavior on resource cards was unclear, and none offered a path to request a missing resource, exactly the space this hub needed to fill.</p>
+      </div>
+    </section>
 
-        <div class="hbom-two-col">
-          <div>
-            <p style="margin-bottom: 1.5rem;">I reviewed existing food-as-medicine hubs, Tufts Food is Medicine, Healthcare x Food from the American Heart Association, and the HHS/ODPHP FAM hub, alongside narrative sites like StoryCorps and the Obama Presidency Oral History Project for tone and content organization.</p>
+    <!-- DESIGN DECISIONS -->
+    <section class="project-section section-nav-target" id="designDecisions">
+      <div class="content-container">
+        <p class="section-number">02</p>
+        <h2 class="section-icon-title">Three Design Decisions</h2>
+        <p class="section-takeaway">Each finding turned into one concrete decision.</p>
+      </div>
 
-            <p class="constraint-label constraint-label--response">Segmentation gap</p>
-            <p class="constraint-text" style="margin-bottom: 1rem;">User-type segmentation was missing from most FAM sites I reviewed, an opening for the hub to lead with Provider, Patient, and Advocate as first-class categories.</p>
-            <p class="constraint-label constraint-label--response">Fewer, better filters</p>
-            <p class="constraint-text" style="margin-bottom: 1rem;">Simple one- or two-filter systems worked best at the resource counts these hubs actually had, rather than dense filter panels built for a scale they hadn't reached.</p>
-            <p class="constraint-label constraint-label--constraint">Scannability</p>
-            <p class="constraint-text">Media-type icons made resource lists easier to scan at a glance, before a visitor commits to opening anything.</p>
-          </div>
-
-          <figure class="two-up-figure">
-            <div class="two-up-grid">
-              <figure class="two-up-tile">
-                <img src="../../assets/img/hbom-wireframe.png" alt="Early wireframe exploration for the NVP Knowledge Hub">
-              </figure>
-              <figure class="two-up-tile">
-                <img src="../../assets/img/hbom-wireframe-resource.png" alt="Early resource-page wireframe exploration for the NVP Knowledge Hub">
-              </figure>
-            </div>
-            <figcaption class="figure-caption"><em>early wireframe exploration</em></figcaption>
+      <div class="content-container" style="margin-top: 1.5rem;">
+        <p><strong>User-type-first, with a three-panel filter</strong> &mdash; User Type, Topic, and Media Type, so patients never wade through content written for clinicians.</p>
+      </div>
+      <figure class="figure-80 two-up-figure" style="margin-top: 1rem;">
+        <div class="two-up-grid">
+          <figure class="two-up-tile">
+            <img src="../../assets/img/hbom-filter1.png" alt="User Type filter panel">
+          </figure>
+          <figure class="two-up-tile">
+            <img src="../../assets/img/hbom-filter2.png" alt="Topic and Media Type filter panels">
           </figure>
         </div>
-      </div>
-    </section>
-
-    <!-- INTENDED SUCCESS METRICS -->
-    <section class="project-section">
-      <div class="container">
-        <h2 class="section-icon-title">Intended Success Metrics</h2>
-        <p class="section-takeaway">The hub hasn't launched publicly yet, so these are planned measures, not results.</p>
-        <div class="hbom-metrics-row">
-          <div>
-            <p class="constraint-label constraint-label--response">Findability</p>
-            <p class="constraint-text">How fast a visitor reaches a relevant resource, via Webflow analytics and post-launch walkthroughs.</p>
-          </div>
-          <div>
-            <p class="constraint-label constraint-label--response">Return usage</p>
-            <p class="constraint-text">Whether visitors come back rather than treating the hub as a one-time lookup.</p>
-          </div>
-          <div>
-            <p class="constraint-label constraint-label--response">Request-form volume</p>
-            <p class="constraint-text">A proxy for how incomplete the library still feels to visitors.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SOLUTION -->
-    <section class="project-section">
-      <div class="container">
-        <p class="section-number">02</p>
-        <h2 class="section-icon-title">Solution</h2>
-        <p class="section-takeaway">A phased, modular system built to be maintained by HBOM without a designer.</p>
-
-        <h3 style="margin-top: 2rem; margin-bottom: 0.5rem; font-size: 1.05rem; font-weight: 700; color: var(--title-color);">IA &amp; entry point</h3>
-        <p>The hub is <span class="text-mint">user-type-first</span>, splitting into Provider, Patient, and Advocate at the entry point so patients never have to wade through content written for clinicians to find their own.</p>
-
-        <h3 style="margin-top: 2rem; margin-bottom: 0.5rem; font-size: 1.05rem; font-weight: 700; color: var(--title-color);">Filter system</h3>
-        <p>Two filter panels replaced the earlier vanity filters (All, Coverage, Our Favorites): Topic (ILOS/Medicaid, FAM Overview, Condition Specific Education) and Media type (Video, PDF, Website, Digital tool). The library holds around 10 to 20 resources today, but Topic and Media type live in separate CMS Collections so the system can scale past 50 without a rebuild.</p>
-      </div>
-
-      <figure class="figure-80 single-tile-figure" style="margin-top: 1.5rem;">
-        <div class="single-tile">
-          <img src="../../assets/img/hbom-filters.png" alt="Topic and media type filter panels">
-        </div>
-        <figcaption class="figure-caption"><em>user-type entry point, then topic and media filters</em></figcaption>
+        <figcaption class="figure-caption">the three-panel filter: User Type, Topic, Media Type</figcaption>
       </figure>
 
-      <div class="container">
-        <h3 style="margin-top: 2.5rem; margin-bottom: 0.5rem; font-size: 1.05rem; font-weight: 700; color: var(--title-color);">Custom iconography</h3>
-        <p>I designed the ILOS/Medicaid and FAM icons with the client: ILOS as a prescription mark with a food element standing in for the pill, FAM as a bowl marked with a medical cross.</p>
-
-        <h3 style="margin-top: 2rem; margin-bottom: 0.5rem; font-size: 1.05rem; font-weight: 700; color: var(--title-color);">Resource card &amp; detail page</h3>
-        <p>One card design maps to a small set of CMS fields, name, type, description, tags, thumbnail, with density variants so HBOM can add resources without a designer. Thumbnails use the provider's logo where one exists, like Mom's Meals or Low Carb Jumpstart, and fall back to a PDF-preview image otherwise, as with the Understanding Medicaid Food Benefits one-pager.</p>
+      <div class="content-container" style="margin-top: 2rem;">
+        <p><strong>Clear click behavior</strong> &mdash; a media-type icon and tag on every card; I designed the custom ILOS/FAM icons with the client.</p>
       </div>
-
-      <figure class="figure-80 single-tile-figure" style="margin-top: 1.5rem;">
+      <figure class="figure-80 single-tile-figure" style="margin-top: 1rem;">
         <div class="single-tile">
-          <img src="../../assets/img/hbom-detail.png" alt="Resource card and detail page">
+          <img src="../../assets/img/hbom-icons.png" alt="Custom ILOS and FAM media-type icons">
         </div>
-        <figcaption class="figure-caption"><em>resource card and detail page, linking out rather than embedding video</em></figcaption>
+        <figcaption class="figure-caption">custom ILOS/FAM icons, designed with the client</figcaption>
       </figure>
 
-      <div class="container">
-        <div class="constraint-blocks" style="margin-top: 1.5rem;">
-          <div class="constraint-block">
-            <h3 class="constraint-title">Video, everywhere or nowhere</h3>
-            <div class="constraint-grid">
-              <div class="constraint-col">
-                <p class="constraint-label constraint-label--constraint">Constraint</p>
-                <p class="constraint-text">Webflow wouldn't let me choose, per resource, between embedding a video and linking out. Whatever I picked had to apply identically across every resource in the library.</p>
-              </div>
-              <div class="constraint-col">
-                <p class="constraint-label constraint-label--response">My response</p>
-                <p class="constraint-text">I chose linking to the source page over embedding, for consistency across resource types and lower long-term maintenance for HBOM.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <h3 style="margin-top: 2.5rem; margin-bottom: 0.5rem; font-size: 1.05rem; font-weight: 700; color: var(--title-color);">Request flow</h3>
-        <p>"I'm looking for something" and "I want to suggest a resource" used to be separate asks. I combined them into one toggle form, reviewed by HBOM before anything publishes.</p>
-
-        <h3 style="margin-top: 2rem; margin-bottom: 0.5rem; font-size: 1.05rem; font-weight: 700; color: var(--title-color);">Food As Medicine Topics</h3>
-        <p>A row of entry tiles gives visitors a second way in, by topic rather than by user type, for people who arrive already knowing what they're looking for.</p>
+      <div class="content-container" style="margin-top: 2rem;">
+        <p><strong>One combined request form</strong> &mdash; "I'm looking for" and "I want to suggest" used to be separate asks; now one toggle form.</p>
       </div>
-
-      <figure class="figure-80 single-tile-figure" style="margin-top: 1.5rem;">
+      <figure class="figure-80 single-tile-figure" style="margin-top: 1rem;">
         <div class="single-tile">
-          <img src="../../assets/img/hbom-fam-topics.png" alt="Food As Medicine Topics entry tiles">
+          <img src="../../assets/img/hbom-form.png" alt="Combined looking-for and suggest-a-resource request form">
         </div>
-        <figcaption class="figure-caption"><em>the request flow and food as medicine topics, as entry tiles</em></figcaption>
+        <figcaption class="figure-caption">the combined request form</figcaption>
       </figure>
     </section>
 
-    <!-- BRAND & IMPACT -->
-    <section class="project-section">
-      <div class="container">
+    <!-- CHALLENGING ASSUMPTIONS -->
+    <section class="project-section section-nav-target" id="assumptions">
+      <div class="content-container">
         <p class="section-number">03</p>
-        <h2 class="section-icon-title">Brand</h2>
-        <p>The hub matches <span class="text-mint">nutrivp.org</span> in palette, typography, and header/footer, so it reads as an extension of the existing site rather than a separate tool bolted on beside it.</p>
+        <h2 class="section-icon-title">Challenging Assumptions</h2>
 
-        <div class="hbom-mini-pair">
-          <a href="../../assets/img/hbom-hero.png" target="_blank" rel="noopener">
-            <img src="../../assets/img/hbom-hero.png" alt="NVP Knowledge Hub overview, matched to the nutrivp.org brand">
-          </a>
-          <a href="../../assets/img/hbom-detail.png" target="_blank" rel="noopener">
-            <img src="../../assets/img/hbom-detail.png" alt="Resource detail page, matched to the nutrivp.org brand">
-          </a>
+        <div class="mint-pullquote">
+          <p class="mint-pullquote-headline">Availability isn't access.</p>
+          <p class="mint-pullquote-body">HBOM's brief was to gather every FAM resource in one place. But a pile of links a patient can't parse isn't access, it's just availability, so the hub had to guide people to the right resource, not just collect them.</p>
         </div>
-        <p class="figure-caption" style="margin-top: 0.5rem;"><em>hub overview and resource detail page, matched to the nutrivp.org brand</em></p>
+
+        <div style="margin-top: 2rem; max-width: 640px;">
+          <p class="constraint-label constraint-label--constraint">The assumption I revised</p>
+          <p class="constraint-text" style="margin-bottom: 1rem;">I assumed users would cleanly self-identify and pick the right filter on the first try.</p>
+          <p class="constraint-label constraint-label--response">What changed</p>
+          <p class="constraint-text">Roles overlap, someone can be both, or claim no label at all, so I designed the filters to be forgiving rather than gating: browsing without a user-type selected still works.</p>
+        </div>
       </div>
     </section>
 
-    <!-- IMPACT -->
-    <section class="project-section">
-      <div class="container">
+    <!-- THE BUILD -->
+    <section class="project-section section-nav-target" id="theBuild">
+      <div class="content-container">
         <p class="section-number">04</p>
-        <h2 class="section-icon-title">Impact</h2>
-        <p class="section-takeaway">Built and handed off; public launch pending.</p>
-        <p style="margin-top: 0.5rem;">The hub is built in Webflow and handed off to HBOM. It hasn't launched publicly yet, so I'm not claiming usage numbers here, only that the system is ready for HBOM to populate and publish on their own timeline.</p>
-        <p style="margin-top: 0.75rem; color: var(--text-color-light); font-size: 0.9rem;"><em>Alongside the hub, I also produced a 30-second patient-story reel, Heart-to-Heart, for the Michigan Cardiac Rehab Network.</em></p>
+        <h2 class="section-icon-title">The Build</h2>
+        <p class="section-takeaway">Figma to Webflow, brand-matched, and built for HBOM to maintain without a designer.</p>
+        <p>Every resource card maps to a small set of CMS fields, so HBOM can add new resources on their own. Trust matters for health content, so the detail page carries the provider's own logo or cover banner, an estimated-time indicator, and every link opens in a new tab.</p>
       </div>
+      <figure class="figure-80 single-tile-figure" style="margin-top: 1.5rem;">
+        <div class="single-tile">
+          <img src="../../assets/img/hbom-detail.png" alt="Resource detail page with provider logo, estimated-time indicator, and open-in-new-tab link">
+        </div>
+        <figcaption class="figure-caption">resource detail page, trust signals for health content</figcaption>
+      </figure>
     </section>
 
-    <!-- REFLECTION -->
-    <section class="project-section">
-      <div class="container">
-        <h2 class="section-icon-title">Reflection</h2>
-        <div class="decision-cards">
-          <div class="decision-card">
-            <h3>Constraints</h3>
-            <p>Webflow's CMS model shaped more decisions than I expected, especially the all-or-nothing video/link choice and the need to split Categories and Media type into separate Collections early.</p>
-          </div>
-          <div class="decision-card">
-            <h3>What I'd improve</h3>
-            <p>I'd pressure-test the filter taxonomy against a larger resource set before launch, since ~10 to 20 items can hide gaps that only show up once the library grows toward 50.</p>
-          </div>
-          <div class="decision-card">
-            <h3>Next steps</h3>
-            <p>HBOM populates the remaining resource entries, reviews incoming requests through the new form, and sets a public launch date.</p>
-          </div>
-        </div>
+    <!-- IMPACT & HANDOFF -->
+    <section class="project-section section-nav-target" id="impact">
+      <div class="content-container">
+        <p class="section-number">05</p>
+        <h2 class="section-icon-title">Impact &amp; Handoff</h2>
+        <p class="section-takeaway">Built and handed off; public launch pending, so no usage numbers here.</p>
+        <p>Next: a CMS guide for HBOM's team and a plan for post-launch feedback.</p>
+        <p style="margin-top: 0.75rem; color: var(--text-color-light); font-size: 0.9rem;"><em>Also edited a 30-second patient reel, which deepened my grasp of the field and the organization.</em></p>
       </div>
     </section>
 
     <!-- PAGER -->
     <nav class="project-pager">
-      <div class="container project-pager__inner">
+      <div class="content-container project-pager__inner">
         <a class="project-pager__link project-pager__prev" href="../oct">
           <i class="uil uil-arrow-left" aria-hidden="true"></i>
           <span>Previous Project</span>
@@ -334,6 +221,8 @@
       </div>
     </nav>
 
+      </div>
+    </div>
   </main>
 
   <footer class="footer" id="footer">
