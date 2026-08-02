@@ -314,6 +314,10 @@ img { max-width: 100%; height: auto; }
   grid-template-columns: repeat(var(--grid-cols), 1fr);
   column-gap: var(--grid-gap);
   row-gap: clamp(40px, 6vw, 64px);
+  /* Tile media now sizes to its own natural aspect ratio (see
+     .tile-framed below), so rows can hold tiles of different heights —
+     don't stretch every card in a row to match the tallest one. */
+  align-items: start;
 }
 
 /* Mobile (2 cols): one card per row, full width */
@@ -1768,27 +1772,33 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
    shadow, so it reads as a framed clip rather than a raw crop-fill.
    Scoped to .tile-framed via a compound selector so it always wins
    over .portfolio__img-link's own background/radius/shadow regardless
-   of source order. overflow stays hidden (inherited from the base
-   rule) so the card's aspect-ratio keeps governing its height — with
-   overflow:visible, a tile whose video has a much taller intrinsic
-   aspect ratio (e.g. hbom's portrait scroll capture) stretches the
-   whole card to fit it instead of respecting the fixed ratio, breaking
-   the grid row height. The generous padding keeps the inner shadow
-   from reading as clipped in normal use instead. Autoplay/poster
-   scroll-play behavior (main.js) is untouched — this only changes how
-   the media is boxed. */
+   of source order. aspect-ratio is reset to auto (the base rule fixes
+   it at 3/2, which crops) so each card's height instead follows its
+   own media's natural ratio at object-fit:contain — nothing clipped.
+   Since the box is no longer a fixed height fighting its content,
+   overflow can safely go back to visible so the inner shadow isn't
+   clipped either. .portfolio .container below adds align-items:start
+   so a tall-ratio tile (e.g. a portrait capture) no longer stretches
+   its shorter row sibling to match. Autoplay/poster scroll-play
+   behavior (main.js) is untouched — this only changes how the media
+   is boxed. */
 .portfolio__img-link.tile-framed {
   background: #f4f4f2;
   padding: clamp(24px, 4vw, 64px);
   border-radius: 20px;
   box-shadow: 0 16px 44px rgba(0, 0, 0, 0.12);
+  aspect-ratio: auto;
+  overflow: visible;
 }
 .tile-framed .tile-media,
 .tile-framed .portfolio__img {
   display: block;
+  width: 100%;
+  height: auto;
   max-width: 86%;
   margin-inline: auto;
   border-radius: 12px;
+  object-fit: contain;
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.16);
 }
 
@@ -2176,8 +2186,17 @@ html {
   transform: translateY(12px);
 }
 
-/* ---- Tab 1 (For Anyone): marker-stroke mint reveal ---- */
-[data-mint-mode="reveal"] {
+/* ---- Tab 1 (For Anyone): marker-stroke mint reveal ----
+   Scoped to the .mint-text descendant, not [data-mint-mode="reveal"]
+   itself — that attribute sits on .reveal-trigger, which also holds
+   the absolutely-positioned .hero-reveal-img popup. clip-path clips
+   the whole element's painted output including out-of-flow children,
+   so putting it directly on .reveal-trigger clipped the popup image
+   away permanently (clip-path: inset(0 0 0 0) still only paints within
+   .reveal-trigger's own box, and the image renders outside that box
+   by design). Scoping it to .mint-text leaves .reveal-trigger itself
+   clip-free, so the sibling popup image can render normally. */
+[data-mint-mode="reveal"] .mint-text {
   /* inline-block gives the phrase one unified border box (even when
      its own text wraps onto a 2nd line), so clip-path has a single
      consistent box to animate — clip-path on a plain `inline` element
@@ -2189,7 +2208,7 @@ html {
      0.3s duration) so the marker-stroke reveal starts once it lands */
   transition: clip-path 0.4s ease-out 0.3s;
 }
-[data-mint-mode="reveal"].is-revealed {
+[data-mint-mode="reveal"].is-revealed .mint-text {
   clip-path: inset(0 0 0 0);
 }
 
@@ -2275,7 +2294,7 @@ html {
     opacity: 1 !important;
     transform: none !important;
   }
-  [data-mint-mode="reveal"] {
+  [data-mint-mode="reveal"] .mint-text {
     transition: none !important;
     clip-path: inset(0 0 0 0) !important;
   }
