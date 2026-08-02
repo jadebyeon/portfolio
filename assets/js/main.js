@@ -202,9 +202,14 @@ document.querySelectorAll('.footer__back').forEach(function (link) {
 
 /*==================== OCT PROJECT: CHARACTER BOARD CURSOR + LIGHTBOX ====
   Hovering the character finalists board (mouse/trackpad only) hides the
-  default cursor and shows a small mint "view why" pill that follows the
-  pointer. Clicking the board opens a lightbox with all four finalists
-  shown large, reasoning always visible (no further hover/click needed
+  default cursor and shows a small mint "view why" pill. The pill is
+  positioned with left/top set to the pointer's raw clientX/clientY on
+  every pointermove — no offset, no easing, no snapping toward tile
+  centers or any other element: it just sits exactly where the pointer
+  is, pointer-events:none so it can never itself become the hit target.
+  Shown only between pointerenter and pointerleave on the board itself.
+  Clicking the board opens a lightbox with all four finalists shown
+  large, reasoning always visible (no further hover/click needed
   inside it) — except clicks on a tile itself, which still hand off to
   the existing click-to-toggle overlay above, so that behavior stays
   intact. Closes via the close button, backdrop click, or Esc; focus
@@ -222,14 +227,18 @@ document.querySelectorAll('.footer__back').forEach(function (link) {
     var CLOSE_MS = 150;
 
     if (pill) {
+      function movePill(e) {
+        pill.style.left = e.clientX + 'px';
+        pill.style.top = e.clientY + 'px';
+      }
       board.addEventListener('pointerenter', function (e) {
         if (e.pointerType === 'touch') return;
-        pill.style.transform = 'translate(' + (e.clientX + 16) + 'px, ' + (e.clientY + 16) + 'px)';
+        movePill(e);
         pill.classList.add('is-visible');
       });
       board.addEventListener('pointermove', function (e) {
         if (e.pointerType === 'touch') return;
-        pill.style.transform = 'translate(' + (e.clientX + 16) + 'px, ' + (e.clientY + 16) + 'px)';
+        movePill(e);
       });
       board.addEventListener('pointerleave', function (e) {
         if (e.pointerType === 'touch') return;

@@ -1772,29 +1772,24 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
    shadow, so it reads as a framed clip rather than a raw crop-fill.
    Scoped to .tile-framed via a compound selector so it always wins
    over .portfolio__img-link's own background/radius/shadow regardless
-   of source order. aspect-ratio is reset to auto (the base rule fixes
-   it at 3/2, which crops) so each card's height instead follows its
-   own media's natural ratio at object-fit:contain — nothing clipped.
-   Since the box is no longer a fixed height fighting its content,
-   overflow can safely go back to visible so the inner shadow isn't
-   clipped either. .portfolio .container below adds align-items:start
-   so a tall-ratio tile (e.g. a portrait capture) no longer stretches
-   its shorter row sibling to match. Autoplay/poster scroll-play
-   behavior (main.js) is untouched — this only changes how the media
-   is boxed. */
+   of source order. All four cards share one fixed aspect-ratio (so
+   they match in height at any width) and the media inside uses
+   object-fit:contain at height:100% — it's never cropped, and any
+   ratio mismatch against the fixed card just shows as extra card
+   background (padding) on the short axis instead of a clipped video. */
 .portfolio__img-link.tile-framed {
   background: #f4f4f2;
   padding: clamp(24px, 4vw, 64px);
   border-radius: 20px;
   box-shadow: 0 16px 44px rgba(0, 0, 0, 0.12);
-  aspect-ratio: auto;
-  overflow: visible;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
 }
 .tile-framed .tile-media,
 .tile-framed .portfolio__img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   max-width: 86%;
   margin-inline: auto;
   border-radius: 12px;
