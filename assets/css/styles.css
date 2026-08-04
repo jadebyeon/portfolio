@@ -307,12 +307,14 @@ img { max-width: 100%; height: auto; }
   padding-top: clamp(16px, 2vw, 32px);
 }
 
-/* Real grid: same --grid-cols/--grid-gap as the hero, so cards sit on
-   the same column tracks as the rest of the page. */
+/* Real grid: same --grid-cols as the hero, so cards sit on the same
+   column tracks as the rest of the page. column-gap is its own,
+   wider value (not the shared --grid-gap, which other grids on the
+   page also use) so a tile's hover-scale never reaches its neighbor. */
 .portfolio .container{
   display: grid;
   grid-template-columns: repeat(var(--grid-cols), 1fr);
-  column-gap: var(--grid-gap);
+  column-gap: clamp(24px, 4vw, 48px);
   row-gap: clamp(40px, 6vw, 64px);
   /* Tile media now sizes to its own natural aspect ratio (see
      .tile-framed below), so rows can hold tiles of different heights —
@@ -394,6 +396,7 @@ img { max-width: 100%; height: auto; }
   display: block;
   object-fit: cover;
   object-position: center;
+  transform-origin: center;
   transition: transform .35s ease;
   will-change: transform;
 }
@@ -406,11 +409,13 @@ img { max-width: 100%; height: auto; }
 .thumb { 
   background: #f5f6f7; 
 }
-/* Desktop/Laptop: subtle hover zoom */
+/* Desktop/Laptop: subtle hover zoom — capped low (not the old
+   1.02-1.06 range) so the scaled-up state still clears the gap to
+   the next tile instead of visibly touching it. */
 @media (hover: hover){
   .portfolio__img-link:hover .portfolio__img,
   .portfolio__img-link:hover .tile-media{
-    transform: scale(1.06);   /* tweak: 1.02-1.06 */
+    transform: scale(1.02);
   }
 }
 
@@ -422,10 +427,15 @@ img { max-width: 100%; height: auto; }
   }
 }
 
-/* Respect reduced motion */
+/* Respect reduced motion: no transition, and no hover scale at all
+   (not just an instant jump to 1.02). */
 @media (prefers-reduced-motion: reduce){
   .portfolio__img,
   .tile-media{ transition: none; }
+  .portfolio__img-link:hover .portfolio__img,
+  .portfolio__img-link:hover .tile-media{
+    transform: none;
+  }
 }
 
 /* Mint/turquoise accent for title hover */
