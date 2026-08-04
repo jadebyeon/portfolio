@@ -1161,3 +1161,53 @@ var PERSONA_COPY = {
   }
 })();
 
+/*==================== HBOM PROJECT: FEATURE TAB SHOWCASE ====================
+  Click-only ARIA tabs (role=tablist/tab/tabpanel): clicking a tab shows its
+  panel and hides the rest; Left/Right arrow keys move focus to the next tab
+  and activate it (standard tabs keyboard pattern), wrapping at the ends.
+  No hover-triggered switching anywhere. No-ops on pages without .hbom-tabs. */
+(function () {
+  function init() {
+    var root = document.querySelector('.hbom-tabs');
+    if (!root) return;
+
+    var tabs = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));
+    if (!tabs.length) return;
+
+    function activate(tab) {
+      tabs.forEach(function (t) {
+        var selected = t === tab;
+        t.setAttribute('aria-selected', selected ? 'true' : 'false');
+        t.tabIndex = selected ? 0 : -1;
+        var panel = document.getElementById(t.getAttribute('aria-controls'));
+        if (panel) panel.hidden = !selected;
+      });
+    }
+
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function () {
+        activate(tab);
+      });
+      tab.addEventListener('keydown', function (e) {
+        var next;
+        if (e.key === 'ArrowRight') {
+          next = tabs[(i + 1) % tabs.length];
+        } else if (e.key === 'ArrowLeft') {
+          next = tabs[(i - 1 + tabs.length) % tabs.length];
+        } else {
+          return;
+        }
+        e.preventDefault();
+        next.focus();
+        activate(next);
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
