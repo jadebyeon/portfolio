@@ -10,9 +10,10 @@
   <title>NVP Knowledge Hub — Jade Byeon</title>
   <meta name="description" content="Research, information architecture, and Webflow build of a searchable food-as-medicine resource hub for HBOM at the University of Michigan, by Jade Byeon." />
   <style>
-    /* No page-scoped overrides needed — this page now reuses shared
-       classes only (section-nav, content-container, ps-block,
-       hmw-callout, mint-pullquote, figure-80/single-tile/two-up). */
+    /* No page-scoped overrides needed — this page reuses shared
+       classes only (section-nav, content-container, case-row,
+       persona-trio/persona-card, principle-row, quote-card,
+       learnings-list, hbom-tabs). */
   </style>
 </head>
 <body class="project-page">
@@ -37,9 +38,10 @@
           <span>Back</span>
         </a>
         <ul class="section-nav__list">
+          <li class="section-nav__item"><a class="section-nav__link" href="#problem">Problem</a></li>
+          <li class="section-nav__item"><a class="section-nav__link" href="#users">Users</a></li>
           <li class="section-nav__item"><a class="section-nav__link" href="#research">Research</a></li>
           <li class="section-nav__item"><a class="section-nav__link" href="#features">Features</a></li>
-          <li class="section-nav__item"><a class="section-nav__link" href="#assumptions">Assumptions</a></li>
           <li class="section-nav__item"><a class="section-nav__link" href="#impact">Impact</a></li>
         </ul>
       </nav>
@@ -55,51 +57,71 @@
             <p class="hero-subtitle">A searchable food-as-medicine resource hub for patients, providers, and advocates.</p>
           </div>
         </div>
+        <p class="case-hero-meta">Design Intern (UX &rarr; Webflow build) &middot; May&ndash;Aug 2026 &middot; HBOM, University of Michigan &middot; Figma, Webflow</p>
       </div>
     </section>
 
-    <!-- PROBLEM + ROLE -->
+    <!-- BRIEF + CONTRIBUTION -->
     <section class="project-intro section">
       <div class="content-container">
-        <div class="problem-solution-row">
-          <div class="ps-block">
-            <p class="ps-label">The Problem</p>
-            <p class="ps-text">No central, filterable resource library existed. What did exist skewed toward providers, leaving patients' own question, what does my plan cover, with nowhere to go.</p>
-          </div>
-          <div class="ps-divider" aria-hidden="true"></div>
-          <div class="ps-block">
-            <p class="ps-label">My Role</p>
-            <p class="ps-text">I owned the hub end to end for HBOM's food-as-medicine (FAM) program, which lets Medicaid cover nutrition benefits: research, IA, filter logic, wireframes, and the Webflow build.</p>
+        <div class="case-row">
+          <p class="case-row__label">Brief</p>
+          <div class="case-row__body">
+            <p>NVP is HBOM's food-as-medicine initiative, connecting Medicaid patients to FAM and ILOS nutrition benefits. The Knowledge Hub is the searchable resource library behind its public landing page, nutrivp.org.</p>
           </div>
         </div>
-
-        <div class="project-meta" style="margin-top: 2.5rem;">
-          <div class="meta-item">
-            <div class="meta-label">Role</div>
-            <div class="meta-value">Design Intern (UX &rarr; Webflow build)</div>
-          </div>
-          <div class="meta-item">
-            <div class="meta-label">Team</div>
-            <div class="meta-value">HBOM, University of Michigan</div>
-          </div>
-          <div class="meta-item">
-            <div class="meta-label">Timeline</div>
-            <div class="meta-value">May 2026 &ndash; Aug 2026</div>
-          </div>
-          <div class="meta-item">
-            <div class="meta-label">Tools</div>
-            <div class="meta-value">Figma &middot; Webflow</div>
+        <div class="case-row">
+          <p class="case-row__label">My Role</p>
+          <div class="case-row__body">
+            <p>I owned the hub end to end: research, information architecture, filter logic, and the Webflow build.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- HMW -->
-    <section class="project-section" style="padding-block: clamp(2rem, 4vw, 3rem);">
+    <!-- PROBLEM -->
+    <section class="project-section section-nav-target" id="problem">
       <div class="content-container">
-        <div class="hmw-callout">
-          <p class="hmw-eyebrow">How might we</p>
-          <p>make FAM resources easy to find, easy to trust, and easy to act on, for providers, patients, and advocates alike?</p>
+        <p class="section-number">01</p>
+        <h2 class="section-icon-title">Everyone landed on the same page &mdash; and left without an answer.</h2>
+        <p>nutrivp.org announced that FAM and ILOS benefits existed, then offered nowhere to go next: no library, no filter, no way back in. Coverage varies by plan and region, so the question people actually had, what does my plan cover, had no home, and even who are you was fuzzy, since provider, patient, and advocate roles overlap more than a clean label admits.</p>
+
+        <div style="max-width: 360px; margin-top: 1.5rem;">
+          <div class="quote-card">
+            <p>I don't know what actually applies to me.</p>
+            <span>what people kept asking</span>
+          </div>
+        </div>
+
+        <div class="case-row" style="margin-top: 2rem;">
+          <p class="case-row__label">Goal</p>
+          <div class="case-row__body">
+            <p>A single searchable hub where a provider, a patient, and an advocate each find their own way in.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TARGET USERS -->
+    <section class="project-section section-nav-target" id="users">
+      <div class="content-container">
+        <p class="section-number">02</p>
+        <h2 class="section-icon-title">Target Users</h2>
+        <p class="section-takeaway">Three roles, three different first questions.</p>
+
+        <div class="persona-trio" style="margin-top: 1.5rem;">
+          <div class="persona-card persona-card--mint">
+            <p class="persona-role">Provider</p>
+            <p class="persona-quote">"I need to refer a patient &mdash; fast."</p>
+          </div>
+          <div class="persona-card persona-card--mint">
+            <p class="persona-role">Patient</p>
+            <p class="persona-quote">"What does my plan actually cover?"</p>
+          </div>
+          <div class="persona-card persona-card--mint">
+            <p class="persona-role">Advocate</p>
+            <p class="persona-quote">"I need something credible to share."</p>
+          </div>
         </div>
       </div>
     </section>
@@ -107,18 +129,34 @@
     <!-- RESEARCH -->
     <section class="project-section section-nav-target" id="research">
       <div class="content-container">
-        <p class="section-number">01</p>
-        <h2 class="section-icon-title">Research &amp; the Insight</h2>
-        <p class="section-takeaway">A qualitative audit, not a formal usability study.</p>
-        <p>I reviewed Tufts Food is Medicine, the HHS/ODPHP FAM hub, StoryCorps, and the American Heart Association's Healthcare x Food site for tone and structure.</p>
-        <p style="margin-top: 1rem;"><strong>The gap:</strong> no FAM site segmented by user type, click behavior on resource cards was unclear, and none offered a path to request a missing resource, exactly the space this hub needed to fill.</p>
+        <p class="section-number">03</p>
+        <h2 class="section-icon-title">Research</h2>
+        <p class="section-takeaway">I audited Tufts Food is Medicine, the HHS/ODPHP FAM hub, StoryCorps, and the American Heart Association's Healthcare x Food for tone and structure.</p>
+
+        <div class="principle-row">
+          <div class="principle-card">
+            <span class="principle-icon" style="background:#f0f7f4;"><i class="uil uil-users-alt" style="color:#1a7a5e;"></i></span>
+            <strong>No user-type segmentation</strong>
+            <p>Every FAM site reviewed treated visitors as one undifferentiated audience.</p>
+          </div>
+          <div class="principle-card">
+            <span class="principle-icon" style="background:#f0f7f4;"><i class="uil uil-question-circle" style="color:#1a7a5e;"></i></span>
+            <strong>Unclear click behavior</strong>
+            <p>Download, video, or external link, nothing told you which one you'd get before you clicked.</p>
+          </div>
+          <div class="principle-card">
+            <span class="principle-icon" style="background:#f0f7f4;"><i class="uil uil-comment-plus" style="color:#1a7a5e;"></i></span>
+            <strong>No way to ask</strong>
+            <p>None offered a path to request or suggest a resource that was missing.</p>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- FEATURES -->
     <section class="project-section section-nav-target" id="features">
       <div class="content-container">
-        <p class="section-number">02</p>
+        <p class="section-number">04</p>
         <h2 class="section-icon-title">Features</h2>
         <p class="section-takeaway">Three places the research turned directly into an interface decision.</p>
 
@@ -167,34 +205,31 @@
       </div>
     </section>
 
-    <!-- CHALLENGING ASSUMPTIONS -->
-    <section class="project-section section-nav-target" id="assumptions">
-      <div class="content-container">
-        <p class="section-number">03</p>
-        <h2 class="section-icon-title">Challenging Assumptions</h2>
-
-        <div class="mint-pullquote">
-          <p class="mint-pullquote-headline">Availability isn't access.</p>
-          <p class="mint-pullquote-body">HBOM's brief was to gather every FAM resource in one place. But a pile of links a patient can't parse isn't access, it's just availability, so the hub had to guide people to the right resource, not just collect them.</p>
-        </div>
-
-        <div style="margin-top: 2rem; max-width: 640px;">
-          <p class="constraint-label constraint-label--constraint">The assumption I revised</p>
-          <p class="constraint-text" style="margin-bottom: 1rem;">I assumed users would cleanly self-identify and pick the right filter on the first try.</p>
-          <p class="constraint-label constraint-label--response">What changed</p>
-          <p class="constraint-text">Roles overlap, someone can be both, or claim no label at all, so I designed the filters to be forgiving rather than gating: browsing without a user-type selected still works.</p>
-        </div>
-      </div>
-    </section>
-
     <!-- IMPACT & HANDOFF -->
     <section class="project-section section-nav-target" id="impact">
       <div class="content-container">
-        <p class="section-number">04</p>
-        <h2 class="section-icon-title">Impact &amp; Handoff</h2>
-        <p class="section-takeaway">Built and handed off; public launch pending, so no usage numbers here.</p>
-        <p>Next: a CMS guide for HBOM's team and a plan for post-launch feedback.</p>
-        <p style="margin-top: 0.75rem; color: var(--text-color-light); font-size: 0.9rem;"><em>Also edited a 30-second patient reel, which deepened my grasp of the field and the organization.</em></p>
+        <p class="section-number">05</p>
+        <h2 class="section-icon-title">Impact &amp; Takeaways</h2>
+        <p class="section-takeaway">Built and handed off to HBOM; public launch is pending, so these are learnings, not usage numbers.</p>
+
+        <div class="learnings-list">
+          <div class="learning-item">
+            <span class="learning-num">1</span>
+            <div>
+              <strong>Health content needs trust signals</strong>
+              <p>A logo, a source, an estimated read time, small cues that make an unfamiliar medical resource feel safe to click.</p>
+            </div>
+          </div>
+          <div class="learning-item">
+            <span class="learning-num">2</span>
+            <div>
+              <strong>Designing for people who don't fit one label</strong>
+              <p>The forgiving, non-gating filters were the direct payoff of realizing "who are you" doesn't have one clean answer.</p>
+            </div>
+          </div>
+        </div>
+
+        <p style="margin-top: 1.5rem; color: var(--text-color-light); font-size: 0.9rem;"><em>Also edited a 30-second patient reel, which deepened my grasp of the field and the organization.</em></p>
       </div>
     </section>
 

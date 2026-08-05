@@ -4335,6 +4335,74 @@ body.is-settled #heroCopy [data-copy-line] {
   .iteration-body { grid-template-columns: 1fr; }
 }
 
+/* Three-up variant of .persona-card (the pair grid above is hardcoded
+   to two columns) — neutral mint tint since these three aren't an
+   emotional contrast pair, just parallel personas. */
+.persona-trio {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+.persona-card--mint {
+  background: color-mix(in oklab, var(--mint-color) 6%, #fff);
+  border: 1px solid color-mix(in oklab, var(--mint-color) 25%, transparent);
+}
+.persona-role {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mint-color);
+}
+@media (max-width: 760px) {
+  .persona-trio { grid-template-columns: 1fr; }
+}
+
+/* ===== EDITORIAL LABEL/CONTENT ROW =====
+   Grace Ma/Helios-style rhythm: a narrow mint caps label on the left,
+   prose on the right, repeated section to section instead of each
+   getting its own full heading treatment. Reusable beyond hbom. */
+.case-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: clamp(1.25rem, 4vw, 3rem);
+  padding-block: 1.5rem;
+  border-top: 1px solid #eee;
+}
+.case-row:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+.case-row__label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mint-color);
+  padding-top: 0.15rem;
+}
+.case-row__body {
+  color: var(--text-color);
+  line-height: 1.7;
+  max-width: 640px;
+}
+.case-row__body p { margin: 0; }
+@media (max-width: 700px) {
+  .case-row {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+}
+
+/* Slim meta line under the hero image (role/timeline/team/tools as
+   one quiet line, not a 4-box grid — the hero should read fast). */
+.case-hero-meta {
+  margin-top: 1.25rem;
+  color: var(--text-color-light);
+  font-size: 0.85rem;
+  letter-spacing: 0.01em;
+}
+
 /* Journey map columns: small label above each always-visible tile */
 .journey-map-col {
   display: flex;
