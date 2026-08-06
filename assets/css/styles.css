@@ -2887,23 +2887,27 @@ body.is-settled #heroCopy [data-copy-line] {
    the click/arrow-key switching logic (role=tablist/tab/tabpanel). */
 .hbom-tabs__bar {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1.75rem;
-  border-bottom: 1px solid #e5e7eb;
-  margin-top: 1.5rem;
+  width: fit-content;
+  max-width: 100%;
+  margin: 1.5rem auto 0;
+  gap: 0.25rem;
+  background: #f3f4f6;
+  border-radius: 999px;
+  padding: 0.3rem;
 }
 .hbom-tabs__tab {
   appearance: none;
   background: none;
   border: none;
-  border-bottom: 2px solid transparent;
-  padding: 0.75rem 0.1rem;
+  border-radius: 999px;
+  padding: 0.55rem 1.15rem;
   font-family: inherit;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-color-light);
+  white-space: nowrap;
   cursor: pointer;
-  transition: color 0.2s ease, border-color 0.2s ease;
+  transition: color 0.2s ease, background 0.2s ease;
 }
 .hbom-tabs__tab:hover {
   color: var(--title-color);
@@ -2911,11 +2915,10 @@ body.is-settled #heroCopy [data-copy-line] {
 .hbom-tabs__tab:focus-visible {
   outline: 2px solid var(--mint-color);
   outline-offset: 2px;
-  border-radius: 2px;
 }
 .hbom-tabs__tab[aria-selected="true"] {
-  color: var(--mint-color);
-  border-bottom-color: var(--mint-color);
+  background: var(--mint-color);
+  color: #fff;
 }
 .hbom-tabs__panel {
   display: grid;

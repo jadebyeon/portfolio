@@ -39,8 +39,8 @@
         </a>
         <ul class="section-nav__list">
           <li class="section-nav__item"><a class="section-nav__link" href="#problem">Problem</a></li>
-          <li class="section-nav__item"><a class="section-nav__link" href="#users">Users</a></li>
           <li class="section-nav__item"><a class="section-nav__link" href="#research">Research</a></li>
+          <li class="section-nav__item"><a class="section-nav__link" href="#design">Design</a></li>
           <li class="section-nav__item"><a class="section-nav__link" href="#features">Features</a></li>
           <li class="section-nav__item"><a class="section-nav__link" href="#impact">Impact</a></li>
         </ul>
@@ -57,70 +57,83 @@
             <p class="hero-subtitle">A searchable food-as-medicine resource hub for patients, providers, and advocates.</p>
           </div>
         </div>
-        <p class="case-hero-meta">Design Intern (UX &rarr; Webflow build) &middot; May&ndash;Aug 2026 &middot; HBOM, University of Michigan &middot; Figma, Webflow</p>
       </div>
     </section>
 
-    <!-- BRIEF + CONTRIBUTION -->
+    <!-- PROBLEM + SOLUTION -->
     <section class="project-intro section">
       <div class="content-container">
-        <div class="case-row">
-          <p class="case-row__label">Brief</p>
-          <div class="case-row__body">
-            <p>NVP is HBOM's food-as-medicine initiative, connecting Medicaid patients to FAM and ILOS nutrition benefits. The Knowledge Hub is the searchable resource library behind its public landing page, nutrivp.org.</p>
+        <div class="problem-solution-row">
+          <div class="ps-block">
+            <p class="ps-label">The Problem</p>
+            <p class="ps-text">nutrivp.org told visitors that FAM and ILOS benefits existed, then gave them nowhere to go: no library, no filter, no way back in.</p>
+          </div>
+          <div class="ps-divider" aria-hidden="true"></div>
+          <div class="ps-block">
+            <p class="ps-label">The Solution</p>
+            <p class="ps-text">A searchable hub where a provider, a patient, and an advocate each filter down to exactly what applies to them, without wading through content built for someone else.</p>
           </div>
         </div>
-        <div class="case-row">
-          <p class="case-row__label">My Role</p>
-          <div class="case-row__body">
-            <p>I owned the hub end to end: research, information architecture, filter logic, and the Webflow build.</p>
+
+        <div class="project-meta" style="margin-top: 2.5rem;">
+          <div class="meta-item">
+            <div class="meta-label">Role</div>
+            <div class="meta-value">Design Intern</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Team</div>
+            <div class="meta-value">HBOM, University of Michigan</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Timeline</div>
+            <div class="meta-value">May &ndash; Aug 2026</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Tools</div>
+            <div class="meta-value">Figma, Webflow, Adobe Illustrator</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- PROBLEM -->
+    <!-- PROBLEM (deep dive) -->
     <section class="project-section section-nav-target" id="problem">
       <div class="content-container">
         <p class="section-number">01</p>
-        <h2 class="section-icon-title">Everyone landed on the same page &mdash; and left without an answer.</h2>
-        <p>nutrivp.org announced that FAM and ILOS benefits existed, then offered nowhere to go next: no library, no filter, no way back in. Coverage varies by plan and region, so the question people actually had, what does my plan cover, had no home, and even who are you was fuzzy, since provider, patient, and advocate roles overlap more than a clean label admits.</p>
+        <h2 class="section-icon-title">Problem</h2>
 
-        <div style="max-width: 360px; margin-top: 1.5rem;">
-          <div class="quote-card">
-            <p>I don't know what actually applies to me.</p>
-            <span>what people kept asking</span>
-          </div>
+        <div class="mint-pullquote">
+          <p class="mint-pullquote-headline">There was no centralized place to find or refer food-as-medicine resources.</p>
+          <p class="mint-pullquote-body">nutrivp.org was a landing page with nothing behind it.</p>
         </div>
 
-        <div class="case-row" style="margin-top: 2rem;">
-          <p class="case-row__label">Goal</p>
-          <div class="case-row__body">
-            <p>A single searchable hub where a provider, a patient, and an advocate each find their own way in.</p>
+        <div class="principle-row" style="margin-top: 2rem;">
+          <div class="principle-card">
+            <span class="principle-icon" style="background:#f0f7f4;"><i class="uil uil-shield-check" style="color:#1a7a5e;"></i></span>
+            <strong>Medical content needs credibility</strong>
+            <p>Patients must trust an unfamiliar health resource, so trust signals mattered from the start.</p>
+          </div>
+          <div class="principle-card">
+            <span class="principle-icon" style="background:#f0f7f4;"><i class="uil uil-lightbulb-alt" style="color:#1a7a5e;"></i></span>
+            <strong>ILOS &amp; FAM are fuzzy, new concepts</strong>
+            <p>No design precedent existed, not even for filter icons, so I leaned on team input and iteration.</p>
+          </div>
+          <div class="principle-card">
+            <span class="principle-icon" style="background:#f0f7f4;"><i class="uil uil-users-alt" style="color:#1a7a5e;"></i></span>
+            <strong>Roles overlap</strong>
+            <p>A provider can also be a patient, so people don't cleanly self-identify.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- TARGET USERS -->
-    <section class="project-section section-nav-target" id="users">
+    <!-- GOAL -->
+    <section class="project-section" style="padding-block: clamp(1.5rem, 3vw, 2.5rem);">
       <div class="content-container">
-        <p class="section-number">02</p>
-        <h2 class="section-icon-title">Target Users</h2>
-        <p class="section-takeaway">Three roles, three different first questions.</p>
-
-        <div class="persona-trio" style="margin-top: 1.5rem;">
-          <div class="persona-card persona-card--mint">
-            <p class="persona-role">Provider</p>
-            <p class="persona-quote">"I need to refer a patient &mdash; fast."</p>
-          </div>
-          <div class="persona-card persona-card--mint">
-            <p class="persona-role">Patient</p>
-            <p class="persona-quote">"What does my plan actually cover?"</p>
-          </div>
-          <div class="persona-card persona-card--mint">
-            <p class="persona-role">Advocate</p>
-            <p class="persona-quote">"I need something credible to share."</p>
+        <div class="case-row">
+          <p class="case-row__label">Goal</p>
+          <div class="case-row__body">
+            <p>A searchable hub where provider, patient, and advocate each find their own way in.</p>
           </div>
         </div>
       </div>
@@ -129,28 +142,42 @@
     <!-- RESEARCH -->
     <section class="project-section section-nav-target" id="research">
       <div class="content-container">
-        <p class="section-number">03</p>
+        <p class="section-number">02</p>
         <h2 class="section-icon-title">Research</h2>
-        <p class="section-takeaway">I audited Tufts Food is Medicine, the HHS/ODPHP FAM hub, StoryCorps, and the American Heart Association's Healthcare x Food for tone and structure.</p>
+        <p class="section-takeaway">I audited Tufts Food is Medicine, the HHS/ODPHP FAM hub, StoryCorps, and the American Heart Association's Healthcare x Food.</p>
 
         <div class="principle-row">
           <div class="principle-card">
             <span class="principle-icon" style="background:#f0f7f4;"><i class="uil uil-users-alt" style="color:#1a7a5e;"></i></span>
             <strong>No user-type segmentation</strong>
-            <p>Every FAM site reviewed treated visitors as one undifferentiated audience.</p>
+            <p>Every site treated visitors as one undifferentiated audience.</p>
           </div>
           <div class="principle-card">
             <span class="principle-icon" style="background:#f0f7f4;"><i class="uil uil-question-circle" style="color:#1a7a5e;"></i></span>
             <strong>Unclear click behavior</strong>
-            <p>Download, video, or external link, nothing told you which one you'd get before you clicked.</p>
+            <p>Nothing signaled download vs. video vs. external before you clicked.</p>
           </div>
           <div class="principle-card">
             <span class="principle-icon" style="background:#f0f7f4;"><i class="uil uil-comment-plus" style="color:#1a7a5e;"></i></span>
             <strong>No way to ask</strong>
-            <p>None offered a path to request or suggest a resource that was missing.</p>
+            <p>None offered a path to request or suggest a missing resource.</p>
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- DESIGN -->
+    <section class="project-section section-nav-target" id="design">
+      <div class="content-container">
+        <p class="section-number">03</p>
+        <h2 class="section-icon-title">Design</h2>
+      </div>
+      <figure class="figure-80 single-tile-figure" style="margin-top: 1rem;">
+        <div class="single-tile">
+          <img src="../../assets/img/hbom-figma.png" alt="Figma canvas with wireframes and live team-comment avatars">
+        </div>
+        <figcaption class="figure-caption">explored multiple layouts and banner variations, iterating on team feedback in Figma</figcaption>
+      </figure>
     </section>
 
     <!-- FEATURES -->
@@ -158,7 +185,6 @@
       <div class="content-container">
         <p class="section-number">04</p>
         <h2 class="section-icon-title">Features</h2>
-        <p class="section-takeaway">Three places the research turned directly into an interface decision.</p>
 
         <div class="hbom-tabs" id="hbomFeatureTabs">
           <div class="hbom-tabs__bar" role="tablist" aria-label="Feature showcase">
@@ -174,8 +200,8 @@
                 <div class="hbom-tabs__placeholder" hidden><span>image coming</span></div>
               </div>
               <div class="hbom-tabs__copy">
-                <h3>Find by who you are, then narrow by what you need</h3>
-                <p>User-type entry (Clinician &middot; Patient &middot; Advocate) sits above Topic and Media-type filters. "All" is the default &mdash; the filters are non-gating, so someone who's both a provider and a patient (or claims neither label) is never forced to self-identify to see resources.</p>
+                <h3>Non-gating filters</h3>
+                <p>User-type entry + Topic/Media filters. "All" by default &mdash; non-gating, so overlapping users never have to self-label.</p>
               </div>
             </div>
 
@@ -185,8 +211,8 @@
                 <div class="hbom-tabs__placeholder" hidden><span>image coming</span></div>
               </div>
               <div class="hbom-tabs__copy">
-                <h3>One form for two needs</h3>
-                <p>"I'm looking for a resource" and "I want to suggest one" share a single toggle form, reviewed by HBOM before publishing. "Which best describes you?" stays optional.</p>
+                <h3>One form, two purposes</h3>
+                <p>One dual-purpose form (request or suggest); captures user type for future segmentation.</p>
               </div>
             </div>
 
@@ -196,8 +222,8 @@
                 <div class="hbom-tabs__placeholder" hidden><span>image coming</span></div>
               </div>
               <div class="hbom-tabs__copy">
-                <h3>Trust signals for health content</h3>
-                <p>Each resource opens to an org logo or cover banner, an estimated read time, its source, and open-in-new-tab &mdash; the cues that make unfamiliar medical resources feel trustworthy.</p>
+                <h3>Built-in trust signals</h3>
+                <p>Org logo/banner, estimated read time, last-updated date, and open-in-new-tab.</p>
               </div>
             </div>
           </div>
