@@ -10,10 +10,21 @@
   <title>NVP Knowledge Hub — Jade Byeon</title>
   <meta name="description" content="Research, information architecture, and Webflow build of a searchable food-as-medicine resource hub for HBOM at the University of Michigan, by Jade Byeon." />
   <style>
-    /* No page-scoped overrides needed — this page reuses shared
+    /* Design section: two independent .single-tile-figure images
+       (artifact + process), side by side on wide screens, stacked
+       under ~760px. Everything else on this page reuses shared
        classes only (section-nav, content-container, case-row,
        persona-trio/persona-card, principle-row, quote-card,
        learnings-list, hbom-tabs). */
+    .hbom-design-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(1.25rem, 3vw, 2rem);
+      margin-top: 1.25rem;
+    }
+    @media (max-width: 760px) {
+      .hbom-design-pair { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body class="project-page">
@@ -171,13 +182,23 @@
       <div class="content-container">
         <p class="section-number">03</p>
         <h2 class="section-icon-title">Design</h2>
-      </div>
-      <figure class="figure-80 single-tile-figure" style="margin-top: 1rem;">
-        <div class="single-tile">
-          <img src="../../assets/img/hbom-figma.png" alt="Figma canvas with wireframes and live team-comment avatars">
+        <p class="section-takeaway">I wireframed the hub in Figma and iterated with the team before building.</p>
+
+        <div class="hbom-design-pair">
+          <figure class="single-tile-figure">
+            <div class="single-tile">
+              <img src="../../assets/img/hbom-wireframe.png" alt="Main library and resource-detail page wireframes">
+            </div>
+            <figcaption class="figure-caption"><em>Main library + resource-detail wireframes.</em></figcaption>
+          </figure>
+          <figure class="single-tile-figure">
+            <div class="single-tile">
+              <img src="../../assets/img/hbom-feedback.png" alt="Wireframe revision based on teammate feedback in Figma">
+            </div>
+            <figcaption class="figure-caption"><em>Iterated on teammate feedback &mdash; e.g. moving filter tags below the description so they don't overlap the image, and making the whole card open the resource.</em></figcaption>
+          </figure>
         </div>
-        <figcaption class="figure-caption">explored multiple layouts and banner variations, iterating on team feedback in Figma</figcaption>
-      </figure>
+      </div>
     </section>
 
     <!-- FEATURES -->
@@ -196,7 +217,7 @@
           <div class="hbom-tabs__panels">
             <div class="hbom-tabs__panel" id="hbomPanel-filters" role="tabpanel" aria-labelledby="hbomTab-filters" tabindex="0">
               <div class="hbom-tabs__media">
-                <img src="../../assets/img/hbom-filters.png" alt="User type, topic, and media type filter panels" onerror="this.hidden=true; this.nextElementSibling.hidden=false;">
+                <img src="../../assets/img/hbom-filters.png?v=2" alt="User type, topic, and media type filter panels" onerror="this.hidden=true; this.nextElementSibling.hidden=false;">
                 <div class="hbom-tabs__placeholder" hidden><span>image coming</span></div>
               </div>
               <div class="hbom-tabs__copy">
@@ -207,7 +228,7 @@
 
             <div class="hbom-tabs__panel" id="hbomPanel-form" role="tabpanel" aria-labelledby="hbomTab-form" tabindex="0" hidden>
               <div class="hbom-tabs__media">
-                <img src="../../assets/img/hbom-form.png" alt="Combined looking-for and suggest-a-resource request form" onerror="this.hidden=true; this.nextElementSibling.hidden=false;">
+                <img src="../../assets/img/hbom-form.png?v=2" alt="Combined looking-for and suggest-a-resource request form" onerror="this.hidden=true; this.nextElementSibling.hidden=false;">
                 <div class="hbom-tabs__placeholder" hidden><span>image coming</span></div>
               </div>
               <div class="hbom-tabs__copy">
@@ -218,7 +239,7 @@
 
             <div class="hbom-tabs__panel" id="hbomPanel-detail" role="tabpanel" aria-labelledby="hbomTab-detail" tabindex="0" hidden>
               <div class="hbom-tabs__media">
-                <img src="../../assets/img/hbom-detail.png" alt="Resource detail page with provider logo, estimated-time indicator, and open-in-new-tab link" onerror="this.hidden=true; this.nextElementSibling.hidden=false;">
+                <img src="../../assets/img/hbom-detail.png?v=2" alt="Resource detail page with provider logo, estimated-time indicator, and open-in-new-tab link" onerror="this.hidden=true; this.nextElementSibling.hidden=false;">
                 <div class="hbom-tabs__placeholder" hidden><span>image coming</span></div>
               </div>
               <div class="hbom-tabs__copy">
