@@ -1180,7 +1180,7 @@ var PERSONA_COPY = {
         t.setAttribute('aria-selected', selected ? 'true' : 'false');
         t.tabIndex = selected ? 0 : -1;
         var panel = document.getElementById(t.getAttribute('aria-controls'));
-        if (panel) panel.hidden = !selected;
+        if (panel) panel.classList.toggle('is-active', selected);
       });
     }
 

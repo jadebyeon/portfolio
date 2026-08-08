@@ -2962,11 +2962,14 @@ body.is-settled #heroCopy [data-copy-line] {
   color: #fff;
 }
 .hbom-tabs__panel {
-  display: grid;
+  display: none;
   grid-template-columns: 1.2fr 1fr;
   gap: clamp(1.5rem, 3vw, 3rem);
   align-items: center;
   margin-top: 2rem;
+}
+.hbom-tabs__panel.is-active {
+  display: grid;
 }
 .hbom-tabs__media {
   position: relative;
