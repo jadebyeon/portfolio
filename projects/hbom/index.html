@@ -10,20 +10,50 @@
   <title>NVP Knowledge Hub — Jade Byeon</title>
   <meta name="description" content="Research, information architecture, and Webflow build of a searchable food-as-medicine resource hub for HBOM at the University of Michigan, by Jade Byeon." />
   <style>
-    /* Design section: two independent .single-tile-figure images
-       (artifact + process), side by side on wide screens, stacked
-       under ~760px. Everything else on this page reuses shared
-       classes only (section-nav, content-container, case-row,
-       persona-trio/persona-card, principle-row, quote-card,
+    /* Design section: two independent .single-tile-figure wireframe
+       images, stacked as full-width rows (they have different native
+       heights and clashed side by side). Decision beats below reuse
+       .case-row, with a capped-width evidence image where one exists.
+       Everything else on this page reuses shared classes only
+       (section-nav, content-container, case-row, alert-statement,
        learnings-list, hbom-tabs). */
     .hbom-design-pair {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(1.25rem, 3vw, 2rem);
+      display: flex;
+      flex-direction: column;
+      gap: clamp(1.5rem, 3vw, 2.25rem);
       margin-top: 1.25rem;
     }
+    .hbom-design-pair .single-tile {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5f6f7;
+      max-height: 480px;
+    }
+    .hbom-design-pair .single-tile > img {
+      width: auto !important;
+      max-width: 100% !important;
+      max-height: 480px !important;
+      object-fit: contain !important;
+    }
     @media (max-width: 760px) {
-      .hbom-design-pair { grid-template-columns: 1fr; }
+      .hbom-design-pair .single-tile,
+      .hbom-design-pair .single-tile > img {
+        max-height: 320px !important;
+      }
+    }
+    .hbom-decisions {
+      margin-top: 2rem;
+    }
+    .hbom-decisions .case-row {
+      grid-template-columns: 190px 1fr;
+    }
+    .hbom-decisions .case-row__body .single-tile-figure {
+      max-width: 320px;
+      margin-top: 0.75rem;
+    }
+    @media (max-width: 700px) {
+      .hbom-decisions .case-row { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -113,11 +143,11 @@
         <p class="section-number">01</p>
         <h2 class="section-icon-title">Problem</h2>
 
-        <div class="alert-statement">
+        <div class="alert-statement alert-statement--danger">
           <span class="alert-statement__icon"><i class="uil uil-exclamation-triangle" aria-hidden="true"></i></span>
           <div>
-            <p class="alert-statement__headline">There was no centralized place to find or refer food-as-medicine resources.</p>
-            <p class="alert-statement__support">nutrivp.org was a landing page with nothing behind it.</p>
+            <p class="alert-statement__headline">FAM and ILOS benefits are real but fragmented: coverage varies by Medicaid plan and region, and existing resources are scattered across providers, PDFs, and one-off pages.</p>
+            <p class="alert-statement__support">Patients had no way to answer &ldquo;what does my plan cover?&rdquo;, and providers had no shared place to send them. nutrivp.org was a public landing page with no library behind it.</p>
           </div>
         </div>
       </div>
@@ -128,23 +158,18 @@
       <div class="content-container">
         <p class="section-number">02</p>
         <h2 class="section-icon-title">Research</h2>
-        <p class="section-takeaway">I audited Tufts Food is Medicine, the HHS/ODPHP FAM hub, StoryCorps, and the American Heart Association's Healthcare x Food.</p>
+        <p class="section-takeaway">I reviewed existing FAM and health resource sites to understand what works and what's missing.</p>
 
-        <div class="principle-row">
-          <div class="principle-card">
-            <span class="principle-icon" style="background:#f0f7f4;"><i class="uil uil-users-alt" style="color:#1a7a5e;"></i></span>
-            <strong>No user-type segmentation</strong>
-            <p>Every site treated visitors as one undifferentiated audience.</p>
+        <figure class="single-tile-figure" style="margin-top: 1.25rem;">
+          <div class="single-tile">
+            <img src="../../assets/img/hbom-audit.png" alt="Competitive audit of three existing food-as-medicine and health resource site homepages">
           </div>
-          <div class="principle-card">
-            <span class="principle-icon" style="background:#f0f7f4;"><i class="uil uil-question-circle" style="color:#1a7a5e;"></i></span>
-            <strong>Unclear click behavior</strong>
-            <p>Nothing signaled download vs. video vs. external before you clicked.</p>
-          </div>
-          <div class="principle-card">
-            <span class="principle-icon" style="background:#f0f7f4;"><i class="uil uil-comment-plus" style="color:#1a7a5e;"></i></span>
-            <strong>No way to ask</strong>
-            <p>None offered a path to request or suggest a missing resource.</p>
+        </figure>
+
+        <div class="case-row" style="margin-top: 1.5rem;">
+          <p class="case-row__label">What was missing</p>
+          <div class="case-row__body">
+            <p>No user-type segmentation &middot; unclear click behavior &middot; no way to ask for a missing resource.</p>
           </div>
         </div>
       </div>
@@ -170,6 +195,33 @@
             </div>
             <figcaption class="figure-caption"><em>Iterated on teammate feedback &mdash; e.g. moving filter tags below the description so they don't overlap the image, and making the whole card open the resource.</em></figcaption>
           </figure>
+        </div>
+
+        <div class="hbom-decisions">
+          <div class="case-row">
+            <p class="case-row__label">Filters built to scale</p>
+            <div class="case-row__body">
+              <p>User type became its own filter axis, backed by separate CMS collections &mdash; structured for 50+ resources even though only ~10&ndash;20 exist today.</p>
+            </div>
+          </div>
+          <div class="case-row">
+            <p class="case-row__label">Made clicking predictable</p>
+            <div class="case-row__body">
+              <p>A media-type icon and tag on every card, so users know download vs. video vs. external before they click.</p>
+            </div>
+          </div>
+          <div class="case-row">
+            <p class="case-row__label">Designed the ILOS/FAM icons with the team</p>
+            <div class="case-row__body">
+              <p>No visual precedent existed for these concepts, so I iterated the icon set directly on team feedback.</p>
+            </div>
+          </div>
+          <div class="case-row">
+            <p class="case-row__label">A platform constraint I designed around</p>
+            <div class="case-row__body">
+              <p>Webflow wouldn't allow per-resource embed-vs-link switching, so I chose linking out everywhere for consistency and lower maintenance for the team.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

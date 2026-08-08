@@ -2894,6 +2894,16 @@ body.is-settled #heroCopy [data-copy-line] {
   line-height: 1.6;
   margin: 0;
 }
+/* Danger variant: same shape, red instead of mint (real-stakes problem framing) */
+.alert-statement--danger {
+  background: color-mix(in oklab, #dc2626 7%, transparent);
+}
+.alert-statement--danger .alert-statement__icon {
+  background: color-mix(in oklab, #dc2626 15%, transparent);
+}
+.alert-statement--danger .alert-statement__icon i {
+  color: #dc2626;
+}
 
 /* ===== MINT PULL-QUOTE (accented callout, left-aligned) ===== */
 .mint-pullquote {
