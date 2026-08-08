@@ -3766,6 +3766,7 @@ body.is-settled #heroCopy [data-copy-line] {
   font-size: 0.85rem;
   color: var(--text-color-light);
   line-height: 1.5;
+  text-align: center;
 }
 @media (max-width: 640px) {
   .char-before-after {

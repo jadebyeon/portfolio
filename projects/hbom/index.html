@@ -10,47 +10,51 @@
   <title>NVP Knowledge Hub — Jade Byeon</title>
   <meta name="description" content="Research, information architecture, and Webflow build of a searchable food-as-medicine resource hub for HBOM at the University of Michigan, by Jade Byeon." />
   <style>
-    /* Design section: two independent .single-tile-figure wireframe
-       images, stacked as full-width rows (they have different native
-       heights and clashed side by side). Decision beats below reuse
-       .case-row, with a capped-width evidence image where one exists.
-       Everything else on this page reuses shared classes only
-       (section-nav, content-container, case-row, alert-statement,
-       learnings-list, hbom-tabs). */
-    .hbom-design-pair {
-      display: flex;
-      flex-direction: column;
-      gap: clamp(1.5rem, 3vw, 2.25rem);
+    /* Design section: process/wireframe figures are plain full-width
+       .single-tile-figure blocks stacked in normal flow, no wrapper
+       forcing equal heights (their native heights differ and don't
+       need to match). Decision captions below the decision image
+       reuse .case-row. Problem section's two pain-point boxes are the
+       only other page-scoped component. Everything else on this page
+       reuses shared classes only (section-nav, content-container,
+       case-row, alert-statement, learnings-list, hbom-tabs). */
+    .pain-point-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
       margin-top: 1.25rem;
     }
-    .hbom-design-pair .single-tile {
+    .pain-point-card {
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 1rem 1.25rem;
+    }
+    .pain-point-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--title-color);
+      margin: 0 0 0.35rem;
       display: flex;
       align-items: center;
-      justify-content: center;
-      background: #f5f6f7;
-      max-height: 480px;
+      gap: 0.4rem;
     }
-    .hbom-design-pair .single-tile > img {
-      width: auto !important;
-      max-width: 100% !important;
-      max-height: 480px !important;
-      object-fit: contain !important;
+    .pain-point-emoji { font-size: 1.1rem; }
+    .pain-point-quote {
+      font-size: 0.9rem;
+      color: var(--text-color-light);
+      font-style: italic;
+      line-height: 1.5;
+      margin: 0;
     }
-    @media (max-width: 760px) {
-      .hbom-design-pair .single-tile,
-      .hbom-design-pair .single-tile > img {
-        max-height: 320px !important;
-      }
+    @media (max-width: 600px) {
+      .pain-point-row { grid-template-columns: 1fr; }
     }
     .hbom-decisions {
-      margin-top: 2rem;
+      margin-top: 1.5rem;
     }
     .hbom-decisions .case-row {
       grid-template-columns: 190px 1fr;
-    }
-    .hbom-decisions .case-row__body .single-tile-figure {
-      max-width: 320px;
-      margin-top: 0.75rem;
     }
     @media (max-width: 700px) {
       .hbom-decisions .case-row { grid-template-columns: 1fr; }
@@ -147,7 +151,18 @@
           <span class="alert-statement__icon"><i class="uil uil-exclamation-triangle" aria-hidden="true"></i></span>
           <div>
             <p class="alert-statement__headline">FAM and ILOS benefits are real but fragmented: coverage varies by Medicaid plan and region, and existing resources are scattered across providers, PDFs, and one-off pages.</p>
-            <p class="alert-statement__support">Patients had no way to answer &ldquo;what does my plan cover?&rdquo;, and providers had no shared place to send them. nutrivp.org was a public landing page with no library behind it.</p>
+            <p class="alert-statement__support">nutrivp.org was a public landing page with no library behind it.</p>
+          </div>
+        </div>
+
+        <div class="pain-point-row">
+          <div class="pain-point-card">
+            <p class="pain-point-label"><span class="pain-point-emoji" aria-hidden="true">&#129489;</span> Patients</p>
+            <p class="pain-point-quote">&ldquo;What does my plan actually cover? &mdash; no way to find out.&rdquo;</p>
+          </div>
+          <div class="pain-point-card">
+            <p class="pain-point-label"><span class="pain-point-emoji" aria-hidden="true">&#x1FA7A;</span> Providers</p>
+            <p class="pain-point-quote">&ldquo;No shared place to send patients to learn more.&rdquo;</p>
           </div>
         </div>
       </div>
@@ -179,50 +194,43 @@
     <section class="project-section section-nav-target" id="design">
       <div class="content-container">
         <p class="section-number">03</p>
-        <h2 class="section-icon-title">Design</h2>
+        <h2 class="section-icon-title">Design decisions</h2>
         <p class="section-takeaway">I wireframed the hub in Figma and iterated with the team before building.</p>
 
-        <div class="hbom-design-pair">
-          <figure class="single-tile-figure">
-            <div class="single-tile">
-              <img src="../../assets/img/hbom-wireframe.png" alt="Main library and resource-detail page wireframes">
-            </div>
-            <figcaption class="figure-caption"><em>Main library + resource-detail wireframes.</em></figcaption>
-          </figure>
-          <figure class="single-tile-figure">
-            <div class="single-tile">
-              <img src="../../assets/img/hbom-feedback.png" alt="Wireframe revision based on teammate feedback in Figma">
-            </div>
-            <figcaption class="figure-caption"><em>Iterated on teammate feedback &mdash; e.g. moving filter tags below the description so they don't overlap the image, and making the whole card open the resource.</em></figcaption>
-          </figure>
-        </div>
+        <figure class="single-tile-figure" style="margin-top: 1.25rem;">
+          <div class="single-tile">
+            <img src="../../assets/img/hbom-decisions.png" alt="Filter placement and request form options compared, with the chosen option marked">
+          </div>
+        </figure>
 
         <div class="hbom-decisions">
           <div class="case-row">
-            <p class="case-row__label">Filters built to scale</p>
+            <p class="case-row__label">Filter placement</p>
             <div class="case-row__body">
-              <p>User type became its own filter axis, backed by separate CMS collections &mdash; structured for 50+ resources even though only ~10&ndash;20 exist today.</p>
+              <p>Side vs. top; after team feedback I used both, so users find filters wherever they look.</p>
             </div>
           </div>
           <div class="case-row">
-            <p class="case-row__label">Made clicking predictable</p>
+            <p class="case-row__label">Request form</p>
             <div class="case-row__body">
-              <p>A media-type icon and tag on every card, so users know download vs. video vs. external before they click.</p>
-            </div>
-          </div>
-          <div class="case-row">
-            <p class="case-row__label">Designed the ILOS/FAM icons with the team</p>
-            <div class="case-row__body">
-              <p>No visual precedent existed for these concepts, so I iterated the icon set directly on team feedback.</p>
-            </div>
-          </div>
-          <div class="case-row">
-            <p class="case-row__label">A platform constraint I designed around</p>
-            <div class="case-row__body">
-              <p>Webflow wouldn't allow per-resource embed-vs-link switching, so I chose linking out everywhere for consistency and lower maintenance for the team.</p>
+              <p>Beside the resource felt intrusive, so I moved it to the bottom as one dual-purpose request + suggest form.</p>
             </div>
           </div>
         </div>
+
+        <p class="case-row__label" style="margin-top: 2rem;">Process</p>
+        <figure class="single-tile-figure" style="margin-top: 0.75rem;">
+          <div class="single-tile">
+            <img src="../../assets/img/hbom-wireframe.png" alt="Main library and resource-detail page wireframes">
+          </div>
+          <figcaption class="figure-caption"><em>Main library + resource-detail wireframes.</em></figcaption>
+        </figure>
+        <figure class="single-tile-figure" style="margin-top: 1.5rem;">
+          <div class="single-tile">
+            <img src="../../assets/img/hbom-feedback.png" alt="Wireframe revision based on teammate feedback in Figma">
+          </div>
+          <figcaption class="figure-caption"><em>Iterated on teammate feedback &mdash; e.g. moving filter tags below the description so they don't overlap the image, and making the whole card open the resource.</em></figcaption>
+        </figure>
       </div>
     </section>
 
