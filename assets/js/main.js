@@ -204,13 +204,13 @@ document.querySelectorAll('.footer__back').forEach(function (link) {
   Hovering the character finalists board (mouse/trackpad only) hides the
   default cursor and shows a small mint "view why" pill. The pill is
   positioned with left/top set to the pointer's raw clientX/clientY on
-  every pointermove — no offset, no easing, no snapping toward tile
+  every pointermove: no offset, no easing, no snapping toward tile
   centers or any other element: it just sits exactly where the pointer
   is, pointer-events:none so it can never itself become the hit target.
   Shown only between pointerenter and pointerleave on the board itself.
   Clicking the board opens a lightbox with all four finalists shown
   large, reasoning always visible (no further hover/click needed
-  inside it) — except clicks on a tile itself, which still hand off to
+  inside it), except clicks on a tile itself, which still hand off to
   the existing click-to-toggle overlay above, so that behavior stays
   intact. Closes via the close button, backdrop click, or Esc; focus
   moves into the lightbox on open and returns to the board on close.
@@ -293,7 +293,7 @@ document.querySelectorAll('.footer__back').forEach(function (link) {
   Single place to edit the hero copy per audience tab.
 
   title: use [[...]] to mark the highlighted phrase (exactly one pair).
-  titleMode: how that phrase reveals —
+  titleMode: how that phrase reveals:
     'reveal'    marker-stroke clip-path sweep (Tab 1)
     'scramble'  characters flicker then settle, left to right (Tab 2)
     'pipeline'  each comma-separated word fades in as its own step,
@@ -318,7 +318,7 @@ var PERSONA_COPY = {
   },
   recruiters: {
     titleMode: 'scramble',
-    title: 'Product designer with a statistics degree — I turn [[research into shipped, measurable design.]]',
+    title: 'Product designer with a statistics degree: I turn [[research into shipped, measurable design.]]',
     line1Mode: 'text',
     line1: 'Seeking product design & UX internships (2026–27)',
     line2: null,
@@ -330,7 +330,7 @@ var PERSONA_COPY = {
   },
   designers: {
     titleMode: 'pipeline',
-    title: 'Every interface is a hypothesis — [[researched, prototyped, tested, shipped.]]',
+    title: 'Every interface is a hypothesis: [[researched, prototyped, tested, shipped.]]',
     line1Mode: 'pipeline',
     line1: 'mixed-methods research → design systems → front-end handoff',
     line2: 'Currently rebuilding this site in vanilla HTML/CSS/JS, one commit at a time',
@@ -342,7 +342,7 @@ var PERSONA_COPY = {
 };
 
 /*==================== PERSONA SWITCHER ====================
-  Click-triggered only — no hover-dependent behavior. Every tab's
+  Click-triggered only, no hover-dependent behavior. Every tab's
   extra effect (scramble, pipeline words, chips, lit segments) starts
   once the headline has landed (~300ms) and finishes within ~1s total.
   Respects prefers-reduced-motion by swapping instantly. */
@@ -366,7 +366,7 @@ var PERSONA_COPY = {
   // "abc [[def]] ghi" -> "abc <span class="text-mint" data-mint>def</span> ghi",
   // or, for titleMode "pipeline", each comma-separated word gets its own span.
   // When copy.revealSrc is set, the mint phrase also becomes a
-  // .reveal-trigger carrying a nested .hero-reveal-img — a pure-CSS
+  // .reveal-trigger carrying a nested .hero-reveal-img, a pure-CSS
   // :hover/:focus-visible reveal, no JS involved in showing it (see
   // .hero-reveal-img in styles.css). For "pipeline" mode that means
   // wrapping the whole run of per-word spans in one outer trigger,
@@ -389,7 +389,7 @@ var PERSONA_COPY = {
     var triggerAttrs = copy.revealSrc ? ' tabindex="0"' : '';
     // Mint text sits in its own inner span so scrambleReveal's
     // textContent rewrites (Tab 2) never wipe out the sibling reveal
-    // image — only [data-mint] > .mint-text gets rewritten as text.
+    // image: only [data-mint] > .mint-text gets rewritten as text.
     return escapeHTML(t.before) +
       '<span class="text-mint reveal-trigger" data-mint data-mint-mode="' + copy.titleMode + '"' + triggerAttrs + '><span class="mint-text">' + escapeHTML(t.mint) + '</span>' + revealImg + '</span>' +
       escapeHTML(t.after);

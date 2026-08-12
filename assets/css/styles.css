@@ -88,12 +88,12 @@
   --z-fixed: 100;
   --z-modal: 1000;
 
-  /* Editorial content grid — shared by the hero and portfolio layouts */
+  /* Editorial content grid, shared by the hero and portfolio layouts */
   --grid-cols: 12;
   --grid-gap: clamp(10px, 1.2vw, 20px);
   --container-max: 1200px;
 
-  /* Shared content container — aliases --container-max/--page-gutter so
+  /* Shared content container: aliases --container-max/--page-gutter so
      it always matches the header nav's rendered edges (see .content-container
      below), under names meant to be reused page-by-page without touching
      the legacy .container every page already depends on. */
@@ -127,7 +127,7 @@
 html { scroll-behavior: smooth; }
 /* Always reserve the scrollbar's width so the viewport-relative grid
    lines (position:fixed) and the normal-flow content (width:100%)
-   agree on how wide "the page" is — otherwise they drift apart by the
+   agree on how wide "the page" is, otherwise they drift apart by the
    scrollbar's width, showing up as a mismatched rightmost column. */
 html { scrollbar-gutter: stable; }
 /* make in-page anchors land below the fixed header */
@@ -301,7 +301,7 @@ img { max-width: 100%; height: auto; }
 .section-title{ margin-top: 0; }
 
 /* ==================== PORTFOLIO ==================== */
-/* Less top padding than other sections — the hero is already capped
+/* Less top padding than other sections. The hero is already capped
    to ~65vh specifically so the first card row peeks into view */
 .portfolio.section {
   padding-top: clamp(16px, 2vw, 32px);
@@ -317,7 +317,7 @@ img { max-width: 100%; height: auto; }
   column-gap: clamp(24px, 4vw, 48px);
   row-gap: clamp(40px, 6vw, 64px);
   /* Tile media now sizes to its own natural aspect ratio (see
-     .tile-framed below), so rows can hold tiles of different heights —
+     .tile-framed below), so rows can hold tiles of different heights,
      don't stretch every card in a row to match the tallest one. */
   align-items: start;
 }
@@ -339,7 +339,7 @@ img { max-width: 100%; height: auto; }
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  min-width: 0;                 /* <— important so tags can’t force width */
+  min-width: 0;                 /* <-- important so tags can't force width */
 }
 .portfolio__data{ padding-top: .25rem; }
 .portfolio__title{ font-size: 1.125rem; line-height: 1.25; }
@@ -465,7 +465,7 @@ img { max-width: 100%; height: auto; }
   padding-left: 0;
   margin: 0.75rem 0;
   display: flex;
-  flex-wrap: wrap;              /* <— was nowrap / overflow-x */
+  flex-wrap: wrap;              /* <-- was nowrap / overflow-x */
   gap: 0.45rem 0.6rem;
 }
 
@@ -921,10 +921,10 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 
 /* ==================== SECTION NAV (per-case rail / pill bar) ====================
    Reusable across project pages. Drop the same three-part markup on any
-   case page — `.section-nav-layout` wrapping a `.section-nav` (an <a
+   case page: `.section-nav-layout` wrapping a `.section-nav` (an <a
    class="section-nav__back"> plus a `.section-nav__list` of anchors) and
    a `.section-nav-content` (everything that used to sit directly in
-   <main>) — and only the anchor list + section ids need to change per
+   <main>). Only the anchor list + section ids need to change per
    case. The wrapper reuses --content-max/--gutter so the rail+content
    pair still lines up with every other page's content-container width.
    Scroll-spy is wired in assets/js/main.js; the scroll itself is native
@@ -1296,7 +1296,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   margin: clamp(16px, 2vw, 28px) auto var(--block-gap, 32px);
 }
 
-/* 3 equal columns — force grid on the wrapper */
+/* 3 equal columns: force grid on the wrapper */
 .figure-80.visual-3col .visual-grid{
   display: grid !important;
   grid-template-columns: repeat(3, minmax(0,1fr)) !important;
@@ -1720,7 +1720,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 
 /* ===== FILM FRAME (flush, edge-to-edge Vimeo embed) =====
    .film-frame is only a content-container-width wrapper now (no card
-   background/padding — unlike the homepage tile videos, in-case films
+   background/padding, unlike the homepage tile videos, in-case films
    run flush to the content container edge); .film-embed is the rounded,
    shadowed, responsive 16:9 box the iframe fills. Reused by both the
    "Robot" demo and the Sam interaction concept film on the OCT page. */
@@ -1749,12 +1749,12 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 
 /* ===== HOMEPAGE TILE VIDEOS: EDGE-TO-EDGE, UNIFORM 16:9 =====
-   No inner padded card — the video fills its tile directly. A fixed
+   No inner padded card: the video fills its tile directly. A fixed
    16:9 aspect-ratio on the card matches the hero videos' own export
    ratio, so object-fit:cover shows the full frame with no cropping
    and every tile stays the same height. The media is positioned
    absolute/inset:0 (same recipe as .film-embed's iframe above) rather
-   than a normal-flow height:100% child — that keeps it out of the
+   than a normal-flow height:100% child. That keeps it out of the
    card's own auto-sizing entirely, so a poster image whose ratio
    doesn't match 16:9 (shown before a video's first frame decodes)
    can't drag the card's height along with it. That also means
@@ -2121,7 +2121,7 @@ html {
 .home__resume-link[hidden] { display: none; }
 
 /* ===== HERO TAB-SWITCH REVEAL =====
-   Click-triggered only (see main.js). Base state is fully visible —
+   Click-triggered only (see main.js). Base state is fully visible,
    safe if JS hasn't run yet. .is-exiting fades old copy out quickly;
    .is-priming snaps new copy invisible with no transition so that
    removing it (in main.js) animates it back in, staggered per line
@@ -2146,7 +2146,7 @@ html {
 
 /* ---- Tab 1 (For Anyone): marker-stroke mint reveal ----
    Scoped to the .mint-text descendant, not [data-mint-mode="reveal"]
-   itself — that attribute sits on .reveal-trigger, which also holds
+   itself: that attribute sits on .reveal-trigger, which also holds
    the absolutely-positioned .hero-reveal-img popup. clip-path clips
    the whole element's painted output including out-of-flow children,
    so putting it directly on .reveal-trigger clipped the popup image
@@ -2157,7 +2157,7 @@ html {
 [data-mint-mode="reveal"] .mint-text {
   /* inline-block gives the phrase one unified border box (even when
      its own text wraps onto a 2nd line), so clip-path has a single
-     consistent box to animate — clip-path on a plain `inline` element
+     consistent box to animate. clip-path on a plain `inline` element
      clips per line fragment and gets stuck once the phrase wraps. */
   display: inline-block;
   max-width: 100%;
@@ -2172,7 +2172,7 @@ html {
 
 /* ---- Tab 2 (Recruiters): scramble mint + stat chips ----
    The scramble effect is driven entirely by main.js swapping
-   textContent, so the span itself needs no extra transition — just
+   textContent, so the span itself needs no extra transition, just
    the same wrap-safe box as the reveal mode. */
 [data-mint-mode="scramble"] {
   display: inline-block;
@@ -2230,7 +2230,7 @@ html {
 }
 
 .pipeline-segment {
-  /* pale/unlit — clearly lighter than the line's own resting color
+  /* pale/unlit, clearly lighter than the line's own resting color
      (--text-color-light) so "lighting up" reads as a real change */
   color: #dde0e5;
   transition: color 0.25s ease-out;
@@ -2362,7 +2362,7 @@ body.is-settled #heroCopy [data-copy-line] {
   background-image: radial-gradient(ellipse at 20% 30%, rgba(26, 122, 94, 0.04), transparent 60%);
 }
 
-/* Full-bleed — not capped to --container-max */
+/* Full-bleed: not capped to --container-max */
 .home__container {
   width: 100%;
   max-width: none;
@@ -2458,7 +2458,7 @@ body.is-settled #heroCopy [data-copy-line] {
   margin-bottom: 1.5rem;
 }
 
-/* ===== PROBLEM / SOLUTION ROW — REVISED ===== */
+/* ===== PROBLEM / SOLUTION ROW: REVISED ===== */
 .problem-solution-row {
   display: grid;
   grid-template-columns: 1fr 1px 1fr;
@@ -2500,7 +2500,7 @@ body.is-settled #heroCopy [data-copy-line] {
   .ps-divider { display: none; }
 }
 
-/* ===== DECISION CARDS — REVISED ===== */
+/* ===== DECISION CARDS: REVISED ===== */
 .decision-cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -2551,7 +2551,7 @@ body.is-settled #heroCopy [data-copy-line] {
   .decision-cards { grid-template-columns: 1fr; }
 }
 
-/* ===== PROJECT SECTION HEADINGS — MORE CONTRAST ===== */
+/* ===== PROJECT SECTION HEADINGS: MORE CONTRAST ===== */
 .project .project-section h2 {
   font-size: clamp(1.6rem, 2.8vw, 2.2rem);
   font-weight: 700;
@@ -2733,7 +2733,7 @@ body.is-settled #heroCopy [data-copy-line] {
   50% { opacity: 0; }
 }
 
-/* Prose max-width — the single biggest readability fix */
+/* Prose max-width: the single biggest readability fix */
 .project-section .prose p,
 .project-section .prose ul,
 .project-section .prose ol {
@@ -2810,7 +2810,7 @@ body.is-settled #heroCopy [data-copy-line] {
 }
 
 /* ===== ALERT STATEMENT (icon + bold ink line, subtle tinted card) =====
-   For a single plain-language problem statement — no big colored
+   For a single plain-language problem statement, no big colored
    headline, just a small icon and normal-weight bold ink text inside
    a light mint-tinted card. Reusable anywhere a mint-pullquote would
    be too loud. */
@@ -2913,7 +2913,7 @@ body.is-settled #heroCopy [data-copy-line] {
 }
 
 /* ===== PRINCIPLE CALLOUT (centered, bold statement) =====
-   For a single hard-won principle stated as fact, not a question —
+   For a single hard-won principle stated as fact, not a question:
    centered instead of left-rule-accented so it reads as a standalone
    declaration rather than a quoted excerpt. */
 .principle-callout {
@@ -2943,7 +2943,7 @@ body.is-settled #heroCopy [data-copy-line] {
 /* ===== FEATURE TAB SHOWCASE (click-only ARIA tabs) =====
    Reusable tabbed panel: a mint-underlined tab bar switches which
    panel (image + heading + caption) is visible below it. Switching
-   is a hard show/hide via the `hidden` attribute — no animation to
+   is a hard show/hide via the `hidden` attribute, no animation to
    gate under prefers-reduced-motion, only the tab underline's own
    color transition needs disabling there. See assets/js/main.js for
    the click/arrow-key switching logic (role=tablist/tab/tabpanel). */
@@ -3794,7 +3794,7 @@ body.is-settled #heroCopy [data-copy-line] {
 }
 
 /* ===== MISC CLUSTER (radial nodes on desktop, collapses to a
-   single-column list below ~760px) — see assets/js/main.js for the
+   single-column list below ~760px). See assets/js/main.js for the
    drag-to-rotate and optional auto-drift logic. Node positions are
    plain translate() offsets computed in JS from --cluster-radius, so
    the radius itself stays a normal responsive CSS value here. ===== */
@@ -4289,7 +4289,7 @@ body.is-settled #heroCopy [data-copy-line] {
   .user-context-row { grid-template-columns: 1fr; }
 }
 
-/* portfolio card — name / description / tags 순서 */
+/* portfolio card: name / description / tags 순서 */
 .portfolio__title-row {
   display: contents; /* wrapper 제거 효과 */
 }
@@ -4390,7 +4390,7 @@ body.is-settled #heroCopy [data-copy-line] {
 }
 
 /* Three-up variant of .persona-card (the pair grid above is hardcoded
-   to two columns) — neutral mint tint since these three aren't an
+   to two columns), neutral mint tint since these three aren't an
    emotional contrast pair, just parallel personas. */
 .persona-trio {
   display: grid;
@@ -4449,7 +4449,7 @@ body.is-settled #heroCopy [data-copy-line] {
 }
 
 /* Slim meta line under the hero image (role/timeline/team/tools as
-   one quiet line, not a 4-box grid — the hero should read fast). */
+   one quiet line, not a 4-box grid, the hero should read fast). */
 .case-hero-meta {
   margin-top: 1.25rem;
   color: var(--text-color-light);
@@ -4515,7 +4515,7 @@ body.is-settled #heroCopy [data-copy-line] {
   text-align: center;
   padding: 1.25rem;
   overflow-y: auto;
-  background: rgba(185, 28, 28, 0.9); /* red tint — all finalists except Sam */
+  background: rgba(185, 28, 28, 0.9); /* red tint: all finalists except Sam */
   opacity: 0;
   transform: translateY(100%);
   pointer-events: none;
@@ -4550,7 +4550,7 @@ body.is-settled #heroCopy [data-copy-line] {
   }
 }
 
-/* ===== SECTION INTRO TEXT — FULL WIDTH ===== */
+/* ===== SECTION INTRO TEXT: FULL WIDTH ===== */
 /* Subhead/intro text above full-width components (cards, grids, story-steps)
    should span the same width as those components, not be constrained to 68ch */
 .decision-cards-section .section-subhead,
