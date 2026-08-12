@@ -10,54 +10,81 @@
   <title>NVP Knowledge Hub — Jade Byeon</title>
   <meta name="description" content="Research, information architecture, and Webflow build of a searchable food-as-medicine resource hub for HBOM at the University of Michigan, by Jade Byeon." />
   <style>
-    /* Design section: process/wireframe figures are plain full-width
-       .single-tile-figure blocks stacked in normal flow, no wrapper
-       forcing equal heights (their native heights differ and don't
-       need to match). Decision captions below the decision image
-       reuse .case-row. Problem section's two pain-point boxes are the
-       only other page-scoped component. Everything else on this page
+    /* Problem section: two chat-style pain-point blocks (emoji+label
+       avatar column, speech-bubble quote to its right). Design
+       decisions section: each beat is a short case-row__label-styled
+       heading + full-width image + .figure-caption "chose" line, no
+       shared height-equalizing wrapper. Everything else on this page
        reuses shared classes only (section-nav, content-container,
        case-row, alert-statement, learnings-list, hbom-tabs). */
     .pain-point-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-top: 1.25rem;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
     }
-    .pain-point-card {
-      background: #f8fafc;
-      border: 1px solid #e5e7eb;
-      border-radius: 14px;
-      padding: 1rem 1.25rem;
+    .pain-point-block {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+    }
+    .pain-point-avatar {
+      flex-shrink: 0;
+      width: 68px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      text-align: center;
+    }
+    .pain-point-emoji {
+      font-size: 2.1rem;
+      line-height: 1;
     }
     .pain-point-label {
-      font-size: 0.85rem;
+      margin: 0;
+      font-size: 0.8rem;
       font-weight: 700;
       color: var(--title-color);
-      margin: 0 0 0.35rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
     }
-    .pain-point-emoji { font-size: 1.1rem; }
-    .pain-point-quote {
-      font-size: 0.9rem;
-      color: var(--text-color-light);
-      font-style: italic;
-      line-height: 1.5;
+    .pain-point-bubble {
+      position: relative;
+      flex: 1;
+      background: #eef6f1;
+      border-radius: 16px;
+      padding: 0.9rem 1.15rem;
+    }
+    .pain-point-bubble::before {
+      content: "";
+      position: absolute;
+      left: -8px;
+      top: 22px;
+      width: 0;
+      height: 0;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      border-right: 9px solid #eef6f1;
+    }
+    .pain-point-bubble p {
       margin: 0;
+      font-size: 0.9rem;
+      color: var(--title-color);
+      line-height: 1.5;
     }
     @media (max-width: 600px) {
       .pain-point-row { grid-template-columns: 1fr; }
     }
-    .hbom-decisions {
-      margin-top: 1.5rem;
+    .hbom-decision-beat {
+      margin-top: 2rem;
     }
-    .hbom-decisions .case-row {
-      grid-template-columns: 190px 1fr;
+    .hbom-decision-beat:first-of-type {
+      margin-top: 1.25rem;
     }
-    @media (max-width: 700px) {
-      .hbom-decisions .case-row { grid-template-columns: 1fr; }
+    .hbom-decision-beat__heading {
+      margin: 0 0 0.75rem;
+    }
+    .hbom-decision-beat .figure-caption {
+      margin-top: 0.5rem;
     }
   </style>
 </head>
@@ -156,13 +183,23 @@
         </div>
 
         <div class="pain-point-row">
-          <div class="pain-point-card">
-            <p class="pain-point-label"><span class="pain-point-emoji" aria-hidden="true">&#129489;</span> Patients</p>
-            <p class="pain-point-quote">&ldquo;What does my plan actually cover? &mdash; no way to find out.&rdquo;</p>
+          <div class="pain-point-block">
+            <div class="pain-point-avatar">
+              <span class="pain-point-emoji" aria-hidden="true">&#129489;</span>
+              <p class="pain-point-label">Patients</p>
+            </div>
+            <div class="pain-point-bubble">
+              <p>&ldquo;What does my plan actually cover? There is no way to find out.&rdquo;</p>
+            </div>
           </div>
-          <div class="pain-point-card">
-            <p class="pain-point-label"><span class="pain-point-emoji" aria-hidden="true">&#x1FA7A;</span> Providers</p>
-            <p class="pain-point-quote">&ldquo;No shared place to send patients to learn more.&rdquo;</p>
+          <div class="pain-point-block">
+            <div class="pain-point-avatar">
+              <span class="pain-point-emoji" aria-hidden="true">&#x1FA7A;</span>
+              <p class="pain-point-label">Providers</p>
+            </div>
+            <div class="pain-point-bubble">
+              <p>&ldquo;No shared place to send patients to learn more.&rdquo;</p>
+            </div>
           </div>
         </div>
       </div>
@@ -195,42 +232,37 @@
       <div class="content-container">
         <p class="section-number">03</p>
         <h2 class="section-icon-title">Design decisions</h2>
-        <p class="section-takeaway">I wireframed the hub in Figma and iterated with the team before building.</p>
+        <p class="section-takeaway">I explored multiple directions and weighed the tradeoffs before building.</p>
 
-        <figure class="single-tile-figure" style="margin-top: 1.25rem;">
-          <div class="single-tile">
-            <img src="../../assets/img/hbom-decisions.png" alt="Filter placement and request form options compared, with the chosen option marked">
-          </div>
-        </figure>
-
-        <div class="hbom-decisions">
-          <div class="case-row">
-            <p class="case-row__label">Filter placement</p>
-            <div class="case-row__body">
-              <p>Side vs. top; after team feedback I used both, so users find filters wherever they look.</p>
+        <div class="hbom-decision-beat">
+          <h3 class="case-row__label hbom-decision-beat__heading">Filter placement</h3>
+          <figure class="single-tile-figure">
+            <div class="single-tile">
+              <img src="../../assets/img/hbom_Filter%20placement.png" alt="Filter placement options compared: top, side, and both, with tradeoffs">
             </div>
-          </div>
-          <div class="case-row">
-            <p class="case-row__label">Request form</p>
-            <div class="case-row__body">
-              <p>Beside the resource felt intrusive, so I moved it to the bottom as one dual-purpose request + suggest form.</p>
-            </div>
-          </div>
+            <figcaption class="figure-caption"><em>Chose both &mdash; top for visibility, side for depth.</em></figcaption>
+          </figure>
         </div>
 
-        <p class="case-row__label" style="margin-top: 2rem;">Process</p>
-        <figure class="single-tile-figure" style="margin-top: 0.75rem;">
-          <div class="single-tile">
-            <img src="../../assets/img/hbom-wireframe.png" alt="Main library and resource-detail page wireframes">
-          </div>
-          <figcaption class="figure-caption"><em>Main library + resource-detail wireframes.</em></figcaption>
-        </figure>
-        <figure class="single-tile-figure" style="margin-top: 1.5rem;">
-          <div class="single-tile">
-            <img src="../../assets/img/hbom-feedback.png" alt="Wireframe revision based on teammate feedback in Figma">
-          </div>
-          <figcaption class="figure-caption"><em>Iterated on teammate feedback &mdash; e.g. moving filter tags below the description so they don't overlap the image, and making the whole card open the resource.</em></figcaption>
-        </figure>
+        <div class="hbom-decision-beat">
+          <h3 class="case-row__label hbom-decision-beat__heading">Resource detail layout</h3>
+          <figure class="single-tile-figure">
+            <div class="single-tile">
+              <img src="../../assets/img/hbom_Resource%20detail%20layout.png" alt="Resource detail page layout options compared, with tradeoffs">
+            </div>
+            <figcaption class="figure-caption"><em>Chose the banner detail; moved the form to the bottom of the page as one dual request + suggest form.</em></figcaption>
+          </figure>
+        </div>
+
+        <div class="hbom-decision-beat">
+          <h3 class="case-row__label hbom-decision-beat__heading">Card exploration</h3>
+          <figure class="single-tile-figure">
+            <div class="single-tile">
+              <img src="../../assets/img/hbom-feedback.png" alt="Several resource-card layout options explored and iterated with the team">
+            </div>
+            <figcaption class="figure-caption"><em>Explored several card layouts and iterated with the team &mdash; they chose option #5 and moved the tags below the description.</em></figcaption>
+          </figure>
+        </div>
       </div>
     </section>
 

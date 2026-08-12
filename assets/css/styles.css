@@ -2973,7 +2973,7 @@ body.is-settled #heroCopy [data-copy-line] {
 }
 .hbom-tabs__panel {
   display: none;
-  grid-template-columns: 1.2fr 1fr;
+  grid-template-columns: 1.85fr 1fr;
   gap: clamp(1.5rem, 3vw, 3rem);
   align-items: center;
   margin-top: 2rem;
