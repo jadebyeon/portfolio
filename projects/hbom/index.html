@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
   <link rel="stylesheet" href="../../assets/css/styles.css"/>
   <link rel="icon" type="image/svg+xml" href="../../assets/img/favicon.svg" />
-  <title>NVP Knowledge Hub — Jade Byeon</title>
+  <title>NVP Knowledge Hub: Jade Byeon</title>
   <meta name="description" content="Research, information architecture, and Webflow build of a searchable food-as-medicine resource hub for HBOM at the University of Michigan, by Jade Byeon." />
   <style>
     /* Problem section: two chat-style pain-point blocks (emoji+label
@@ -90,17 +90,21 @@
     .hbom-decision-beat:first-of-type {
       margin-top: 1.25rem;
     }
-    .hbom-decision-beat__pain {
-      margin: 0 0 0.4rem;
-      font-size: 0.9rem;
-      color: var(--text-color-light);
-      line-height: 1.5;
-    }
     .hbom-decision-beat__heading {
       margin: 0 0 0.75rem;
     }
-    .hbom-decision-beat .figure-caption {
-      margin-top: 0.5rem;
+    .hbom-decision-beat__pain {
+      margin: 0 0 1.25rem;
+    }
+    .hbom-decision-beat__explanation {
+      margin: 0.85rem 0 0;
+      color: var(--text-color);
+      line-height: 1.7;
+    }
+    .hbom-decision-beat__solution {
+      margin: 0.5rem 0 0;
+      color: var(--title-color);
+      line-height: 1.6;
     }
     /* Final outcome: MacBook mockup, video layered on top of the
        frame's screen cutout. Screen rect measured directly off
@@ -165,7 +169,8 @@
           <li class="section-nav__item"><a class="section-nav__link" href="#research">Research</a></li>
           <li class="section-nav__item"><a class="section-nav__link" href="#design">Design</a></li>
           <li class="section-nav__item"><a class="section-nav__link" href="#features">Features</a></li>
-          <li class="section-nav__item"><a class="section-nav__link" href="#impact">Impact</a></li>
+          <li class="section-nav__item"><a class="section-nav__link" href="#outcome">Final solution</a></li>
+          <li class="section-nav__item"><a class="section-nav__link" href="#takeaways">Takeaways</a></li>
         </ul>
       </nav>
       <div class="section-nav-content">
@@ -195,7 +200,7 @@
         <div class="case-row">
           <p class="case-row__label">What are FAM &amp; ILOS?</p>
           <div class="case-row__body">
-            <p>Food as Medicine (FAM) covers nutrition programs; In Lieu of Services (ILOS) lets Michigan Medicaid pay for them &mdash; but what's covered varies by plan and region.</p>
+            <p>Food as Medicine (FAM) covers nutrition programs; In Lieu of Services (ILOS) lets Michigan Medicaid pay for them, but what's covered varies by plan and region.</p>
           </div>
         </div>
       </div>
@@ -293,9 +298,9 @@
             <div>
               <p class="alert-statement__headline">What was missing</p>
               <ul class="alert-statement__list">
-                <li><strong>No user-type segmentation</strong> &mdash; every site treated visitors as one audience.</li>
-                <li><strong>Unclear click behavior</strong> &mdash; nothing signaled download vs. video vs. external before clicking.</li>
-                <li><strong>No way to ask</strong> &mdash; none offered a path to request or suggest a missing resource.</li>
+                <li><strong>No user-type segmentation:</strong> every site treated visitors as one audience.</li>
+                <li><strong>Unclear click behavior:</strong> nothing signaled download vs. video vs. external before clicking.</li>
+                <li><strong>No way to ask:</strong> none offered a path to request or suggest a missing resource.</li>
               </ul>
             </div>
           </div>
@@ -304,9 +309,9 @@
             <div>
               <p class="alert-statement__headline">What worked</p>
               <ul class="alert-statement__list">
-                <li><strong>Tufts Food is Medicine</strong> &mdash; every format in one place (not just videos), with side filters and detail-rich cards.</li>
-                <li><strong>StoryCorps</strong> &mdash; each story shows its length up front.</li>
-                <li><strong>Obama Presidency Oral History</strong> &mdash; warm, friendly, and interactive; never feels clinical.</li>
+                <li>Fewer, clearer filters beat dense panels at small resource counts.</li>
+                <li>Type and length cues up front cut the guesswork before a click.</li>
+                <li>A warm, non-clinical tone keeps health content approachable.</li>
               </ul>
             </div>
           </div>
@@ -322,36 +327,48 @@
         <p class="section-takeaway">I explored multiple directions and weighed the tradeoffs before building.</p>
 
         <div class="hbom-decision-beat">
-          <p class="hbom-decision-beat__pain">Filters were easy to overlook, so people never narrowed to what applied to them.</p>
-          <h3 class="case-row__label hbom-decision-beat__heading">Filter placement</h3>
+          <h3 class="case-row__label hbom-decision-beat__heading">1. Filter placement</h3>
+          <div class="alert-statement alert-statement--danger hbom-decision-beat__pain">
+            <span class="alert-statement__icon"><i class="uil uil-exclamation-circle" aria-hidden="true"></i></span>
+            <p>Filters were easy to overlook, so people never narrowed to what applied to them.</p>
+          </div>
           <figure class="single-tile-figure">
             <div class="single-tile">
               <img src="../../assets/img/hbom_Filter%20placement.png" alt="Filter placement options compared: top, side, and both, with tradeoffs">
             </div>
-            <figcaption class="figure-caption"><em>Chose both &mdash; top for visibility, side for depth.</em></figcaption>
           </figure>
+          <p class="hbom-decision-beat__explanation">I compared filters on the side, on top, and both. Side filters are familiar and scannable but easy to miss on a busy page; top filters are eye-catching but crowd as categories grow.</p>
+          <p class="hbom-decision-beat__solution"><strong>Solution: I used both, top for visibility and side for depth.</strong></p>
         </div>
 
         <div class="hbom-decision-beat">
-          <p class="hbom-decision-beat__pain">The detail page had to hold a lot without burying the next action.</p>
-          <h3 class="case-row__label hbom-decision-beat__heading">Resource detail layout</h3>
+          <h3 class="case-row__label hbom-decision-beat__heading">2. Resource detail layout</h3>
+          <div class="alert-statement alert-statement--danger hbom-decision-beat__pain">
+            <span class="alert-statement__icon"><i class="uil uil-exclamation-circle" aria-hidden="true"></i></span>
+            <p>The detail page had to hold a lot without burying the next action.</p>
+          </div>
           <figure class="single-tile-figure">
             <div class="single-tile">
               <img src="../../assets/img/hbom_Resource%20detail%20layout.png" alt="Resource detail page layout options compared, with tradeoffs">
             </div>
-            <figcaption class="figure-caption"><em>Chose the banner detail; moved the form to the bottom of the page as one dual request + suggest form.</em></figcaption>
           </figure>
+          <p class="hbom-decision-beat__explanation">I compared a banner-style detail against one with the form beside the resource. The banner holds a lot cleanly; the side form prompts sign-up but competes with the content and feels intrusive.</p>
+          <p class="hbom-decision-beat__solution"><strong>Solution: I kept the banner detail and moved the form to the bottom of the page as one dual request and suggest form.</strong></p>
         </div>
 
         <div class="hbom-decision-beat">
-          <p class="hbom-decision-beat__pain">Every card had to show type, credibility, and time &mdash; without clutter.</p>
-          <h3 class="case-row__label hbom-decision-beat__heading">Card exploration</h3>
+          <h3 class="case-row__label hbom-decision-beat__heading">3. Card exploration</h3>
+          <div class="alert-statement alert-statement--danger hbom-decision-beat__pain">
+            <span class="alert-statement__icon"><i class="uil uil-exclamation-circle" aria-hidden="true"></i></span>
+            <p>Every card had to show type, credibility, and time without clutter.</p>
+          </div>
           <figure class="single-tile-figure">
             <div class="single-tile">
               <img src="../../assets/img/hbom-feedback.png" alt="Several resource-card layout options explored and iterated with the team">
             </div>
-            <figcaption class="figure-caption"><em>Explored several card layouts and iterated with the team &mdash; they chose option #5 and moved the tags below the description.</em></figcaption>
           </figure>
+          <p class="hbom-decision-beat__explanation">I explored several card layouts and reviewed them with the team.</p>
+          <p class="hbom-decision-beat__solution"><strong>Solution: we moved forward with option 5 and put the tags below the description so they don't overlap the image.</strong></p>
         </div>
       </div>
     </section>
@@ -376,7 +393,7 @@
               </div>
               <div class="hbom-tabs__copy">
                 <h3>Non-gating filters</h3>
-                <p>User-type entry + Topic/Media filters. "All" by default &mdash; non-gating, so overlapping users never have to self-label.</p>
+                <p>User-type entry + Topic/Media filters. "All" by default: non-gating, so overlapping users never have to self-label.</p>
               </div>
             </div>
 
@@ -405,9 +422,9 @@
     </section>
 
     <!-- FINAL OUTCOME -->
-    <section class="project-section final-outcome" id="outcome">
+    <section class="project-section final-outcome section-nav-target" id="outcome">
       <div class="content-container">
-        <h2 class="section-icon-title">The hub, live</h2>
+        <h2 class="section-icon-title">Final solution</h2>
         <div class="mac-mockup">
           <video class="mac-screen" autoplay muted loop playsinline
                  src="../../assets/video/hbom_demo.mp4"></video>
@@ -416,12 +433,23 @@
       </div>
     </section>
 
-    <!-- IMPACT & HANDOFF -->
-    <section class="project-section section-nav-target" id="impact">
+    <!-- NEXT STEPS -->
+    <section class="project-section" style="padding-block: clamp(1.5rem, 3vw, 2.5rem);">
+      <div class="content-container">
+        <div class="case-row">
+          <p class="case-row__label">Next steps</p>
+          <div class="case-row__body">
+            <p>Usability testing with patients and providers, a public launch, and growing the library past its first set of resources.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAKEAWAYS -->
+    <section class="project-section section-nav-target" id="takeaways">
       <div class="content-container">
         <p class="section-number">05</p>
-        <h2 class="section-icon-title">Impact &amp; Takeaways</h2>
-        <p class="section-takeaway">Built and handed off to HBOM; public launch is pending, so these are learnings, not usage numbers.</p>
+        <h2 class="section-icon-title">Takeaways</h2>
 
         <div class="learnings-list">
           <div class="learning-item">
@@ -439,8 +467,6 @@
             </div>
           </div>
         </div>
-
-        <p style="margin-top: 1.5rem; color: var(--text-color-light); font-size: 0.9rem;"><em>Also edited a 30-second patient reel, which deepened my grasp of the field and the organization.</em></p>
       </div>
     </section>
 
