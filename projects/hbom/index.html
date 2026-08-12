@@ -74,11 +74,27 @@
     @media (max-width: 600px) {
       .pain-point-row { grid-template-columns: 1fr; }
     }
+    .alert-box-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .alert-box-row { grid-template-columns: 1fr; }
+    }
     .hbom-decision-beat {
       margin-top: 2rem;
     }
     .hbom-decision-beat:first-of-type {
       margin-top: 1.25rem;
+    }
+    .hbom-decision-beat__pain {
+      margin: 0 0 0.4rem;
+      font-size: 0.9rem;
+      color: var(--text-color-light);
+      line-height: 1.5;
     }
     .hbom-decision-beat__heading {
       margin: 0 0 0.75rem;
@@ -127,6 +143,24 @@
           <div class="hero-overlay">
             <h1 class="hero-title">NVP Knowledge Hub</h1>
             <p class="hero-subtitle">A searchable food-as-medicine resource hub for patients, providers, and advocates.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="project-section" style="padding-block: clamp(1.5rem, 3vw, 2.5rem);">
+      <div class="content-container">
+        <div class="case-row">
+          <p class="case-row__label">About NVP</p>
+          <div class="case-row__body">
+            <p>Nutrition Value Pathways is HBOM's food-as-medicine initiative connecting Medicaid patients to nutrition benefits.</p>
+          </div>
+        </div>
+        <div class="case-row">
+          <p class="case-row__label">What are FAM &amp; ILOS?</p>
+          <div class="case-row__body">
+            <p>Food as Medicine (FAM) covers nutrition programs; In Lieu of Services (ILOS) lets Michigan Medicaid pay for them &mdash; but what's covered varies by plan and region.</p>
           </div>
         </div>
       </div>
@@ -218,10 +252,28 @@
           </div>
         </figure>
 
-        <div class="case-row" style="margin-top: 1.5rem;">
-          <p class="case-row__label">What was missing</p>
-          <div class="case-row__body">
-            <p>No user-type segmentation &middot; unclear click behavior &middot; no way to ask for a missing resource.</p>
+        <div class="alert-box-row">
+          <div class="alert-statement alert-statement--danger">
+            <span class="alert-statement__icon"><i class="uil uil-exclamation-triangle" aria-hidden="true"></i></span>
+            <div>
+              <p class="alert-statement__headline">What was missing</p>
+              <ul class="alert-statement__list">
+                <li><strong>No user-type segmentation</strong> &mdash; every site treated visitors as one audience.</li>
+                <li><strong>Unclear click behavior</strong> &mdash; nothing signaled download vs. video vs. external before clicking.</li>
+                <li><strong>No way to ask</strong> &mdash; none offered a path to request or suggest a missing resource.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="alert-statement alert-statement--success">
+            <span class="alert-statement__icon"><i class="uil uil-lightbulb-alt" aria-hidden="true"></i></span>
+            <div>
+              <p class="alert-statement__headline">What worked</p>
+              <ul class="alert-statement__list">
+                <li><strong>Tufts Food is Medicine</strong> &mdash; every format in one place (not just videos), with side filters and detail-rich cards.</li>
+                <li><strong>StoryCorps</strong> &mdash; each story shows its length up front.</li>
+                <li><strong>Obama Presidency Oral History</strong> &mdash; warm, friendly, and interactive; never feels clinical.</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -235,6 +287,7 @@
         <p class="section-takeaway">I explored multiple directions and weighed the tradeoffs before building.</p>
 
         <div class="hbom-decision-beat">
+          <p class="hbom-decision-beat__pain">Filters were easy to overlook, so people never narrowed to what applied to them.</p>
           <h3 class="case-row__label hbom-decision-beat__heading">Filter placement</h3>
           <figure class="single-tile-figure">
             <div class="single-tile">
@@ -245,6 +298,7 @@
         </div>
 
         <div class="hbom-decision-beat">
+          <p class="hbom-decision-beat__pain">The detail page had to hold a lot without burying the next action.</p>
           <h3 class="case-row__label hbom-decision-beat__heading">Resource detail layout</h3>
           <figure class="single-tile-figure">
             <div class="single-tile">
@@ -255,6 +309,7 @@
         </div>
 
         <div class="hbom-decision-beat">
+          <p class="hbom-decision-beat__pain">Every card had to show type, credibility, and time &mdash; without clutter.</p>
           <h3 class="case-row__label hbom-decision-beat__heading">Card exploration</h3>
           <figure class="single-tile-figure">
             <div class="single-tile">

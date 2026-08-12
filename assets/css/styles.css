@@ -396,27 +396,15 @@ img { max-width: 100%; height: auto; }
   display: block;
   object-fit: cover;
   object-position: center;
-  transform-origin: center;
-  transition: transform .35s ease;
-  will-change: transform;
 }
 
-.portfolio__img--contain { 
+.portfolio__img--contain {
   object-fit: contain !important;   /* prevent crop/zoom */
 }
 
 /* give the contain area a subtle backdrop so empty bands look clean */
-.thumb { 
-  background: #f5f6f7; 
-}
-/* Desktop/Laptop: subtle hover zoom — capped low (not the old
-   1.02-1.06 range) so the scaled-up state still clears the gap to
-   the next tile instead of visibly touching it. */
-@media (hover: hover){
-  .portfolio__img-link:hover .portfolio__img,
-  .portfolio__img-link:hover .tile-media{
-    transform: scale(1.02);
-  }
+.thumb {
+  background: #f5f6f7;
 }
 
 /* Larger screens: wider ratio + softer corners */
@@ -424,17 +412,6 @@ img { max-width: 100%; height: auto; }
   .portfolio__img-link{
     aspect-ratio: 16 / 9;
     border-radius: 24px;
-  }
-}
-
-/* Respect reduced motion: no transition, and no hover scale at all
-   (not just an instant jump to 1.02). */
-@media (prefers-reduced-motion: reduce){
-  .portfolio__img,
-  .tile-media{ transition: none; }
-  .portfolio__img-link:hover .portfolio__img,
-  .portfolio__img-link:hover .tile-media{
-    transform: none;
   }
 }
 
@@ -1073,10 +1050,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 .project-image img{
   width:100%; height:auto; display:block;
-  transition: transform .35s ease;
-  will-change: transform;
 }
-.project-image:hover img{ transform: scale(1.03); }
 @media (min-width: 992px){ .project-image{ border-radius:24px; } }
 
 /* ---- Tighten hero → lede and match lede → meta ---- */
@@ -2091,28 +2065,9 @@ html {
   transform: translate3d(0, 28px, 0);
 }
 
-/* optional hover polish for cards/images */
-.portfolio__content,
-.two-up-tile,
-.single-tile,
-.paired-tile {
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.portfolio__content:hover,
-.two-up-tile:hover,
-.single-tile:hover,
-.paired-tile:hover {
-  transform: translateY(-4px);
-}
-
 @media (prefers-reduced-motion: reduce) {
   .reveal-up,
-  .reveal-up.is-visible,
-  .portfolio__content,
-  .two-up-tile,
-  .single-tile,
-  .paired-tile {
+  .reveal-up.is-visible {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
@@ -2904,6 +2859,34 @@ body.is-settled #heroCopy [data-copy-line] {
 .alert-statement--danger .alert-statement__icon i {
   color: #dc2626;
 }
+/* Success variant: same shape, green (what worked, not what's wrong) */
+.alert-statement--success {
+  background: color-mix(in oklab, #16a34a 7%, transparent);
+}
+.alert-statement--success .alert-statement__icon {
+  background: color-mix(in oklab, #16a34a 15%, transparent);
+}
+.alert-statement--success .alert-statement__icon i {
+  color: #16a34a;
+}
+/* Bulleted-list body, for when an alert-statement holds findings
+   instead of a single headline + support line. */
+.alert-statement__list {
+  margin: 0.5rem 0 0;
+  padding-left: 1.1rem;
+  font-size: 0.9rem;
+  color: var(--text-color-light);
+  line-height: 1.6;
+}
+.alert-statement__list li {
+  margin-bottom: 0.4rem;
+}
+.alert-statement__list li:last-child {
+  margin-bottom: 0;
+}
+.alert-statement__list strong {
+  color: var(--title-color);
+}
 
 /* ===== MINT PULL-QUOTE (accented callout, left-aligned) ===== */
 .mint-pullquote {
@@ -2927,6 +2910,34 @@ body.is-settled #heroCopy [data-copy-line] {
   color: var(--text-color);
   line-height: 1.7;
   margin: 0;
+}
+
+/* ===== PRINCIPLE CALLOUT (centered, bold statement) =====
+   For a single hard-won principle stated as fact, not a question —
+   centered instead of left-rule-accented so it reads as a standalone
+   declaration rather than a quoted excerpt. */
+.principle-callout {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+  background: color-mix(in oklab, var(--mint-color) 6%, transparent);
+  border-radius: 16px;
+  padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2.5rem);
+}
+.principle-callout__headline {
+  font-family: var(--display-font);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  color: var(--mint-color);
+  line-height: 1.2;
+  margin: 0 0 1rem;
+}
+.principle-callout__body {
+  font-size: 1rem;
+  color: var(--text-color);
+  line-height: 1.7;
+  max-width: 560px;
+  margin: 0 auto;
 }
 
 /* ===== FEATURE TAB SHOWCASE (click-only ARIA tabs) =====
