@@ -12,11 +12,12 @@
   <style>
     /* Problem section: two chat-style pain-point blocks (emoji+label
        avatar column, speech-bubble quote to its right). Design
-       decisions section: each beat is a short case-row__label-styled
-       heading + full-width image + .figure-caption "chose" line, no
-       shared height-equalizing wrapper. Everything else on this page
-       reuses shared classes only (section-nav, content-container,
-       case-row, alert-statement, learnings-list, hbom-tabs). */
+       decisions section: each beat is a small muted pain line, a
+       case-row__label-styled numbered heading, a flowing explanation
+       paragraph (mint-highlighted decision phrase inline), then the
+       comparison image. Everything else on this page reuses shared
+       classes only (section-nav, content-container, case-row,
+       alert-statement, learnings-list, hbom-tabs, text-mint). */
     .pain-point-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -85,33 +86,35 @@
       .alert-box-row { grid-template-columns: 1fr; }
     }
     .hbom-decision-beat {
-      margin-top: 2rem;
+      margin-top: 2.5rem;
     }
     .hbom-decision-beat:first-of-type {
-      margin-top: 1.25rem;
+      margin-top: 1.5rem;
+    }
+    .hbom-decision-beat__pain {
+      margin: 0 0 0.4rem;
+      font-size: 0.85rem;
+      color: var(--text-color-light);
+      line-height: 1.5;
+    }
+    .hbom-decision-beat__pain-mark {
+      color: #dc2626;
+      font-weight: 700;
+      margin-right: 0.15rem;
     }
     .hbom-decision-beat__heading {
       margin: 0 0 0.75rem;
     }
-    .hbom-decision-beat__pain {
-      margin: 0 0 1.25rem;
-    }
     .hbom-decision-beat__explanation {
-      margin: 0.85rem 0 0;
+      margin: 0 0 1.25rem;
       color: var(--text-color);
       line-height: 1.7;
     }
-    .hbom-decision-beat__solution {
-      margin: 0.5rem 0 0;
-      color: var(--title-color);
-      line-height: 1.6;
-    }
-    /* Final outcome: MacBook mockup, video layered on top of the
-       frame's screen cutout. Screen rect measured directly off
-       mac-frame.png's transparent cutout (not eyeballed). */
-    .final-outcome {
-      text-align: center;
-    }
+    /* Final outcome: numbered heading like every other section (left-
+       aligned), MacBook mockup centered independently via its own
+       margin-inline:auto. Video layered on top of the frame's screen
+       cutout; screen rect measured directly off mac-frame.png's
+       transparent cutout (not eyeballed). */
     .final-outcome h2 {
       margin-bottom: 1.75rem;
     }
@@ -327,48 +330,36 @@
         <p class="section-takeaway">I explored multiple directions and weighed the tradeoffs before building.</p>
 
         <div class="hbom-decision-beat">
+          <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__pain-mark" aria-hidden="true">!</span> Filters were easy to overlook, so people never narrowed to what applied to them.</p>
           <h3 class="case-row__label hbom-decision-beat__heading">1. Filter placement</h3>
-          <div class="alert-statement alert-statement--danger hbom-decision-beat__pain">
-            <span class="alert-statement__icon"><i class="uil uil-exclamation-circle" aria-hidden="true"></i></span>
-            <p>Filters were easy to overlook, so people never narrowed to what applied to them.</p>
-          </div>
+          <p class="hbom-decision-beat__explanation">I compared filters on the side, on top, and both. Side filters are familiar and scannable but easy to miss on a busy page; top filters are eye-catching but crowd as categories grow. After team feedback, I used <span class="text-mint">both, top for visibility and side for depth</span>.</p>
           <figure class="single-tile-figure">
             <div class="single-tile">
               <img src="../../assets/img/hbom_Filter%20placement.png" alt="Filter placement options compared: top, side, and both, with tradeoffs">
             </div>
           </figure>
-          <p class="hbom-decision-beat__explanation">I compared filters on the side, on top, and both. Side filters are familiar and scannable but easy to miss on a busy page; top filters are eye-catching but crowd as categories grow.</p>
-          <p class="hbom-decision-beat__solution"><strong>Solution: I used both, top for visibility and side for depth.</strong></p>
         </div>
 
         <div class="hbom-decision-beat">
+          <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__pain-mark" aria-hidden="true">!</span> The detail page had to hold a lot without burying the next action.</p>
           <h3 class="case-row__label hbom-decision-beat__heading">2. Resource detail layout</h3>
-          <div class="alert-statement alert-statement--danger hbom-decision-beat__pain">
-            <span class="alert-statement__icon"><i class="uil uil-exclamation-circle" aria-hidden="true"></i></span>
-            <p>The detail page had to hold a lot without burying the next action.</p>
-          </div>
+          <p class="hbom-decision-beat__explanation">I compared a banner-style detail against one with the form beside the resource. The banner holds a lot cleanly; the side form prompts sign-up but competes with the content and feels intrusive. I kept the <span class="text-mint">banner detail and moved the form to the bottom of the page</span> as one dual request and suggest form.</p>
           <figure class="single-tile-figure">
             <div class="single-tile">
               <img src="../../assets/img/hbom_Resource%20detail%20layout.png" alt="Resource detail page layout options compared, with tradeoffs">
             </div>
           </figure>
-          <p class="hbom-decision-beat__explanation">I compared a banner-style detail against one with the form beside the resource. The banner holds a lot cleanly; the side form prompts sign-up but competes with the content and feels intrusive.</p>
-          <p class="hbom-decision-beat__solution"><strong>Solution: I kept the banner detail and moved the form to the bottom of the page as one dual request and suggest form.</strong></p>
         </div>
 
         <div class="hbom-decision-beat">
+          <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__pain-mark" aria-hidden="true">!</span> Every card had to show type, credibility, and time without clutter.</p>
           <h3 class="case-row__label hbom-decision-beat__heading">3. Card exploration</h3>
-          <div class="alert-statement alert-statement--danger hbom-decision-beat__pain">
-            <span class="alert-statement__icon"><i class="uil uil-exclamation-circle" aria-hidden="true"></i></span>
-            <p>Every card had to show type, credibility, and time without clutter.</p>
-          </div>
+          <p class="hbom-decision-beat__explanation">I explored several card layouts and reviewed them with the team. We <span class="text-mint">moved forward with option 5</span> and put the tags below the description so they don't overlap the image.</p>
           <figure class="single-tile-figure">
             <div class="single-tile">
               <img src="../../assets/img/hbom-feedback.png" alt="Several resource-card layout options explored and iterated with the team">
             </div>
           </figure>
-          <p class="hbom-decision-beat__explanation">I explored several card layouts and reviewed them with the team.</p>
-          <p class="hbom-decision-beat__solution"><strong>Solution: we moved forward with option 5 and put the tags below the description so they don't overlap the image.</strong></p>
         </div>
       </div>
     </section>
@@ -424,6 +415,7 @@
     <!-- FINAL OUTCOME -->
     <section class="project-section final-outcome section-nav-target" id="outcome">
       <div class="content-container">
+        <p class="section-number">05</p>
         <h2 class="section-icon-title">Final solution</h2>
         <div class="mac-mockup">
           <video class="mac-screen" autoplay muted loop playsinline
@@ -434,21 +426,16 @@
     </section>
 
     <!-- NEXT STEPS -->
-    <section class="project-section" style="padding-block: clamp(1.5rem, 3vw, 2.5rem);">
+    <section class="project-section">
       <div class="content-container">
-        <div class="case-row">
-          <p class="case-row__label">Next steps</p>
-          <div class="case-row__body">
-            <p>Usability testing with patients and providers, a public launch, and growing the library past its first set of resources.</p>
-          </div>
-        </div>
+        <h2 class="section-icon-title">Next steps</h2>
+        <p class="section-takeaway">Usability testing with patients and providers, a public launch, and growing the library past its first set of resources.</p>
       </div>
     </section>
 
     <!-- TAKEAWAYS -->
     <section class="project-section section-nav-target" id="takeaways">
       <div class="content-container">
-        <p class="section-number">05</p>
         <h2 class="section-icon-title">Takeaways</h2>
 
         <div class="learnings-list">
@@ -506,7 +493,6 @@
         <div class="footer__links">
           <a href="mailto:jadebyeonj@gmail.com" class="footer__btn" aria-label="Email">Email</a>
           <a href="https://www.linkedin.com/in/jadebyeon/" target="_blank" rel="noopener noreferrer" class="footer__btn" aria-label="LinkedIn">LinkedIn</a>
-          <a href="https://www.instagram.com/b._.jade/" target="_blank" rel="noopener noreferrer" class="footer__btn" aria-label="Instagram">Instagram</a>
         </div>
         <div class="footer__meta">
           <p>Designed and developed by Jade Byeon</p>
