@@ -91,8 +91,11 @@
     .hbom-decision-beat:first-of-type {
       margin-top: 1.5rem;
     }
+    .hbom-decision-beat__heading {
+      margin: 0 0 0.5rem;
+    }
     .hbom-decision-beat__pain {
-      margin: 0 0 0.4rem;
+      margin: 0 0 0.85rem;
       font-size: 0.85rem;
       color: var(--text-color-light);
       line-height: 1.5;
@@ -102,19 +105,41 @@
       font-weight: 700;
       margin-right: 0.15rem;
     }
-    .hbom-decision-beat__heading {
-      margin: 0 0 0.75rem;
+    .hbom-decision-beat__pain-label {
+      font-weight: 700;
+      color: var(--title-color);
     }
     .hbom-decision-beat__explanation {
       margin: 0 0 1.25rem;
       color: var(--text-color);
       line-height: 1.7;
     }
+    /* Crop out the blank top margin baked into the Filter placement /
+       Resource detail layout exports (measured directly off the PNGs:
+       ~220px of 1709px is empty background before the cards start).
+       object-position:bottom crops from the top only, so the real
+       content and captions at the bottom stay untouched. Higher
+       specificity + !important needed to beat .single-tile's own
+       !important aspect-ratio/object-fit reset. */
+    .single-tile.hbom-crop-top {
+      aspect-ratio: 3448 / 1489 !important;
+    }
+    .single-tile.hbom-crop-top > img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      object-position: center bottom !important;
+    }
     /* Final outcome: numbered heading like every other section (left-
        aligned), MacBook mockup centered independently via its own
        margin-inline:auto. Video layered on top of the frame's screen
        cutout; screen rect measured directly off mac-frame.png's
-       transparent cutout (not eyeballed). */
+       transparent cutout (not eyeballed). Section padding trimmed so
+       the mockup doesn't float in as much empty space as the default
+       section rhythm gives every other section. */
+    .project .project-section.final-outcome {
+      padding-block: clamp(1.75rem, 3.5vw, 3rem);
+    }
     .final-outcome h2 {
       margin-bottom: 1.75rem;
     }
@@ -266,7 +291,7 @@
               <p class="pain-point-label">Patients</p>
             </div>
             <div class="pain-point-bubble">
-              <p>&ldquo;What does my plan actually cover? There is no way to find out.&rdquo;</p>
+              <p>What does my plan actually cover?</p>
             </div>
           </div>
           <div class="pain-point-block">
@@ -275,7 +300,7 @@
               <p class="pain-point-label">Providers</p>
             </div>
             <div class="pain-point-bubble">
-              <p>&ldquo;No shared place to send patients to learn more.&rdquo;</p>
+              <p>No shared place to send patients to learn more.</p>
             </div>
           </div>
         </div>
@@ -301,9 +326,9 @@
             <div>
               <p class="alert-statement__headline">What was missing</p>
               <ul class="alert-statement__list">
-                <li><strong>No user-type segmentation:</strong> every site treated visitors as one audience.</li>
-                <li><strong>Unclear click behavior:</strong> nothing signaled download vs. video vs. external before clicking.</li>
-                <li><strong>No way to ask:</strong> none offered a path to request or suggest a missing resource.</li>
+                <li><strong>No user-type segmentation:</strong> one page for everyone.</li>
+                <li><strong>Unclear click behavior:</strong> no cue before you click.</li>
+                <li><strong>No way to ask:</strong> no request or suggest path.</li>
               </ul>
             </div>
           </div>
@@ -312,9 +337,9 @@
             <div>
               <p class="alert-statement__headline">What worked</p>
               <ul class="alert-statement__list">
-                <li>Fewer, clearer filters beat dense panels at small resource counts.</li>
-                <li>Type and length cues up front cut the guesswork before a click.</li>
-                <li>A warm, non-clinical tone keeps health content approachable.</li>
+                <li><span class="text-mint">Fewer, clearer filters</span> win at small counts.</li>
+                <li><span class="text-mint">Type and length cues</span> cut click guesswork.</li>
+                <li>A <span class="text-mint">warm, non-clinical tone</span> stays approachable.</li>
               </ul>
             </div>
           </div>
@@ -330,30 +355,30 @@
         <p class="section-takeaway">I explored multiple directions and weighed the tradeoffs before building.</p>
 
         <div class="hbom-decision-beat">
-          <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__pain-mark" aria-hidden="true">!</span> Filters were easy to overlook, so people never narrowed to what applied to them.</p>
           <h3 class="case-row__label hbom-decision-beat__heading">1. Filter placement</h3>
+          <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__pain-mark" aria-hidden="true">!</span> <span class="hbom-decision-beat__pain-label">Pain point</span> &middot; Filters were easy to overlook, so people never narrowed to what applied to them.</p>
           <p class="hbom-decision-beat__explanation">I compared filters on the side, on top, and both. Side filters are familiar and scannable but easy to miss on a busy page; top filters are eye-catching but crowd as categories grow. After team feedback, I used <span class="text-mint">both, top for visibility and side for depth</span>.</p>
           <figure class="single-tile-figure">
-            <div class="single-tile">
+            <div class="single-tile hbom-crop-top">
               <img src="../../assets/img/hbom_Filter%20placement.png" alt="Filter placement options compared: top, side, and both, with tradeoffs">
             </div>
           </figure>
         </div>
 
         <div class="hbom-decision-beat">
-          <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__pain-mark" aria-hidden="true">!</span> The detail page had to hold a lot without burying the next action.</p>
           <h3 class="case-row__label hbom-decision-beat__heading">2. Resource detail layout</h3>
+          <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__pain-mark" aria-hidden="true">!</span> <span class="hbom-decision-beat__pain-label">Pain point</span> &middot; The detail page had to hold a lot without burying the next action.</p>
           <p class="hbom-decision-beat__explanation">I compared a banner-style detail against one with the form beside the resource. The banner holds a lot cleanly; the side form prompts sign-up but competes with the content and feels intrusive. I kept the <span class="text-mint">banner detail and moved the form to the bottom of the page</span> as one dual request and suggest form.</p>
           <figure class="single-tile-figure">
-            <div class="single-tile">
+            <div class="single-tile hbom-crop-top">
               <img src="../../assets/img/hbom_Resource%20detail%20layout.png" alt="Resource detail page layout options compared, with tradeoffs">
             </div>
           </figure>
         </div>
 
         <div class="hbom-decision-beat">
-          <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__pain-mark" aria-hidden="true">!</span> Every card had to show type, credibility, and time without clutter.</p>
           <h3 class="case-row__label hbom-decision-beat__heading">3. Card exploration</h3>
+          <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__pain-mark" aria-hidden="true">!</span> <span class="hbom-decision-beat__pain-label">Pain point</span> &middot; Every card had to show type, credibility, and time without clutter.</p>
           <p class="hbom-decision-beat__explanation">I explored several card layouts and reviewed them with the team. We <span class="text-mint">moved forward with option 5</span> and put the tags below the description so they don't overlap the image.</p>
           <figure class="single-tile-figure">
             <div class="single-tile">
@@ -429,7 +454,7 @@
     <section class="project-section">
       <div class="content-container">
         <h2 class="section-icon-title">Next steps</h2>
-        <p class="section-takeaway">Usability testing with patients and providers, a public launch, and growing the library past its first set of resources.</p>
+        <p>Usability testing with patients and providers, a public launch, and growing the library past its first set of resources.</p>
       </div>
     </section>
 
