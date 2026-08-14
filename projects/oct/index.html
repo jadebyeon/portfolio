@@ -12,22 +12,10 @@
   <style>
     /* Page-scoped overrides (this page only). */
 
-    /* Designing Under Constraints: compact vertical rhythm so the
-       section reads in roughly one screen instead of forcing a scroll,
-       without touching .constraint-blocks/.constraint-grid sitewide
-       (hbom's own constraint block reuses those unchanged). */
-    #designingUnderConstraints.constraints-compact {
-      padding-block: clamp(24px, 3vw, 48px) !important;
-    }
-    #designingUnderConstraints .constraint-blocks {
-      gap: clamp(1.5rem, 2.5vw, 2rem);
-      margin-top: 1.25rem;
-    }
-    #designingUnderConstraints .constraint-title {
-      margin-bottom: 0.75rem;
-    }
-    #designingUnderConstraints .constraint-num {
-      margin-bottom: 0.35rem;
+    /* Survey Results stat grid: down to 3 cards after dropping the
+       "30 caregivers" stat (duplicated the Method line above it). */
+    .impact-grid.oct-impact-grid--3 {
+      grid-template-columns: repeat(3, 1fr);
     }
 
     /* Character finalists board: custom "view why" cursor pill +
@@ -265,7 +253,9 @@
           <p class="constraint-label constraint-label--response">The call</p>
           <p class="constraint-text" style="margin-bottom: 1rem;">I recommended Sam on converging evidence, not one clean statistic, and documented the uncertainty in the paper.</p>
           <p class="constraint-label constraint-label--constraint">Why forced-choice</p>
-          <p class="constraint-text">Caregivers rate everything positively on a Likert scale. Forced choice surfaces what they'd actually pick.</p>
+          <p class="constraint-text" style="margin-bottom: 1rem;">Caregivers rate everything positively on a Likert scale. Forced choice surfaces what they'd actually pick.</p>
+          <p class="constraint-label constraint-label--constraint">Methods note: the IRB clock</p>
+          <p class="constraint-text">Direct child surveys needed an IRB approval cycle longer than the project window, so I used a caregiver-report instrument instead, capturing children's reactions through parent observation. Their spontaneous reactions during sessions entered the data anyway.</p>
         </div>
     
         <!-- STORY -->
@@ -383,6 +373,7 @@
         <h2 class="section-icon-title">Character Design</h2>
         <p class="section-takeaway">Four concepts, one recommendation: Sam the Ranger, for cross-age appeal and clinical fit.</p>
         <p>Each concept targeted a different emotional register. Survey data and medical staff review narrowed the field to Sam, a mission-driven ranger who reads well across ages.</p>
+        <p style="margin-top: 0.75rem; color: var(--text-color);">One clear finding: children saw through A-Eye's staring-contest narrative and stopped cooperating, which is why the robot never lying became a first principle for the whole interaction system.</p>
       </div>
 
       <figure class="figure-80 content-container single-tile-figure" style="margin-top: 1.5rem;">
@@ -433,15 +424,9 @@
           </div>
           <figcaption class="figure-caption">four character finalists with Optic · Sam the Ranger · A-Eye · Cheeze</figcaption>
         </figure>
-    </section>
 
-    <!-- PULL QUOTE: THE ROBOT MUST NEVER LIE -->
-    <section class="project-section" style="padding-block: clamp(2rem, 4vw, 3rem);">
       <div class="content-container">
-        <div class="principle-callout">
-          <p class="principle-callout__headline">The robot must never lie.</p>
-          <p class="principle-callout__body">A-Eye framed the scan as a staring contest. Children caught the lie and stopped cooperating. Sam's story is true: the exam is real, and so is the child's part in it.</p>
-        </div>
+        <p style="margin-top: 1.5rem; color: var(--text-color);">Every concept also had to survive the clinic itself: infection control, cleaning cycles, constant equipment contact. The fix was one robot with multiple swappable characters, outfits and masks that come off and go through the wash, so hygiene never had to compete with personality.</p>
       </div>
     </section>
 
@@ -484,11 +469,7 @@
         <p class="constraint-label constraint-label--response">Key insight</p>
         <p class="constraint-text" style="margin-bottom: 1.5rem;">Over 60% reported curiosity and interest in every character; 80% rated Sam very or extremely effective at engaging children.</p>
 
-        <div class="impact-grid">
-          <div class="impact-card">
-            <p class="impact-number">30</p>
-            <p class="impact-label">caregivers surveyed at Kellogg Eye Center</p>
-          </div>
+        <div class="impact-grid oct-impact-grid--3">
           <div class="impact-card">
             <p class="impact-number">70%</p>
             <p class="impact-label">of caregivers preferred character-guided interaction over the traditional pediatric OCT exam</p>
@@ -510,63 +491,10 @@
       </div>
     </section>
 
-    <!-- ⑨.5 DESIGNING UNDER CONSTRAINTS -->
-    <section class="project-section constraints-compact section-nav-target" id="designingUnderConstraints">
-      <div class="content-container">
-        <p class="section-number">05</p>
-        <h2 class="section-icon-title">Designing Under Constraints</h2>
-
-        <div class="constraint-blocks">
-          <div class="constraint-block">
-            <p class="constraint-num">01</p>
-            <h3 class="constraint-title">The IRB clock</h3>
-            <div class="constraint-grid">
-              <div class="constraint-col">
-                <p class="constraint-label constraint-label--constraint">Constraint</p>
-                <p class="constraint-text">Direct child surveys required an approval cycle longer than our project window.</p>
-              </div>
-              <div class="constraint-col">
-                <p class="constraint-label constraint-label--response">My response</p>
-                <p class="constraint-text">I designed a caregiver-report instrument capturing children's states through parent observation. Their spontaneous reactions during sessions entered the data anyway.</p>
-              </div>
-            </div>
-          </div>
-          <div class="constraint-block">
-            <p class="constraint-num">02</p>
-            <h3 class="constraint-title">Fear blocks the scan</h3>
-            <div class="constraint-grid">
-              <div class="constraint-col">
-                <p class="constraint-label constraint-label--constraint">Constraint</p>
-                <p class="constraint-text">An OCT scan needs a still child. A frightened one moves, cries, or refuses. Two thirds of our families were first-timers, the most anxious group.</p>
-              </div>
-              <div class="constraint-col">
-                <p class="constraint-label constraint-label--response">My response</p>
-                <p class="constraint-text">Anxiety reduction was a functional requirement: a scared child can't be scanned.</p>
-              </div>
-            </div>
-          </div>
-          <div class="constraint-block">
-            <p class="constraint-num">03</p>
-            <h3 class="constraint-title">The clinic filters everything</h3>
-            <div class="constraint-grid">
-              <div class="constraint-col">
-                <p class="constraint-label constraint-label--constraint">Constraint</p>
-                <p class="constraint-text">Every concept had to survive infection control, cleaning cycles, and equipment contact.</p>
-              </div>
-              <div class="constraint-col">
-                <p class="constraint-label constraint-label--response">My response</p>
-                <p class="constraint-text">One robot. Multiple swappable characters. Outfits and masks come off and go through the wash, no hygiene compromise.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- ⑨.65 INTERACTION SYSTEM -->
     <section class="project-section section-nav-target" id="interaction">
       <div class="content-container">
-        <p class="section-number">06</p>
+        <p class="section-number">05</p>
         <h2 class="section-icon-title">Interaction</h2>
 
         <div class="principles-strip">
@@ -577,9 +505,23 @@
           <span class="principles-strip-item">One robot, many characters</span>
         </div>
         <p class="section-takeaway" style="margin-top: 0.5rem;">Every behavior below traces to one of these three principles.</p>
+        <p style="margin-top: 0.75rem; color: var(--text-color);">The project itself ran about a year. After it wrapped, I kept refining this interaction system on my own.</p>
+
+        <h3 style="margin-top: 1.5rem; margin-bottom: 0; font-size: 1.05rem; font-weight: 700; color: var(--title-color);">Interaction Specification</h3>
       </div>
 
-      <figure class="film-frame content-container" style="margin-top: 1.5rem;">
+      <figure class="figure-80 content-container single-tile-figure" style="margin-top: 1.5rem;">
+        <div class="single-tile">
+          <img src="../../assets/img/oct_spec.png" alt="Sam the Ranger service blueprint: journey phases (Pre-Exposure, First Contact, Calibration, The Game, Success &amp; Goodbye) mapped across child actions, Sam's front-stage dialogue, and the system's back-stage mechanism for each phase.">
+        </div>
+        <figcaption class="figure-caption">Sam the Ranger service blueprint, exported from Figma</figcaption>
+      </figure>
+
+      <div class="content-container">
+        <p style="margin-top: 1.5rem;">The blueprint above defines the system; the film below visualizes it.</p>
+      </div>
+
+      <figure class="film-frame content-container" style="margin-top: 1rem;">
         <div class="film-embed">
           <iframe
             src="https://player.vimeo.com/video/1213024532?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
@@ -594,21 +536,8 @@
       </figure>
 
       <div class="content-container">
-        <p style="margin-top: 1.5rem;">The film above visualizes this system; the diagram and tables below define it.</p>
-
-        <h3 style="margin-top: 1.5rem; margin-bottom: 0; font-size: 1.05rem; font-weight: 700; color: var(--title-color);">Interaction Specification</h3>
-      </div>
-
-      <figure class="figure-80 content-container single-tile-figure" style="margin-top: 1.5rem;">
-        <div class="single-tile">
-          <img src="../../assets/img/oct_spec.png" alt="Sam the Ranger service blueprint: journey phases (Pre-Exposure, First Contact, Calibration, The Game, Success &amp; Goodbye) mapped across child actions, Sam's front-stage dialogue, and the system's back-stage mechanism for each phase.">
-        </div>
-        <figcaption class="figure-caption">Sam the Ranger service blueprint, exported from Figma</figcaption>
-      </figure>
-
-      <div class="content-container">
         <h3 style="margin-top: 2.5rem; margin-bottom: 0; font-size: 1.05rem; font-weight: 700; color: var(--title-color);">When it goes wrong</h3>
-        <p class="failure-intro">A spec that only covers the happy path isn't a spec. These are Sam's responses when a child disengages, including when Sam steps back.</p>
+        <p class="failure-intro">A spec that only covers the happy path isn't a spec. These are the cases caregivers and the clinical team actually raised: the moments a frightened child startles, cries, or moves during the scan, and how Sam responds.</p>
         <p class="failure-assumptions">Assumes voice output, a display, and basic motion/audio sensing. Detection methods are proposals for engineering validation.</p>
 
         <div class="failure-table-wrap">
@@ -635,28 +564,10 @@
                 <td data-label="Escalation">One gentle re-invite, then clinician handoff</td>
               </tr>
               <tr>
-                <td data-label="Situation">Child looks away</td>
-                <td data-label="Detection (proposed)">Gaze/motion tracking lost</td>
-                <td data-label="Sam's response">"Let's find the deer!"</td>
-                <td data-label="Escalation">No response in 10s &rarr; pause and wait</td>
-              </tr>
-              <tr>
                 <td data-label="Situation">Child moves during scan</td>
                 <td data-label="Detection (proposed)">Motion exceeds threshold</td>
                 <td data-label="Sam's response">Calm reminder to stay still</td>
                 <td data-label="Escalation">Pause scan, resume from last segment</td>
-              </tr>
-              <tr>
-                <td data-label="Situation">Adult speaks (parent/clinician)</td>
-                <td data-label="Detection (proposed)">Voice overlap</td>
-                <td data-label="Sam's response">Sam stops speaking immediately</td>
-                <td data-label="Escalation">Resume only after silence</td>
-              </tr>
-              <tr>
-                <td data-label="Situation">Exam interrupted</td>
-                <td data-label="Detection (proposed)">Timeout</td>
-                <td data-label="Sam's response">Save state, friendly hold message</td>
-                <td data-label="Escalation">Resume from previous step on return</td>
               </tr>
             </tbody>
           </table>
@@ -676,12 +587,10 @@
     <!-- ⑨.7 NEXT STEPS -->
     <section class="project-section section-nav-target" id="nextSteps">
       <div class="content-container">
-        <p class="section-number">07</p>
+        <p class="section-number">06</p>
         <h2 class="section-icon-title">Next steps</h2>
-        <p class="section-takeaway">My involvement ended December 2025. Here's what shipped, and what came after.</p>
+        <p class="section-takeaway">My involvement ended December 2025.</p>
         <div style="margin-top: 1.25rem; max-width: 560px;">
-          <p class="constraint-label constraint-label--response">Handoff</p>
-          <p class="constraint-text" style="margin-bottom: 1rem;">A validated character, a two-part storyboard, the pre-exposure video, and a concept film of the interaction system.</p>
           <p class="constraint-label constraint-label--constraint">Continued</p>
           <p class="constraint-text">The engineering team carried the physical prototype forward from there.</p>
         </div>
@@ -691,7 +600,7 @@
     <!-- ⑨.8 TAKEAWAYS -->
     <section class="project-section section-nav-target" id="takeaways">
       <div class="content-container">
-        <p class="section-number">08</p>
+        <p class="section-number">07</p>
         <h2 class="section-icon-title">Takeaways</h2>
         <div class="learnings-list">
           <div class="learning-item">
