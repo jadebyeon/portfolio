@@ -1718,15 +1718,15 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   border: 0;
 }
 
-/* ===== FILM FRAME (flush, edge-to-edge Vimeo embed) =====
-   .film-frame is only a content-container-width wrapper now (no card
-   background/padding, unlike the homepage tile videos, in-case films
-   run flush to the content container edge); .film-embed is the rounded,
-   shadowed, responsive 16:9 box the iframe fills. Reused by both the
-   "Robot" demo and the Sam interaction concept film on the OCT page. */
+/* ===== FILM FRAME (Vimeo embed, same edges as the rest of the page) =====
+   .film-frame is a plain content-container-width wrapper (no card
+   background); .film-embed is the rounded, shadowed, responsive 16:9
+   box the iframe fills. Reused by both the "Robot" demo and the Sam
+   interaction concept film on the OCT page. Left at .content-container's
+   own padding (no padding:0 override) so the video's edges line up
+   with the surrounding text/figures instead of bleeding past them. */
 .film-frame {
   background: none;
-  padding: 0;
 }
 .film-embed {
   position: relative;
