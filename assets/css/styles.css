@@ -2362,21 +2362,12 @@ body.is-settled #heroCopy [data-copy-line] {
   background-image: radial-gradient(ellipse at 20% 30%, rgba(26, 122, 94, 0.04), transparent 60%);
 }
 
-/* Full-bleed: not capped to --container-max */
-.home__container {
-  width: 100%;
-  max-width: none;
-  display: grid;
-  grid-template-columns: repeat(var(--grid-cols), 1fr);
-  column-gap: var(--grid-gap);
-}
-
+/* Hero uses the same .container box as the nav and the portfolio grid
+   below it (already in the HTML's class list) instead of its own
+   full-bleed grid, so its left edge lines up with the nav logo and
+   the tiles instead of sitting one grid column further in. */
 .home__data {
-  grid-column: 2 / -2;
-}
-
-@media (max-width: 767px) {
-  .home__data { grid-column: 1 / -1; }
+  width: 100%;
 }
 
 /* ===== HERO REVEAL IMAGE (see assets/js/main.js renderTitleHTML) =====
@@ -2625,6 +2616,31 @@ body.is-settled #heroCopy [data-copy-line] {
   display: flex;
   flex-direction: column;
   gap: 0;
+}
+
+/* Homepage tile hover-lift: an intentional affordance for the
+   clickable project cards (distinct from decorative hover on plain
+   images/figures elsewhere on the site, which stays removed). Whole
+   card lifts + scales as one unit; .tile-framed's overflow:visible
+   means nothing clips. Gap between tiles (.portfolio .container's
+   column-gap/row-gap) is already sized so a scaled tile can't touch
+   its neighbor. */
+.portfolio__content {
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+@media (hover: hover) {
+  .portfolio__content:hover {
+    transform: translateY(-8px) scale(1.02);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portfolio__content {
+    transition: none;
+  }
+  .portfolio__content:hover {
+    transform: none;
+  }
 }
 
 /* Image (or .tile-media video, same frame either way, see below) */
