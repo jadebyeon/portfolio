@@ -309,7 +309,7 @@ var PERSONA_COPY = {
     titleMode: 'reveal',
     title: "Hi, I'm Jade. I design products that [[make hard situations feel less hard.]]",
     line1Mode: 'text',
-    line1: 'Incoming MEng Design & Technology Innovation @ Duke',
+    line1: 'MEng Design & Technology Innovation @ Duke',
     line2: 'Previously BA Art & Design + BS Statistics @ University of Michigan',
     chips: null,
     resume: null,
