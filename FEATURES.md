@@ -10,19 +10,18 @@ Jade Byeon's personal design portfolio — a static, vanilla HTML/CSS/JS site de
 |------|----------------|---------------------|--------|
 | Homepage & First Impression | Persona-Adaptive Hero, Work Index | — | shipped |
 | Case Studies | Pediatric Eye Exam Robot (OCT), NVP Knowledge Hub (HBOM), Wearby (OOTD) | — | shipped |
-| Misc & Side Projects | Misc Cluster Index, TELL Tool, Turbo, Arts at the Unions, ICML 2025 Tutorial | — | shipped |
+| Misc & Side Projects | — | Misc Cluster Index, TELL Tool, Turbo, Arts at the Unions, ICML 2025 Tutorial | shipped |
 | About & Credibility | About Page | Resume Access | shipped |
 | Site Chrome & Navigation | — | Global Header & Nav, Footer & Contact, In-Case Section Navigation, Scroll Reveal | shipped |
 | SEO & Discoverability | — | Metadata & Structured Data, Sitemap | mixed |
 
 ## Needs Review
 
-- **HANOK case study is built but not reachable from any live navigation.** Its homepage tile is HTML-commented-out (`index.html`), it's absent from the Misc cluster, yet it's still listed in `sitemap.xml` and fully crawlable at its direct URL. The hero image also carries a `<!-- Replace with your actual hero image -->` placeholder comment, suggesting it isn't finished. Is this paused-in-progress work (status `planned`), or intentionally shelved (status `deprecated`)? Either way, `sitemap.xml` is currently telling search engines to index an unfinished, unlinked page.
+- **HANOK case study is built but not reachable from any live navigation.** Its homepage tile is HTML-commented-out (`index.html`), it's absent from the Misc cluster, yet it's still listed in `sitemap.xml` and fully crawlable at its direct URL. The hero image also carries a `<!-- Replace with your actual hero image -->` placeholder comment, suggesting it isn't finished. Status resolution deferred by the user for now — left undocumented as its own feature entry until its status (planned / deprecated / finished-but-unlinked) is decided. `sitemap.xml` is currently telling search engines to index it regardless.
 - **`projects/oct/spec.html`** ("Sam: Interaction & Behavior Specification") is a complete standalone page with no inbound link from `projects/oct/index.html` or anywhere else in the site. Was it meant to be linked from the OCT case study's Interaction section and got dropped, or is it superseded content that should be deleted?
 - **`projects/knowledge-hub/` is an empty directory** — no `index.html`, no assets. Likely a leftover from renaming that project to `hbom`/NVP Knowledge Hub. Safe to delete unless something is still meant to land there.
 - **Swiper.js (CSS + JS bundle) loads on every single page via CDN, but is never instantiated anywhere** — no `new Swiper(...)`, no `.swiper` markup, in any page in the repo. This is pure unused weight on every page load. Confirm it's safe to remove from all `<head>`/`<script>` includes.
 - **`sitemap.xml` is stale relative to the live site.** It lists `telltool-branding`, `uu-arts`, `oct`, `qq`, `turbo`, and the unreachable `hanok` — but omits `hbom`, `ootd`, and `misc`, three pages that are very much live and linked from the homepage. Worth regenerating rather than hand-patching, since it's already drifted once.
-- **Are the four Misc cluster sub-projects (TELL Tool, Turbo, Arts at the Unions, ICML 2025 Tutorial) `major` or `supporting` scale?** Each is a full standalone case study page (326–487 lines, comparable to Wearby's 452), but the site itself frames them as "side quests," one level down from the four flagship tiles on the homepage. Documented below as `major` within the Misc area rather than the Case Studies area — flag if that undersells them.
 
 ## Homepage & First Impression
 
@@ -89,7 +88,7 @@ Jade Byeon's personal design portfolio — a static, vanilla HTML/CSS/JS site de
 
 ## Misc & Side Projects
 
-> **Area summary:** Smaller, faster projects — branding, a research-communication effort, and one fitness-app redesign — presented as a self-contained cluster rather than mixed into the flagship four. See Needs Review for the major-vs-supporting scale question on these four.
+> **Area summary:** Smaller, faster projects — branding, a research-communication effort, and one fitness-app redesign — presented as a self-contained cluster rather than mixed into the flagship four. Scoped as supporting-scale work, matching the site's own "side quests" framing rather than the depth of the four flagship case studies.
 
 ### Misc Cluster Index
 
@@ -106,7 +105,7 @@ Jade Byeon's personal design portfolio — a static, vanilla HTML/CSS/JS site de
 
 | Field | Value |
 |-------|-------|
-| Scale | major |
+| Scale | supporting |
 | Status | shipped |
 | One-liner | A brand identity system designed to include every kind of family. |
 | Short | Visual identity work for TELL Tool, framed around inclusive representation of family structures. |
@@ -117,7 +116,7 @@ Jade Byeon's personal design portfolio — a static, vanilla HTML/CSS/JS site de
 
 | Field | Value |
 |-------|-------|
-| Scale | major |
+| Scale | supporting |
 | Status | shipped |
 | One-liner | A fitness app redesign focused on motivation, not just movement-tracking. |
 | Short | Redesign case study reframing a fitness app around sustaining motivation rather than pure activity logging. |
@@ -128,7 +127,7 @@ Jade Byeon's personal design portfolio — a static, vanilla HTML/CSS/JS site de
 
 | Field | Value |
 |-------|-------|
-| Scale | major |
+| Scale | supporting |
 | Status | shipped |
 | One-liner | Systems design for the infrastructure behind a campus arts engagement program. |
 | Short | Design work for the systems and infrastructure underlying a campus arts program, rather than a single user-facing artifact. |
@@ -139,7 +138,7 @@ Jade Byeon's personal design portfolio — a static, vanilla HTML/CSS/JS site de
 
 | Field | Value |
 |-------|-------|
-| Scale | major |
+| Scale | supporting |
 | Status | shipped |
 | One-liner | A live tutorial making diffusion-model research accessible, shipped for ICML 2025 attendees. |
 | Short | Research-communication project: a human-centered tutorial on diffusion models, delivered live at ICML 2025. |
