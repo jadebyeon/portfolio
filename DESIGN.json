@@ -1,0 +1,55 @@
+{
+  "northStar": "Research notebook, typeset for a fast reader",
+  "accessibility": "WCAG AA",
+  "colors": {
+    "charcoal-ink": { "token": "--title-color", "value": "hsl(250, 8%, 15%)", "hex": "#242329", "usage": "headings, primary titles, default link color" },
+    "slate-text": { "token": "--text-color", "value": "hsl(250, 8%, 45%)", "hex": "#6D6A7C", "usage": "body copy, descriptions" },
+    "soft-slate": { "token": "--text-color-light", "value": "hsl(250, 8%, 65%)", "hex": "#A19FAD", "usage": "secondary/muted text" },
+    "near-white": { "token": "--body-color", "value": "hsl(250, 60%, 99%)", "hex": "#FBFBFE", "usage": "page background" },
+    "true-white": { "token": null, "hex": "#FFFFFF", "usage": "elevated card/container surfaces" },
+    "deep-muted-forest": { "token": "--mint-color", "hex": "#1a7a5e", "usage": "the one accent — hover, focus, reveal moments only, never a resting fill" },
+    "dark-forest-text": { "token": null, "hex": "#064e3b", "usage": "accent used as text on hover, always paired with mint fill" },
+    "near-black": { "token": null, "hex": "#111111", "usage": "active/selected state fill, deliberately distinct from accent" },
+    "hairline-gray": { "token": null, "hex": ["#CCCCCC", "#D4D4D8", "#D1D5DB"], "usage": "borders on quiet chrome at rest" },
+    "muted-gray-text": { "token": null, "hex": ["#9CA3AF", "#4B5563"], "usage": "secondary label text" }
+  },
+  "deadTokens": ["--first-color", "--first-color-second", "--first-color-alt", "--first-color-lighter", "--input-color", "--container-color"],
+  "typography": {
+    "displayFont": "ClashGrotesk, Inter, sans-serif",
+    "bodyFont": "Inter, system-ui, sans-serif",
+    "fixedScale": {
+      "big": "2rem",
+      "h1": "1.5rem",
+      "h2": "1.25rem",
+      "h3": "1.125rem",
+      "normal": ".938rem",
+      "small": ".813rem",
+      "smaller": ".75rem"
+    },
+    "fluidScale": {
+      "heroTitle": "clamp(1.8rem, 3.6vw, 4rem)",
+      "aboutName": "clamp(2.8rem, 5.5vw, 4.8rem)",
+      "footerWordmark": "clamp(3.8rem, 11vw, 7rem)"
+    },
+    "weights": { "medium": 500, "semiBold": 600, "displayBold": 700 },
+    "readingMeasure": "52ch"
+  },
+  "elevation": {
+    "philosophy": "static elevation permitted on resting surfaces; stronger shadow tiers reserved for interaction feedback",
+    "shadowScale": {
+      "restingSubtle": ["0 1px 2px rgba(0,0,0,.04)", "0 1px 10px rgba(0,0,0,.06)"],
+      "liftMedium": ["0 8px 18px rgba(15,23,42,.18)", "0 12px 32px rgba(0,0,0,.14)", "0 8px 24px rgba(0,0,0,.12)"],
+      "liftStrong": ["0 14px 40px rgba(0,0,0,.14)", "0 20px 60px rgba(0,0,0,.18)"]
+    },
+    "focusRing": "0 0 0 3px color-mix(in oklab, var(--mint-color) 35-45%, transparent)",
+    "zIndex": { "tooltip": 10, "fixed": 100, "modal": 1000 }
+  },
+  "components": {
+    "pillButton": { "selector": ".footer__btn", "states": ["default", "hover"], "gaps": ["focus-visible"] },
+    "tag": { "selector": ".portfolio__tags .tag", "states": ["default"], "gaps": ["hover", "focus (only if made interactive)", "duplicate definitions need reconciling"] },
+    "personaTab": { "selector": ".persona-tab", "states": ["default", "hover", "active"], "gaps": ["focus-visible", "touch target height unverified on mobile"] },
+    "heroChip": { "selector": ".hero-chip", "states": ["default", "entrance"], "gaps": [] },
+    "portfolioTitleLink": { "selector": ".portfolio__title-link", "states": ["default", "hover", "focus-visible"], "gaps": [], "note": "reference pattern for filling other components' focus gaps" },
+    "sectionNavLink": { "selector": ".section-nav__link", "states": ["default", "hover", "focus-visible", "active"], "gaps": [] }
+  }
+}
