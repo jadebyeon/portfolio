@@ -12,7 +12,7 @@ Three overlapping audiences, switchable via the homepage persona tabs:
 All three are trying to accomplish the same thing from different angles: quickly decide "does this person's design judgment and experience meet my bar?"
 
 ## Purpose
-Convert a visit into a correct, favorable impression of Jade's design judgment and shipped experience — fast enough for a recruiter's skim, credible enough for a designer's scrutiny.
+Help visitors quickly understand what kind of designer Jade is, the jobs/works she can perform/deliver to the company/organization/recruiter, how she works (strenghts & weaknesses), and what evidence supports her design decisions — with enough depth for designers who want to look closer.
 
 ## Operating Conditions
 
@@ -23,7 +23,7 @@ Convert a visit into a correct, favorable impression of Jade's design judgment a
 **User skill level:** Mixed by design, not by accident. Recruiters/hiring managers and the general "Anyone" audience are non-specialists who need clarity without jargon. Designers/UX professionals are experts who will scrutinize reasoning and craft. The persona tabs exist specifically to serve this split — content depth and framing can shift per tab, but the underlying voice and quality bar should not.
 
 ## Voice
-Exacting, quietly confident, evidence-first. States credentials and outcomes plainly (e.g., "validated with 30 caregivers," "ARVO 2026 co-author") rather than oversells them. A little wry, never flashy ("Every interface is a hypothesis: researched, prototyped, tested, shipped."). Precise about what is and isn't confirmed — see the ARVO/ACM distinction in [CLAUDE.md](CLAUDE.md).
+Direct, specific, and human. States credentials and outcomes plainly (e.g., "validated with 30 caregivers," "ARVO 2026 co-author") rather than oversells them. Avoids dramatic framing, generic design-speak, and copy that's been polished into symmetrical, quotable lines — it should read like a person explaining their work, not a tagline. Precise about what is and isn't confirmed — see the ARVO/ACM distinction in [CLAUDE.md](CLAUDE.md).
 
 ## References
 - Well-typeset personal/research portfolios (ClashGrotesk display + Inter body pairing signals this direction)
@@ -38,7 +38,7 @@ Exacting, quietly confident, evidence-first. States credentials and outcomes pla
 1. **A recruiter's 10-second scan and a designer's close read both have to land.** Never trade one off for the other — surface the headline first, let depth be discoverable underneath.
 2. **Claim only what's confirmed.** If a credential or outcome's status is unconfirmed, don't state it as shipped (see CLAUDE.md's locked-copy precedent).
 3. **Desktop scanning is the primary case; mobile must never be an afterthought.** Design for the skim first, verify the phone second — but always verify it.
-4. **Craft precision is the message, not just the packaging.** Pixel-level care (alignment, hover behavior, film-frame consistency) is itself evidence of the design judgment being sold.
+4. **Craft precision supports the message, but does not replace design reasoning.** Show the decisions, constraints, evidence, and iterations behind the work; use visual polish to make that reasoning easier to understand.
 5. **Plain evidence over persuasion techniques.** State research numbers, validation counts, and outcomes directly rather than using hype language — the voice sells itself by being exact.
 
 ## Accessibility
