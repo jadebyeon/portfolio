@@ -123,6 +123,20 @@
   --gutter: var(--page-gutter);
 }
 
+/* Case study pages keep Lora for the page title only. Every other
+   heading inside a project page's main content -- section headings,
+   stat numbers, component-level headings -- falls back to Inter via
+   this scoped override. Every project page's main element carries the
+   "project" class, so scoping it here covers the whole page body
+   without touching each heading rule individually. Header and footer
+   sit outside main as siblings, so they still inherit Lora from root
+   on every page, case studies included. The .hero-title override back
+   to Lora lives further down, after the shared heading rule it needs
+   to beat -- see the comment there for why the order matters. */
+.project {
+  --display-font: var(--body-font);
+}
+
 /* Column count follows the same breakpoints as the container/gutter system */
 @media (max-width: 1279px) {
   :root { --grid-cols: 6; }
@@ -169,6 +183,15 @@ h1, h2, h3, h4, h5,
 .home__title, .brand, .hero-title,
 .footer__title, .project__title, .portfolio__title {
   font-family: var(--display-font);
+}
+
+/* Beats the shared rule above on source order (same specificity as its
+   own .hero-title clause) so the case study page title stays Lora
+   even where .project has scoped --display-font down to Inter. Must
+   stay below the rule it's overriding -- moving it back above would
+   silently lose this again. */
+.hero-title {
+  font-family: 'Lora', 'Inter', serif;
 }
 
 .text-mint {
@@ -3053,7 +3076,7 @@ body.is-settled #heroCopy [data-copy-line] {
   height: auto;
 }
 .hbom-tabs__copy h3 {
-  font-family: "Lora", "Inter", serif;
+  font-family: var(--body-font);
   font-size: 1.15rem;
   font-weight: 700;
   color: var(--title-color);
@@ -4580,7 +4603,7 @@ body.is-settled #heroCopy [data-copy-line] {
   pointer-events: auto;
 }
 .character-overlay-name {
-  font-family: "Lora", "Inter", serif;
+  font-family: var(--body-font);
   font-size: 1.05rem;
   font-weight: 600;
   color: #fff;
