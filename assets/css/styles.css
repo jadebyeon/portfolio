@@ -2,6 +2,37 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:wght@400;500;600;700&display=swap");
 
 @font-face {
+  font-family: 'Geist';
+  src: url('../fonts/Geist-ExtraLight.woff2') format('woff2');
+  font-weight: 200; font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('../fonts/Geist-Light.woff2') format('woff2');
+  font-weight: 300; font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('../fonts/Geist-Regular.woff2') format('woff2');
+  font-weight: 400; font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('../fonts/Geist-Medium.woff2') format('woff2');
+  font-weight: 500; font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('../fonts/Geist-SemiBold.woff2') format('woff2');
+  font-weight: 600; font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('../fonts/Geist-Bold.woff2') format('woff2');
+  font-weight: 700; font-display: swap;
+}
+
+@font-face {
   font-family: 'Geist Mono';
   src: url('../fonts/GeistMono-Regular.woff2') format('woff2');
   font-weight: 400; font-display: swap;
@@ -90,6 +121,16 @@
      the legacy .container every page already depends on. */
   --content-max: var(--container-max);
   --gutter: var(--page-gutter);
+}
+
+/* Lora is homepage-only for now. Every project page's main element
+   carries .project (see each projects folder's index.html) -- scoping
+   the override here instead of touching every heading rule
+   individually. Header/footer sit outside main as siblings, so they
+   keep inheriting Lora from :root on every page, including project
+   pages. */
+.project {
+  --display-font: 'Geist', sans-serif;
 }
 
 /* Column count follows the same breakpoints as the container/gutter system */
@@ -598,6 +639,7 @@ img { max-width: 100%; height: auto; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.55rem;
   padding: 0.8rem 2.1rem;
   border-radius: 999px;                       /* rounded rectangle / pill */
   border: 1px solid #d4d4d8;                 /* light gray outline */
@@ -3022,7 +3064,7 @@ body.is-settled #heroCopy [data-copy-line] {
   height: auto;
 }
 .hbom-tabs__copy h3 {
-  font-family: "Lora", "Inter", serif;
+  font-family: "Geist", "Inter", sans-serif;
   font-size: 1.15rem;
   font-weight: 700;
   color: var(--title-color);
@@ -4549,7 +4591,7 @@ body.is-settled #heroCopy [data-copy-line] {
   pointer-events: auto;
 }
 .character-overlay-name {
-  font-family: "Lora", "Inter", serif;
+  font-family: "Geist", "Inter", sans-serif;
   font-size: 1.05rem;
   font-weight: 600;
   color: #fff;
