@@ -1,58 +1,6 @@
 /* ==================== GOOGLE FONTS ==================== */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:wght@400;500;600;700&display=swap");
 
-@font-face {
-  font-family: 'Geist';
-  src: url('../fonts/Geist-ExtraLight.woff2') format('woff2');
-  font-weight: 200; font-display: swap;
-}
-@font-face {
-  font-family: 'Geist';
-  src: url('../fonts/Geist-Light.woff2') format('woff2');
-  font-weight: 300; font-display: swap;
-}
-@font-face {
-  font-family: 'Geist';
-  src: url('../fonts/Geist-Regular.woff2') format('woff2');
-  font-weight: 400; font-display: swap;
-}
-@font-face {
-  font-family: 'Geist';
-  src: url('../fonts/Geist-Medium.woff2') format('woff2');
-  font-weight: 500; font-display: swap;
-}
-@font-face {
-  font-family: 'Geist';
-  src: url('../fonts/Geist-SemiBold.woff2') format('woff2');
-  font-weight: 600; font-display: swap;
-}
-@font-face {
-  font-family: 'Geist';
-  src: url('../fonts/Geist-Bold.woff2') format('woff2');
-  font-weight: 700; font-display: swap;
-}
-
-@font-face {
-  font-family: 'Geist Mono';
-  src: url('../fonts/GeistMono-Regular.woff2') format('woff2');
-  font-weight: 400; font-display: swap;
-}
-@font-face {
-  font-family: 'Geist Mono';
-  src: url('../fonts/GeistMono-Medium.woff2') format('woff2');
-  font-weight: 500; font-display: swap;
-}
-@font-face {
-  font-family: 'Geist Mono';
-  src: url('../fonts/GeistMono-SemiBold.woff2') format('woff2');
-  font-weight: 600; font-display: swap;
-}
-@font-face {
-  font-family: 'Geist Mono';
-  src: url('../fonts/GeistMono-Bold.woff2') format('woff2');
-  font-weight: 700; font-display: swap;
-}
-
 /* ==================== VARIABLES ==================== */
 :root {
   /* Layout */
@@ -82,7 +30,6 @@
   /* Typography */
   --body-font: 'Inter', system-ui, sans-serif;
   --display-font: 'Lora', serif;
-  --mono-font: 'Geist Mono', monospace;
   --big-font-size: 2rem;
   --h1-font-size: 1.5rem;
   --h2-font-size: 1.25rem;
@@ -214,7 +161,7 @@ h1, h2, h3, h4, h5,
 .portfolio__tags .tag{
   --mint-color: #1a7a5e;  /* mint outline color */
 
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -397,7 +344,7 @@ img { max-width: 100%; height: auto; }
   align-items: center;
   gap: 0.4rem;
   margin: 0;
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -527,7 +474,7 @@ img { max-width: 100%; height: auto; }
   border: 1.2px solid var(--mint-outline);
   background-color: #ffffff;
   color: #4b5563;
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 0.65rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -564,7 +511,7 @@ img { max-width: 100%; height: auto; }
 
 .footer__eyebrow {
   margin: 0 0 0.75rem;
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 0.9rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -680,7 +627,7 @@ img { max-width: 100%; height: auto; }
 /* credits bottom-right */
 .footer__meta {
   text-align: right;
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 0.9rem;
   color: #4b5563;
 }
@@ -886,7 +833,7 @@ img { max-width: 100%; height: auto; }
 }
 
 .meta-label{
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-weight: 700;
   font-size: clamp(15px, 1.1vw, 18px);   /* slightly larger than body */
   color: var(--title-color);
@@ -894,7 +841,7 @@ img { max-width: 100%; height: auto; }
 }
 
 .meta-value{
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   color: var(--text-color);
   font-size: clamp(14px, 1.05vw, 17px);
   line-height: 1.6;
@@ -1961,7 +1908,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 
 .about-eyebrow {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.2em;
@@ -2004,7 +1951,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 
 .about-tag {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 0.78rem;
   font-weight: 500;
   padding: 0.35rem 0.85rem;
@@ -2248,7 +2195,7 @@ html {
   border: 1.5px solid #ccc;
   border-radius: 999px;
   padding: 0.35rem 0.9rem;
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 0.78rem;
   color: #555;
   letter-spacing: 0.01em;
@@ -2760,7 +2707,7 @@ body.is-settled #heroCopy [data-copy-line] {
 }
 
 .portfolio__tags .tag {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 0.58rem;
   letter-spacing: 0.13em;
   text-transform: uppercase;
@@ -4134,12 +4081,12 @@ body.is-settled #heroCopy [data-copy-line] {
 /* ===== CHART AXIS LABELS + LEGEND (shared by the journey scrubber) ===== */
 .arc-axis-label {
   font-size: 11px;
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   fill: var(--text-color-light);
 }
 .arc-x-label {
   font-size: 11px;
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   fill: var(--text-color-light);
   text-anchor: middle;
 }
@@ -4383,7 +4330,7 @@ body.is-settled #heroCopy [data-copy-line] {
   max-width: 100%;
 }
 .story-step-num {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.1em;
