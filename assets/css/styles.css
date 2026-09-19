@@ -123,16 +123,6 @@
   --gutter: var(--page-gutter);
 }
 
-/* Lora is homepage-only for now. Every project page's main element
-   carries .project (see each projects folder's index.html) -- scoping
-   the override here instead of touching every heading rule
-   individually. Header/footer sit outside main as siblings, so they
-   keep inheriting Lora from :root on every page, including project
-   pages. */
-.project {
-  --display-font: 'Geist', sans-serif;
-}
-
 /* Column count follows the same breakpoints as the container/gutter system */
 @media (max-width: 1279px) {
   :root { --grid-cols: 6; }
@@ -3063,7 +3053,7 @@ body.is-settled #heroCopy [data-copy-line] {
   height: auto;
 }
 .hbom-tabs__copy h3 {
-  font-family: "Geist", "Inter", sans-serif;
+  font-family: "Lora", "Inter", serif;
   font-size: 1.15rem;
   font-weight: 700;
   color: var(--title-color);
@@ -4590,7 +4580,7 @@ body.is-settled #heroCopy [data-copy-line] {
   pointer-events: auto;
 }
 .character-overlay-name {
-  font-family: "Geist", "Inter", sans-serif;
+  font-family: "Lora", "Inter", serif;
   font-size: 1.05rem;
   font-weight: 600;
   color: #fff;
