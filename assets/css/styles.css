@@ -1,36 +1,5 @@
 /* ==================== GOOGLE FONTS ==================== */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
-
-@font-face {
-  font-family: 'Geist';
-  src: url('../fonts/Geist-ExtraLight.woff2') format('woff2');
-  font-weight: 200; font-display: swap;
-}
-@font-face {
-  font-family: 'Geist';
-  src: url('../fonts/Geist-Light.woff2') format('woff2');
-  font-weight: 300; font-display: swap;
-}
-@font-face {
-  font-family: 'Geist';
-  src: url('../fonts/Geist-Regular.woff2') format('woff2');
-  font-weight: 400; font-display: swap;
-}
-@font-face {
-  font-family: 'Geist';
-  src: url('../fonts/Geist-Medium.woff2') format('woff2');
-  font-weight: 500; font-display: swap;
-}
-@font-face {
-  font-family: 'Geist';
-  src: url('../fonts/Geist-SemiBold.woff2') format('woff2');
-  font-weight: 600; font-display: swap;
-}
-@font-face {
-  font-family: 'Geist';
-  src: url('../fonts/Geist-Bold.woff2') format('woff2');
-  font-weight: 700; font-display: swap;
-}
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:wght@400;500;600;700&display=swap");
 
 @font-face {
   font-family: 'Geist Mono';
@@ -81,7 +50,7 @@
 
   /* Typography */
   --body-font: 'Inter', system-ui, sans-serif;
-  --display-font: 'Geist', sans-serif;
+  --display-font: 'Lora', serif;
   --mono-font: 'Geist Mono', monospace;
   --big-font-size: 2rem;
   --h1-font-size: 1.5rem;
@@ -2454,7 +2423,7 @@ body.is-settled #heroCopy [data-copy-line] {
 }
 
 .home__title {
-  font-family: "Geist", "Inter", sans-serif;
+  font-family: "Lora", "Inter", serif;
   font-size: clamp(1.8rem, 3.6vw, 4rem);
   font-weight: 500;
   line-height: 1.15 !important;
@@ -2702,7 +2671,7 @@ body.is-settled #heroCopy [data-copy-line] {
 
 .portfolio__title {
   margin: 0;
-  font-family: "Geist", "Inter", sans-serif;
+  font-family: "Lora", "Inter", serif;
   font-size: clamp(1.5rem, 1.8vw, 1.9rem);
   font-weight: 500;
   line-height: 1.15;
@@ -3053,7 +3022,7 @@ body.is-settled #heroCopy [data-copy-line] {
   height: auto;
 }
 .hbom-tabs__copy h3 {
-  font-family: "Geist", "Inter", sans-serif;
+  font-family: "Lora", "Inter", serif;
   font-size: 1.15rem;
   font-weight: 700;
   color: var(--title-color);
@@ -4216,7 +4185,7 @@ body.is-settled #heroCopy [data-copy-line] {
 }
 .impact-number {
   font-size: clamp(1.8rem, 3vw, 2.5rem);
-  font-weight: 800;
+  font-weight: 700;
   color: var(--mint-color);
   font-family: var(--display-font);
   margin: 0;
@@ -4580,7 +4549,7 @@ body.is-settled #heroCopy [data-copy-line] {
   pointer-events: auto;
 }
 .character-overlay-name {
-  font-family: "Geist", "Inter", sans-serif;
+  font-family: "Lora", "Inter", serif;
   font-size: 1.05rem;
   font-weight: 600;
   color: #fff;
