@@ -947,30 +947,35 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   align-self: flex-start;
   max-height: calc(100vh - var(--header-height) - 64px);
   overflow-y: auto;
-  /* Below 1680px there isn't enough natural side margin for a 176px rail
-     to sit outside a centered content column without overlapping it
-     (verified at 1280px: only 40px per side) -- user chose to accept
-     the current asymmetric flex layout there rather than force it. */
+  /* This in-flow flex/sticky version is now only what's visually active
+     between 1024-1280px (below 1024px the pill-strip override further
+     down replaces it; >=1280px the media query below replaces it). */
   padding-left: var(--gutter);
 }
 
-/* >=1680px: content column pinned to a fixed 1200px (not --content-max's
-   1400/1560px growth) so the 208px the rail needs outside it (176px rail
-   + 32px gap) stays a guaranteed constant, verified algebraically to
-   never overlap and never push the rail off-screen at any width above
-   this threshold. */
-@media (min-width: 1680px) {
+/* >=1280px: rail width and rail-to-content gap both shrink fluidly
+   (clamp) instead of staying fixed at 176px/32px, so there's always
+   enough room for the content column to be exactly as wide as it can
+   get while still leaving the rail its space -- --sn-content-w is that
+   width, computed once and reused by both the content and the rail's
+   own position so they can never disagree with each other. Content
+   still caps at 1200px once the viewport is wide enough to afford it
+   without the rail's help. */
+@media (min-width: 1280px) {
   .section-nav-layout {
     display: block; /* stop the sidebar consuming flex width from the content column */
+    --sn-rail-w: clamp(140px, 12vw, 176px); /* 140px floor keeps "Interaction"/"Next steps" from wrapping; 176px matches the original fixed rail */
+    --sn-gap: clamp(16px, 2vw, 32px); /* shrinks with the rail instead of holding a full 32px when space is already tight */
+    --sn-content-w: min(1200px, 100vw - 2 * (var(--sn-rail-w) + var(--sn-gap))); /* the max width content can take while still leaving the rail (mirrored on both sides, so it stays centered) its room */
   }
   .section-nav-content {
-    max-width: 1200px;
+    max-width: var(--sn-content-w);
     margin-inline: auto; /* content now centers on the viewport, independent of the rail */
   }
   .section-nav {
     position: fixed; /* out of flow entirely, so it can no longer shift the content column */
-    left: calc(50% - 808px); /* 600 (half the 1200px column) + 208 (rail + gap) = rail sits flush left of the centered column */
-    width: 176px;
+    left: calc(50% - (var(--sn-content-w) / 2) - var(--sn-rail-w) - var(--sn-gap)); /* flush against the left edge of the centered content column, whatever width that resolves to */
+    width: var(--sn-rail-w);
   }
 }
 
