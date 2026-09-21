@@ -947,8 +947,33 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   align-self: flex-start;
   max-height: calc(100vh - var(--header-height) - 64px);
   overflow-y: auto;
+  /* Below 1680px there isn't enough natural side margin for a 176px rail
+     to sit outside a centered content column without overlapping it
+     (verified at 1280px: only 40px per side) -- user chose to accept
+     the current asymmetric flex layout there rather than force it. */
   padding-left: var(--gutter);
 }
+
+/* >=1680px: content column pinned to a fixed 1200px (not --content-max's
+   1400/1560px growth) so the 208px the rail needs outside it (176px rail
+   + 32px gap) stays a guaranteed constant, verified algebraically to
+   never overlap and never push the rail off-screen at any width above
+   this threshold. */
+@media (min-width: 1680px) {
+  .section-nav-layout {
+    display: block; /* stop the sidebar consuming flex width from the content column */
+  }
+  .section-nav-content {
+    max-width: 1200px;
+    margin-inline: auto; /* content now centers on the viewport, independent of the rail */
+  }
+  .section-nav {
+    position: fixed; /* out of flow entirely, so it can no longer shift the content column */
+    left: calc(50% - 808px); /* 600 (half the 1200px column) + 208 (rail + gap) = rail sits flush left of the centered column */
+    width: 176px;
+  }
+}
+
 .section-nav__back {
   display: inline-flex;
   align-items: center;
