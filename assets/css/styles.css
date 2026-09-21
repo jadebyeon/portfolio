@@ -778,11 +778,15 @@ img { max-width: 100%; height: auto; }
 /* Media block: each project keeps its own asset's natural aspect ratio --
    no forced crop, no fixed height, no background behind transparent PNGs.
    --hero-media-max lets an individual project narrow the cap (e.g. a
-   portrait mobile mockup) via an inline style on .hero-media. */
+   portrait mobile mockup) via an inline style on .hero-media. Gap to the
+   copy above is deliberately small -- tighter than the header-to-title
+   gap (.project-hero.section's padding-top, clamp(32px, 5vw, 64px)) --
+   so the image reads as attached to the subtitle rather than floating
+   on its own. */
 .hero-media {
   max-width: var(--hero-media-max, 1100px);
   margin-inline: auto;
-  margin-top: clamp(40px, 6vw, 80px);
+  margin-top: clamp(0px, 0.75vw, 12px);
   display: flex;
   justify-content: center;
 }
@@ -791,6 +795,30 @@ img { max-width: 100%; height: auto; }
   display: block;
   width: 100%;
   height: auto;
+}
+
+/* Breathing-room variant: spacing only, no card surface. For a hero
+   asset that's mostly negative space (a mockup on a large transparent
+   canvas) and would otherwise look like it's touching the copy/content
+   edges, without turning the hero into a separate boxed element -- no
+   background, shadow or radius, so it stays visually part of the page
+   background rather than reading as a homepage-tile-style card (that
+   card treatment -- .portfolio__img-link / .oct-tile-mockup -- is
+   sitewide-tile-specific and unrelated to this). No padding-top: the
+   image should sit close under the subtitle, not get pushed down by
+   its own inset.
+
+   padding-inline is deliberately larger than a typical "small exception"
+   spacing value: oct_banner.png was measured (alpha-channel content
+   bounds, not eyeballed) to have only ~3-4% of its own canvas as
+   horizontal margin, so nearly all of the *visible* horizontal gap has
+   to come from this padding, not from the asset. */
+.hero-media--padded {
+  padding-inline: clamp(32px, 7vw, 112px);
+  padding-top: 0;
+  padding-bottom: clamp(16px, 3vw, 48px);
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* ===== Project detail: 4×2 meta ===== */
@@ -1785,20 +1813,23 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 
 /* ===== OCT HOMEPAGE TILE: TABLET MOCKUP =====
    Differentiates OCT's tile from Wearby's mobile-mockup poster image and
-   HBOM's Mac-mockup video (see projects/hbom/index.html's .mac-mockup):
-   the pre-exposure video sits inside a landscape tablet frame instead of
-   filling the tile edge-to-edge. Padding lives on .oct-tile-mockup (outer
-   tile -> frame gap) so the frame image floats inside the card.
+   HBOM's flat poster image: the pre-exposure video sits inside a
+   landscape tablet frame instead of filling the tile edge-to-edge.
 
-   The screen cutout is clipped with a CSS mask (tablet_frame_mask.png)
-   instead of a border-radius + inset-percentage guess: that mask is
-   generated straight from tablet_frame.png's own alpha channel (the
-   largest transparent region not touching the image border), so the
-   video's edges and corner curvature line up with the artwork exactly --
-   no approximation to drift out of sync if the frame art changes. The
-   video itself fills the *entire* frame box (same box as the frame
-   image, object-fit: cover) and the mask hides everything outside the
-   true cutout, so there's no gap between the video and the bezel. */
+   .oct-tile-mockup is the "card": it gets the exact same background,
+   border-radius and box-shadow as every other tile's .portfolio__img-link
+   / .tile-media (see above and the base .portfolio__img-link rule) so
+   OCT reads as the same kind of card, just with a tablet floating inside
+   it instead of a photo filling it edge-to-edge. Padding lives here too
+   (outer card -> frame gap).
+
+   The screen cutout position/size (left/top/width/height %) and its
+   corner radius are measured directly off tablet_frame.png's alpha
+   channel (2788x2068 source: hole bbox x 200-2587, y 200-1867; corner
+   radius ~32px), not guessed -- an earlier CSS-mask-based approach was
+   removed because Safari doesn't reliably render mask-image on <video>,
+   so this plain position+border-radius+overflow:hidden approach is used
+   instead, matching the video to the cutout with a regular clip. */
 .oct-tile-mockup {
   position: absolute;
   inset: 0;
@@ -1807,7 +1838,15 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   justify-content: center;
   padding: clamp(14px, 4%, 40px);
   box-sizing: border-box;
-  background: var(--body-color);
+  background: #f5f6f7;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
+}
+@media (min-width: 992px) {
+  .oct-tile-mockup {
+    border-radius: 24px;
+  }
 }
 .oct-tile-frame {
   position: relative;
@@ -1826,47 +1865,23 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 .oct-tile-screen {
   position: absolute;
-  inset: 0;
+  left: 7.17%;
+  top: 9.67%;
+  width: 85.62%;
+  height: 80.61%;
+  box-sizing: border-box;
+  overflow: hidden;
   z-index: 1;
-  -webkit-mask-image: url("../img/tablet_frame_mask.png");
-  mask-image: url("../img/tablet_frame_mask.png");
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
+  border-radius: 1.34% / 1.92%; /* matches the frame art's own screen-corner curvature (measured, not guessed) */
 }
 .oct-tile-screen video.tile-media {
   position: static; /* override .tile-framed .tile-media's position:absolute/inset:0 above */
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* fills the whole frame box; the mask above clips it to the real screen cutout */
-  border-radius: 0;
+  object-fit: cover; /* fills the screen cutout edge-to-edge; crops only the outer edges if aspect ratios differ */
+  border-radius: inherit;
   box-shadow: none;
-}
-
-/* ===== GENERIC PADDED TILE =====
-   Same proportions as .oct-tile-mockup (padding + card background) but
-   without OCT's tablet-frame overlay, so any tile can float its media
-   inside the card instead of running edge-to-edge. Currently used by the
-   HBOM tile so its Mac-mockup poster reads at the same visual "weight"
-   as OCT's framed tablet instead of looking like a plain cropped video. */
-.tile-padded {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(14px, 4%, 40px);
-  box-sizing: border-box;
-  background: var(--body-color);
-}
-.tile-padded .tile-media,
-.tile-padded .portfolio__img {
-  position: static; /* override .tile-framed .tile-media's position:absolute/inset:0 */
-  width: 100%;
-  height: 100%;
-  object-fit: contain; /* whole mockup stays visible, never cropped to fill */
 }
 
 /* ========== 2-up paired tiles – same height, no crop, no empty space ========== */
