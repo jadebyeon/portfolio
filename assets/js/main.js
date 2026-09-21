@@ -313,7 +313,7 @@ var PERSONA_COPY = {
     line2: 'Previously BA Art & Design + BS Statistics @ University of Michigan',
     chips: null,
     resume: null,
-    revealSrc: 'assets/img/oct_hero.png',
+    revealSrc: 'assets/img/oct_banner.png',
     revealAlt: 'Pediatric Eye Exam Robot'
   },
   recruiters: {

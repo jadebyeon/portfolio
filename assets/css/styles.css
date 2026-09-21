@@ -5,7 +5,7 @@
 :root {
   /* Layout */
   --header-height: 72px;
-  --page-gutter: clamp(16px, 2vw, 32px);
+  --page-gutter: clamp(16px, 2vw, 36px); /* was two clamps (16-32 / 20-36) swapped at 1200px; both share the same 2vw ratio so one clamp spanning both ranges is identical output, just continuous */
   --section-vspace: clamp(32px, 6vw, 96px);
   /* a bit more top space (like the reference hero) */
   --hero-top: clamp(72px, 14vh, 160px);
@@ -60,7 +60,7 @@
   /* Editorial content grid, shared by the hero and portfolio layouts */
   --grid-cols: 12;
   --grid-gap: clamp(10px, 1.2vw, 20px);
-  --container-max: 1200px;
+  --container-max: clamp(1200px, calc(90vw + 48px), 1560px); /* was a 1200/1400/1560 step ladder; this ramp holds flat at 1200px through 1280px (matches the rail breakpoint, no regression there) then grows continuously to the old 1560px cap by 1680px */
 
   /* Shared content container: aliases --container-max/--page-gutter so
      it always matches the header nav's rendered edges (see .content-container
@@ -966,7 +966,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
     display: block; /* stop the sidebar consuming flex width from the content column */
     --sn-rail-w: clamp(140px, 12vw, 176px); /* 140px floor keeps "Interaction"/"Next steps" from wrapping; 176px matches the original fixed rail */
     --sn-gap: clamp(16px, 2vw, 32px); /* shrinks with the rail instead of holding a full 32px when space is already tight */
-    --sn-content-w: min(1200px, 100vw - 2 * (var(--sn-rail-w) + var(--sn-gap))); /* the max width content can take while still leaving the rail (mirrored on both sides, so it stays centered) its room */
+    --sn-content-w: min(1200px, 65vw, 100vw - 2 * (var(--sn-rail-w) + var(--sn-gap))); /* target ~65% of viewport (was landing at ~72% before, reading as too little margin) with the no-overlap geometry kept only as a safety floor, not the driver */
   }
   .section-nav-content {
     max-width: var(--sn-content-w);
@@ -974,7 +974,10 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   }
   .section-nav {
     position: fixed; /* out of flow entirely, so it can no longer shift the content column */
-    left: calc(50% - (var(--sn-content-w) / 2) - var(--sn-rail-w) - var(--sn-gap)); /* flush against the left edge of the centered content column, whatever width that resolves to */
+    left: min(
+      calc((100vw - var(--container-max)) / 2 + var(--page-gutter)), /* same shared gutter vars the header logo's own .container uses -- aligns exactly wherever this is the smaller (safer) of the two */
+      calc(50% - (var(--sn-content-w) / 2) - var(--sn-rail-w) - var(--sn-gap)) /* guaranteed-safe fallback flush against content's left edge, wins whenever logo alignment would overlap */
+    );
     width: var(--sn-rail-w);
   }
 }
@@ -2359,23 +2362,11 @@ body.is-settled #heroCopy [data-copy-line] {
   }
 }
 
-/* ===== RESPONSIVE LAYOUT FIX ===== */
-
-/* Wider container on large screens */
-@media (min-width: 1400px) {
-  :root { --container-max: 1400px; }
-}
-
-@media (min-width: 1600px) {
-  :root { --container-max: 1560px; }
-}
-
-/* Reduce excessive side padding on large screens */
-@media (min-width: 1200px) {
-  :root {
-    --page-gutter: clamp(20px, 2vw, 36px);
-  }
-}
+/* ===== RESPONSIVE LAYOUT FIX =====
+   --container-max/--page-gutter used to jump at fixed breakpoints
+   (1200->1400->1560, 16-32->20-36); replaced with the smooth formulas
+   on their :root declarations instead -- nothing to override here
+   anymore, kept as a marker for where that logic used to live. */
 
 /* Hero: capped to ~65vh so the first portfolio row peeks into the
    first viewport on a 13" laptop instead of requiring a scroll */
