@@ -1787,14 +1787,18 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
    Differentiates OCT's tile from Wearby's mobile-mockup poster image and
    HBOM's Mac-mockup video (see projects/hbom/index.html's .mac-mockup):
    the pre-exposure video sits inside a landscape tablet frame instead of
-   filling the tile edge-to-edge. Screen-cutout percentages measured
-   directly off tablet_frame.png's alpha channel (2788x2068 source) --
-   the transparent region is the largest connected component that does
-   not touch the image border, at x 201-2586, y 201-1866 -- not guessed.
-   Padding lives on .oct-tile-mockup (outer tile -> frame gap) so the
-   frame image floats inside the card; the screen itself has none, so
-   the video runs edge-to-edge to the cutout (outer card -> padding ->
-   frame -> video, never frame -> padding -> smaller video). */
+   filling the tile edge-to-edge. Padding lives on .oct-tile-mockup (outer
+   tile -> frame gap) so the frame image floats inside the card.
+
+   The screen cutout is clipped with a CSS mask (tablet_frame_mask.png)
+   instead of a border-radius + inset-percentage guess: that mask is
+   generated straight from tablet_frame.png's own alpha channel (the
+   largest transparent region not touching the image border), so the
+   video's edges and corner curvature line up with the artwork exactly --
+   no approximation to drift out of sync if the frame art changes. The
+   video itself fills the *entire* frame box (same box as the frame
+   image, object-fit: cover) and the mask hides everything outside the
+   true cutout, so there's no gap between the video and the bezel. */
 .oct-tile-mockup {
   position: absolute;
   inset: 0;
@@ -1809,7 +1813,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   position: relative;
   height: 100%;
   max-width: 100%;
-  aspect-ratio: 2788 / 2068; /* matches tablet_frame.png's actual pixel dimensions, so the screen percentages below line up */
+  aspect-ratio: 2788 / 2068; /* matches tablet_frame.png's actual pixel dimensions */
 }
 .oct-tile-frame-img {
   position: absolute;
@@ -1822,27 +1826,47 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 .oct-tile-screen {
   position: absolute;
-  left: 7.21%;
-  top: 9.72%;
-  width: 85.53%;
-  height: 80.51%;
-  padding: 0;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  inset: 0;
   z-index: 1;
-  border-radius: 2%;
+  -webkit-mask-image: url("../img/tablet_frame_mask.png");
+  mask-image: url("../img/tablet_frame_mask.png");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
 }
 .oct-tile-screen video.tile-media {
   position: static; /* override .tile-framed .tile-media's position:absolute/inset:0 above */
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* fills the screen cutout edge-to-edge; crops only the outer edges if aspect ratios differ */
+  object-fit: cover; /* fills the whole frame box; the mask above clips it to the real screen cutout */
   border-radius: 0;
   box-shadow: none;
+}
+
+/* ===== GENERIC PADDED TILE =====
+   Same proportions as .oct-tile-mockup (padding + card background) but
+   without OCT's tablet-frame overlay, so any tile can float its media
+   inside the card instead of running edge-to-edge. Currently used by the
+   HBOM tile so its Mac-mockup poster reads at the same visual "weight"
+   as OCT's framed tablet instead of looking like a plain cropped video. */
+.tile-padded {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(14px, 4%, 40px);
+  box-sizing: border-box;
+  background: var(--body-color);
+}
+.tile-padded .tile-media,
+.tile-padded .portfolio__img {
+  position: static; /* override .tile-framed .tile-media's position:absolute/inset:0 */
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* whole mockup stays visible, never cropped to fill */
 }
 
 /* ========== 2-up paired tiles – same height, no crop, no empty space ========== */

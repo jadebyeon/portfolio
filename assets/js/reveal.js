@@ -25,7 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
     "main section .container > .about__content",
 
     /* project pages */
-    ".project-hero .hero-overlay > *",
+    ".project-hero-copy > *",
+    ".project-hero .hero-media",
     ".project__lede",
     ".project-meta .meta-item",
     ".project-section .prose > *",

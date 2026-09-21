@@ -325,7 +325,7 @@ var PERSONA_COPY = {
     chips: ['3 shipped projects', 'ARVO 2026 co-author', '30+ research participants'],
     // Résumé is already in the header nav, so no in-copy link here.
     resume: null,
-    revealSrc: 'assets/img/hbom-hero.png',
+    revealSrc: 'assets/img/hbom_hero.png',
     revealAlt: 'NVP Knowledge Hub'
   },
   designers: {
