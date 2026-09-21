@@ -209,14 +209,6 @@ img { max-width: 100%; height: auto; }
   max-width: var(--content-max);
   padding-inline: var(--gutter);
 }
-/* Hero banner: the wrapping .content-container owns the edges/padding,
-   the media block just fills it (only applies when actually nested this
-   way, so pages that use .hero-media on its own are unaffected). */
-.content-container > .hero-media {
-  width: 100%;
-  max-width: none;
-  margin: 0;
-}
 .section { padding-block: var(--section-vspace); }
 .grid { display: grid; gap: 1.5rem; }
 
@@ -720,17 +712,15 @@ img { max-width: 100%; height: auto; }
   }
 }
 
-/* ==================== Project: TELL-Tool ==================== */
-/* ===== PROJECT PAGE ===== */
+/* ==================== Project: case-study hero (shared pattern) ====================
+   Every case study uses the same text-above-media hero: title + subtitle
+   centered above a hero visual, no image overlay/scrim. Only the visual
+   itself (photo/mockup/video) differs per project -- see markup comments
+   for each page. */
 .project-hero.section{
-  /* same generous top spacing as home */
-  padding-top: 0;             /* keep the top tight */
-  padding-block-start: 0;
-  margin-top: 0;  
-}
-
-.project-hero + .project-intro{
-  margin-top: clamp(24px, 3vw, 48px);
+  padding-block-start: clamp(32px, 5vw, 64px);
+  padding-top: clamp(32px, 5vw, 64px);
+  margin-top: 0;
 }
 
 .project__title{
@@ -751,76 +741,56 @@ img { max-width: 100%; height: auto; }
 }
 
 .main{ padding-top: var(--header-height); }
-/* --- Project hero banner --- */
-.project-hero.section{
-  padding-block-start: 0;   /* kill the top padding from .section */
-  padding-top: 0;
-}
 
-.project-intro.section { 
-  padding-top: var(--section-vspace); 
+.project-intro.section {
+  padding-top: var(--section-vspace);
 }
 
 .project-hero + .project-intro{
-   margin-top: clamp(12px, 1.6vw, 20px);
+   margin-top: clamp(24px, 3vw, 48px);
 }
 
 .header{ z-index: var(--z-fixed); }     /* already high, but explicit */
-.hero-media{ 
-  width: 100%;
-  max-width: 100%;
-  height: calc(100vh - var(--header-height));
-  border-radius: 0;                /* remove rounding so it truly fills */
-  margin: 0;  
-}
-.hero-overlay{
-  position: absolute; inset: 0;
-  display: grid; place-content: center;
-  padding: clamp(24px, 3vw, 40px);
+
+/* Copy block: centered, width-constrained so the subtitle stays readable */
+.project-hero-copy {
+  max-width: 900px;
+  margin-inline: auto;
+  text-align: center;
 }
 
-.hero-media{ 
-  margin: 0 auto clamp(24px, 3vw, 48px);
-}
-
-.hero-media {
-  position: relative;
-  width: calc(100% - (var(--page-gutter) * 2));
-  max-width: 1200px;
-  margin: 0 auto;
-  aspect-ratio: 16 / 7;
-  border-radius: 24px;
-  overflow: hidden;
-  background: #111;
-  margin-bottom: clamp(10px, 1.2vw, 16px);
-}
-.hero-media img{
-  width: 100%; height: 100%;
-  object-fit: cover; object-position: center;
-  display: block;
-}
-
-/* Overlay text */
-.hero-overlay{
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  text-align: center; padding: clamp(16px, 4vw, 48px);
-  /* subtle top/bottom gradient to help legibility */
-  background: linear-gradient(180deg, rgba(0,0,0,.28), rgba(0,0,0,.20) 35%, rgba(0,0,0,.28));
-}
 .hero-title{
-  color: #fff;
-  font-weight: 800;
-  font-size: clamp(40px, 7vw, 72px);
-  line-height: 1.05;
+  color: var(--title-color);
+  font-weight: var(--font-semi-bold);
+  font-size: clamp(1.8rem, 4vw, 3.5rem);
+  line-height: 1.15;
   letter-spacing: .2px;
 }
 .hero-subtitle{
-  margin-top: .6rem;
-  color: #fff;
-  opacity: .95;
-  font-size: clamp(16px, 1.6vw, 22px);
+  margin-top: clamp(12px, 1.5vw, 20px);
+  max-width: 760px;
+  margin-inline: auto;
+  color: var(--text-color);
+  font-size: clamp(1rem, 1.3vw, 1.25rem);
+  line-height: 1.6;
+}
+
+/* Media block: each project keeps its own asset's natural aspect ratio --
+   no forced crop, no fixed height, no background behind transparent PNGs.
+   --hero-media-max lets an individual project narrow the cap (e.g. a
+   portrait mobile mockup) via an inline style on .hero-media. */
+.hero-media {
+  max-width: var(--hero-media-max, 1100px);
+  margin-inline: auto;
+  margin-top: clamp(40px, 6vw, 80px);
+  display: flex;
+  justify-content: center;
+}
+.hero-media img,
+.hero-media video {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 /* ===== Project detail: 4×2 meta ===== */
@@ -910,8 +880,10 @@ img { max-width: 100%; height: auto; }
 .project-page { margin-top: 0; }
 .project-page .main { padding-top: var(--header-height); }
 
-/* Make sure the hero isn’t adding its own top gap */
-.project-page .project-hero.section { padding-top: 0; margin-top: 0; }
+/* Hero copy gets breathing room below the fixed header instead of
+   touching it -- overrides .project-hero.section on specificity, so it
+   has to restate the same clamp rather than just zeroing it. */
+.project-page .project-hero.section { padding-top: clamp(32px, 5vw, 64px); margin-top: 0; }
 
 /* Optional: if you have any paragraphs not wrapped in .project-section,
    keep them nicely spaced too */
@@ -1809,6 +1781,68 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   object-fit: cover;
   border-radius: 16px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
+}
+
+/* ===== OCT HOMEPAGE TILE: TABLET MOCKUP =====
+   Differentiates OCT's tile from Wearby's mobile-mockup poster image and
+   HBOM's Mac-mockup video (see projects/hbom/index.html's .mac-mockup):
+   the pre-exposure video sits inside a landscape tablet frame instead of
+   filling the tile edge-to-edge. Screen-cutout percentages measured
+   directly off tablet_frame.png's alpha channel (2788x2068 source) --
+   the transparent region is the largest connected component that does
+   not touch the image border, at x 201-2586, y 201-1866 -- not guessed.
+   Padding lives on .oct-tile-mockup (outer tile -> frame gap) so the
+   frame image floats inside the card; the screen itself has none, so
+   the video runs edge-to-edge to the cutout (outer card -> padding ->
+   frame -> video, never frame -> padding -> smaller video). */
+.oct-tile-mockup {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(14px, 4%, 40px);
+  box-sizing: border-box;
+  background: var(--body-color);
+}
+.oct-tile-frame {
+  position: relative;
+  height: 100%;
+  max-width: 100%;
+  aspect-ratio: 2788 / 2068; /* matches tablet_frame.png's actual pixel dimensions, so the screen percentages below line up */
+}
+.oct-tile-frame-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 2;
+  pointer-events: none;
+}
+.oct-tile-screen {
+  position: absolute;
+  left: 7.21%;
+  top: 9.72%;
+  width: 85.53%;
+  height: 80.51%;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 1;
+  border-radius: 2%;
+}
+.oct-tile-screen video.tile-media {
+  position: static; /* override .tile-framed .tile-media's position:absolute/inset:0 above */
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* fills the screen cutout edge-to-edge; crops only the outer edges if aspect ratios differ */
+  border-radius: 0;
+  box-shadow: none;
 }
 
 /* ========== 2-up paired tiles – same height, no crop, no empty space ========== */
