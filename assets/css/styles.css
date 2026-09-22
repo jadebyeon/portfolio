@@ -867,6 +867,7 @@ img { max-width: 100%; height: auto; }
   box-sizing: content-box;
   position: relative;
   aspect-ratio: 1955 / 1125;
+  overflow: hidden;
 }
 .hero-media--hbom img {
   position: absolute;
@@ -4672,6 +4673,154 @@ body.is-settled #heroCopy [data-copy-line] {
   .case-row {
     grid-template-columns: 1fr;
     gap: 0.4rem;
+  }
+}
+
+/* ===== REUSABLE PROJECT CONTEXT PATTERNS =====
+   Apply .project-meta--details to a project's metadata grid and
+   .project-section--context to a full-width context section. Project pages
+   can supply their own --project-context-* tokens without changing shared
+   case-study styles. */
+.project-meta--details {
+  margin-top: 0;
+  gap: clamp(1.25rem, 2.5vw, 2.5rem);
+  padding-bottom: var(--project-meta-bottom-space, var(--project-context-divider-space, clamp(0.875rem, 1.25vw, 1.125rem)));
+}
+.project-meta--details .meta-label {
+  margin-bottom: 0.4rem;
+}
+.project-meta--details :is(.meta-value, .meta-list) {
+  color: var(--project-context-body, var(--text-color));
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+.project .project-section--context {
+  border-top: 0;
+  margin-top: clamp(2rem, 3.75vw, 4rem);
+}
+.project .project-section--context .project-section__eyebrow {
+  margin: 0 0 0.45rem;
+  color: var(--project-context-muted, var(--text-color-light));
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+.project .project-section--context .project-section__title {
+  margin: 0 0 var(--project-context-divider-space, clamp(0.875rem, 1.25vw, 1.125rem));
+}
+.project-section--context .project-section__body {
+  max-width: none;
+  margin-top: 0;
+  padding-top: var(--project-context-divider-space, clamp(0.875rem, 1.25vw, 1.125rem));
+  border-top: 1px solid var(--project-context-rule, currentColor);
+  color: var(--project-context-body, var(--text-color));
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+.project-section--context .project-section__body p {
+  margin: 0;
+  line-height: 1.55;
+}
+.project-section--context .project-section__body p + p { margin-top: 1rem; }
+
+/* ===== HBOM CASE-STUDY INTRO HIERARCHY =====
+   Scoped to HBOM so the shared case-study rail, metadata, and problem /
+   solution patterns retain their existing appearance elsewhere. The color
+   choices are measured against --body-color (#FBFBFE): body text #6A6874
+   is 5.29:1, active/focus forest #064E3B is 9.41:1, and grouping rules
+   #909099 are 3.06:1. */
+.project-page--hbom {
+  --hbom-ink: #242329;
+  --hbom-secondary: #5b5966;
+  --hbom-body: #6a6874;
+  --hbom-accent: #064e3b;
+  --hbom-rule: #909099;
+  --hbom-divider-space: clamp(0.875rem, 1.25vw, 1.125rem);
+  --hbom-problem-divider-space: calc(var(--hbom-divider-space) + 1.03125rem);
+  --hbom-context-divider-space: var(--hbom-divider-space);
+  --project-context-muted: var(--hbom-secondary);
+  --project-context-body: var(--hbom-body);
+  --project-context-rule: var(--hbom-rule);
+  --project-context-divider-space: var(--hbom-context-divider-space);
+  --project-meta-bottom-space: var(--hbom-divider-space);
+}
+.project-page--hbom .problem-solution-row {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2rem, 4vw, 3rem);
+  padding: clamp(2rem, 3.5vw, 2.75rem) 0 var(--hbom-divider-space);
+  margin-bottom: var(--hbom-problem-divider-space);
+  border-top: 0;
+  border-color: var(--hbom-rule);
+}
+.project-page--hbom :is(.ps-label, .meta-label, .project-background__title) {
+  color: var(--hbom-ink);
+  font-family: var(--body-font);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: normal;
+  line-height: 1.35;
+  text-transform: none;
+}
+.project-page--hbom .ps-label { margin-bottom: 0.7rem; }
+.project-page--hbom .ps-text {
+  max-width: none;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--hbom-body);
+  font-weight: 400;
+}
+.project-page--hbom .ps-divider {
+  display: none;
+}
+.project-page--hbom .section-nav__back,
+.project-page--hbom .section-nav__link {
+  color: var(--hbom-secondary);
+}
+.project-page--hbom .section-nav__back:hover,
+.project-page--hbom .section-nav__link:hover {
+  color: var(--hbom-ink);
+}
+.project-page--hbom .section-nav__link.is-active {
+  color: var(--hbom-accent);
+  border-left-color: var(--hbom-accent);
+  border-left-width: 3px;
+  font-weight: 700;
+}
+.project-page--hbom .section-nav__back:focus-visible,
+.project-page--hbom .section-nav__link:focus-visible {
+  color: var(--hbom-ink);
+  outline: 3px solid var(--hbom-accent);
+  outline-offset: 3px;
+}
+@media (max-width: 1024px) {
+  .project-page--hbom .section-nav__link.is-active {
+    background: var(--hbom-accent);
+    border-color: var(--hbom-accent);
+    color: #fff;
+  }
+}
+@media (max-width: 680px) {
+  .project-page--hbom .site-menu {
+    gap: 0.75rem;
+    font-size: 0.8125rem;
+  }
+  .project-page--hbom .brand {
+    flex: 0 0 auto;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+  .project-page--hbom .problem-solution-row {
+    gap: 1.5rem;
+    padding-top: 1.75rem;
+    padding-bottom: var(--hbom-divider-space);
+  }
+  .project-page--hbom .ps-block + .ps-block {
+    border-top: 1px solid var(--hbom-rule);
+    padding-top: var(--hbom-divider-space);
+  }
+  .project-page--hbom .project-meta {
+    gap: 1.5rem;
   }
 }
 
