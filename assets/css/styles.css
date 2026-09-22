@@ -782,7 +782,9 @@ img { max-width: 100%; height: auto; }
    copy above is deliberately small -- tighter than the header-to-title
    gap (.project-hero.section's padding-top, clamp(32px, 5vw, 64px)) --
    so the image reads as attached to the subtitle rather than floating
-   on its own. */
+   on its own. This is the gap to the *image element's box*, not to its
+   visible artwork -- see .hero-media--hbom below for a case where those
+   differ. */
 .hero-media {
   max-width: var(--hero-media-max, 1100px);
   margin-inline: auto;
@@ -809,16 +811,62 @@ img { max-width: 100%; height: auto; }
    its own inset.
 
    padding-inline is deliberately larger than a typical "small exception"
-   spacing value: oct_banner.png was measured (alpha-channel content
-   bounds, not eyeballed) to have only ~3-4% of its own canvas as
-   horizontal margin, so nearly all of the *visible* horizontal gap has
-   to come from this padding, not from the asset. */
+   spacing value: oct_banner.png and hbom_hero.png were measured (alpha-
+   channel content bounds, not eyeballed) to have only ~1-4% of their own
+   canvas as horizontal margin, so nearly all of the *visible* horizontal
+   gap has to come from this padding, not from the asset. overflow:hidden
+   exists only to support the asset-trim rule directly below -- it does
+   nothing on its own since nothing here has a background/border to
+   reveal a hard clip edge. */
 .hero-media--padded {
   padding-inline: clamp(32px, 7vw, 112px);
   padding-top: 0;
   padding-bottom: clamp(16px, 3vw, 48px);
   box-sizing: border-box;
   overflow: hidden;
+}
+
+/* .hero-media--oct: no adjustment needed. oct_banner.png's visible
+   tablet+pencil artwork already fills ~93-95% of its own canvas on every
+   edge (measured off the alpha channel), so .hero-media--padded's plain
+   padding is enough on its own -- it's the reference the other variant
+   below is calibrated against. */
+
+/* .hero-media--hbom: hbom_hero.png is a square 2000x2000 export with the
+   MacBook artwork vertically centered, occupying only x 23-1974 / y
+   439-1560 of the canvas (measured off the alpha channel, not guessed)
+   -- ~97.5% of the width but just ~56% of the height. Rendered at
+   .hero-media--padded's plain padding, the visible MacBook ended up a
+   comparable *width* to OCT's tablet but with ~193px of dead transparent
+   space below it (vs OCT's ~62px), because the square canvas' unused
+   top+bottom bands were still being laid out as if they were visible
+   content. This crops only transparent canvas margin via overflow:hidden
+   + an oversized, offset img. The crop window keeps a 2px transparent
+   guard on every side of the measured artwork (1955:1125), so no
+   antialiased visible edge of the MacBook can be clipped. The img is
+   scaled up by canvas-width/crop-width so the crop region maps 1:1 to
+   the wrapper's box, then shifted by the crop's own top/left offset (as
+   a % of the scaled image, which is what `top`/`left` resolve against).
+   Nothing is edited or actually cropped in the file; every visible pixel
+   of the MacBook is still rendered, just with no dead space around it. The
+   width below is chosen to land HBOM's visible artwork at close to
+   OCT's own ~67%-of-container width (verified by measuring rendered
+   getBoundingClientRect + canvas alpha bounds side by side, not by eye). */
+.hero-media--hbom {
+  width: min(72%, 800px);
+  margin-inline: auto;
+  padding: 0;
+  box-sizing: content-box;
+  position: relative;
+  aspect-ratio: 1955 / 1125;
+}
+.hero-media--hbom img {
+  position: absolute;
+  width: 102.30%;
+  max-width: none;
+  top: -38.84%;
+  left: -1.07%;
+  height: auto;
 }
 
 /* ===== Project detail: 4×2 meta ===== */
@@ -1809,6 +1857,32 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   object-fit: cover;
   border-radius: 16px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
+}
+
+/* HBOM's homepage asset is a square transparent canvas with a centered
+   MacBook. This wrapper keeps the tile's existing surface treatment while
+   sizing the visible laptop to OCT's tablet width. The image stays fully
+   contained—its extra scale reaches only transparent canvas pixels—so no
+   part of the MacBook is cropped. Scoped to the homepage mockup class;
+   it does not affect the HBOM case-study hero. */
+.hbom-tile-mockup {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  background: #f5f6f7;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
+}
+.hbom-tile-mockup__image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 135%;
+  height: 135%;
+  max-width: none;
+  object-fit: contain;
+  transform: translate(-50%, -50%);
 }
 
 /* ===== OCT HOMEPAGE TILE: TABLET MOCKUP =====
