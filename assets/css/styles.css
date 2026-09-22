@@ -779,10 +779,9 @@ img { max-width: 100%; height: auto; }
    no forced crop, no fixed height, no background behind transparent PNGs.
    --hero-media-max lets an individual project narrow the cap (e.g. a
    portrait mobile mockup) via an inline style on .hero-media. Gap to the
-   copy above is deliberately small -- tighter than the header-to-title
-   gap (.project-hero.section's padding-top, clamp(32px, 5vw, 64px)) --
-   so the image reads as attached to the subtitle rather than floating
-   on its own. This is the gap to the *image element's box*, not to its
+   copy above is set by the variant: standard media stays close, while
+   .hero-media--device uses a deliberate editorial gap before the device
+   frame begins. This is the gap to the image element's box, not to its
    visible artwork -- see .hero-media--hbom below for a case where those
    differ. */
 .hero-media {
@@ -797,6 +796,15 @@ img { max-width: 100%; height: auto; }
   display: block;
   width: 100%;
   height: auto;
+}
+
+/* Shared case-study device-banner rhythm. OCT and HBOM use different
+   source canvases, so the class establishes the layout before their
+   asset-specific rendering begins: the same subtitle-to-frame interval
+   and the same wide desktop cap, echoing the reference composition. */
+.hero-media--device {
+  width: min(100%, 1100px);
+  margin-top: clamp(3.5rem, 5vw, 6rem);
 }
 
 /* Breathing-room variant: spacing only, no card surface. For a hero
@@ -853,7 +861,7 @@ img { max-width: 100%; height: auto; }
    OCT's own ~67%-of-container width (verified by measuring rendered
    getBoundingClientRect + canvas alpha bounds side by side, not by eye). */
 .hero-media--hbom {
-  width: min(72%, 800px);
+  width: min(100%, 1100px);
   margin-inline: auto;
   padding: 0;
   box-sizing: content-box;
@@ -866,6 +874,26 @@ img { max-width: 100%; height: auto; }
   max-width: none;
   top: -38.84%;
   left: -1.07%;
+  height: auto;
+}
+
+/* Wearby's 4000 × 3000 export has a 556px transparent band above the
+   phones. Like HBOM, this wrapper removes only transparent canvas margin,
+   allowing the visible phone pair to begin at the shared device-banner
+   interval without cropping any artwork. */
+.hero-media--wearby {
+  padding: 0;
+  box-sizing: content-box;
+  position: relative;
+  aspect-ratio: 4000 / 2100;
+  overflow: hidden;
+}
+.hero-media--wearby img {
+  position: absolute;
+  width: 100%;
+  max-width: none;
+  top: -26.19%;
+  left: 0;
   height: auto;
 }
 
