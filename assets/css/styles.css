@@ -920,6 +920,15 @@ img { max-width: 100%; height: auto; }
   font-size: clamp(14px, 1.05vw, 17px);
   line-height: 1.6;
 }
+.meta-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--body-font);
+  color: var(--text-color);
+  font-size: clamp(14px, 1.05vw, 17px);
+  line-height: 1.6;
+}
 
 /* Tablet: two columns, items pair vertically (label above value) */
 @media (max-width: 900px){
@@ -4657,6 +4666,8 @@ body.is-settled #heroCopy [data-copy-line] {
   max-width: 640px;
 }
 .case-row__body p { margin: 0; }
+.case-row__body p + p { margin-top: 1rem; }
+.project-background { margin-top: clamp(2.5rem, 5vw, 4rem); }
 @media (max-width: 700px) {
   .case-row {
     grid-template-columns: 1fr;
