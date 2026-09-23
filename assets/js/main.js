@@ -102,6 +102,79 @@ document.addEventListener("DOMContentLoaded", function () {
     );
     observer.observe(footer);
   }
+
+  /* Shared phone menu ----------------------------------------------------
+     The markup is repeated across static pages, so the control is added
+     here once rather than creating a second menu or duplicating header HTML.
+     The existing list is hidden while closed, which removes its links from
+     keyboard navigation; it becomes the full overlay when opened. */
+  const siteNav = document.querySelector('.site-nav');
+  const siteMenu = document.querySelector('.site-menu');
+  const header = document.querySelector('.header');
+  const phoneMenuQuery = window.matchMedia('(max-width: 639px)');
+
+  if (siteNav && siteMenu && header) {
+    const menuId = siteMenu.id || 'site-menu';
+    siteMenu.id = menuId;
+
+    const menuButton = document.createElement('button');
+    menuButton.type = 'button';
+    menuButton.className = 'site-menu-toggle';
+    menuButton.setAttribute('aria-controls', menuId);
+    menuButton.setAttribute('aria-expanded', 'false');
+    menuButton.setAttribute('aria-label', 'Open menu');
+    menuButton.innerHTML = [
+      '<span class="site-menu-toggle__icon" aria-hidden="true">',
+      '<span class="site-menu-toggle__line"></span>',
+      '<span class="site-menu-toggle__line"></span>',
+      '<span class="site-menu-toggle__line"></span>',
+      '</span>'
+    ].join('');
+    siteNav.insertBefore(menuButton, siteMenu);
+
+    function setMenuState(open, restoreFocus) {
+      const isPhone = phoneMenuQuery.matches;
+      const shouldOpen = isPhone && open;
+
+      siteMenu.hidden = isPhone && !shouldOpen;
+      menuButton.hidden = !isPhone;
+      menuButton.classList.toggle('is-open', shouldOpen);
+      menuButton.setAttribute('aria-expanded', String(shouldOpen));
+      menuButton.setAttribute('aria-label', shouldOpen ? 'Close menu' : 'Open menu');
+      header.classList.toggle('is-menu-open', shouldOpen);
+      document.documentElement.classList.toggle('site-menu-open', shouldOpen);
+      document.body.classList.toggle('site-menu-open', shouldOpen);
+
+      if (restoreFocus && isPhone) {
+        menuButton.focus();
+      }
+    }
+
+    menuButton.addEventListener('click', function () {
+      setMenuState(menuButton.getAttribute('aria-expanded') !== 'true', false);
+    });
+
+    siteMenu.addEventListener('click', function (event) {
+      if (phoneMenuQuery.matches && event.target.closest('.nav-link')) {
+        setMenuState(false, true);
+      }
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && menuButton.getAttribute('aria-expanded') === 'true') {
+        event.preventDefault();
+        setMenuState(false, true);
+      }
+    });
+
+    const syncMenuForViewport = function () { setMenuState(false, false); };
+    if (phoneMenuQuery.addEventListener) {
+      phoneMenuQuery.addEventListener('change', syncMenuForViewport);
+    } else {
+      phoneMenuQuery.addListener(syncMenuForViewport);
+    }
+    syncMenuForViewport();
+  }
 });
 
 /*==================== BACK TO TOP ====================*/
@@ -1210,4 +1283,3 @@ var PERSONA_COPY = {
     init();
   }
 })();
-
