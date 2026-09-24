@@ -10,109 +10,49 @@
   <title>Nutrition Benefits Resource Hub: Jade Byeon</title>
   <meta name="description" content="Information architecture and web experience design for a filterable nutrition benefits resource hub for HBOM at the University of Michigan, by Jade Byeon." />
   <style>
-    /* Problem section: two chat-style pain-point blocks (emoji+label
-       avatar column, speech-bubble quote to its right). Design
-       decisions section: each beat is a small muted pain line, a
-       case-row__label-styled numbered heading, a flowing explanation
-       paragraph (mint-highlighted decision phrase inline), then the
-       comparison image. Everything else on this page reuses shared
-       classes only (section-nav, content-container, case-row,
-       alert-statement, learnings-list, hbom-tabs, text-mint). */
-    .pain-point-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-top: 1.5rem;
-    }
-    .pain-point-block {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.85rem;
-    }
-    .pain-point-avatar {
-      flex-shrink: 0;
-      width: 68px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.3rem;
-      text-align: center;
-    }
-    .pain-point-emoji {
-      font-size: 2.1rem;
-      line-height: 1;
-    }
-    .pain-point-label {
-      margin: 0;
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--title-color);
-    }
-    .pain-point-bubble {
-      position: relative;
-      flex: 1;
-      background: #eef6f1;
-      border-radius: 16px;
-      padding: 0.9rem 1.15rem;
-    }
-    .pain-point-bubble::before {
-      content: "";
-      position: absolute;
-      left: -8px;
-      top: 22px;
-      width: 0;
-      height: 0;
-      border-top: 8px solid transparent;
-      border-bottom: 8px solid transparent;
-      border-right: 9px solid #eef6f1;
-    }
-    .pain-point-bubble p {
-      margin: 0;
-      font-size: 0.9rem;
-      color: var(--title-color);
-      line-height: 1.5;
-    }
-    @media (max-width: 600px) {
-      .pain-point-row { grid-template-columns: 1fr; }
-    }
-    .alert-box-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.25rem;
-      margin-top: 1.5rem;
-      align-items: start;
-    }
-    @media (max-width: 760px) {
-      .alert-box-row { grid-template-columns: 1fr; }
-    }
     .hbom-decision-beat {
-      margin-top: 2.5rem;
+      margin-top: clamp(2rem, 4vw, 3rem);
     }
-    .hbom-decision-beat:first-of-type {
-      margin-top: 1.5rem;
+    .project-page--hbom .hbom-ideation .project-section__body > .hbom-decision-beat:first-child {
+      margin-top: 0;
     }
-    .hbom-decision-beat__heading {
-      margin: 0 0 0.5rem;
-    }
-    .hbom-decision-beat__pain {
-      margin: 0 0 0.85rem;
-      font-size: 0.85rem;
-      color: var(--text-color-light);
-      line-height: 1.5;
-    }
-    .hbom-decision-beat__pain-mark {
-      color: #dc2626;
+    /* Override the global project h3 margin: parent beats control the
+       space between decisions, while the first heading begins directly
+       after the shared context divider padding. */
+    .project-page--hbom .hbom-ideation .project-section__body h3.hbom-decision-beat__heading {
+      margin-top: 0;
+      margin: 0 0 0.75rem;
+      color: var(--hbom-ink);
+      font-family: var(--body-font);
+      font-size: clamp(1.125rem, 1.5vw, 1.375rem);
       font-weight: 700;
-      margin-right: 0.15rem;
+      letter-spacing: normal;
+      line-height: 1.3;
+      text-transform: none;
     }
-    .hbom-decision-beat__pain-label {
+    .project-page--hbom .hbom-ideation .project-section__body p.hbom-decision-beat__pain {
+      margin: 0 0 1rem;
+      color: var(--hbom-body);
+      line-height: 1.55;
+    }
+    .project-page--hbom .hbom-ideation .hbom-decision-beat__challenge-label {
+      flex: 0 0 auto;
+      color: #b91c1c;
+      font-size: inherit;
       font-weight: 700;
-      color: var(--title-color);
+      letter-spacing: normal;
+      line-height: inherit;
     }
-    .hbom-decision-beat__explanation {
-      margin: 0 0 1.25rem;
-      color: var(--text-color);
-      line-height: 1.7;
+    .project-page--hbom .project-section__body p.hbom-decision-beat__explanation {
+      margin: 0 0 1.5rem;
+      color: var(--hbom-body);
+      line-height: 1.55;
+    }
+    .project-page--hbom .project-section__body strong {
+      color: var(--hbom-ink);
+    }
+    .project-page--hbom .hbom-final-solution .mac-mockup {
+      margin-top: 0.75rem;
     }
     /* Crop out the blank top margin baked into the Filter placement /
        Resource detail layout exports (measured directly off the PNGs:
@@ -130,25 +70,12 @@
       object-fit: cover !important;
       object-position: center bottom !important;
     }
-    /* Final outcome: numbered heading like every other section (left-
-       aligned), MacBook mockup centered independently via its own
-       margin-inline:auto. Video layered on top of the frame's screen
-       cutout; screen rect measured directly off mac-frame.png's
-       transparent cutout (not eyeballed). Section padding trimmed so
-       the mockup doesn't float in as much empty space as the default
-       section rhythm gives every other section. */
-    .project .project-section.final-outcome {
-      padding-block: clamp(1.75rem, 3.5vw, 3rem);
-    }
-    .final-outcome h2 {
-      margin-bottom: 1.75rem;
-    }
     .mac-mockup {
       position: relative;
       width: 100%;
       max-width: 900px;
       margin-inline: auto;
-      aspect-ratio: 1 / 1;
+      aspect-ratio: 1000 / 615;
     }
     .mac-frame {
       position: absolute;
@@ -161,10 +88,10 @@
     }
     .mac-screen {
       position: absolute;
-      top: 25.2%;
+      top: 14.15%;
       left: 12.1%;
       width: 75.5%;
-      height: 47.2%;
+      height: 76.75%;
       object-fit: cover;
       z-index: 2;
       border-radius: 6px;
@@ -194,12 +121,10 @@
         </a>
         <ul class="section-nav__list">
           <li class="section-nav__item"><a class="section-nav__link" href="#background">Background</a></li>
-          <li class="section-nav__item"><a class="section-nav__link" href="#problem">Problem</a></li>
           <li class="section-nav__item"><a class="section-nav__link" href="#research">Research</a></li>
-          <li class="section-nav__item"><a class="section-nav__link" href="#design">Design</a></li>
-          <li class="section-nav__item"><a class="section-nav__link" href="#features">Features</a></li>
+          <li class="section-nav__item"><a class="section-nav__link" href="#design">Ideation</a></li>
           <li class="section-nav__item"><a class="section-nav__link" href="#outcome">Final solution</a></li>
-          <li class="section-nav__item"><a class="section-nav__link" href="#takeaways">Takeaways</a></li>
+          <li class="section-nav__item"><a class="section-nav__link" href="#takeaways">Reflection</a></li>
         </ul>
       </nav>
       <div class="section-nav-content">
@@ -271,220 +196,171 @@
         <p class="project-section__eyebrow">Background</p>
         <h2 class="section-icon-title project-section__title">Nutrition Value Pathways</h2>
         <div class="project-section__body">
-          <p>Health Behaviors and Outcomes Mentorship (HBOM) developed Nutrition Value Pathways, or NVP, as a University of Michigan initiative focused on connecting people with nutrition benefits.</p>
-          <p>The existing site introduced the program, but did not provide a library for browsing available resources. I worked on the information architecture and web experience for that missing layer.</p>
+          <p><a class="text-mint" style="font-weight: 400; text-decoration: underline; text-underline-offset: 0.15em;" href="https://www.hbomich.org/">Health Behaviors and Outcomes Mentorship (HBOM)</a> developed <a class="text-mint" style="font-weight: 400; text-decoration: underline; text-underline-offset: 0.15em;" href="https://www.nutrivp.org/">Nutrition Value Pathways (NVP)</a> as a University of Michigan initiative connecting people with nutrition benefits. NVP estimates annual healthcare savings of <strong>85,000+ hospitalizations</strong> and <strong>$1,800+</strong> per enrolled Michigander.</p>
+          <p>NVP explains <strong>In Lieu of Services (ILOS)</strong>, Medicaid benefits that can provide nutrition support such as medically tailored meals, healthy food packs, and produce prescriptions. Its website also included a coverage checker that helped visitors check available benefits by plan and region.</p>
+          <p>I designed the resource hub for the NVP website.</p>
         </div>
       </div>
     </section>
 
     <!-- PROBLEM (deep dive) -->
-    <section class="project-section section-nav-target" id="problem">
+    <section class="project-section project-section--context section-nav-target" id="problem">
       <div class="content-container">
-        <p class="section-number">01</p>
-        <h2 class="section-icon-title">Problem</h2>
-
-        <div class="alert-statement alert-statement--danger">
-          <span class="alert-statement__icon"><i class="uil uil-exclamation-triangle" aria-hidden="true"></i></span>
-          <div>
-            <p class="alert-statement__headline">FAM and ILOS benefits are real but fragmented: coverage varies by Medicaid plan and region, and existing resources are scattered across providers, PDFs, and one-off pages.</p>
-            <p class="alert-statement__support">nutrivp.org was a public landing page with no library behind it.</p>
-          </div>
-        </div>
-
-        <div class="pain-point-row">
-          <div class="pain-point-block">
-            <div class="pain-point-avatar">
-              <span class="pain-point-emoji" aria-hidden="true">&#129489;</span>
-              <p class="pain-point-label">Patients</p>
+        <p class="project-section__eyebrow">Research</p>
+        <h2 class="section-icon-title project-section__title">Identifying Problem</h2>
+        <div class="project-section__body">
+          <p>The NVP site explained ILOS coverage, benefit types, and the evidence behind the program. But after checking coverage, visitors had no clear place to find resources they could use or share.</p>
+          <figure class="single-tile-figure" style="margin: 2rem 0;">
+            <div class="single-tile">
+              <img src="../../assets/img/hbom-evidence-reference.png" alt="Existing NVP evidence page showing research reference cards">
             </div>
-            <div class="pain-point-bubble">
-              <p>What does my plan actually cover?</p>
+          </figure>
+          <p>Through <span class="text-mint" style="color: #2457c5; font-weight: 400;">interview content audit</span> and <span class="text-mint" style="color: #2457c5; font-weight: 400;">secondary research</span>, I reviewed how patients and providers might use shared health information. This identified two core use cases: patients looking for understandable information about food benefits, and providers looking for materials to learn from or share.</p>
+          <figure class="single-tile-figure" style="margin: 2rem 0;">
+            <div class="single-tile" style="width: 90%; margin: 0 auto;">
+              <img src="../../assets/img/hbom-user-needs.png" alt="Patients and providers ask where to find relevant nutrition benefits resources; Jade frames the opportunity and design question for a browsable resource hub.">
             </div>
-          </div>
-          <div class="pain-point-block">
-            <div class="pain-point-avatar">
-              <span class="pain-point-emoji" aria-hidden="true">&#x1FA7A;</span>
-              <p class="pain-point-label">Providers</p>
-            </div>
-            <div class="pain-point-bubble">
-              <p>No shared place to send patients to learn more.</p>
-            </div>
-          </div>
+          </figure>
+          <p>I was assigned to design the hub in Figma. After completing the information architecture and wireframes early, I proposed extending the work into a Webflow CMS implementation.</p>
         </div>
       </div>
     </section>
 
     <!-- RESEARCH -->
-    <section class="project-section section-nav-target" id="research">
+    <section class="project-section project-section--context section-nav-target" id="research">
       <div class="content-container">
-        <p class="section-number">02</p>
-        <h2 class="section-icon-title">Research</h2>
-        <p class="section-takeaway">I reviewed existing FAM and health resource sites to understand what works and what's missing.</p>
-
-        <figure class="single-tile-figure" style="margin-top: 1.25rem;">
-          <div class="single-tile">
-            <img src="../../assets/img/hbom-audit.png" alt="Competitive audit of three existing food-as-medicine and health resource site homepages">
-          </div>
-        </figure>
-
-        <div class="alert-box-row">
-          <div class="alert-statement alert-statement--danger">
-            <span class="alert-statement__icon"><i class="uil uil-exclamation-triangle" aria-hidden="true"></i></span>
-            <div>
-              <p class="alert-statement__headline">What was missing</p>
-              <ul class="alert-statement__list">
-                <li><strong>No user-type segmentation:</strong> one page for everyone.</li>
-                <li><strong>Unclear click behavior:</strong> no cue before you click.</li>
-                <li><strong>No way to ask:</strong> no request or suggest path.</li>
-              </ul>
-            </div>
-          </div>
-          <div class="alert-statement alert-statement--success">
-            <span class="alert-statement__icon"><i class="uil uil-lightbulb-alt" aria-hidden="true"></i></span>
-            <div>
-              <p class="alert-statement__headline">What worked</p>
-              <ul class="alert-statement__list">
-                <li><span class="text-mint">Fewer, clearer filters</span> win at small counts.</li>
-                <li><span class="text-mint">Type and length cues</span> cut click guesswork.</li>
-                <li>A <span class="text-mint">warm, non-clinical tone</span> stays approachable.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- DESIGN -->
-    <section class="project-section section-nav-target" id="design">
-      <div class="content-container">
-        <p class="section-number">03</p>
-        <h2 class="section-icon-title">Design decisions</h2>
-        <p class="section-takeaway">I explored multiple directions and weighed the tradeoffs before building.</p>
-
-        <div class="hbom-decision-beat">
-          <h3 class="case-row__label hbom-decision-beat__heading">1. Filter placement</h3>
-          <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__pain-mark" aria-hidden="true">!</span> <span class="hbom-decision-beat__pain-label">Pain point</span> &middot; Filters were easy to overlook, so people never narrowed to what applied to them.</p>
-          <p class="hbom-decision-beat__explanation">I compared filters on the side, on top, and both. Side filters are familiar and scannable but easy to miss on a busy page; top filters are eye-catching but crowd as categories grow. After team feedback, I used <span class="text-mint">both, top for visibility and side for depth</span>.</p>
-          <figure class="single-tile-figure">
-            <div class="single-tile hbom-crop-top">
-              <img src="../../assets/img/hbom_Filter%20placement.png" alt="Filter placement options compared: top, side, and both, with tradeoffs">
-            </div>
-          </figure>
-        </div>
-
-        <div class="hbom-decision-beat">
-          <h3 class="case-row__label hbom-decision-beat__heading">2. Resource detail layout</h3>
-          <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__pain-mark" aria-hidden="true">!</span> <span class="hbom-decision-beat__pain-label">Pain point</span> &middot; The detail page had to hold a lot without burying the next action.</p>
-          <p class="hbom-decision-beat__explanation">I compared a banner-style detail against one with the form beside the resource. The banner holds a lot cleanly; the side form prompts sign-up but competes with the content and feels intrusive. I kept the <span class="text-mint">banner detail and moved the form to the bottom of the page</span> as one dual request and suggest form.</p>
-          <figure class="single-tile-figure">
-            <div class="single-tile hbom-crop-top">
-              <img src="../../assets/img/hbom_Resource%20detail%20layout.png" alt="Resource detail page layout options compared, with tradeoffs">
-            </div>
-          </figure>
-        </div>
-
-        <div class="hbom-decision-beat">
-          <h3 class="case-row__label hbom-decision-beat__heading">3. Card exploration</h3>
-          <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__pain-mark" aria-hidden="true">!</span> <span class="hbom-decision-beat__pain-label">Pain point</span> &middot; Every card had to show type, credibility, and time without clutter.</p>
-          <p class="hbom-decision-beat__explanation">I explored several card layouts and reviewed them with the team. We <span class="text-mint">moved forward with option 5</span> and put the tags below the description so they don't overlap the image.</p>
-          <figure class="single-tile-figure">
+        <p class="project-section__eyebrow">Research</p>
+        <h2 class="section-icon-title project-section__title">Competitive Audit</h2>
+        <div class="project-section__body">
+          <p>I compared existing food and health resource sites to understand how they organize resources and support browsing.</p>
+          <figure class="single-tile-figure" style="margin: 1.25rem 0;">
             <div class="single-tile">
-              <img src="../../assets/img/hbom-feedback.png" alt="Several resource-card layout options explored and iterated with the team">
+              <img src="../../assets/img/hbom-audit.png?v=2" alt="Competitive audit of three existing food-as-medicine and health resource site homepages">
             </div>
           </figure>
+          <p>The review showed that visitors needed a clearer starting point and more context before opening a resource. These findings informed the hub’s filters and resource-card design.</p>
         </div>
       </div>
     </section>
 
-    <!-- FEATURES -->
-    <section class="project-section section-nav-target" id="features">
+    <!-- IDEATION -->
+    <section class="project-section project-section--context section-nav-target hbom-ideation" id="design">
       <div class="content-container">
-        <p class="section-number">04</p>
-        <h2 class="section-icon-title">Features</h2>
+        <p class="project-section__eyebrow">Ideation</p>
+        <h2 class="section-icon-title project-section__title">Design decisions</h2>
+        <div class="project-section__body">
 
-        <div class="hbom-tabs" id="hbomFeatureTabs">
-          <div class="hbom-tabs__bar" role="tablist" aria-label="Feature showcase">
-            <button type="button" class="hbom-tabs__tab" id="hbomTab-filters" role="tab" aria-selected="true" aria-controls="hbomPanel-filters">Filters</button>
-            <button type="button" class="hbom-tabs__tab" id="hbomTab-form" role="tab" aria-selected="false" aria-controls="hbomPanel-form" tabindex="-1">Request form</button>
-            <button type="button" class="hbom-tabs__tab" id="hbomTab-detail" role="tab" aria-selected="false" aria-controls="hbomPanel-detail" tabindex="-1">Detail page</button>
+          <div class="hbom-decision-beat">
+            <h3 class="hbom-decision-beat__heading">01. Filter placement</h3>
+            <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__challenge-label">Challenge:</span> Visitors needed to narrow resources, while filters had to stay visible as categories grew.</p>
+            <p class="hbom-decision-beat__explanation">Side and top filters solved different parts of the problem. I developed both directions and presented their trade-offs to the project team in a <span class="text-mint" style="color: #2457c5; font-weight: 400;">comparative evaluation</span>. We combined them in the final layout: a top filter for visibility and a side filter for depth.</p>
+            <figure class="single-tile-figure">
+              <div class="single-tile hbom-crop-top">
+                <img src="../../assets/img/hbom_Filter%20placement.png" alt="Filter placement options compared: top, side, and combined filters">
+              </div>
+            </figure>
           </div>
 
-          <div class="hbom-tabs__panels">
-            <div class="hbom-tabs__panel is-active" id="hbomPanel-filters" role="tabpanel" aria-labelledby="hbomTab-filters" tabindex="0">
-              <div class="hbom-tabs__media">
-                <img src="../../assets/img/hbom-filters.png?v=3" alt="User type, topic, and media type filter panels">
+          <div class="hbom-decision-beat">
+            <h3 class="hbom-decision-beat__heading">02. Resource detail layout</h3>
+            <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__challenge-label">Challenge:</span> The page needed to support both reading and requesting resources without letting either compete with the other.</p>
+            <p class="hbom-decision-beat__explanation">I explored two ways to place the request form alongside the resource. A <span class="text-mint" style="color: #2457c5; font-weight: 400;">comparative evaluation</span> with the project team showed the full-width layout kept the resource easier to focus on, so I moved the form below the content.</p>
+            <figure class="single-tile-figure">
+              <div class="single-tile hbom-crop-top">
+                <img src="../../assets/img/hbom_Resource%20detail%20layout.png" alt="Resource detail layout options compared">
               </div>
-              <div class="hbom-tabs__copy">
-                <h3>Non-gating filters</h3>
-                <p>User-type entry + Topic/Media filters. "All" by default: non-gating, so overlapping users never have to self-label.</p>
-              </div>
-            </div>
+            </figure>
+          </div>
 
-            <div class="hbom-tabs__panel" id="hbomPanel-form" role="tabpanel" aria-labelledby="hbomTab-form" tabindex="0">
-              <div class="hbom-tabs__media">
-                <img src="../../assets/img/hbom-form.png?v=3" alt="Combined looking-for and suggest-a-resource request form">
+          <div class="hbom-decision-beat">
+            <h3 class="hbom-decision-beat__heading">03. Resource cards</h3>
+            <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__challenge-label">Challenge:</span> Visitors needed enough context to judge a resource before opening it.</p>
+            <p class="hbom-decision-beat__explanation">I designed eight card variations, each with a different information hierarchy and use case. After <span class="text-mint" style="color: #2457c5; font-weight: 400;">preference testing</span> with the project team, I developed the preferred direction further and kept the resource type, source, and reading time visible before the click.</p>
+            <figure class="single-tile-figure">
+              <div class="single-tile">
+                <img src="../../assets/img/hbom-feedback.png" alt="Resource card variations and final direction">
               </div>
-              <div class="hbom-tabs__copy">
-                <h3>One form, two purposes</h3>
-                <p>One dual-purpose form (request or suggest); captures user type for future segmentation.</p>
-              </div>
-            </div>
-
-            <div class="hbom-tabs__panel" id="hbomPanel-detail" role="tabpanel" aria-labelledby="hbomTab-detail" tabindex="0">
-              <div class="hbom-tabs__media">
-                <img src="../../assets/img/hbom-detail.png?v=3" alt="Resource detail page with provider logo, estimated-time indicator, and open-in-new-tab link">
-              </div>
-              <div class="hbom-tabs__copy">
-                <h3>Built-in trust signals</h3>
-                <p>Org logo/banner, estimated read time, last-updated date, and open-in-new-tab.</p>
-              </div>
-            </div>
+            </figure>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- FINAL OUTCOME -->
-    <section class="project-section final-outcome section-nav-target" id="outcome">
+    <!-- FINAL SOLUTION -->
+    <section class="project-section project-section--context final-outcome section-nav-target hbom-final-solution" id="outcome">
       <div class="content-container">
-        <p class="section-number">05</p>
-        <h2 class="section-icon-title">Final solution</h2>
-        <div class="mac-mockup">
-          <video class="mac-screen" autoplay muted loop playsinline
-                 src="../../assets/video/hbom_demo.mp4?v=6"></video>
-          <img class="mac-frame" src="../../assets/img/mac-frame.png" alt="NVP Knowledge Hub running in a browser">
+        <p class="project-section__eyebrow">Final Solution</p>
+        <h2 class="section-icon-title project-section__title">Inside the Hub</h2>
+        <div class="project-section__body">
+          <div class="hbom-tabs" id="hbomFeatureTabs">
+            <div class="hbom-tabs__bar" role="tablist" aria-label="Inside the Hub">
+              <button type="button" class="hbom-tabs__tab" id="hbomTab-filters" role="tab" aria-selected="true" aria-controls="hbomPanel-filters">Filters</button>
+              <button type="button" class="hbom-tabs__tab" id="hbomTab-form" role="tab" aria-selected="false" aria-controls="hbomPanel-form" tabindex="-1">Request form</button>
+              <button type="button" class="hbom-tabs__tab" id="hbomTab-detail" role="tab" aria-selected="false" aria-controls="hbomPanel-detail" tabindex="-1">Detail page</button>
+            </div>
+
+            <div class="hbom-tabs__panels">
+              <div class="hbom-tabs__panel is-active" id="hbomPanel-filters" role="tabpanel" aria-labelledby="hbomTab-filters" tabindex="0">
+                <div class="hbom-tabs__media">
+                  <img src="../../assets/img/hbom-filters.png?v=3" alt="User type, topic, and media type filter panels">
+                </div>
+                <div class="hbom-tabs__copy">
+                  <h3>Non-gating filters</h3>
+                  <p>Visitors can enter through a user type, topic, or media type. “All” stays selected by default, so people with overlapping needs can browse without choosing a label first.</p>
+                </div>
+              </div>
+
+              <div class="hbom-tabs__panel" id="hbomPanel-form" role="tabpanel" aria-labelledby="hbomTab-form" tabindex="0">
+                <div class="hbom-tabs__media">
+                  <img src="../../assets/img/hbom-form.png?v=3" alt="Combined request and suggestion form">
+                </div>
+                <div class="hbom-tabs__copy">
+                  <h3>One form, two paths</h3>
+                  <p>The same form supports both requesting a resource and suggesting one.</p>
+                </div>
+              </div>
+
+              <div class="hbom-tabs__panel" id="hbomPanel-detail" role="tabpanel" aria-labelledby="hbomTab-detail" tabindex="0">
+                <div class="hbom-tabs__media">
+                  <img src="../../assets/img/hbom-detail.png?v=3" alt="Resource detail page">
+                </div>
+                <div class="hbom-tabs__copy">
+                  <h3>Information before the click</h3>
+                  <p>Each resource includes its source, format, reading time, and last-updated date so visitors can decide whether it is worth opening.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
 
-    <!-- NEXT STEPS -->
-    <section class="project-section">
+    <!-- WEBFLOW BUILD -->
+    <section class="project-section project-section--context final-outcome hbom-final-solution">
       <div class="content-container">
-        <h2 class="section-icon-title">Next steps</h2>
-        <p>Usability testing with patients and providers, a public launch, and growing the library past its first set of resources.</p>
+        <p class="project-section__eyebrow">Final Solution</p>
+        <h2 class="section-icon-title project-section__title">Webflow build</h2>
+        <div class="project-section__body">
+          <p>Walkthrough from filtering to opening a resource.</p>
+          <div class="mac-mockup">
+            <video class="mac-screen" autoplay muted loop playsinline
+                   src="../../assets/video/hbom_demo.mp4?v=6"></video>
+            <img class="mac-frame" src="../../assets/img/mac-frame.png" alt="NVP Knowledge Hub walkthrough in a browser">
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- TAKEAWAYS -->
-    <section class="project-section section-nav-target" id="takeaways">
+    <!-- REFLECTION -->
+    <section class="project-section project-section--context section-nav-target" id="takeaways">
       <div class="content-container">
-        <h2 class="section-icon-title">Takeaways</h2>
+        <p class="project-section__eyebrow">Reflection</p>
+        <h2 class="section-icon-title project-section__title">Learnings</h2>
 
-        <div class="learnings-list">
-          <div class="learning-item">
-            <span class="learning-num">1</span>
-            <div>
-              <strong>Health content needs trust signals</strong>
-              <p>A logo, a source, an estimated read time, small cues that make an unfamiliar medical resource feel safe to click.</p>
-            </div>
-          </div>
-          <div class="learning-item">
-            <span class="learning-num">2</span>
-            <div>
-              <strong>Designing for people who don't fit one label</strong>
-              <p>The forgiving, non-gating filters were the direct payoff of realizing "who are you" doesn't have one clean answer.</p>
-            </div>
-          </div>
+        <div class="project-section__body">
+          <p><strong>Reflection:</strong> The main challenge was not only deciding how the hub should look, but what each resource needed to communicate before someone opened it. Resource type, source, reading time, and audience became part of the interface rather than background content.</p>
+          <p>Moving from Figma into Webflow changed how I worked. I had to think about CMS fields, reusable content, and how the design would hold as more resources were added.</p>
         </div>
       </div>
     </section>
