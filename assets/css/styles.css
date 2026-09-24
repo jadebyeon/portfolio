@@ -2117,15 +2117,150 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   width: 100%;
 }
 
-.about-hero__img {
+.about-hero__visual {
   width: 100%;
+  min-width: 0;
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  min-height: 560px;
 }
 
-.about-hero__img img {
+.about-messages {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.about-message {
+  position: absolute;
+  max-width: 15rem;
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d8dce2;
+  border-radius: 1.1rem;
+  background: #fff;
+  color: var(--title-color);
+  box-shadow: 0 10px 24px rgba(17, 24, 39, 0.08);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.about-message::after {
+  content: '';
+  position: absolute;
+  bottom: -0.42rem;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-right: 1px solid #d8dce2;
+  border-bottom: 1px solid #d8dce2;
+  background: #fff;
+  transform: rotate(45deg);
+}
+
+.about-message--hello {
+  top: 7%;
+  left: 0;
+}
+
+.about-message--hello::after { left: 1.4rem; }
+
+.about-message--prompt {
+  top: 20%;
+  right: 0;
+}
+
+.about-message--prompt::after { right: 1.4rem; }
+
+.about-avatar-stage {
+  position: relative;
+  width: min(100%, 440px);
+  aspect-ratio: 1 / 1.06;
+  perspective: 900px;
+}
+
+.about-avatar {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.about-avatar__intro,
+.about-avatar__image {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  border-radius: 24px;
-  object-fit: cover;
-  aspect-ratio: 3 / 4;
+  height: 100%;
+  object-fit: contain;
+}
+
+.about-avatar__intro { z-index: 1; }
+.about-avatar__image { z-index: 2; }
+
+.about-stickers {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  transform-style: preserve-3d;
+}
+
+.about-sticker {
+  position: absolute;
+  display: block;
+  width: var(--sticker-width);
+  left: var(--sticker-left);
+  top: var(--sticker-top);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  transform-origin: var(--sticker-origin);
+  transform: translateY(var(--sticker-depth)) rotateX(var(--sticker-x)) rotateY(var(--sticker-y)) rotateZ(var(--sticker-z));
+  transition: transform 180ms ease, filter 180ms ease;
+  filter: drop-shadow(0 0.25rem 0.24rem rgba(17, 24, 39, 0.2));
+}
+
+.about-sticker img { display: block; width: 100%; height: auto; }
+
+.about-sticker--uofm { --sticker-left: 17%; --sticker-top: 12%; --sticker-width: 18%; --sticker-origin: 50% 70%; --sticker-x: -3deg; --sticker-y: -5deg; --sticker-z: -18deg; --sticker-depth: -1px; z-index: 2; }
+.about-sticker--duke { --sticker-left: 60%; --sticker-top: 23%; --sticker-width: 14%; --sticker-origin: 45% 80%; --sticker-x: 3deg; --sticker-y: 5deg; --sticker-z: 8deg; --sticker-depth: -1px; z-index: 2; }
+.about-sticker--earth { --sticker-left: 21%; --sticker-top: 49%; --sticker-width: 18%; --sticker-origin: 60% 50%; --sticker-x: 2deg; --sticker-y: -4deg; --sticker-z: -8deg; --sticker-depth: -2px; z-index: 4; }
+.about-sticker--film { --sticker-left: 65%; --sticker-top: 61%; --sticker-width: 21%; --sticker-origin: 40% 48%; --sticker-x: -2deg; --sticker-y: 4deg; --sticker-z: -12deg; --sticker-depth: -1px; z-index: 4; }
+.about-sticker--pokemon { --sticker-left: 40%; --sticker-top: 51%; --sticker-width: 24%; --sticker-origin: 50% 55%; --sticker-x: 0deg; --sticker-y: 0deg; --sticker-z: 2deg; --sticker-depth: -3px; z-index: 5; }
+
+.about-sticker:hover,
+.about-sticker:focus-visible {
+  transform: translateY(calc(var(--sticker-depth) - 4px)) rotateX(var(--sticker-hover-x, -2deg)) rotateY(var(--sticker-hover-y, 2deg)) rotateZ(var(--sticker-z));
+  filter: drop-shadow(0 0.46rem 0.3rem rgba(17, 24, 39, 0.28));
+  animation: about-sticker-settle 220ms ease-out;
+}
+
+@keyframes about-sticker-settle {
+  0% { margin-left: 0; }
+  45% { margin-left: -1px; }
+  100% { margin-left: 0; }
+}
+
+.about-sticker:focus-visible { outline: 2px solid var(--mint-color); outline-offset: 4px; }
+
+.about-sticker-panel { position: absolute; inset: auto 0 0; z-index: 10; display: flex; justify-content: center; }
+.about-sticker-panel__card { position: relative; width: min(100%, 23rem); padding: 1.2rem 1.35rem 1.35rem; border: 1px solid #d8dce2; border-radius: 1.15rem; background: rgba(255,255,255,0.97); box-shadow: 0 16px 38px rgba(17,24,39,0.14); }
+.about-sticker-panel__close { position: absolute; top: 0.45rem; right: 0.65rem; border: 0; background: transparent; color: var(--text-color-light); font-size: 1.35rem; line-height: 1; cursor: pointer; }
+.about-sticker-panel__close:focus-visible { outline: 2px solid var(--mint-color); outline-offset: 3px; }
+.about-sticker-panel__label { margin: 0 0 0.35rem; color: var(--mint-color); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+.about-sticker-panel h2 { margin: 0 0 0.55rem; color: var(--title-color); font-size: 1rem; }
+.about-sticker-panel p:last-child { margin: 0; color: var(--text-color); font-size: 0.92rem; line-height: 1.6; }
+
+@media (prefers-reduced-motion: reduce) {
+  .about-sticker,
+  .about-sticker:hover,
+  .about-sticker:focus-visible {
+    transform: translateY(0) rotateX(0) rotateY(0) rotateZ(0);
+    transition: none;
+    animation: none;
+  }
 }
 
 .about-eyebrow {
@@ -2212,9 +2347,17 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   .about-hero__grid {
     grid-template-columns: 1fr;
   }
-  .about-hero__img {
+  .about-hero__visual {
     order: -1;
-    max-width: 280px;
+    min-height: 500px;
+  }
+  .about-avatar-stage {
+    width: min(100%, 390px);
+  }
+  .about-message--hello { top: 1%; left: 2%; }
+  .about-message--prompt { top: 13%; right: 2%; }
+  .about-message { max-width: 13rem; font-size: 0.76rem; }
+  .about-sticker-panel { bottom: 1rem; padding-inline: 0.5rem;
   }
   .about-two-col {
     grid-template-columns: 1fr;

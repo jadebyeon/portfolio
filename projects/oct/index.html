@@ -12,6 +12,59 @@
   <style>
     /* Page-scoped overrides (this page only). */
 
+    /* OCT project context: mirrors the established HBOM problem/solution and
+       metadata hierarchy without affecting the OCT hero media. */
+    .project-page--oct {
+      --oct-ink: #242329;
+      --oct-body: #6a6874;
+      --oct-rule: #909099;
+      --oct-divider-space: clamp(0.875rem, 1.25vw, 1.125rem);
+      --project-context-body: var(--oct-body);
+      --project-context-rule: var(--oct-rule);
+      --project-context-divider-space: var(--oct-divider-space);
+      --project-meta-bottom-space: var(--oct-divider-space);
+    }
+    .project-page--oct .problem-solution-row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(2rem, 4vw, 3rem);
+      padding: clamp(2rem, 3.5vw, 2.75rem) 0 var(--oct-divider-space);
+      margin-bottom: calc(var(--oct-divider-space) + 1.03125rem);
+      border-top: 0;
+      border-color: var(--oct-rule);
+    }
+    .project-page--oct :is(.ps-label, .meta-label) {
+      color: var(--oct-ink);
+      font-family: var(--body-font);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: normal;
+      line-height: 1.35;
+      text-transform: none;
+    }
+    .project-page--oct .ps-label { margin-bottom: 0.7rem; }
+    .project-page--oct .ps-text {
+      max-width: none;
+      color: var(--oct-body);
+      font-size: 0.9375rem;
+      font-weight: 400;
+      line-height: 1.55;
+    }
+    .project-page--oct .ps-divider { display: none; }
+    .project-page--oct .hero-subtitle { text-align: center; }
+    @media (max-width: 680px) {
+      .project-page--oct .problem-solution-row {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding-top: 1.75rem;
+        padding-bottom: var(--oct-divider-space);
+      }
+      .project-page--oct .ps-block + .ps-block {
+        border-top: 1px solid var(--oct-rule);
+        padding-top: var(--oct-divider-space);
+      }
+      .project-page--oct .project-meta { gap: 1.5rem; }
+    }
+
     /* Survey Results stat grid: down to 3 cards after dropping the
        "30 caregivers" stat (duplicated the Method line above it). */
     .impact-grid.oct-impact-grid--3 {
@@ -104,7 +157,7 @@
     }
   </style>
 </head>
-<body class="project-page">
+<body class="project-page project-page--oct">
 
   <header class="header" id="header">
     <nav class="site-nav container">
@@ -140,8 +193,8 @@
     <section class="project-hero section">
       <div class="content-container">
         <div class="project-hero-copy">
-          <h1 class="hero-title">Pediatric Eye Exam Robot</h1>
-          <p class="hero-subtitle">A 6-year-old grips her mother's hand. A mechanical arm extends toward her face. My job was to give that arm a soul before she ever walked into the room.</p>
+          <h1 class="hero-title">Pediatric OCT Robot</h1>
+          <p class="hero-subtitle">Using caregiver research to shape a robot’s character and interaction design.</p>
         </div>
         <div class="hero-media hero-media--device hero-media--padded">
           <img src="../../assets/img/oct_banner.png" alt="Pediatric Eye Exam Robot">
@@ -154,24 +207,33 @@
       <div class="content-container">
         <div class="problem-solution-row">
           <div class="ps-block">
-            <p class="ps-label">The Problem</p>
-            <p class="ps-text">The mechanical design was finalized. But the robot had no name, no face, and no way to tell a frightened child that everything was going to be okay. 53% of caregivers said the standard OCT exam is uncomfortable for children.</p>
+            <p class="ps-label">Problem</p>
+            <p class="ps-text">Pediatric OCT exams can feel unfamiliar and difficult for children to complete.</p>
           </div>
           <div class="ps-divider" aria-hidden="true"></div>
           <div class="ps-block">
-            <p class="ps-label">My Role</p>
-            <p class="ps-text">I owned the character design system, survey research and analysis, storyboard, and pre-exposure media. I translated raw caregiver data into a design direction the team could build from.</p>
+            <p class="ps-label">Solution</p>
+            <p class="ps-text">I used caregiver research to develop a character and interaction system that helps children understand what to expect from the robot.</p>
           </div>
         </div>
 
-        <div class="project-meta" style="margin-top: 2.5rem;">
+        <div class="project-meta project-meta--details">
           <div class="meta-item">
             <div class="meta-label">Project Type</div>
-            <div class="meta-value">Product, UX Research, Digital + Physical Design</div>
+            <ul class="meta-list">
+              <li>Product</li>
+              <li>UX Research</li>
+              <li>Digital + Physical Design</li>
+            </ul>
           </div>
           <div class="meta-item">
             <div class="meta-label">Team</div>
-            <div class="meta-value">3 Product Designers (including me), 2 Digital Fabrication Designers, 5 Engineers, 2 Medical Collaborators</div>
+            <ul class="meta-list">
+              <li>3 Product Designers (including me)</li>
+              <li>2 Digital Fabrication Designers</li>
+              <li>5 Engineers</li>
+              <li>2 Medical Collaborators</li>
+            </ul>
           </div>
           <div class="meta-item">
             <div class="meta-label">Timeline</div>
@@ -179,7 +241,13 @@
           </div>
           <div class="meta-item">
             <div class="meta-label">Tools</div>
-            <div class="meta-value">Figma · R · Procreate · ACM LaTeX</div>
+            <ul class="meta-list">
+              <li>Figma</li>
+              <li>Higgsfield</li>
+              <li>R and Python</li>
+              <li>Procreate</li>
+              <li>ACM LaTeX</li>
+            </ul>
           </div>
         </div>
       </div>

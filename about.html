@@ -57,8 +57,44 @@
           </div>
   
           <!-- RIGHT -->
-          <div class="about-hero__img">
-            <img src="assets/img/Linkedin_Profile_Photo.JPG" alt="Jade Byeon" />
+          <div class="about-hero__visual" aria-label="Interactive introduction to Jade">
+            <div class="about-messages" aria-label="Messages from Jade">
+              <p class="about-message about-message--hello">Hi, I’m Jade.</p>
+              <p class="about-message about-message--prompt">Click on the stickers to learn more about me.<br />Each one has a different story.</p>
+            </div>
+            <div class="about-avatar-stage">
+              <div class="about-avatar" data-about-avatar>
+                <video class="about-avatar__intro" data-about-intro muted playsinline preload="auto" poster="assets/img/about/jade_still.png" aria-hidden="true">
+                  <source src="assets/video/jade-memoji-intro.webm" type="video/webm" />
+                </video>
+                <img class="about-avatar__image" data-about-smile src="assets/img/about/jade_smile.png" alt="Jade Byeon" />
+                <div class="about-stickers" aria-label="Learn more about Jade">
+                  <button class="about-sticker about-sticker--uofm" type="button" data-sticker="uofm" aria-label="Learn about Jade’s University of Michigan background">
+                    <img src="assets/img/about/sticker-uofm.png" alt="" />
+                  </button>
+                  <button class="about-sticker about-sticker--duke" type="button" data-sticker="duke" aria-label="Learn about Jade’s Duke studies">
+                    <img src="assets/img/about/sticker-duke.png" alt="" />
+                  </button>
+                  <button class="about-sticker about-sticker--earth" type="button" data-sticker="earth" aria-label="Learn about Jade’s international background">
+                    <img src="assets/img/about/sticker-earth.png" alt="" />
+                  </button>
+                  <button class="about-sticker about-sticker--film" type="button" data-sticker="film" aria-label="Learn about Jade’s interest in film">
+                    <img src="assets/img/about/sticker-film.png" alt="" />
+                  </button>
+                  <button class="about-sticker about-sticker--pokemon" type="button" data-sticker="pokemon" aria-label="Learn about Jade’s interest in Pokémon">
+                    <img src="assets/img/about/sticker-pokemon.png" alt="" />
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="about-sticker-panel" data-sticker-panel hidden>
+              <div class="about-sticker-panel__card" role="dialog" aria-modal="false" aria-labelledby="about-sticker-panel-title">
+                <button class="about-sticker-panel__close" type="button" data-sticker-close aria-label="Close information panel">×</button>
+                <p class="about-sticker-panel__label">A little more about me</p>
+                <h2 id="about-sticker-panel-title" data-sticker-title></h2>
+                <p data-sticker-copy></p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

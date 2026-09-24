@@ -39,6 +39,76 @@
   }
 })();
 
+/*==================== ABOUT STICKER INTRO ====================
+  One short Memoji intro, then a still smiling image and independently
+  interactive sticker buttons. No-ops on pages without the About composition. */
+(function () {
+  var avatar = document.querySelector('[data-about-avatar]');
+  if (!avatar) return;
+
+  var intro = avatar.querySelector('[data-about-intro]');
+  var smile = avatar.querySelector('[data-about-smile]');
+  var stickers = Array.prototype.slice.call(avatar.querySelectorAll('[data-sticker]'));
+  var panel = document.querySelector('[data-sticker-panel]');
+  var panelTitle = panel && panel.querySelector('[data-sticker-title]');
+  var panelCopy = panel && panel.querySelector('[data-sticker-copy]');
+  var closeButton = panel && panel.querySelector('[data-sticker-close]');
+  var activeSticker = null;
+  var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var content = {
+    uofm: ['University of Michigan', 'B.S. in Art & Design and Statistics at the University of Michigan.'],
+    duke: ['Duke', 'Currently pursuing a Master of Engineering at Duke University.'],
+    earth: ['Earth', 'I was born in Korea and have lived and studied in China, Singapore, and the United States.'],
+    film: ['Film', 'I enjoy films that make ordinary details feel unfamiliar.\nFavorite films coming soon.'],
+    pokemon: ['Pokémon', 'I’m a longtime Pokémon fan.']
+  };
+
+  function showSmile() {
+    smile.hidden = false;
+    intro.hidden = true;
+  }
+
+  function openPanel(button) {
+    var entry = content[button.getAttribute('data-sticker')];
+    if (!entry || !panel) return;
+    activeSticker = button;
+    panelTitle.textContent = entry[0];
+    panelCopy.textContent = entry[1];
+    panelCopy.style.whiteSpace = 'pre-line';
+    panel.hidden = false;
+    if (closeButton) closeButton.focus();
+  }
+
+  function closePanel() {
+    if (!panel || panel.hidden) return;
+    panel.hidden = true;
+    if (activeSticker) activeSticker.focus();
+  }
+
+  if (reducedMotion) {
+    showSmile();
+  } else {
+    smile.hidden = true;
+    intro.hidden = false;
+    intro.addEventListener('ended', showSmile, { once: true });
+    intro.addEventListener('error', showSmile, { once: true });
+    var play = intro.play();
+    if (play && play.catch) play.catch(showSmile);
+  }
+
+  stickers.forEach(function (button) {
+    button.addEventListener('click', function (event) {
+      event.preventDefault();
+      openPanel(button);
+    });
+  });
+  if (closeButton) closeButton.addEventListener('click', closePanel);
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') closePanel();
+  });
+})();
+
 /*==================== HERO LOAD-IN ====================
   Load-triggered only (see styles.css @keyframes heroLoadIn). Toggles
   body.loaded to start the staggered entrance animation, then once
