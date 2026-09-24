@@ -2122,18 +2122,24 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   text-align: center;
 }
 
+/* Matches .home__title (index.html hero "Hi, I'm Jade...") exactly, so
+   the two pages read as the same type system rather than each having
+   its own name-heading size/weight. */
 .about-name {
-  font-size: clamp(2.8rem, 5.5vw, 4.8rem);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  color: var(--title-color);
-  font-family: var(--display-font);
-  line-height: 1.05;
+  font-family: "Lora", "Inter", serif;
+  font-size: clamp(1.8rem, 3.6vw, 4rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: #1f1f29;
   margin-bottom: clamp(0.6rem, 1.4vw, 0.9rem);
 }
 
+/* Matches .hero-subtitle (the project case-study subtitle, e.g. "Using
+   caregiver research..." on the OCT page) rather than the old
+   ad-hoc size. */
 .about-subtitle {
-  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  font-size: clamp(1rem, 1.3vw, 1.25rem);
   line-height: 1.6;
   color: var(--text-color);
   max-width: 42ch;
@@ -2143,7 +2149,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 .about-avatar-row {
   width: 100%;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(auto, 30rem) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(auto, 42rem) minmax(0, 1fr);
   align-items: center;
   gap: clamp(0.5rem, 2vw, 2rem);
 }
@@ -2207,7 +2213,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 .about-avatar-stage {
   position: relative;
   width: 100%;
-  max-width: clamp(280px, 32vw, 460px);
+  max-width: clamp(340px, 38vw, 640px);
   margin-inline: auto;
   /* Matches jade_smile.png (2560x1920) / jade_still.png (1448x1086) /
      the intro video (2560x1920) -- all exactly 4:3. Getting this wrong
@@ -2241,7 +2247,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
    was only ever for the on-face 3D tilt). */
 .about-sticker {
   display: block;
-  width: clamp(3.2rem, 7vw, 5.2rem);
+  width: clamp(4.5rem, 9vw, 7.5rem);
   padding: 0;
   border: 0;
   background: transparent;
