@@ -41,7 +41,11 @@
 
 /*==================== ABOUT STICKER INTRO ====================
   One short Memoji intro, then a still smiling image and independently
-  interactive sticker buttons. No-ops on pages without the About composition. */
+  interactive sticker buttons. Clicking a sticker "peels" it off the
+  face to the center of the screen (a FLIP-technique transform from the
+  sticker's own screen position), enlarges it, then flips it over to
+  reveal its content on a plain card back. No-ops on pages without the
+  About composition. */
 (function () {
   var avatar = document.querySelector('[data-about-avatar]');
   if (!avatar) return;
@@ -49,41 +53,57 @@
   var intro = avatar.querySelector('[data-about-intro]');
   var smile = avatar.querySelector('[data-about-smile]');
   var stickers = Array.prototype.slice.call(avatar.querySelectorAll('[data-sticker]'));
-  var panel = document.querySelector('[data-sticker-panel]');
-  var panelTitle = panel && panel.querySelector('[data-sticker-title]');
-  var panelCopy = panel && panel.querySelector('[data-sticker-copy]');
-  var closeButton = panel && panel.querySelector('[data-sticker-close]');
-  var activeSticker = null;
+  var hint = document.querySelector('[data-about-hint]');
+
+  var overlay = document.querySelector('[data-sticker-overlay]');
+  var card = overlay && overlay.querySelector('[data-sticker-card]');
+  var inner = overlay && overlay.querySelector('[data-sticker-card-inner]');
+  var cardImg = overlay && overlay.querySelector('[data-sticker-card-img]');
+  var cardContent = overlay && overlay.querySelector('[data-sticker-card-content]');
+  var cardTitle = overlay && overlay.querySelector('[data-sticker-card-title]');
+  var cardCopy = overlay && overlay.querySelector('[data-sticker-card-copy]');
+  var closeButtons = overlay ? Array.prototype.slice.call(overlay.querySelectorAll('[data-sticker-close]')) : [];
+
+  var activeButton = null;
+  // True only once a card is fully committed to being open (set the
+  // instant open/switch starts, cleared the instant close starts --
+  // not waiting on animations). Click routing (open vs. switch vs.
+  // close) reads this instead of just activeButton, because
+  // activeButton itself isn't cleared until the close animation's
+  // async finish, which lags behind a fast re-click.
+  var isOpen = false;
+  var pendingCloseButton = null;
+  var pendingCloseTimer = null;
+  var pendingCloseHandler = null;
+  var pendingContentTimer = null;
   var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var content = {
-    uofm: ['University of Michigan', 'B.S. in Art & Design and Statistics at the University of Michigan.'],
-    duke: ['Duke', 'Currently pursuing a Master of Engineering at Duke University.'],
-    earth: ['Earth', 'I was born in Korea and have lived and studied in China, Singapore, and the United States.'],
-    film: ['Film', 'I enjoy films that make ordinary details feel unfamiliar.\nFavorite films coming soon.'],
-    pokemon: ['Pokémon', 'I’m a longtime Pokémon fan.']
+    uofm: {
+      title: 'University of Michigan',
+      body: 'Graduated from the University of Michigan – Ann Arbor with a B.A. in Art & Design and a B.S. in Statistics.'
+    },
+    duke: {
+      title: 'Duke',
+      body: 'Currently pursuing an MEng in Design & Technology Innovation at Duke.'
+    },
+    earth: {
+      title: 'Earth',
+      body: 'Born in Korea, raised across China, Singapore, and the U.S. — that background shapes how I think about diverse users, contexts, and the cultural assumptions built into design decisions.'
+    },
+    film: {
+      title: 'Film',
+      body: 'I love a good movie. Favorites: How to Train Your Dragon, Life Is Beautiful, Memento, and Arrival.'
+    },
+    pokemon: {
+      title: 'Pokémon',
+      body: 'Been loving Pokémon and Nintendo since I was a kid.'
+    }
   };
 
   function showSmile() {
     smile.hidden = false;
     intro.hidden = true;
-  }
-
-  function openPanel(button) {
-    var entry = content[button.getAttribute('data-sticker')];
-    if (!entry || !panel) return;
-    activeSticker = button;
-    panelTitle.textContent = entry[0];
-    panelCopy.textContent = entry[1];
-    panelCopy.style.whiteSpace = 'pre-line';
-    panel.hidden = false;
-    if (closeButton) closeButton.focus();
-  }
-
-  function closePanel() {
-    if (!panel || panel.hidden) return;
-    panel.hidden = true;
-    if (activeSticker) activeSticker.focus();
   }
 
   if (reducedMotion) {
@@ -97,15 +117,196 @@
     if (play && play.catch) play.catch(showSmile);
   }
 
+  if (!overlay || !card || !inner) return;
+
+  function hideHint() {
+    if (hint) hint.classList.add('is-hidden');
+  }
+
+  function setCardContent(button) {
+    var entry = content[button.getAttribute('data-sticker')];
+    if (!entry) return;
+    var img = button.querySelector('img');
+    if (cardImg && img) cardImg.src = img.src;
+    if (cardTitle) cardTitle.textContent = entry.title;
+    if (cardCopy) cardCopy.textContent = entry.body;
+  }
+
+  // FLIP technique: compute the transform that maps the card's resting
+  // (centered) rect onto the clicked sticker's current on-face rect, so
+  // the entrance/exit animation can run in reverse from that offset.
+  function entranceTransform(button) {
+    var btnRect = button.getBoundingClientRect();
+    var cardRect = card.getBoundingClientRect();
+    var dx = (btnRect.left + btnRect.width / 2) - (cardRect.left + cardRect.width / 2);
+    var dy = (btnRect.top + btnRect.height / 2) - (cardRect.top + cardRect.height / 2);
+    var scale = Math.max(0.04, btnRect.width / cardRect.width);
+    var rotate = parseFloat(getComputedStyle(button).getPropertyValue('--sticker-z')) || 0;
+    return 'translate(' + dx + 'px, ' + dy + 'px) scale(' + scale + ') rotate(' + rotate + 'deg)';
+  }
+
+  function onKeydown(event) {
+    if (event.key === 'Escape') close();
+  }
+
+  // A prior close() may still be waiting on its transitionend/timeout
+  // when a new open/switch starts (fast re-click). Left alone, that
+  // stale finish would later fire, force-hide the overlay and reset
+  // the card's inline styles out from under the new card -- so any
+  // in-flight close gets abandoned before a new one begins. The
+  // button that was mid-close still needs its own lifted/expanded
+  // state cleared here (finishClose won't run for it anymore), so it
+  // reappears on the face immediately instead of staying hidden.
+  function cancelPendingClose() {
+    if (pendingCloseTimer) {
+      window.clearTimeout(pendingCloseTimer);
+      pendingCloseTimer = null;
+    }
+    if (pendingCloseHandler) {
+      card.removeEventListener('transitionend', pendingCloseHandler);
+      pendingCloseHandler = null;
+    }
+    if (pendingContentTimer) {
+      window.clearTimeout(pendingContentTimer);
+      pendingContentTimer = null;
+    }
+    if (cardContent) cardContent.style.opacity = '';
+    if (pendingCloseButton) {
+      pendingCloseButton.classList.remove('is-lifted');
+      pendingCloseButton.setAttribute('aria-expanded', 'false');
+      pendingCloseButton = null;
+    }
+  }
+
+  function openFresh(button) {
+    cancelPendingClose();
+    isOpen = true;
+    activeButton = button;
+    setCardContent(button);
+    overlay.hidden = false;
+    overlay.classList.remove('is-visible');
+    card.classList.remove('is-open');
+    inner.classList.remove('is-flipped');
+    card.style.transition = 'none';
+    card.style.transform = 'none';
+    void overlay.offsetWidth;
+    var entrance = entranceTransform(button);
+    card.style.transform = entrance;
+    void card.offsetWidth;
+    card.style.transition = '';
+
+    button.classList.add('is-lifted');
+    button.setAttribute('aria-expanded', 'true');
+    hideHint();
+
+    requestAnimationFrame(function () {
+      overlay.classList.add('is-visible');
+      card.classList.add('is-open');
+      card.style.transform = '';
+      inner.classList.add('is-flipped');
+    });
+
+    document.addEventListener('keydown', onKeydown);
+    if (closeButtons[0]) closeButtons[0].focus();
+  }
+
+  function switchSticker(button) {
+    cancelPendingClose();
+    isOpen = true;
+    var prevButton = activeButton;
+    prevButton.classList.remove('is-lifted');
+    prevButton.setAttribute('aria-expanded', 'false');
+    activeButton = button;
+    button.classList.add('is-lifted');
+    button.setAttribute('aria-expanded', 'true');
+
+    if (cardContent) {
+      cardContent.style.opacity = '0';
+      pendingContentTimer = window.setTimeout(function () {
+        pendingContentTimer = null;
+        setCardContent(button);
+        cardContent.style.opacity = '1';
+      }, 140);
+    } else {
+      setCardContent(button);
+    }
+    if (closeButtons[0]) closeButtons[0].focus();
+  }
+
+  function finishClose(button) {
+    if (pendingCloseButton !== button) return;
+    pendingCloseButton = null;
+    overlay.hidden = true;
+    card.style.transition = '';
+    card.style.transform = '';
+    button.classList.remove('is-lifted');
+    button.setAttribute('aria-expanded', 'false');
+    button.focus();
+    if (activeButton === button) activeButton = null;
+  }
+
+  function close() {
+    var button = activeButton;
+    // Already mid-close for this exact button (e.g. a second Escape
+    // press while it's animating out) -- let the in-flight one finish
+    // rather than restarting it.
+    if (!button || pendingCloseButton === button) return;
+    isOpen = false;
+    pendingCloseButton = button;
+    document.removeEventListener('keydown', onKeydown);
+
+    var entrance = entranceTransform(button);
+    inner.classList.remove('is-flipped');
+    card.classList.remove('is-open');
+    overlay.classList.remove('is-visible');
+    card.style.transform = entrance;
+
+    function settle() {
+      if (pendingCloseTimer) {
+        window.clearTimeout(pendingCloseTimer);
+        pendingCloseTimer = null;
+      }
+      if (pendingCloseHandler) {
+        card.removeEventListener('transitionend', pendingCloseHandler);
+        pendingCloseHandler = null;
+      }
+      finishClose(button);
+    }
+    function onEnd(event) {
+      if (event.target !== card || event.propertyName !== 'transform') return;
+      settle();
+    }
+    pendingCloseHandler = onEnd;
+    card.addEventListener('transitionend', onEnd);
+    pendingCloseTimer = window.setTimeout(settle, 500);
+  }
+
   stickers.forEach(function (button) {
-    button.addEventListener('click', function (event) {
-      event.preventDefault();
-      openPanel(button);
+    button.addEventListener('click', function () {
+      if (isOpen && activeButton === button) {
+        close();
+      } else if (isOpen) {
+        switchSticker(button);
+      } else {
+        openFresh(button);
+      }
     });
   });
-  if (closeButton) closeButton.addEventListener('click', closePanel);
-  document.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape') closePanel();
+
+  // The overlay's dim/blur backdrop has pointer-events: none (so the
+  // stickers it visually sits over stay clickable underneath it), so a
+  // "click the backdrop to close" listener can't live on the overlay
+  // itself -- it has to catch clicks that land on whatever real element
+  // is under the backdrop instead.
+  document.addEventListener('click', function (event) {
+    if (!isOpen) return;
+    if (event.target.closest('[data-sticker-card]')) return;
+    if (event.target.closest('.about-sticker')) return;
+    close();
+  });
+
+  closeButtons.forEach(function (button) {
+    button.addEventListener('click', close);
   });
 })();
 

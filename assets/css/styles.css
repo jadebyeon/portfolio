@@ -2109,34 +2109,57 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   align-items: center;
 }
 
-.about-hero__grid {
-  display: grid;
-  grid-template-columns: 1fr 360px;
-  gap: clamp(1.5rem, 3vw, 3rem);
-  align-items: center;
-  width: 100%;
-}
-
-.about-hero__visual {
-  width: 100%;
-  min-width: 0;
+.about-hero {
+  --mint-color: #1a7a5e;
   position: relative;
-  display: grid;
-  justify-items: center;
+}
+
+.about-hero__stack {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  min-height: 560px;
+  text-align: center;
 }
 
-.about-messages {
-  position: absolute;
-  inset: 0;
-  z-index: 4;
-  pointer-events: none;
+.about-name {
+  font-size: clamp(2.8rem, 5.5vw, 4.8rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--title-color);
+  font-family: var(--display-font);
+  line-height: 1.05;
+  margin-bottom: clamp(0.6rem, 1.4vw, 0.9rem);
 }
 
-.about-message {
-  position: absolute;
-  max-width: 15rem;
+.about-subtitle {
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  line-height: 1.6;
+  color: var(--text-color);
+  max-width: 42ch;
+  margin-bottom: clamp(1rem, 3vw, 2rem);
+}
+
+.about-avatar-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(auto, 30rem) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(0.5rem, 2vw, 2rem);
+}
+
+.about-avatar-gutter {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+.about-avatar-gutter--left { justify-content: flex-end; }
+.about-avatar-gutter--right { justify-content: flex-start; }
+
+.about-hint {
+  position: relative;
+  max-width: 12rem;
   margin: 0;
   padding: 0.75rem 1rem;
   border: 1px solid #d8dce2;
@@ -2144,39 +2167,37 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   background: #fff;
   color: var(--title-color);
   box-shadow: 0 10px 24px rgba(17, 24, 39, 0.08);
-  font-size: 0.82rem;
-  line-height: 1.45;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  text-align: left;
+  transition: opacity 220ms ease, transform 220ms ease;
 }
 
-.about-message::after {
+.about-hint::after {
   content: '';
   position: absolute;
-  bottom: -0.42rem;
+  top: 50%;
+  right: -0.4rem;
   width: 0.8rem;
   height: 0.8rem;
+  margin-top: -0.4rem;
   border-right: 1px solid #d8dce2;
   border-bottom: 1px solid #d8dce2;
   background: #fff;
-  transform: rotate(45deg);
+  transform: rotate(-45deg);
 }
 
-.about-message--hello {
-  top: 7%;
-  left: 0;
+.about-hint.is-hidden {
+  opacity: 0;
+  transform: translateX(-0.5rem);
+  pointer-events: none;
 }
-
-.about-message--hello::after { left: 1.4rem; }
-
-.about-message--prompt {
-  top: 20%;
-  right: 0;
-}
-
-.about-message--prompt::after { right: 1.4rem; }
 
 .about-avatar-stage {
   position: relative;
-  width: min(100%, 440px);
+  width: 100%;
+  max-width: clamp(280px, 32vw, 460px);
+  margin-inline: auto;
   aspect-ratio: 1 / 1.06;
   perspective: 900px;
 }
@@ -2218,7 +2239,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   cursor: pointer;
   transform-origin: var(--sticker-origin);
   transform: translateY(var(--sticker-depth)) rotateX(var(--sticker-x)) rotateY(var(--sticker-y)) rotateZ(var(--sticker-z));
-  transition: transform 180ms ease, filter 180ms ease;
+  transition: filter 180ms ease, visibility 0ms;
   filter: drop-shadow(0 0.25rem 0.24rem rgba(17, 24, 39, 0.2));
 }
 
@@ -2230,91 +2251,160 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 .about-sticker--film { --sticker-left: 65%; --sticker-top: 61%; --sticker-width: 21%; --sticker-origin: 40% 48%; --sticker-x: -2deg; --sticker-y: 4deg; --sticker-z: -12deg; --sticker-depth: -1px; z-index: 4; }
 .about-sticker--pokemon { --sticker-left: 40%; --sticker-top: 51%; --sticker-width: 24%; --sticker-origin: 50% 55%; --sticker-x: 0deg; --sticker-y: 0deg; --sticker-z: 2deg; --sticker-depth: -3px; z-index: 5; }
 
-.about-sticker:hover,
+.about-sticker.is-lifted { visibility: hidden; }
+
+@keyframes about-sticker-wiggle {
+  0%, 100% { transform: translateY(var(--sticker-depth)) rotateX(var(--sticker-x)) rotateY(var(--sticker-y)) rotateZ(var(--sticker-z)); }
+  25% { transform: translateY(var(--sticker-depth)) rotateX(var(--sticker-x)) rotateY(var(--sticker-y)) rotateZ(calc(var(--sticker-z) - 6deg)); }
+  75% { transform: translateY(var(--sticker-depth)) rotateX(var(--sticker-x)) rotateY(var(--sticker-y)) rotateZ(calc(var(--sticker-z) + 6deg)); }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .about-sticker:hover {
+    animation: about-sticker-wiggle 380ms ease-in-out;
+    filter: drop-shadow(0 0.4rem 0.3rem rgba(17, 24, 39, 0.26));
+  }
+}
+
 .about-sticker:focus-visible {
-  transform: translateY(calc(var(--sticker-depth) - 4px)) rotateX(var(--sticker-hover-x, -2deg)) rotateY(var(--sticker-hover-y, 2deg)) rotateZ(var(--sticker-z));
-  filter: drop-shadow(0 0.46rem 0.3rem rgba(17, 24, 39, 0.28));
-  animation: about-sticker-settle 220ms ease-out;
+  outline: 2px solid var(--mint-color);
+  outline-offset: 4px;
+  animation: about-sticker-wiggle 380ms ease-in-out;
 }
 
-@keyframes about-sticker-settle {
-  0% { margin-left: 0; }
-  45% { margin-left: -1px; }
-  100% { margin-left: 0; }
+/* The overlay is a full-viewport backdrop for the dim/blur look, but it
+   never intercepts clicks (pointer-events: none) so the stickers it
+   visually sits over stay clickable underneath it -- switching to a
+   different sticker while one is open relies on that. Closing on a
+   backdrop click is handled by a document-level listener in JS instead
+   of a click on this element. */
+.about-sticker-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(17, 24, 39, 0.32);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 260ms ease;
 }
 
-.about-sticker:focus-visible { outline: 2px solid var(--mint-color); outline-offset: 4px; }
+.about-sticker-overlay[hidden] {
+  display: none;
+}
 
-.about-sticker-panel { position: absolute; inset: auto 0 0; z-index: 10; display: flex; justify-content: center; }
-.about-sticker-panel__card { position: relative; width: min(100%, 23rem); padding: 1.2rem 1.35rem 1.35rem; border: 1px solid #d8dce2; border-radius: 1.15rem; background: rgba(255,255,255,0.97); box-shadow: 0 16px 38px rgba(17,24,39,0.14); }
-.about-sticker-panel__close { position: absolute; top: 0.45rem; right: 0.65rem; border: 0; background: transparent; color: var(--text-color-light); font-size: 1.35rem; line-height: 1; cursor: pointer; }
-.about-sticker-panel__close:focus-visible { outline: 2px solid var(--mint-color); outline-offset: 3px; }
-.about-sticker-panel__label { margin: 0 0 0.35rem; color: var(--mint-color); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
-.about-sticker-panel h2 { margin: 0 0 0.55rem; color: var(--title-color); font-size: 1rem; }
-.about-sticker-panel p:last-child { margin: 0; color: var(--text-color); font-size: 0.92rem; line-height: 1.6; }
+.about-sticker-overlay.is-visible { opacity: 1; }
+
+.about-sticker-card {
+  position: relative;
+  width: min(88vw, 22rem);
+  height: min(70vh, 20rem);
+  pointer-events: auto;
+  transition: transform 320ms cubic-bezier(0.22, 0.8, 0.32, 1);
+}
+
+.about-sticker-card__inner {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 260ms ease 170ms;
+}
+
+.about-sticker-card__inner.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.about-sticker-card__face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 1.25rem;
+  overflow: hidden;
+}
+
+.about-sticker-card__face--front {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12%;
+}
+
+.about-sticker-card__face--front img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0.6rem 0.5rem rgba(17, 24, 39, 0.2));
+}
+
+.about-sticker-card__face--back {
+  transform: rotateY(180deg);
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid #d8dce2;
+  box-shadow: 0 24px 48px rgba(17, 24, 39, 0.18);
+  padding: 1.5rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.about-sticker-card__content {
+  transition: opacity 140ms ease;
+}
+
+.about-sticker-card__close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.7rem;
+  border: 0;
+  background: transparent;
+  color: var(--text-color-light);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.about-sticker-card__close:focus-visible {
+  outline: 2px solid var(--mint-color);
+  outline-offset: 3px;
+}
+
+.about-sticker-card__eyebrow {
+  margin: 0 0 0.4rem;
+  color: var(--mint-color);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.about-sticker-card__face--back h2 {
+  margin: 0 0 0.6rem;
+  color: var(--title-color);
+  font-size: 1.15rem;
+}
+
+.about-sticker-card__face--back p:last-child {
+  margin: 0;
+  color: var(--text-color);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .about-sticker,
   .about-sticker:hover,
   .about-sticker:focus-visible {
-    transform: translateY(0) rotateX(0) rotateY(0) rotateZ(0);
-    transition: none;
     animation: none;
   }
-}
-
-.about-eyebrow {
-  font-family: var(--body-font);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--mint-color);
-  margin-bottom: 0.75rem;
-}
-
-.about-name {
-  font-size: clamp(2.8rem, 5.5vw, 4.8rem);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  color: var(--title-color);
-  font-family: var(--display-font);
-  line-height: 1.05;
-  margin-bottom: 0.5rem;
-}
-
-.about-role {
-  font-size: 0.95rem;
-  color: var(--text-color-light);
-  margin-bottom: 1.75rem;
-}
-
-.about-bio {
-  font-size: 1.05rem;
-  line-height: 1.8;
-  color: var(--text-color);
-  max-width: 52ch;
-}
-.about-bio + .about-bio {
-  margin-top: 1.25rem;
-}
-
-.about-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1.25rem;
-}
-
-.about-tag {
-  font-family: var(--body-font);
-  font-size: 0.78rem;
-  font-weight: 500;
-  padding: 0.35rem 0.85rem;
-  border-radius: 999px;
-  border: 1px solid #e5e7eb;
-  color: var(--text-color);
-  background: #f9fafb;
+  .about-sticker-overlay,
+  .about-sticker-card,
+  .about-sticker-card__inner,
+  .about-hint {
+    transition: none;
+  }
 }
 
 .about-section.section {
@@ -2344,20 +2434,30 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 
 @media (max-width: 768px) {
-  .about-hero__grid {
+  /* Rough mobile fallback -- not a design pass, just keeps things usable. */
+  .about-avatar-row {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
-  .about-hero__visual {
-    order: -1;
-    min-height: 500px;
+  .about-avatar-gutter {
+    justify-content: center;
+  }
+  .about-avatar-gutter--right {
+    display: none;
+  }
+  .about-hint {
+    max-width: 16rem;
+    text-align: center;
+  }
+  .about-hint::after {
+    display: none;
   }
   .about-avatar-stage {
-    width: min(100%, 390px);
+    max-width: min(100%, 340px);
   }
-  .about-message--hello { top: 1%; left: 2%; }
-  .about-message--prompt { top: 13%; right: 2%; }
-  .about-message { max-width: 13rem; font-size: 0.76rem; }
-  .about-sticker-panel { bottom: 1rem; padding-inline: 0.5rem;
+  .about-sticker-card {
+    width: min(90vw, 20rem);
+    height: min(60vh, 18rem);
   }
   .about-two-col {
     grid-template-columns: 1fr;

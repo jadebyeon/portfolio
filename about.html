@@ -29,70 +29,59 @@
     <!-- ABOUT HERO -->
     <section class="about-hero section">
       <div class="content-container">
-        <div class="about-hero__grid">
+        <div class="about-hero__stack">
+          <h1 class="about-name">Jade Byeon</h1>
+          <!-- Alt copy (longer): "I design at the intersection of evidence and expression — turning research into products people actually keep using." -->
+          <p class="about-subtitle">I turn research into products people keep coming back to.</p>
 
-          <!-- LEFT -->
-          <div class="about-hero__text">
-            <p class="about-eyebrow">About</p>
-            <h1 class="about-name">Jade Byeon</h1>
-            <p class="about-role">UX/Product Designer · Art &amp; Design + Statistics</p>
-  
-            <p class="about-bio">
-              I design at the intersection of evidence and expression. With a dual background in Art &amp; Design and Statistics at the University of Michigan, I translate complex data into emotionally engaging, high-fidelity experiences: from research and strategy to scalable systems that build lasting habits.
-            </p>
-  
-            <p class="about-bio">
-              Born in Korea, studied in China, Singapore, and the United States. That background shapes how I think about diverse users, contexts, and the cultural assumptions embedded in design decisions.
-            </p>
-  
-            <!-- Tags -->
-            <div class="about-tags">
-              <span class="about-tag">Figma</span>
-              <span class="about-tag">Design Systems</span>
-              <span class="about-tag">User Research</span>
-              <span class="about-tag">WCAG Accessibility</span>
-              <span class="about-tag">HTML/CSS/JS</span>
-              <span class="about-tag">R &amp; Python</span>
+          <div class="about-avatar-row">
+            <div class="about-avatar-gutter about-avatar-gutter--left">
+              <p class="about-hint" data-about-hint>Click on the stickers!</p>
             </div>
-          </div>
-  
-          <!-- RIGHT -->
-          <div class="about-hero__visual" aria-label="Interactive introduction to Jade">
-            <div class="about-messages" aria-label="Messages from Jade">
-              <p class="about-message about-message--hello">Hi, I’m Jade.</p>
-              <p class="about-message about-message--prompt">Click on the stickers to learn more about me.<br />Each one has a different story.</p>
-            </div>
+
             <div class="about-avatar-stage">
               <div class="about-avatar" data-about-avatar>
-                <video class="about-avatar__intro" data-about-intro muted playsinline preload="auto" poster="assets/img/about/jade_still.png" aria-hidden="true">
+                <video class="about-avatar__intro" data-about-intro autoplay muted playsinline preload="auto" poster="assets/img/about/jade_still.png" aria-hidden="true">
                   <source src="assets/video/jade-memoji-intro.webm" type="video/webm" />
                 </video>
-                <img class="about-avatar__image" data-about-smile src="assets/img/about/jade_smile.png" alt="Jade Byeon" />
+                <img class="about-avatar__image" data-about-smile src="assets/img/about/jade_smile.png" alt="Jade Byeon" hidden />
                 <div class="about-stickers" aria-label="Learn more about Jade">
-                  <button class="about-sticker about-sticker--uofm" type="button" data-sticker="uofm" aria-label="Learn about Jade’s University of Michigan background">
+                  <button class="about-sticker about-sticker--uofm" type="button" data-sticker="uofm" aria-haspopup="dialog" aria-expanded="false" aria-label="Learn about Jade’s University of Michigan background">
                     <img src="assets/img/about/sticker-uofm.png" alt="" />
                   </button>
-                  <button class="about-sticker about-sticker--duke" type="button" data-sticker="duke" aria-label="Learn about Jade’s Duke studies">
+                  <button class="about-sticker about-sticker--duke" type="button" data-sticker="duke" aria-haspopup="dialog" aria-expanded="false" aria-label="Learn about Jade’s Duke studies">
                     <img src="assets/img/about/sticker-duke.png" alt="" />
                   </button>
-                  <button class="about-sticker about-sticker--earth" type="button" data-sticker="earth" aria-label="Learn about Jade’s international background">
+                  <button class="about-sticker about-sticker--earth" type="button" data-sticker="earth" aria-haspopup="dialog" aria-expanded="false" aria-label="Learn about Jade’s international background">
                     <img src="assets/img/about/sticker-earth.png" alt="" />
                   </button>
-                  <button class="about-sticker about-sticker--film" type="button" data-sticker="film" aria-label="Learn about Jade’s interest in film">
+                  <button class="about-sticker about-sticker--film" type="button" data-sticker="film" aria-haspopup="dialog" aria-expanded="false" aria-label="Learn about Jade’s interest in film">
                     <img src="assets/img/about/sticker-film.png" alt="" />
                   </button>
-                  <button class="about-sticker about-sticker--pokemon" type="button" data-sticker="pokemon" aria-label="Learn about Jade’s interest in Pokémon">
+                  <button class="about-sticker about-sticker--pokemon" type="button" data-sticker="pokemon" aria-haspopup="dialog" aria-expanded="false" aria-label="Learn about Jade’s interest in Pokémon">
                     <img src="assets/img/about/sticker-pokemon.png" alt="" />
                   </button>
                 </div>
               </div>
             </div>
-            <div class="about-sticker-panel" data-sticker-panel hidden>
-              <div class="about-sticker-panel__card" role="dialog" aria-modal="false" aria-labelledby="about-sticker-panel-title">
-                <button class="about-sticker-panel__close" type="button" data-sticker-close aria-label="Close information panel">×</button>
-                <p class="about-sticker-panel__label">A little more about me</p>
-                <h2 id="about-sticker-panel-title" data-sticker-title></h2>
-                <p data-sticker-copy></p>
+
+            <div class="about-avatar-gutter about-avatar-gutter--right"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-sticker-overlay" data-sticker-overlay hidden>
+        <div class="about-sticker-card" data-sticker-card>
+          <div class="about-sticker-card__inner" data-sticker-card-inner>
+            <div class="about-sticker-card__face about-sticker-card__face--front" aria-hidden="true">
+              <img data-sticker-card-img src="" alt="" />
+            </div>
+            <div class="about-sticker-card__face about-sticker-card__face--back" role="dialog" aria-modal="true" aria-labelledby="about-sticker-card-title">
+              <button class="about-sticker-card__close" type="button" data-sticker-close aria-label="Close">×</button>
+              <div class="about-sticker-card__content" data-sticker-card-content>
+                <p class="about-sticker-card__eyebrow">A little more about me</p>
+                <h2 id="about-sticker-card-title" data-sticker-card-title></h2>
+                <p data-sticker-card-copy></p>
               </div>
             </div>
           </div>
