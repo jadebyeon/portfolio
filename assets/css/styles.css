@@ -2198,7 +2198,11 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   width: 100%;
   max-width: clamp(280px, 32vw, 460px);
   margin-inline: auto;
-  aspect-ratio: 1 / 1.06;
+  /* Matches jade_smile.png (2560x1920) / jade_still.png (1448x1086) /
+     the intro video (2560x1920) -- all exactly 4:3. Getting this wrong
+     makes object-fit: contain add invisible top/bottom letterbox
+     padding, which silently shifts every sticker's top:% off. */
+  aspect-ratio: 4 / 3;
   perspective: 900px;
 }
 
@@ -2245,11 +2249,20 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 
 .about-sticker img { display: block; width: 100%; height: auto; }
 
-.about-sticker--uofm { --sticker-left: 17%; --sticker-top: 12%; --sticker-width: 18%; --sticker-origin: 50% 70%; --sticker-x: -3deg; --sticker-y: -5deg; --sticker-z: -18deg; --sticker-depth: -1px; z-index: 2; }
-.about-sticker--duke { --sticker-left: 60%; --sticker-top: 23%; --sticker-width: 14%; --sticker-origin: 45% 80%; --sticker-x: 3deg; --sticker-y: 5deg; --sticker-z: 8deg; --sticker-depth: -1px; z-index: 2; }
-.about-sticker--earth { --sticker-left: 21%; --sticker-top: 49%; --sticker-width: 18%; --sticker-origin: 60% 50%; --sticker-x: 2deg; --sticker-y: -4deg; --sticker-z: -8deg; --sticker-depth: -2px; z-index: 4; }
-.about-sticker--film { --sticker-left: 65%; --sticker-top: 61%; --sticker-width: 21%; --sticker-origin: 40% 48%; --sticker-x: -2deg; --sticker-y: 4deg; --sticker-z: -12deg; --sticker-depth: -1px; z-index: 4; }
-.about-sticker--pokemon { --sticker-left: 40%; --sticker-top: 51%; --sticker-width: 24%; --sticker-origin: 50% 55%; --sticker-x: 0deg; --sticker-y: 0deg; --sticker-z: 2deg; --sticker-depth: -3px; z-index: 5; }
+.about-sticker--uofm { --sticker-left: 29%; --sticker-top: 16%; --sticker-width: 11%; --sticker-origin: 50% 70%; --sticker-x: -3deg; --sticker-y: -5deg; --sticker-z: -18deg; --sticker-depth: -1px; z-index: 2; }
+/* rotateX/rotateY dropped here on purpose: at this sticker's small,
+   wide-flat size (h/w ~0.56, the flattest of the five), Chromium's 3D
+   rasterization for a perspective-tilted element collapses the "D"
+   logo into an illegible sliver -- confirmed by testing rotateX and
+   rotateY in isolation, at this size, both independently broke it, and
+   the same tilt only stopped breaking it once the box was enlarged well
+   past its correct measured size. The other four stickers don't hit
+   this at their sizes. rotateZ alone (in-plane, no perspective
+   depth) renders perfectly at any size, so it's kept. */
+.about-sticker--duke { --sticker-left: 50%; --sticker-top: 30%; --sticker-width: 9%; --sticker-origin: 45% 80%; --sticker-x: 0deg; --sticker-y: 0deg; --sticker-z: 8deg; --sticker-depth: -1px; z-index: 2; }
+.about-sticker--earth { --sticker-left: 31%; --sticker-top: 54%; --sticker-width: 10%; --sticker-origin: 60% 50%; --sticker-x: 2deg; --sticker-y: -4deg; --sticker-z: -8deg; --sticker-depth: -2px; z-index: 4; }
+.about-sticker--film { --sticker-left: 54%; --sticker-top: 58%; --sticker-width: 11%; --sticker-origin: 40% 48%; --sticker-x: -2deg; --sticker-y: 4deg; --sticker-z: -12deg; --sticker-depth: -1px; z-index: 4; }
+.about-sticker--pokemon { --sticker-left: 39%; --sticker-top: 47%; --sticker-width: 19%; --sticker-origin: 50% 55%; --sticker-x: 0deg; --sticker-y: 0deg; --sticker-z: 2deg; --sticker-depth: -3px; z-index: 5; }
 
 .about-sticker.is-lifted { visibility: hidden; }
 
