@@ -41,18 +41,21 @@
 
 /*==================== ABOUT STICKER INTRO ====================
   One short Memoji intro, then a still smiling image and independently
-  interactive sticker buttons. Clicking a sticker "peels" it off the
-  face to the center of the screen (a FLIP-technique transform from the
-  sticker's own screen position), enlarges it, then flips it over to
-  reveal its content on a plain card back. No-ops on pages without the
-  About composition. */
+  interactive sticker buttons floating in the side gutters. Clicking a
+  sticker "peels" it from its resting spot to the center of the screen
+  (a FLIP-technique transform from the sticker's own screen position),
+  enlarges it, then flips it over to reveal its content on a card back
+  shaped like that sticker's own silhouette. No-ops on pages without
+  the About composition. */
 (function () {
   var avatar = document.querySelector('[data-about-avatar]');
   if (!avatar) return;
 
   var intro = avatar.querySelector('[data-about-intro]');
   var smile = avatar.querySelector('[data-about-smile]');
-  var stickers = Array.prototype.slice.call(avatar.querySelectorAll('[data-sticker]'));
+  // Stickers float in the side gutters now, not on the face, so they're
+  // no longer inside `avatar` -- scoped from the document instead.
+  var stickers = Array.prototype.slice.call(document.querySelectorAll('[data-sticker]'));
   var hint = document.querySelector('[data-about-hint]');
 
   var overlay = document.querySelector('[data-sticker-overlay]');
@@ -147,15 +150,17 @@
   }
 
   // FLIP technique: compute the transform that maps the card's resting
-  // (centered) rect onto the clicked sticker's current on-face rect, so
-  // the entrance/exit animation can run in reverse from that offset.
+  // (centered) rect onto the clicked sticker's current resting-spot
+  // rect, so the entrance/exit animation can run in reverse from that
+  // offset. Reads the button's live rect, so it works the same whether
+  // that resting spot is on the face or floating in a gutter.
   function entranceTransform(button) {
     var btnRect = button.getBoundingClientRect();
     var cardRect = card.getBoundingClientRect();
     var dx = (btnRect.left + btnRect.width / 2) - (cardRect.left + cardRect.width / 2);
     var dy = (btnRect.top + btnRect.height / 2) - (cardRect.top + cardRect.height / 2);
     var scale = Math.max(0.04, btnRect.width / cardRect.width);
-    var rotate = parseFloat(getComputedStyle(button).getPropertyValue('--sticker-z')) || 0;
+    var rotate = parseFloat(getComputedStyle(button).getPropertyValue('--sticker-rotate')) || 0;
     return 'translate(' + dx + 'px, ' + dy + 'px) scale(' + scale + ') rotate(' + rotate + 'deg)';
   }
 

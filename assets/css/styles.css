@@ -2151,11 +2151,22 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 .about-avatar-gutter {
   min-width: 0;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.25rem;
 }
 
-.about-avatar-gutter--left { justify-content: flex-end; }
-.about-avatar-gutter--right { justify-content: flex-start; }
+/* Cross-axis alignment (column direction, so this is horizontal): hug
+   the edge nearer the avatar, same as when this only held the hint. */
+.about-avatar-gutter--left { align-items: flex-end; }
+.about-avatar-gutter--right { align-items: flex-start; }
+
+.about-gutter-stickers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2rem);
+}
 
 .about-hint {
   position: relative;
@@ -2201,15 +2212,13 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   /* Matches jade_smile.png (2560x1920) / jade_still.png (1448x1086) /
      the intro video (2560x1920) -- all exactly 4:3. Getting this wrong
      makes object-fit: contain add invisible top/bottom letterbox
-     padding, which silently shifts every sticker's top:% off. */
+     padding. */
   aspect-ratio: 4 / 3;
-  perspective: 900px;
 }
 
 .about-avatar {
   position: absolute;
   inset: 0;
-  transform-style: preserve-3d;
 }
 
 .about-avatar__intro,
@@ -2224,52 +2233,38 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 .about-avatar__intro { z-index: 1; }
 .about-avatar__image { z-index: 2; }
 
-.about-stickers {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  transform-style: preserve-3d;
-}
-
+/* Stickers now live in the side gutters as fixed floating elements,
+   not positioned over the face, so sizing is a plain flex-item width
+   and the only rotation is a small fixed "resting tilt" per sticker
+   for a scattered look -- no more --sticker-left/-top/-origin/-x/-y/
+   -depth face-alignment system, and no perspective/preserve-3d (that
+   was only ever for the on-face 3D tilt). */
 .about-sticker {
-  position: absolute;
   display: block;
-  width: var(--sticker-width);
-  left: var(--sticker-left);
-  top: var(--sticker-top);
+  width: clamp(3.2rem, 7vw, 5.2rem);
   padding: 0;
   border: 0;
   background: transparent;
   cursor: pointer;
-  transform-origin: var(--sticker-origin);
-  transform: translateY(var(--sticker-depth)) rotateX(var(--sticker-x)) rotateY(var(--sticker-y)) rotateZ(var(--sticker-z));
+  transform: rotate(var(--sticker-rotate, 0deg));
   transition: filter 180ms ease, visibility 0ms;
   filter: drop-shadow(0 0.25rem 0.24rem rgba(17, 24, 39, 0.2));
 }
 
 .about-sticker img { display: block; width: 100%; height: auto; }
 
-.about-sticker--uofm { --sticker-left: 29%; --sticker-top: 16%; --sticker-width: 11%; --sticker-origin: 50% 70%; --sticker-x: -3deg; --sticker-y: -5deg; --sticker-z: -18deg; --sticker-depth: -1px; z-index: 2; }
-/* rotateX/rotateY dropped here on purpose: at this sticker's small,
-   wide-flat size (h/w ~0.56, the flattest of the five), Chromium's 3D
-   rasterization for a perspective-tilted element collapses the "D"
-   logo into an illegible sliver -- confirmed by testing rotateX and
-   rotateY in isolation, at this size, both independently broke it, and
-   the same tilt only stopped breaking it once the box was enlarged well
-   past its correct measured size. The other four stickers don't hit
-   this at their sizes. rotateZ alone (in-plane, no perspective
-   depth) renders perfectly at any size, so it's kept. */
-.about-sticker--duke { --sticker-left: 50%; --sticker-top: 30%; --sticker-width: 9%; --sticker-origin: 45% 80%; --sticker-x: 0deg; --sticker-y: 0deg; --sticker-z: 8deg; --sticker-depth: -1px; z-index: 2; }
-.about-sticker--earth { --sticker-left: 31%; --sticker-top: 54%; --sticker-width: 10%; --sticker-origin: 60% 50%; --sticker-x: 2deg; --sticker-y: -4deg; --sticker-z: -8deg; --sticker-depth: -2px; z-index: 4; }
-.about-sticker--film { --sticker-left: 54%; --sticker-top: 58%; --sticker-width: 11%; --sticker-origin: 40% 48%; --sticker-x: -2deg; --sticker-y: 4deg; --sticker-z: -12deg; --sticker-depth: -1px; z-index: 4; }
-.about-sticker--pokemon { --sticker-left: 39%; --sticker-top: 47%; --sticker-width: 19%; --sticker-origin: 50% 55%; --sticker-x: 0deg; --sticker-y: 0deg; --sticker-z: 2deg; --sticker-depth: -3px; z-index: 5; }
+.about-sticker--uofm { --sticker-rotate: -6deg; }
+.about-sticker--duke { --sticker-rotate: 5deg; }
+.about-sticker--earth { --sticker-rotate: 6deg; }
+.about-sticker--film { --sticker-rotate: -5deg; }
+.about-sticker--pokemon { --sticker-rotate: -8deg; }
 
 .about-sticker.is-lifted { visibility: hidden; }
 
 @keyframes about-sticker-wiggle {
-  0%, 100% { transform: translateY(var(--sticker-depth)) rotateX(var(--sticker-x)) rotateY(var(--sticker-y)) rotateZ(var(--sticker-z)); }
-  25% { transform: translateY(var(--sticker-depth)) rotateX(var(--sticker-x)) rotateY(var(--sticker-y)) rotateZ(calc(var(--sticker-z) - 6deg)); }
-  75% { transform: translateY(var(--sticker-depth)) rotateX(var(--sticker-x)) rotateY(var(--sticker-y)) rotateZ(calc(var(--sticker-z) + 6deg)); }
+  0%, 100% { transform: rotate(var(--sticker-rotate, 0deg)); }
+  25% { transform: rotate(calc(var(--sticker-rotate, 0deg) - 6deg)); }
+  75% { transform: rotate(calc(var(--sticker-rotate, 0deg) + 6deg)); }
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -2493,16 +2488,26 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 
 @media (max-width: 768px) {
-  /* Rough mobile fallback -- not a design pass, just keeps things usable. */
+  /* Rough mobile fallback -- not a design pass, just keeps things usable.
+     Gutters stack full-width above/below the avatar (grid collapses to
+     one column) with their stickers running in a wrapped row instead
+     of a tall column, since there's no side space left to float them
+     in. All five stay reachable -- hiding a whole gutter isn't an
+     option now that it holds real stickers, not just the hint. */
   .about-avatar-row {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 1.5rem;
   }
   .about-avatar-gutter {
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
   }
-  .about-avatar-gutter--right {
-    display: none;
+  .about-gutter-stickers {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
   }
   .about-hint {
     max-width: 16rem;
