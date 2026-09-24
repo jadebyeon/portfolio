@@ -59,6 +59,7 @@
   var card = overlay && overlay.querySelector('[data-sticker-card]');
   var inner = overlay && overlay.querySelector('[data-sticker-card-inner]');
   var cardImg = overlay && overlay.querySelector('[data-sticker-card-img]');
+  var cardShape = overlay && overlay.querySelector('[data-sticker-card-shape]');
   var cardContent = overlay && overlay.querySelector('[data-sticker-card-content]');
   var cardTitle = overlay && overlay.querySelector('[data-sticker-card-title]');
   var cardCopy = overlay && overlay.querySelector('[data-sticker-card-copy]');
@@ -130,6 +131,19 @@
     if (cardImg && img) cardImg.src = img.src;
     if (cardTitle) cardTitle.textContent = entry.title;
     if (cardCopy) cardCopy.textContent = entry.body;
+    // The card's shape follows this sticker's own silhouette: its
+    // aspect-ratio drives the card's box (see --card-ratio in CSS),
+    // and the same PNG is applied as a mask on the back face's shape
+    // layer so it reads as the same shape flipped over, not a
+    // generic rectangle.
+    if (img && img.naturalWidth && img.naturalHeight) {
+      card.style.setProperty('--card-ratio', img.naturalWidth / img.naturalHeight);
+    }
+    if (cardShape && img) {
+      var maskUrl = 'url(' + img.src + ')';
+      cardShape.style.webkitMaskImage = maskUrl;
+      cardShape.style.maskImage = maskUrl;
+    }
   }
 
   // FLIP technique: compute the transform that maps the card's resting
@@ -278,7 +292,7 @@
     }
     pendingCloseHandler = onEnd;
     card.addEventListener('transitionend', onEnd);
-    pendingCloseTimer = window.setTimeout(settle, 500);
+    pendingCloseTimer = window.setTimeout(settle, 800);
   }
 
   stickers.forEach(function (button) {

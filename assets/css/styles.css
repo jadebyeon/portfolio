@@ -2313,17 +2313,24 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 
 .about-sticker-card {
   position: relative;
-  width: min(88vw, 22rem);
-  height: min(70vh, 20rem);
+  /* --card-ratio (natural width/height of the clicked sticker's own
+     PNG) is set per-sticker in JS. This sizes the card to that same
+     ratio while stying within a max box, by translating the height
+     cap into an equivalent width cap (calc) rather than setting width
+     and height independently -- aspect-ratio then derives the actual
+     height, so the two constraints can't fight and skew the shape. */
+  --card-max-h: min(70vh, 24rem);
+  aspect-ratio: var(--card-ratio, 1);
+  width: min(88vw, 24rem, calc(var(--card-max-h) * var(--card-ratio, 1)));
   pointer-events: auto;
-  transition: transform 320ms cubic-bezier(0.22, 0.8, 0.32, 1);
+  transition: transform 480ms cubic-bezier(0.22, 0.8, 0.32, 1);
 }
 
 .about-sticker-card__inner {
   position: absolute;
   inset: 0;
   transform-style: preserve-3d;
-  transition: transform 260ms ease 170ms;
+  transition: transform 390ms ease 255ms;
 }
 
 .about-sticker-card__inner.is-flipped {
@@ -2334,7 +2341,6 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   position: absolute;
   inset: 0;
   backface-visibility: hidden;
-  border-radius: 1.25rem;
   overflow: hidden;
 }
 
@@ -2354,27 +2360,67 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 
 .about-sticker-card__face--back {
   transform: rotateY(180deg);
-  background: rgba(255, 255, 255, 0.98);
-  border: 1px solid #d8dce2;
-  box-shadow: 0 24px 48px rgba(17, 24, 39, 0.18);
-  padding: 1.5rem 1.6rem;
+  padding: 20%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* The masked shape is its own layer behind the text/close button,
+   rather than the mask living on --face--back itself, because CSS
+   masking clips an element's whole subtree -- with the mask on the
+   face, the close button (anchored to the box's literal corner) fell
+   inside the masked-out margin for every sticker shape and vanished.
+   Keeping text/button as unmasked siblings on top means they're
+   always visible regardless of how irregular the silhouette is;
+   padding on the face is what keeps them clear of the mask edges. */
+.about-sticker-card__shape {
+  position: absolute;
+  inset: 0;
+  background-color: #faf9f7;
+  /* --card-mask (url() of the clicked sticker's own PNG) is set per-
+     sticker in JS, so the back takes the same silhouette as the front
+     instead of a generic card rectangle. mask-size is intentionally
+     under 100% to leave the same kind of breathing room the front
+     face gets from its own padding. */
+  -webkit-mask-image: var(--card-mask);
+  mask-image: var(--card-mask);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: 82%;
+  mask-size: 82%;
+  filter: drop-shadow(0 1.1rem 1.4rem rgba(17, 24, 39, 0.22));
 }
 
 .about-sticker-card__content {
+  position: relative;
   transition: opacity 140ms ease;
 }
 
 .about-sticker-card__close {
   position: absolute;
-  top: 0.6rem;
-  right: 0.7rem;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 1.7rem;
+  height: 1.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 0;
-  background: transparent;
-  color: var(--text-color-light);
-  font-size: 1.5rem;
+  border-radius: 50%;
+  /* Its own backdrop chip, not just transparent-over-the-shape: the
+     card's silhouette rarely reaches the box's literal corner (a
+     circle, a wordmark with gaps, an angled clapperboard), so without
+     this the close control was landing on the dimmed backdrop and
+     nearly disappearing regardless of which sticker was open. */
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 2px 6px rgba(17, 24, 39, 0.18);
+  color: var(--text-color);
+  font-size: 1.25rem;
   line-height: 1;
   cursor: pointer;
 }
@@ -2469,8 +2515,8 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
     max-width: min(100%, 340px);
   }
   .about-sticker-card {
-    width: min(90vw, 20rem);
-    height: min(60vh, 18rem);
+    --card-max-h: min(60vh, 18rem);
+    width: min(90vw, 20rem, calc(var(--card-max-h) * var(--card-ratio, 1)));
   }
   .about-two-col {
     grid-template-columns: 1fr;
