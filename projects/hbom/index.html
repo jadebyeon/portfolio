@@ -11,6 +11,17 @@
   <meta name="description" content="Information architecture and web experience design for a filterable nutrition benefits resource hub for HBOM at the University of Michigan, by Jade Byeon." />
   <style>
     .project-page--hbom .hero-subtitle { text-align: center; }
+    .project-page--hbom { --hbom-media-space: var(--block-gap); }
+
+    /* Match OCT's visual rhythm: one shared gap around every standalone visual,
+       with captions kept close to the media rather than adding another block gap. */
+    .project-page--hbom .project-section__body > .single-tile-figure,
+    .project-page--hbom .hbom-decision-beat > .single-tile-figure {
+      margin: var(--hbom-media-space) auto;
+    }
+    .project-page--hbom .project-section__body .figure-caption {
+      margin: 8px 0 0;
+    }
 
     .hbom-decision-beat {
       margin-top: clamp(2rem, 4vw, 3rem);
@@ -35,7 +46,7 @@
     .project-page--hbom .hbom-ideation .project-section__body p.hbom-decision-beat__pain {
       margin: 0 0 1rem;
       color: var(--hbom-body);
-      line-height: 1.55;
+      line-height: 1.6;
     }
     .project-page--hbom .hbom-ideation .hbom-decision-beat__challenge-label {
       flex: 0 0 auto;
@@ -46,15 +57,15 @@
       line-height: inherit;
     }
     .project-page--hbom .project-section__body p.hbom-decision-beat__explanation {
-      margin: 0 0 1.5rem;
+      margin: 0;
       color: var(--hbom-body);
-      line-height: 1.55;
+      line-height: 1.6;
     }
     .project-page--hbom .project-section__body strong {
       color: var(--hbom-ink);
     }
     .project-page--hbom .hbom-final-solution .mac-mockup {
-      margin-top: 0.75rem;
+      margin: var(--hbom-media-space) auto;
     }
     /* Crop out the blank top margin baked into the Filter placement /
        Resource detail layout exports (measured directly off the PNGs:
@@ -125,7 +136,7 @@
           <li class="section-nav__item"><a class="section-nav__link" href="#background">Background</a></li>
           <li class="section-nav__item"><a class="section-nav__link" href="#research">Research</a></li>
           <li class="section-nav__item"><a class="section-nav__link" href="#design">Ideation</a></li>
-          <li class="section-nav__item"><a class="section-nav__link" href="#outcome">Final solution</a></li>
+          <li class="section-nav__item"><a class="section-nav__link" href="#outcome">Final Solution</a></li>
           <li class="section-nav__item"><a class="section-nav__link" href="#takeaways">Reflection</a></li>
         </ul>
       </nav>
@@ -198,7 +209,7 @@
         <p class="project-section__eyebrow">Background</p>
         <h2 class="section-icon-title project-section__title">Nutrition Value Pathways</h2>
         <div class="project-section__body">
-          <p><a class="text-mint" style="font-weight: 400; text-decoration: underline; text-underline-offset: 0.15em;" href="https://www.hbomich.org/">Health Behaviors and Outcomes Mentorship (HBOM)</a> developed <a class="text-mint" style="font-weight: 400; text-decoration: underline; text-underline-offset: 0.15em;" href="https://www.nutrivp.org/">Nutrition Value Pathways (NVP)</a> as a University of Michigan initiative connecting people with nutrition benefits. NVP estimates annual healthcare savings of <strong>85,000+ hospitalizations</strong> and <strong>$1,800+</strong> per enrolled Michigander.</p>
+          <p><a style="font-weight: 400; text-decoration: underline; text-underline-offset: 0.15em;" href="https://www.hbomich.org/" target="_blank" rel="noopener noreferrer" aria-label="Health Behaviors and Outcomes Mentorship (HBOM) (opens in a new tab)">Health Behaviors and Outcomes Mentorship (HBOM)<span class="external-link-indicator" aria-hidden="true">↗</span></a> developed <a style="font-weight: 400; text-decoration: underline; text-underline-offset: 0.15em;" href="https://www.nutrivp.org/" target="_blank" rel="noopener noreferrer" aria-label="Nutrition Value Pathways (NVP) (opens in a new tab)">Nutrition Value Pathways (NVP)<span class="external-link-indicator" aria-hidden="true">↗</span></a> as a University of Michigan initiative connecting people with nutrition benefits. NVP estimates annual healthcare savings of <strong>85,000+ hospitalizations</strong> and <strong>$1,800+</strong> per enrolled Michigander.</p>
           <p>NVP explains <strong>In Lieu of Services (ILOS)</strong>, Medicaid benefits that can provide nutrition support such as medically tailored meals, healthy food packs, and produce prescriptions. Its website also included a coverage checker that helped visitors check available benefits by plan and region.</p>
           <p>I designed the resource hub for the NVP website.</p>
         </div>
@@ -212,13 +223,13 @@
         <h2 class="section-icon-title project-section__title">Identifying Problem</h2>
         <div class="project-section__body">
           <p>The NVP site explained ILOS coverage, benefit types, and the evidence behind the program. But after checking coverage, visitors had no clear place to find resources they could use or share.</p>
-          <figure class="single-tile-figure" style="margin: 2rem 0;">
+          <figure class="single-tile-figure">
             <div class="single-tile">
               <img src="../../assets/img/hbom-evidence-reference.png" alt="Existing NVP evidence page showing research reference cards">
             </div>
           </figure>
           <p>Through <span class="text-mint" style="color: #2457c5; font-weight: 400;">interview content audit</span> and <span class="text-mint" style="color: #2457c5; font-weight: 400;">secondary research</span>, I reviewed how patients and providers might use shared health information. This identified two core use cases: patients looking for understandable information about food benefits, and providers looking for materials to learn from or share.</p>
-          <figure class="single-tile-figure" style="margin: 2rem 0;">
+          <figure class="single-tile-figure">
             <div class="single-tile" style="width: 90%; margin: 0 auto;">
               <img src="../../assets/img/hbom-user-needs.png" alt="Patients and providers ask where to find relevant nutrition benefits resources; Jade frames the opportunity and design question for a browsable resource hub.">
             </div>
@@ -235,7 +246,7 @@
         <h2 class="section-icon-title project-section__title">Competitive Audit</h2>
         <div class="project-section__body">
           <p>I compared existing food and health resource sites to understand how they organize resources and support browsing.</p>
-          <figure class="single-tile-figure" style="margin: 1.25rem 0;">
+          <figure class="single-tile-figure">
             <div class="single-tile">
               <img src="../../assets/img/hbom-audit.png?v=2" alt="Competitive audit of three existing food-as-medicine and health resource site homepages">
             </div>

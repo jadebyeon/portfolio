@@ -17,8 +17,11 @@
     .project-page--oct {
       --oct-ink: #242329;
       --oct-body: #6a6874;
+      --oct-secondary: #5b5966;
       --oct-rule: #909099;
       --oct-divider-space: clamp(0.875rem, 1.25vw, 1.125rem);
+      --oct-media-space: var(--block-gap);
+      --project-context-muted: var(--oct-secondary);
       --project-context-body: var(--oct-body);
       --project-context-rule: var(--oct-rule);
       --project-context-divider-space: var(--oct-divider-space);
@@ -45,12 +48,76 @@
     .project-page--oct .ps-text {
       max-width: none;
       color: var(--oct-body);
-      font-size: 0.9375rem;
+      font-size: 1rem;
       font-weight: 400;
-      line-height: 1.55;
+      line-height: 1.6;
     }
     .project-page--oct .ps-divider { display: none; }
-    .project-page--oct .hero-subtitle { text-align: center; }
+    .project-page--oct .hero-subtitle {
+      width: min(100%, 760px);
+      margin-inline: auto;
+      text-align: center;
+    }
+    /* Every OCT visual sits one shared responsive step from its surrounding copy. */
+    .project-page--oct .project-section__body > :is(.film-frame, .two-up-figure, .single-tile-figure, .oct-character-directions-figure) {
+      margin: var(--oct-media-space) auto;
+    }
+    .project-page--oct .project-section__body .figure-caption {
+      margin: 8px 0 0;
+    }
+    .project-page--oct .oct-character-directions-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(12px, 2vw, 24px);
+      align-items: start;
+    }
+    .project-page--oct .oct-character-directions-panel { min-width: 0; }
+    .project-page--oct .oct-character-directions-panel .single-tile { border-radius: 16px; }
+    .project-page--oct .oct-selected-directions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      column-gap: 12px;
+      /* Balances the 16:9 source boards with the adjacent concept board. */
+      row-gap: calc(11.213% + 4.15px);
+      padding: 4px;
+      aspect-ratio: 7670 / 5174;
+      overflow: hidden;
+      border-radius: 16px;
+      background: #fff;
+    }
+    .project-page--oct .oct-selected-directions img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .project-page--oct .oct-clinical-walkthrough-tile {
+      min-width: 0;
+      margin: 0;
+    }
+    .project-page--oct .oct-clinical-walkthrough-media {
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+    .project-page--oct .oct-clinical-walkthrough-media > img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    .project-page--oct .oct-clinical-walkthrough-tile:nth-child(2) .oct-clinical-walkthrough-media > img {
+      object-position: center 58%;
+    }
+    .project-page--oct .oct-clinical-walkthrough-tile .figure-caption {
+      margin: 8px 0 0;
+      text-align: center;
+      color: var(--text-color-light);
+      font-size: clamp(12px, .9vw, 14px);
+      line-height: 1.4;
+    }
     @media (max-width: 680px) {
       .project-page--oct .problem-solution-row {
         grid-template-columns: 1fr;
@@ -63,6 +130,7 @@
         padding-top: var(--oct-divider-space);
       }
       .project-page--oct .project-meta { gap: 1.5rem; }
+      .project-page--oct .oct-character-directions-grid { grid-template-columns: 1fr; }
     }
 
     /* Survey Results stat grid: down to 3 cards after dropping the
@@ -179,12 +247,11 @@
           <span>Back</span>
         </a>
         <ul class="section-nav__list">
-          <li class="section-nav__item"><a class="section-nav__link" href="#problem">Problem</a></li>
-          <li class="section-nav__item"><a class="section-nav__link" href="#researchStrategy">Research</a></li>
-          <li class="section-nav__item"><a class="section-nav__link" href="#design">Design</a></li>
-          <li class="section-nav__item"><a class="section-nav__link" href="#interaction">Interaction</a></li>
-          <li class="section-nav__item"><a class="section-nav__link" href="#nextSteps">Next steps</a></li>
-          <li class="section-nav__item"><a class="section-nav__link" href="#takeaways">Takeaways</a></li>
+          <li class="section-nav__item"><a class="section-nav__link" href="#background">Background</a></li>
+          <li class="section-nav__item"><a class="section-nav__link" href="#research">Research</a></li>
+          <li class="section-nav__item"><a class="section-nav__link" href="#design">Ideation</a></li>
+          <li class="section-nav__item"><a class="section-nav__link" href="#finalSolution">Final Solution</a></li>
+          <li class="section-nav__item"><a class="section-nav__link" href="#reflection">Reflection</a></li>
         </ul>
       </nav>
       <div class="section-nav-content">
@@ -193,7 +260,7 @@
     <section class="project-hero section">
       <div class="content-container">
         <div class="project-hero-copy">
-          <h1 class="hero-title">Pediatric OCT Robot</h1>
+          <h1 class="hero-title">Pediatric Eye Exam Robot</h1>
           <p class="hero-subtitle">Using caregiver research to shape a robot’s character and interaction design.</p>
         </div>
         <div class="hero-media hero-media--device hero-media--padded">
@@ -208,12 +275,12 @@
         <div class="problem-solution-row">
           <div class="ps-block">
             <p class="ps-label">Problem</p>
-            <p class="ps-text">Pediatric OCT exams can feel unfamiliar and difficult for children to complete.</p>
+            <p class="ps-text">Eye scans require children to stay still, and movement means repeating the exam.</p>
           </div>
           <div class="ps-divider" aria-hidden="true"></div>
           <div class="ps-block">
             <p class="ps-label">Solution</p>
-            <p class="ps-text">I used caregiver research to develop a character and interaction system that helps children understand what to expect from the robot.</p>
+            <p class="ps-text">A character-led experience that prepares children for the scan and keeps them engaged through it.</p>
           </div>
         </div>
 
@@ -246,449 +313,277 @@
               <li>Higgsfield</li>
               <li>R and Python</li>
               <li>Procreate</li>
-              <li>ACM LaTeX</li>
             </ul>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ④ KEY DESIGN DECISIONS -->
-    <section class="project-section section-nav-target" id="keyDesignDecisions">
+    <!-- BACKGROUND -->
+    <section class="project-section project-section--context section-nav-target" id="background">
       <div class="content-container">
-        <h2>Key Design Decisions</h2>
-        <p class="section-subhead">Three choices that shaped the interaction system, each one traceable to survey data.</p>
-        <div class="decision-cards">
-          <div class="decision-card">
-            <p class="decision-num">01</p>
-            <h3>Character over function</h3>
-            <p>The robot's mechanical capability was already defined; the missing layer was personality. Children meet Sam at home first, so by the time they walk into the exam room, he's someone they already know.</p>
-          </div>
-          <div class="decision-card">
-            <p class="decision-num">02</p>
-            <h3>Data-driven design</h3>
-            <p>I designed the survey as forced-choice pairwise comparisons and fit a Bradley-Terry model to the results. The model favored Sam in every matchup; the gaps weren't individually significant at n=30, so I triangulated with qualitative coding before recommending him.</p>
-          </div>
-          <div class="decision-card">
-            <p class="decision-num">03</p>
-            <h3>Pre-exposure before first contact</h3>
-            <p>Familiarity is built at home, before the child ever sees the arm. The pre-exposure video does that work.</p>
-          </div>
+        <p class="project-section__eyebrow">Background</p>
+    <h2 class="section-icon-title project-section__title">Optical Coherence Tomography</h2>
+    <div class="project-section__body">
+      <p>Optical coherence tomography (OCT) is an eye scan that requires children to keep their eyes on a target while the scanner moves close to their face. If they look away or move, the scan may be repeated, straining the child, caregiver, and clinical team.</p>
+          <figure class="film-frame oct-robot-arm-demo">
+            <div class="film-embed">
+              <iframe
+                src="https://player.vimeo.com/video/1138360201?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                loading="lazy"
+                frameborder="0"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                referrerpolicy="strict-origin-when-cross-origin"
+                title="Pediatric OCT robot arm demo">
+              </iframe>
+            </div>
+        <figcaption class="figure-caption">Pediatric OCT robot arm prototype demo</figcaption>
+          </figure>
         </div>
       </div>
     </section>
 
-    <!-- ⑤ ROBOT DEMO -->
-    <section class="project-section">
+    <!-- CLINICAL WALKTHROUGH -->
+    <section class="project-section project-section--context section-nav-target" id="research">
       <div class="content-container">
-        <h2 class="section-icon-title">The Robot</h2>
-        <p class="section-takeaway">The hardware was done before I arrived. Everything the child would feel about it wasn't.</p>
-      </div>
-      <figure class="film-frame content-container">
-        <div class="film-embed">
-          <iframe
-            src="https://player.vimeo.com/video/1138360201?badge=0&autopause=0&player_id=0&app_id=58479"
-            loading="lazy"
-            frameborder="0"
-            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-            referrerpolicy="strict-origin-when-cross-origin"
-            title="OCT robot arm demo">
-          </iframe>
-        </div>
-        <figcaption class="figure-caption">robot arm video demo</figcaption>
-      </figure>
-      <script src="https://player.vimeo.com/api/player.js"></script>
-    </section>
-
-    <!-- ⑥ RESEARCH -->
-    <section class="project-section section-nav-target" id="researchStrategy">
-      <div class="content-container">
-        <p class="section-number">01</p>
-        <h2 class="section-icon-title">Research &amp; Strategy</h2>
-        <p class="section-takeaway">Four methods, one question: what actually makes children less afraid?</p>
-        <p style="margin-top: 0.5rem; margin-bottom: 1.5rem;">I started by shadowing real OCT procedures at Kellogg Eye Center: wait times, friction points, how children reacted to the equipment in the moment.</p>
-
-        <div class="quote-cards" style="margin-bottom: 1.75rem;">
-          <div class="quote-card">
-            <p>It's a super cool project. Has the potential to make the situation so much easier for children.</p>
-            <span>Caregiver, Kellogg Eye Center survey</span>
-          </div>
-        </div>
-
-        <div style="max-width: 560px;">
-          <p class="constraint-label constraint-label--response">Key insight</p>
-          <p class="constraint-text" style="margin-bottom: 1rem;">The model favored Sam in every matchup: 62% over Optic, 68% over Cheeze, 76% over A-Eye. At n=30 no gap cleared significance, but the direction never flipped.</p>
-          <p class="constraint-label constraint-label--response">The call</p>
-          <p class="constraint-text" style="margin-bottom: 1rem;">I recommended Sam on converging evidence, not one clean statistic, and documented the uncertainty in the paper.</p>
-          <p class="constraint-label constraint-label--constraint">Why forced-choice</p>
-          <p class="constraint-text" style="margin-bottom: 1rem;">Caregivers rate everything positively on a Likert scale. Forced choice surfaces what they'd actually pick.</p>
-          <p class="constraint-label constraint-label--constraint">Methods note: the IRB clock</p>
-          <p class="constraint-text">Direct child surveys needed an IRB approval cycle longer than the project window, so I used a caregiver-report instrument instead, capturing children's reactions through parent observation. Their spontaneous reactions during sessions entered the data anyway.</p>
-        </div>
-    
-        <!-- STORY -->
-        <div style="margin-top: 2.5rem; border-top: 1px solid #f3f4f6; padding-top: 2rem;">
-          <p class="section-takeaway" style="margin-bottom: 1.75rem;">Shadowing revealed two different kids in the same room, and two different design problems.</p>
-
-          <div class="persona-pair">
-            <div class="persona-card persona-card--red">
-              <div class="persona-card-header">
-                <span class="persona-age">Age 6</span>
-                <span class="persona-emotion">Scared</span>
-              </div>
-              <p class="persona-quote">"What is that thing? Is it going to hurt me?"</p>
-              <p class="persona-need">Needs comfort and familiarity before anything else.</p>
-            </div>
-            <div class="persona-card persona-card--blue">
-              <div class="persona-card-header">
-                <span class="persona-age">Age 10</span>
-                <span class="persona-emotion">Bored</span>
-              </div>
-              <p class="persona-quote">"How long is this going to take?"</p>
-              <p class="persona-need">Needs engagement and a sense of mission to stay cooperative.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <!-- Personas -->
-      <figure class="figure-80 content-container two-up-figure" style="margin-top: 2rem;">
+        <p class="project-section__eyebrow">Research</p>
+    <h2 class="section-icon-title project-section__title">Identifying the Problem</h2>
+    <div class="project-section__body">
+      <p>When I joined, the engineering team had already built a robotic arm that scans from multiple angles and postures. I focused on the experience around it.</p>
+      <p>We conducted a <span class="text-mint" style="color: #2457c5; font-weight: 400;">service safari</span> at Kellogg Eye Center, walking through the full visit in pairs from the waiting room to the scan. Clinical staff walked us through each step, including what happens when a scan needs to be repeated.</p>
+      <figure class="two-up-figure oct-clinical-walkthrough-figure">
         <div class="two-up-grid">
-          <figure class="two-up-tile">
-            <img src="../../assets/img/oct_persona_age6.svg" alt="Persona: Age 6, Scared">
+          <figure class="oct-clinical-walkthrough-tile">
+            <div class="oct-clinical-walkthrough-media"><img src="../../assets/img/oct_waiting%20room.png" alt="Waiting room at Kellogg Eye Center"></div>
+            <figcaption class="figure-caption"><em>The waiting area at Kellogg Eye Center, where visits often included 30–60 minute waits, longer than the scan itself.</em></figcaption>
           </figure>
-          <figure class="two-up-tile">
-            <img src="../../assets/img/oct_persona_age10.svg" alt="Persona: Age 10, Bored">
-          </figure>
-        </div>
-        <figcaption class="figure-caption">personas</figcaption>
-      </figure>
-    
-    </section>
-
-    <!-- ⑥.5 THE JOURNEY WE SET OUT TO CHANGE -->
-    <section class="project-section">
-      <div class="content-container">
-        <h2 class="section-icon-title">The Journey We Set Out to Change</h2>
-        <p class="section-takeaway">How comfort shifts across the visit, with and without Sam.</p>
-
-        <div class="journey-chart">
-          <svg class="journey-chart-svg" viewBox="0 0 640 220" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Line chart of emotional comfort from anxious to comfortable across five visit stages. With Sam, comfort stays high throughout. Without Sam, comfort drops sharply at first contact and during the exam.">
-            <rect class="arc-zone-band" x="248" y="8" width="290" height="150"></rect>
-            <text x="393" y="22" class="arc-zone-label" text-anchor="middle">Where the exam succeeds or fails</text>
-
-            <text x="4" y="26" class="arc-axis-label">Comfortable</text>
-            <text x="4" y="146" class="arc-axis-label">Anxious</text>
-
-            <polyline class="scrubber-line scrubber-line--without" points="30,111 175,118 320,134 465,127 610,108"></polyline>
-            <polyline class="scrubber-line scrubber-line--with" points="30,105 175,92 320,72 465,56 610,40"></polyline>
-
-            <g class="arc-points arc-points--without">
-              <circle cx="30" cy="111" r="3.5"></circle>
-              <circle cx="175" cy="118" r="3.5"></circle>
-              <circle cx="320" cy="134" r="3.5"></circle>
-              <circle cx="465" cy="127" r="3.5"></circle>
-              <circle cx="610" cy="108" r="3.5"></circle>
-            </g>
-            <g class="arc-points arc-points--with">
-              <circle cx="30" cy="105" r="3.5"></circle>
-              <circle cx="175" cy="92" r="3.5"></circle>
-              <circle cx="320" cy="72" r="3.5"></circle>
-              <circle cx="465" cy="56" r="3.5"></circle>
-              <circle cx="610" cy="40" r="3.5"></circle>
-            </g>
-
-            <text x="30"  y="172" class="arc-x-label">Home</text>
-            <text x="175" y="172" class="arc-x-label">Waiting room</text>
-            <text x="320" y="172" class="arc-x-label">First contact</text>
-            <text x="465" y="172" class="arc-x-label">During exam</text>
-            <text x="610" y="172" class="arc-x-label">Goodbye</text>
-          </svg>
-
-          <div class="emotional-arc-legend">
-            <span class="arc-legend-item"><span class="arc-legend-swatch arc-legend-swatch--standard"></span>Without Sam</span>
-            <span class="arc-legend-item"><span class="arc-legend-swatch arc-legend-swatch--sam"></span>With Sam</span>
-          </div>
-
-          <p class="journey-chart-takeaway">Without Sam, comfort collapses at first contact. With Sam, it holds, which is what makes the scan possible.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Journey Maps -->
-    <figure class="figure-80 content-container two-up-figure journey-maps-figure" style="margin-top: 2rem;">
-      <div class="two-up-grid">
-        <div class="journey-map-col">
-          <p class="journey-map-label">Age 6, comfort first</p>
-          <figure class="two-up-tile">
-            <img src="../../assets/img/oct_jm_age6.svg" alt="Journey Map: Age 6">
+          <figure class="oct-clinical-walkthrough-tile">
+            <div class="oct-clinical-walkthrough-media"><img src="../../assets/img/oct_clinical%20walkthrough.jpg" alt="A team member undergoing a traditional OCT scan at Kellogg Eye Center alongside clinical staff"></div>
+            <figcaption class="figure-caption"><em>A team member undergoes a traditional OCT scan alongside clinical staff.</em></figcaption>
           </figure>
         </div>
-        <div class="journey-map-col">
-          <p class="journey-map-label">Age 10, mission first</p>
-          <figure class="two-up-tile">
-            <img src="../../assets/img/oct_jm_age10.svg" alt="Journey Map: Age 10">
-          </figure>
-        </div>
-      </div>
-      <figcaption class="figure-caption">full journey maps from research</figcaption>
-    </figure>
-
-    <!-- ⑦ CHARACTER DESIGN (part of the "Design" nav group, along with Storyboard below) -->
-    <section class="project-section section-nav-target" id="design">
-      <div class="content-container">
-        <p class="section-number">02</p>
-        <h2 class="section-icon-title">Character Design</h2>
-        <p class="section-takeaway">Four concepts, one recommendation: Sam the Ranger, for cross-age appeal and clinical fit.</p>
-        <p>Each concept targeted a different emotional register. Survey data and medical staff review narrowed the field to Sam, a mission-driven ranger who reads well across ages.</p>
-        <p style="margin-top: 0.75rem; color: var(--text-color);">One clear finding: children saw through A-Eye's staring-contest narrative and stopped cooperating, which is why the robot never lying became a first principle for the whole interaction system.</p>
-      </div>
-
-      <figure class="figure-80 content-container single-tile-figure" style="margin-top: 1.5rem;">
-        <div class="single-tile">
-          <img src="../../assets/img/oct_character_design.jpg" alt="Character Design Board">
-        </div>
-        <figcaption class="figure-caption">character design board created with team</figcaption>
       </figure>
-
-      <figure class="figure-80 content-container two-up-figure" id="charFinalistsBoard" style="margin-top: 1.5rem;">
-          <div class="char-cursor-pill" id="charCursorPill" aria-hidden="true">
-            <i class="uil uil-eye"></i>
-            <span>view why</span>
-          </div>
-          <div class="two-up-grid">
-            <figure class="two-up-tile character-tile">
-              <img src="../../assets/img/oct_Optic.jpg" alt="Optic Character">
-              <span class="verdict-badge">+ verdict</span>
-              <div class="character-overlay">
-                <p class="character-overlay-name">Optic</p>
-                <p class="character-overlay-desc">Strongest runner-up, especially with older curious kids. The mysterious persona needs pre-exposure videos, so it stays on the roadmap.</p>
-              </div>
-            </figure>
-            <figure class="two-up-tile character-tile">
-              <img src="../../assets/img/oct_SAM_the_Ranger.jpg" alt="SAM the Ranger">
-              <span class="verdict-badge verdict-badge--priority">★ prioritized</span>
-              <div class="character-overlay character-overlay--sam">
-                <p class="character-overlay-name">Sam the Ranger</p>
-                <p class="character-overlay-desc">The Bradley-Terry model predicts caregivers choose Sam head-to-head: 62% over Optic, 68% over Cheeze, 76% over A-Eye. One risk, the camera reading as a weapon, I reframed as binoculars in Sam's narrative.</p>
-              </div>
-            </figure>
-            <figure class="two-up-tile character-tile">
-              <img src="../../assets/img/oct_A-Eye.jpg" alt="A-Eye Character">
-              <span class="verdict-badge">+ verdict</span>
-              <div class="character-overlay">
-                <p class="character-overlay-name">A-Eye</p>
-                <p class="character-overlay-desc">Lowest scores, and the clearest lesson. Its narrative called the scan a staring contest, children caught the lie, and that failure became the system's first principle.</p>
-              </div>
-            </figure>
-            <figure class="two-up-tile character-tile">
-              <img src="../../assets/img/oct_cheeze.jpg" alt="Cheeze Character">
-              <span class="verdict-badge">+ verdict</span>
-              <div class="character-overlay">
-                <p class="character-overlay-name">Cheeze</p>
-                <p class="character-overlay-desc">Strong visuals and storytelling, with a weak signal among anxious children. A photo interaction raised privacy flags, so future versions use pre-existing imagery.</p>
-              </div>
-            </figure>
-          </div>
-          <figcaption class="figure-caption">four character finalists with Optic · Sam the Ranger · A-Eye · Cheeze</figcaption>
-        </figure>
-
-      <div class="content-container">
-        <p style="margin-top: 1.5rem; color: var(--text-color);">Every concept also had to survive the clinic itself: infection control, cleaning cycles, constant equipment contact. The fix was one robot with multiple swappable characters, outfits and masks that come off and go through the wash, so hygiene never had to compete with personality.</p>
-      </div>
-    </section>
-
-    <!-- ⑧ STORYBOARD + MEDIA -->
-    <section class="project-section section-nav-target" id="storyboard">
-      <div class="content-container">
-        <p class="section-number">03</p>
-        <h2 class="section-icon-title">Storyboard &amp; Pre-Exposure Media</h2>
-        <p class="section-takeaway">I structured the storyboard to mirror the child's own emotional arc: Sam's introduction builds trust before the exam, and Sam's farewell closes the story with a good memory. I illustrated the pre-exposure video in Procreate for home and waiting-room viewing.</p>
-      </div>
-
-      <figure class="figure-80 content-container single-tile-figure" style="margin-top: 2rem;">
-        <div class="single-tile">
-          <img src="../../assets/img/oct_storyboard.png" alt="SAM the Ranger Storyboard">
-        </div>
-        <figcaption class="figure-caption">SAM the Ranger storyboard</figcaption>
+      <p>The walkthrough gave us an initial hypothesis about where the experience could break down.</p>
+      <figure class="single-tile-figure oct-user-needs-figure">
+        <div class="single-tile" style="width: 90%; margin: 0 auto;"><img src="../../assets/img/oct_user-needs.png" alt="Two speech bubbles, one from a child and caregiver about long waits, one from clinical staff about repeated scans, converging into the design question: how might we make the OCT experience easier for children to understand and participate in."></div>
       </figure>
-    </section>
-
-    <!-- ⑨ DATA & DELIVERABLES -->
-    <section class="project-section section-nav-target" id="dataAnalysis">
-      <div class="content-container">
-        <p class="section-number">04</p>
-        <h2 class="section-icon-title">Data Analysis &amp; Deliverables</h2>
-        <p class="section-takeaway">What the numbers said, what caregivers said, and what I did with both.</p>
-        <p style="margin-top: 0.75rem; color: var(--text-color);">I built or analyzed everything below except the physical prototype, which the engineering team continued after my involvement ended.</p>
-      </div>
-
-      <figure class="figure-80 content-container single-tile-figure" style="margin-top: 2rem;">
-        <div class="single-tile">
-          <img src="../../assets/img/oct_data_analysis.png" alt="Survey data analysis">
-        </div>
-        <figcaption class="figure-caption">survey data analysis</figcaption>
-      </figure>
-      <!-- Survey Results -->
-      <div class="content-container">
-        <h3 style="margin-top: 2rem; margin-bottom: 1rem; font-size: 1.1rem; font-weight: 700; color: var(--title-color);">Survey Results</h3>
-        <p class="constraint-label constraint-label--constraint">Method</p>
-        <p class="constraint-text" style="margin-bottom: 1rem;">30 caregivers completed a 40-question survey after viewing pre-exposure videos at Kellogg Eye Center.</p>
-        <p class="constraint-label constraint-label--response">Key insight</p>
-        <p class="constraint-text" style="margin-bottom: 1.5rem;">Over 60% reported curiosity and interest in every character; 80% rated Sam very or extremely effective at engaging children.</p>
-
-        <div class="impact-grid oct-impact-grid--3">
-          <div class="impact-card">
-            <p class="impact-number">70%</p>
-            <p class="impact-label">of caregivers preferred character-guided interaction over the traditional pediatric OCT exam</p>
-          </div>
-          <div class="impact-card">
-            <p class="impact-number">4</p>
-            <p class="impact-label">robot character concepts designed and tested</p>
-          </div>
-          <div class="impact-card">
-            <p class="impact-number">2</p>
-            <p class="impact-label">personas from in-clinic observation</p>
-          </div>
-        </div>
-
-        <div style="margin-top: 1.75rem;">
-          <p style="font-weight: 700; font-size: 0.95rem; color: var(--title-color); margin-bottom: 0.5rem;">Head-to-head predictions</p>
-          <p style="color: var(--text-color); line-height: 1.6;">I fit a Bradley-Terry model to the forced-choice data to convert raw picks into matchup probabilities: 62% over Optic, 68% over Cheeze, 76% over A-Eye.</p>
         </div>
       </div>
     </section>
 
-    <!-- ⑨.65 INTERACTION SYSTEM -->
-    <section class="project-section section-nav-target" id="interaction">
+    <!-- SECONDARY RESEARCH -->
+    <section class="project-section project-section--context">
       <div class="content-container">
-        <p class="section-number">05</p>
-        <h2 class="section-icon-title">Interaction</h2>
-
-        <div class="principles-strip">
-          <span class="principles-strip-item">The robot must never lie</span>
-          <span class="principles-strip-sep">·</span>
-          <span class="principles-strip-item">Familiar before first contact</span>
-          <span class="principles-strip-sep">·</span>
-          <span class="principles-strip-item">One robot, many characters</span>
-        </div>
-        <p class="section-takeaway" style="margin-top: 0.5rem;">Every behavior below traces to one of these three principles.</p>
-        <p style="margin-top: 0.75rem; color: var(--text-color);">The project itself ran about a year. After it wrapped, I kept refining this interaction system on my own.</p>
-
-        <h3 style="margin-top: 1.5rem; margin-bottom: 0; font-size: 1.05rem; font-weight: 700; color: var(--title-color);">Interaction Specification</h3>
-      </div>
-
-      <figure class="figure-80 content-container single-tile-figure" style="margin-top: 1.5rem;">
-        <div class="single-tile">
-          <img src="../../assets/img/oct_spec.png" alt="Sam the Ranger service blueprint: journey phases (Pre-Exposure, First Contact, Calibration, The Game, Success &amp; Goodbye) mapped across child actions, Sam's front-stage dialogue, and the system's back-stage mechanism for each phase.">
-        </div>
-        <figcaption class="figure-caption">Sam the Ranger service blueprint, exported from Figma</figcaption>
-      </figure>
-
-      <div class="content-container">
-        <p style="margin-top: 1.5rem;">The blueprint above defines the system; the film below visualizes it.</p>
-      </div>
-
-      <figure class="film-frame content-container" style="margin-top: 1rem;">
-        <div class="film-embed">
-          <iframe
-            src="https://player.vimeo.com/video/1213024532?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
-            loading="lazy"
-            frameborder="0"
-            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            title="oct-sam demo video">
-          </iframe>
-        </div>
-        <figcaption class="figure-caption">A concept film visualizing Sam's behavior specification, from first contact to graceful failure recovery. AI-accelerated production; every shot maps to a spec row.</figcaption>
-      </figure>
-
-      <div class="content-container">
-        <h3 style="margin-top: 2.5rem; margin-bottom: 0; font-size: 1.05rem; font-weight: 700; color: var(--title-color);">When it goes wrong</h3>
-        <p class="failure-intro">A spec that only covers the happy path isn't a spec. These are the cases caregivers and the clinical team actually raised: the moments a frightened child startles, cries, or moves during the scan, and how Sam responds.</p>
-        <p class="failure-assumptions">Assumes voice output, a display, and basic motion/audio sensing. Detection methods are proposals for engineering validation.</p>
-
-        <div class="failure-table-wrap">
-          <table class="failure-table">
-            <thead>
-              <tr>
-                <th scope="col">Situation</th>
-                <th scope="col">Detection (proposed)</th>
-                <th scope="col">Sam's response</th>
-                <th scope="col">Escalation</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td data-label="Situation">Child startled by Sam's approach</td>
-                <td data-label="Detection (proposed)">Sudden recoil / gaze lost as the head nears</td>
-                <td data-label="Sam's response">Stop, ease back, lower the head (apology), then one reassuring nod</td>
-                <td data-label="Escalation">Re-approach slowly; if still uneasy, pause and wait</td>
-              </tr>
-              <tr>
-                <td data-label="Situation">Child cries</td>
-                <td data-label="Detection (proposed)">Audio level</td>
-                <td data-label="Sam's response">Pause dialogue 5s, soften posture</td>
-                <td data-label="Escalation">One gentle re-invite, then clinician handoff</td>
-              </tr>
-              <tr>
-                <td data-label="Situation">Child moves during scan</td>
-                <td data-label="Detection (proposed)">Motion exceeds threshold</td>
-                <td data-label="Sam's response">Calm reminder to stay still</td>
-                <td data-label="Escalation">Pause scan, resume from last segment</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="failure-never">
-          <p class="failure-never-title">Sam never</p>
-          <ul class="failure-never-list">
-            <li>Sam never lies about the procedure. (From research: a deception-based concept was rejected on trust grounds.)</li>
-            <li>Sam never blocks the child's path to their parent.</li>
-            <li>Sam never raises volume or speeds up when a child disengages.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- ⑨.7 NEXT STEPS -->
-    <section class="project-section section-nav-target" id="nextSteps">
-      <div class="content-container">
-        <p class="section-number">06</p>
-        <h2 class="section-icon-title">Next steps</h2>
-        <p class="section-takeaway">My involvement ended December 2025.</p>
-        <div style="margin-top: 1.25rem; max-width: 560px;">
-          <p class="constraint-label constraint-label--constraint">Continued</p>
-          <p class="constraint-text">The engineering team carried the physical prototype forward from there.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ⑨.8 TAKEAWAYS -->
-    <section class="project-section section-nav-target" id="takeaways">
-      <div class="content-container">
-        <p class="section-number">07</p>
-        <h2 class="section-icon-title">Takeaways</h2>
-        <div class="learnings-list">
-          <div class="learning-item">
-            <span class="learning-num">1</span>
-            <div>
-              <strong>Emotional design is clinical design</strong>
-              <p>In pediatric healthcare, a child's emotional state decides whether the exam can happen at all: a scared child moves, cries, or refuses, and the scan fails. Emotional design was the difference between a usable device and an unusable one.</p>
+        <p class="project-section__eyebrow">Research</p>
+        <h2 class="section-icon-title project-section__title">Secondary Research</h2>
+        <div class="project-section__body">
+          <p>We ran a <span class="text-mint" style="color: #2457c5; font-weight: 400;">literature review</span> and <span class="text-mint" style="color: #2457c5; font-weight: 400;">comparative evaluation</span> of children’s media, medical preparation, and child–robot interaction to understand how an unfamiliar clinical experience could become easier to approach. We identified <span class="text-mint" style="color: #2457c5; font-weight: 400;">3 design criteria</span>:</p>
+          <section class="research-insight-cards research-insight-cards--criteria" aria-label="Three research criteria">
+            <div class="research-insight-cards__grid">
+              <article class="research-insight-card">
+                <figure class="research-insight-card__media">
+                  <img src="../../assets/img/oct-card%20icon%201.png" alt="">
+                </figure>
+                <h3>01 Prepare Before First Contact</h3>
+                <p>Knowing what to expect can reduce uncertainty.</p>
+                <p class="research-insight-card__implication"><em><span class="research-insight-card__arrow" aria-hidden="true">→</span>Introduce the robot before the visit.</em></p>
+              </article>
+              <article class="research-insight-card">
+                <figure class="research-insight-card__media">
+                  <img src="../../assets/img/oct-card%20icon%202.png" alt="">
+                </figure>
+                <h3>02 Give Children an Active Role</h3>
+                <p>Participation can help children stay engaged during a task that requires stillness.</p>
+                <p class="research-insight-card__implication"><em><span class="research-insight-card__arrow" aria-hidden="true">→</span>Give the child a mission.</em></p>
+              </article>
+              <article class="research-insight-card">
+                <figure class="research-insight-card__media">
+                  <img src="../../assets/img/oct-card%20icon%203.png" alt="">
+                </figure>
+                <h3>03 Make Behavior Predictable</h3>
+                <p>Clear cues can help children understand what the robot will do next.</p>
+                <p class="research-insight-card__implication"><em><span class="research-insight-card__arrow" aria-hidden="true">→</span>Signal movement before it happens.</em></p>
+              </article>
             </div>
-          </div>
-          <div class="learning-item">
-            <span class="learning-num">2</span>
-            <div>
-              <strong>Children are the sharpest honesty detectors</strong>
-              <p>A-Eye failed because it lied, and that failure became the system's first principle. Children don't need the truth softened into fiction; they need a real role in a real story.</p>
-            </div>
-          </div>
+          </section>
         </div>
-        <div style="margin-top: 1.75rem; max-width: 560px;">
-          <p class="constraint-label constraint-label--response">Published</p>
-          <p class="constraint-text">A co-authored abstract in Investigative Ophthalmology &amp; Visual Science, presented at the 2026 ARVO Annual Meeting.</p>
+      </div>
+    </section>
+
+    <!-- PERSONAS -->
+    <section class="project-section project-section--context section-nav-target" id="design">
+      <div class="content-container">
+        <p class="project-section__eyebrow">Ideation</p>
+        <h2 class="section-icon-title project-section__title">Personas</h2>
+        <div class="project-section__body">
+          <p>Children do not experience the OCT visit in the same way. Differences in age, attention span, temperament, and familiarity with medical equipment can change what helps a child cooperate.</p>
+          <p>We synthesized two representative profiles from the literature, clinical walkthrough, and team discussion. They were not individual patient profiles. We used them to test whether a character or interaction idea could support different needs within the same procedure.</p>
+          <figure class="two-up-figure">
+            <div class="two-up-grid">
+              <figure class="two-up-tile"><img src="../../assets/img/oct_persona_age6.svg" alt="Persona: Age 6, Scared"></figure>
+              <figure class="two-up-tile"><img src="../../assets/img/oct_persona_age10.svg" alt="Persona: Age 10, Bored"></figure>
+            </div>
+            <figcaption class="figure-caption">Representative personas from the research phase.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- USER JOURNEYS -->
+    <section class="project-section project-section--context">
+      <div class="content-container">
+        <p class="project-section__eyebrow">Ideation</p>
+        <h2 class="section-icon-title project-section__title">Journey Maps</h2>
+        <div class="project-section__body">
+          <p>The personas described different needs. We mapped their journeys to locate where those needs appeared across the visit, from waiting to scan completion. Rather than measuring emotional change, the maps were hypothesis-driven tools for identifying opportunities for pre-exposure, reassurance, and engagement.</p>
+          <p>The younger profile needed support before and during the first close interaction. The older profile needed a reason to remain engaged during the scan itself. This suggested a broader character system could eventually support different interaction styles, beginning with Sam as the first direction to develop.</p>
+          <figure class="two-up-figure journey-maps-figure">
+            <div class="two-up-grid">
+              <div class="journey-map-col">
+                <p class="journey-map-label">Age 6, comfort first</p>
+                <figure class="two-up-tile"><img src="../../assets/img/oct_jm_age6.svg" alt="Journey Map: Age 6"></figure>
+              </div>
+              <div class="journey-map-col">
+                <p class="journey-map-label">Age 10, mission first</p>
+                <figure class="two-up-tile"><img src="../../assets/img/oct_jm_age10.svg" alt="Journey Map: Age 10"></figure>
+              </div>
+            </div>
+            <figcaption class="figure-caption">Journey maps for two representative child profiles.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHARACTER DIRECTIONS -->
+    <section class="project-section project-section--context">
+      <div class="content-container">
+        <p class="project-section__eyebrow">Ideation</p>
+        <h2 class="section-icon-title project-section__title">Character Directions</h2>
+        <div class="project-section__body">
+          <p>We diverged across the design team, developing 10 character concepts across animal, spy, medical, robot, and space themes. I proposed Optic, one of the four concepts that advanced. We then converged through a <span class="text-mint" style="color: #2457c5; font-weight: 400;">team-based concept review</span>, weighing each direction against comfort and engagement and against feasibility with robotics, digital fabrication, and clinical collaborators. Materials couldn't add weight to the robot's joints, and surfaces had to withstand repeated cleaning with medical wipes.</p>
+          <figure class="oct-character-directions-figure">
+            <div class="oct-character-directions-grid">
+              <figure class="oct-character-directions-panel">
+                <div class="single-tile"><img src="../../assets/img/oct_character_design.jpg" alt="Concept exploration board showing early pediatric OCT character directions"></div>
+                <figcaption class="figure-caption">Concept exploration on Miro</figcaption>
+              </figure>
+              <figure class="oct-character-directions-panel">
+                <div class="oct-selected-directions">
+                  <img src="../../assets/img/oct_SAM_the_Ranger.jpg" alt="Sam the Ranger character board">
+                  <img src="../../assets/img/oct_Optic.jpg" alt="Optic character board">
+                  <img src="../../assets/img/oct_A-Eye.jpg" alt="A-Eye character board">
+                  <img src="../../assets/img/oct_cheeze.jpg" alt="Cheeze character board">
+                </div>
+                <figcaption class="figure-caption">Selected directions</figcaption>
+              </figure>
+            </div>
+          </figure>
+          <p>The four selected concepts became <span class="text-mint" style="color: #2457c5; font-weight: 400;">character boards</span> and the basis for the pre-exposure demos used in the caregiver study. I wrote the content and copy for Optic, while illustrations were done by teammates.</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- PRE-EXPOSURE PROTOTYPES -->
+    <section class="project-section project-section--context">
+      <div class="content-container">
+        <p class="project-section__eyebrow">Ideation</p>
+        <h2 class="section-icon-title project-section__title">Pre-Exposure Prototypes</h2>
+        <div class="project-section__body">
+          <p>To evaluate each character as an experience rather than a static board, the team created 4 <span class="text-mint" style="color: #2457c5; font-weight: 400;">low-fidelity pre-exposure videos</span> using 3D-printed robot forms and simple props. I <span class="text-mint" style="color: #2457c5; font-weight: 400;">storyboarded</span> the overall interaction of a child with Sam. The team used it as a shared template for all 4 characters, adjusting the dialogue and character details for each.</p>
+          <p>Each video showed how a character could introduce the scan and give a child a role in the experience. We used these prototypes as stimuli in the caregiver evaluation.</p>
+          <figure class="single-tile-figure">
+            <div class="single-tile"><img src="../../assets/img/oct_storyboard.png" alt="Sam the Ranger pre-exposure video storyboard"></div>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- USER SURVEYS -->
+    <section class="project-section project-section--context">
+      <div class="content-container">
+        <p class="project-section__eyebrow">Ideation</p>
+        <h2 class="section-icon-title project-section__title">User Surveys</h2>
+        <div class="project-section__body">
+          <p>We conducted a <span class="text-mint" style="color: #2457c5; font-weight: 400;">mixed-method caregiver evaluation</span> with 30 caregivers, combining quantitative ratings, qualitative feedback, and <span class="text-mint" style="color: #2457c5; font-weight: 400;">pairwise comparisons</span>. Each participant reviewed two randomly assigned character videos. I led the quantitative analysis, applying the <a style="font-weight: 400; text-decoration: underline; text-underline-offset: 0.15em;" href="https://en.wikipedia.org/wiki/Bradley%E2%80%93Terry_model" target="_blank" rel="noopener noreferrer" aria-label="Bradley–Terry model (opens in a new tab)">Bradley–Terry model<span class="external-link-indicator" aria-hidden="true">↗</span></a> to estimate preference across matchups.</p>
+          <p>After analyzing 1,200+ responses, we discovered that:</p>
+          <section class="research-insight-cards" aria-label="Caregiver survey findings">
+            <div class="research-insight-cards__grid">
+              <article class="research-insight-card research-stat-card">
+                <p class="research-stat-card__value">70%</p>
+                <p>Preferred character-guided interaction over the traditional exam.</p>
+              </article>
+              <article class="research-insight-card research-stat-card">
+                <p class="research-stat-card__value">80%</p>
+                <p>Rated Sam very or extremely effective at engaging children.</p>
+              </article>
+              <article class="research-insight-card research-stat-card">
+                <p class="research-stat-card__value">60%+</p>
+                <p>Sam led every pairwise comparison.</p>
+              </article>
+            </div>
+          </section>
+          <p>Caregivers also pointed to specific features, music, verbal communication, animal noises, and soft textures, as what made a character feel effective.</p>
+          <figure class="single-tile-figure">
+            <div class="single-tile"><img src="../../assets/img/oct-character%20comparison.png" alt="Comparison of the four pediatric OCT character directions"></div>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL SOLUTION: RESEARCH OUTCOME -->
+    <section class="project-section project-section--context section-nav-target" id="finalSolution">
+      <div class="content-container">
+        <p class="project-section__eyebrow">Final Solution</p>
+        <h2 class="section-icon-title project-section__title">Research Outcome</h2>
+        <div class="project-section__body">
+          <p>I co-authored two <a style="font-weight: 400; text-decoration: underline; text-underline-offset: 0.15em;" href="https://www.arvo.org/" target="_blank" rel="noopener noreferrer" aria-label="Association for Research in Vision and Ophthalmology (ARVO) (opens in a new tab)">Association for Research in Vision and Ophthalmology (ARVO)<span class="external-link-indicator" aria-hidden="true">↗</span></a> 2026 conference abstracts published in <em>Investigative Ophthalmology &amp; Visual Science</em>. Covering the robotic character prototype and caregiver perspectives on pediatric OCT characters, I led the quantitative analysis sections.</p>
+          <p>[<a style="font-weight: 400; text-decoration: underline; text-underline-offset: 0.15em;" href="https://iovs.arvojournals.org/article.aspx?articleid=2813626" target="_blank" rel="noopener noreferrer" aria-label="Robotic character prototype (opens in a new tab)">Robotic character prototype<span class="external-link-indicator" aria-hidden="true">↗</span></a>] [<a style="font-weight: 400; text-decoration: underline; text-underline-offset: 0.15em;" href="https://iovs.arvojournals.org/article.aspx?articleid=2813627" target="_blank" rel="noopener noreferrer" aria-label="Caregiver perspectives (opens in a new tab)">Caregiver perspectives<span class="external-link-indicator" aria-hidden="true">↗</span></a>]</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL SOLUTION: FUTURE EXPLORATION -->
+    <section class="project-section project-section--context">
+      <div class="content-container">
+        <p class="project-section__eyebrow">Final Solution</p>
+        <h2 class="section-icon-title project-section__title">Future Exploration - AI</h2>
+        <div class="project-section__body">
+          <p>I wanted to further explore how to make an idea evolve from a character concept into a scalable interaction system. I mapped the storyboard into a <span class="text-mint" style="color: #2457c5; font-weight: 400;">service blueprint</span> for a broader experience easier to review and extend to future character directions.</p>
+          <figure class="single-tile-figure oct-iteration-blueprint">
+            <div class="single-tile">
+              <img src="../../assets/img/oct_spec.png" alt="Sam the Ranger service blueprint: journey phases (Pre-Exposure, First Contact, Calibration, The Game, Success &amp; Goodbye) mapped across child actions, Sam's front-stage dialogue, and the system's back-stage mechanism for each phase.">
+            </div>
+            <figcaption class="figure-caption">Sam the Ranger service blueprint, exported from Figma</figcaption>
+          </figure>
+          <p>I was curious on how I can use generative AI as a tool for <span class="text-mint" style="color: #2457c5; font-weight: 400;">rapid prototyping</span> in a field where physical iteration is slow. I prompted a concept film to visualize the interaction before committing to another physical build. Using Higgsfield, I generated keyframe images of the robot in the clinic environment, converted them into short video clips, and edited the sequence in Canva.</p>
+          <figure class="film-frame oct-iteration-film">
+            <div class="film-embed">
+              <iframe
+                src="https://player.vimeo.com/video/1213024532?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                loading="lazy"
+                frameborder="0"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                title="AI-generated Sam concept film">
+              </iframe>
+            </div>
+            <figcaption class="figure-caption">This is an AI-generated concept, not footage of a working prototype.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- REFLECTION -->
+    <section class="project-section project-section--context section-nav-target" id="reflection">
+      <div class="content-container">
+        <p class="project-section__eyebrow">Reflection</p>
+        <h2 class="section-icon-title project-section__title">Post-Project Reflection</h2>
+        <div class="project-section__body">
+          <p><strong>1. Cross-Functional Communication</strong><br>Working with engineers, field experts, and designers taught me to explain design decisions through constraints and trade-offs that other disciplines could act on.</p>
+          <p><strong>2. Turning Evidence into Direction</strong><br>I learned to combine observations, literature, caregiver feedback, and pairwise analysis without treating any single source as definitive.</p>
+          <p><strong>3. Designing for Real Constraints</strong><br>Working on a physical medical product made feasibility part of the design process from the beginning, including movement, materials, cleaning, and clinical workflow.</p>
+          <p><strong>4. Future Explorations and AI</strong><br>The project strengthened my ability to extend an early concept into a broader system and use emerging tools, including AI video generation, for rapid prototyping.</p>
         </div>
       </div>
     </section>

@@ -11,6 +11,15 @@
   <style>
     /* Page-scoped overrides (this page only). */
 
+    /* Match OCT's visual rhythm for standalone visuals and their captions. */
+    .project-page--ootd { --ootd-media-space: var(--block-gap); }
+    .project-page--ootd .project-section > .figure-80 {
+      margin: var(--ootd-media-space) auto;
+    }
+    .project-page--ootd .project-section .figure-caption {
+      margin: 8px 0 0;
+    }
+
     /* Intro row carries Problem / My Role / Solution (3 blocks, to
        match oct's role-callout) instead of the shared 2-block
        Problem/Solution recipe: extends .problem-solution-row's
@@ -34,6 +43,9 @@
       align-items: center;
       justify-content: center;
       gap: clamp(1rem, 3vw, 1.75rem);
+    }
+    .char-before-after-figure {
+      margin: var(--ootd-media-space) 0;
     }
     .char-before-after-item {
       flex: 0 0 auto;
@@ -73,7 +85,7 @@
     }
   </style>
 </head>
-<body class="project-page">
+<body class="project-page project-page--ootd">
 
   <header class="header" id="header">
     <nav class="site-nav container">
@@ -214,7 +226,7 @@
       </div>
     </div>
 
-    <figure class="figure-80 two-up-figure" style="margin-top: 2rem;">
+    <figure class="figure-80 two-up-figure">
       <div class="two-up-grid">
         <figure class="two-up-tile">
           <img src="../../assets/img/ootd:board1.png" alt="Inspiration board 1">
@@ -236,7 +248,7 @@
       <p>The flow was mapped horizontally to reflect industry standards, with WCAG considerations annotated at each decision point.</p>
       <p class="flow-path">Open Diary &rarr; Meet Ear &rarr; Dress Ear &rarr; Reflect &rarr; Save Memory (or Skip)</p>
     </div>
-    <figure class="figure-80 single-tile-figure" style="margin-top: 1.5rem;">
+    <figure class="figure-80 single-tile-figure">
       <div class="single-tile">
         <img src="../../assets/img/ootd:userflow1.png" alt="Wearby user flow diagram with WCAG annotations">
       </div>
@@ -252,7 +264,7 @@
       <p class="section-takeaway">Tokens defined before screens, visual cohesion was a constraint not an afterthought.</p>
       <p>A scalable token-based system was built first, ensuring WCAG AA compliance across all surfaces. All color pairings verified via WebAIM Contrast Checker.</p>
     </div>
-    <figure class="figure-80 single-tile-figure" style="margin-top: 1.5rem;">
+    <figure class="figure-80 single-tile-figure">
       <div class="single-tile">
         <img src="../../assets/img/ootd:designSystem.png" alt="Wearby design system">
       </div>
@@ -268,7 +280,7 @@
       <p class="section-takeaway">Naming structure enabled scalable clothing variants with zero ambiguity.</p>
       <p>Every clothing item was structured as a named Figma component using hierarchical slash notation (Category/Type/Color), with color variants grouped into component sets. This enabled fast lookup and consistent variant switching across all screens.</p>
     </div>
-    <figure class="figure-80 single-tile-figure" style="margin-top: 1.5rem;">
+    <figure class="figure-80 single-tile-figure">
       <div class="single-tile">
         <img src="../../assets/img/ootd:component.png" alt="Wearby Figma component library">
       </div>
@@ -306,7 +318,7 @@
         </div>
       </div>
 
-      <div style="margin-top: 2rem;">
+      <div class="char-before-after-figure">
         <div class="char-before-after">
           <div class="char-before-after-item">
             <p class="char-before-after-label">Sketches</p>
@@ -331,7 +343,7 @@
       <p class="section-takeaway">Five core screens designed.</p>
       <p>Sage green and warm cream carry the calm non-clinical tone. Ear's presence creates emotional continuity across every step of the flow.</p>
     </div>
-    <figure class="figure-80 single-tile-figure" style="margin-top: 1.5rem;">
+    <figure class="figure-80 single-tile-figure">
       <div class="single-tile">
         <img id="ootdScreensImg" src="../../assets/img/ootd:screens.png" alt="Wearby UI screens prototype">
       </div>
@@ -347,7 +359,7 @@
       <p>The digital experience extends into a pocket-sized physical diary. A sealed envelope and an end-page QR code work as a two-layer surprise, 30 daily prompt cards give the reflection ritual a physical home, and a sticker and background-scene system mirrors the app's dress-up flow as a tactile extension of the digital companion.</p>
     </div>
 
-    <figure class="figure-80" style="margin-top: 1.5rem;">
+    <figure class="figure-80">
       <div class="physical-thumb-grid">
         <button type="button" class="physical-thumb" data-caption="A pocket-sized dress-up diary, the whole system fits in one hand." aria-label="A pocket-sized dress-up diary, the whole system fits in one hand.">
           <img src="../../assets/img/ootd-physical-hero.jpg" alt="" loading="lazy">

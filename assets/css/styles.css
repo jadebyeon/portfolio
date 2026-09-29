@@ -59,7 +59,7 @@
 
   /* Editorial content grid, shared by the hero and portfolio layouts */
   --grid-cols: 12;
-  --grid-gap: clamp(10px, 1.2vw, 20px);
+  --grid-gap: clamp(12px, 1.2vw, 20px);
   --container-max: clamp(1200px, calc(90vw + 48px), 1560px); /* was a 1200/1400/1560 step ladder; this ramp holds flat at 1200px through 1280px (matches the rail breakpoint, no regression there) then grows continuously to the old 1560px cap by 1680px */
 
   /* Shared content container: aliases --container-max/--page-gutter so
@@ -150,10 +150,10 @@ h1, h2, h3, h4, h5,
 .portfolio__tags{
   list-style: none;
   padding-left: 0;
-  margin: 0.6rem 0 0.4rem;
+  margin: 0.5rem 0 0.5rem;
   display: flex;
   flex-wrap: nowrap;         /* stay on one line */
-  gap: 0.25rem 0.4rem;       /* tighter gaps so they fit */
+  gap: 0.25rem 0.5rem;       /* tighter gaps so they fit */
   overflow-x: visible;       /* don't grow the card / no scrolling */
 }
 
@@ -167,7 +167,7 @@ h1, h2, h3, h4, h5,
   justify-content: center;
 
   /* smaller padding so three tags fit inside half-width cards */
-  padding: 0.32rem 0.8rem;
+  padding: 0.25rem 0.75rem;
 
   border-radius: 999px;
   border: 1.2px solid var(--mint-outline);
@@ -278,7 +278,7 @@ img { max-width: 100%; height: auto; }
 /* ==================== HOME (HERO) ==================== */
 .section__title{
   text-align:center;
-  margin:0 0 1.25rem;
+  margin: 0 0 1.25rem;
 }
 .section-title, .section-kicker{ text-align: center; }
 .section-title{ margin-top: 0; }
@@ -324,7 +324,7 @@ img { max-width: 100%; height: auto; }
   gap: 0.75rem;
   min-width: 0;                 /* <-- important so tags can't force width */
 }
-.portfolio__data{ padding-top: .25rem; }
+.portfolio__data{ padding-top: 0.25rem; }
 .portfolio__title{ font-size: 1.125rem; line-height: 1.25; }
 .portfolio__description{ color: var(--text-color); font-size: var(--small-font-size); }
 
@@ -332,7 +332,7 @@ img { max-width: 100%; height: auto; }
 .portfolio__status{
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
   margin: 0;
   font-family: var(--body-font);
   font-size: 0.7rem;
@@ -450,7 +450,7 @@ img { max-width: 100%; height: auto; }
   margin: 0.75rem 0;
   display: flex;
   flex-wrap: wrap;              /* <-- was nowrap / overflow-x */
-  gap: 0.45rem 0.6rem;
+  gap: 0.5rem 0.5rem;
 }
 
 .portfolio__tags .tag{
@@ -459,7 +459,7 @@ img { max-width: 100%; height: auto; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.3rem 0.9rem;
+  padding: 0.25rem 1rem;
   border-radius: 999px;
   border: 1.2px solid var(--mint-outline);
   background-color: #ffffff;
@@ -537,7 +537,7 @@ img { max-width: 100%; height: auto; }
 }
 
 .footer__back-label {
-  margin-top: 0.1rem;
+  margin-top: 0.25rem;
 }
 
 .footer__back-circle {
@@ -581,7 +581,7 @@ img { max-width: 100%; height: auto; }
 .footer__links {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.1rem;
+  gap: 1rem;
 }
 
 /* pill buttons – same vibe as reference */
@@ -589,7 +589,7 @@ img { max-width: 100%; height: auto; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.8rem 2.1rem;
+  padding: 0.75rem 2rem;
   border-radius: 999px;                       /* rounded rectangle / pill */
   border: 1px solid #d4d4d8;                 /* light gray outline */
   background-color: #ffffff;
@@ -768,6 +768,7 @@ img { max-width: 100%; height: auto; }
   margin-top: clamp(12px, 1.5vw, 20px);
   max-width: 760px;
   margin-inline: auto;
+  text-align: center;
   color: var(--text-color);
   font-size: clamp(1rem, 1.3vw, 1.25rem);
   line-height: 1.6;
@@ -966,7 +967,7 @@ img { max-width: 100%; height: auto; }
 .project .project-section > h3{
   line-height: 1.2;
   color: var(--title-color);
-  margin: 0 0 clamp(22px, 2.2vw, 34px);   /* “double” gap under heading */
+  margin: 0 0 clamp(24px, 2.2vw, 32px);   /* “double” gap under heading */
 }
 
 /* ---- List fixes (override the global 'ul { list-style: none }') ---- */
@@ -1069,7 +1070,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 .section-nav__back {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
   margin-bottom: 1.5rem;
   font-size: 0.8rem;
   font-weight: 600;
@@ -1084,11 +1085,11 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  gap: 0.25rem;
 }
 .section-nav__link {
   display: block;
-  padding: 0.45rem 0 0.45rem 0.85rem;
+  padding: 0.5rem 0 0.5rem 0.75rem;
   border-left: 2px solid transparent;
   font-size: 0.85rem;
   font-weight: 500;
@@ -1130,7 +1131,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
        Containing it here prevents its wide pill row from becoming
        page-level horizontal scrolling. */
     overflow: clip;
-    padding: 0.6rem 0;
+    padding: 0.5rem 0;
     background: var(--body-color);
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   }
@@ -1147,7 +1148,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   .section-nav__list::-webkit-scrollbar { display: none; }
   .section-nav__item { flex: 0 0 auto; }
   .section-nav__link {
-    padding: 0.4rem 0.9rem;
+    padding: 0.5rem 1rem;
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 999px;
     white-space: nowrap;
@@ -1370,7 +1371,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 /* cells never crop the image; keep a gentle card bg */
 .logo-cell{
   margin: 0;
-  padding: clamp(10px, 1.2vw, 16px);
+  padding: clamp(12px, 1.2vw, 16px);
   background: #f3f4f6;
   border-radius: 16px;
   /* give the cell some natural height so images never "disappear" */
@@ -1490,7 +1491,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   height: var(--app-row-h);          /* keeps all cards same height per row */
   background: #f3f4f6;
   border-radius: 24px;               /* rounded rectangle */
-  padding: clamp(10px, 1.2vw, 16px); /* breathing room so images never kiss edge */
+  padding: clamp(12px, 1.2vw, 16px); /* breathing room so images never kiss edge */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1647,7 +1648,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 /* Container: just a rounded frame that clips the image edges */
 .single-tile{
   display:block;
-  padding:0;
+  padding: 0;
   background:none;
   border-radius:24px;
   overflow:hidden;       /* clip to rounded corners */
@@ -1666,10 +1667,10 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 
 /* In case .prose adds margins around figure/img/caption */
 .prose .single-tile-figure :is(img, figure, figcaption){
-  margin:0 !important;
+  margin: 0 !important;
 }
 .single-tile-figure .figure-caption{
-  margin:8px 0 var(--block-gap,16px) !important;
+  margin: 8px 0 var(--block-gap,16px) !important;
   text-align:center;
 }
 
@@ -1951,7 +1952,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(14px, 4%, 40px);
+  padding: clamp(16px, 4%, 40px);
   box-sizing: border-box;
   background: #f5f6f7;
   border-radius: 16px;
@@ -2052,7 +2053,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 
 /* small gap between tiles */
 :root{
-  --stack-gap: clamp(10px, 1.2vw, 16px);
+  --stack-gap: clamp(12px, 1.2vw, 16px);
 }
 
 /* same width + horizontal position as other figure-80 figures */
@@ -2132,7 +2133,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   line-height: 1.15;
   letter-spacing: -0.01em;
   color: #1f1f29;
-  margin-bottom: clamp(0.6rem, 1.4vw, 0.9rem);
+  margin-bottom: clamp(0.5rem, 1.4vw, 1rem);
 }
 
 /* Matches .hero-subtitle (the project case-study subtitle, e.g. "Using
@@ -2432,7 +2433,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 
 .about-sticker-card__eyebrow {
-  margin: 0 0 0.4rem;
+  margin: 0 0 0.5rem;
   color: var(--mint-color);
   font-size: 0.68rem;
   font-weight: 700;
@@ -2441,7 +2442,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 
 .about-sticker-card__face--back h2 {
-  margin: 0 0 0.6rem;
+  margin: 0 0 0.5rem;
   color: var(--title-color);
   font-size: 1.15rem;
 }
@@ -2554,7 +2555,7 @@ html {
   color: #6b7280;            /* grey */
   text-decoration: none;
   font-weight: 500;
-  padding-bottom: 0.2rem;
+  padding-bottom: 0.25rem;
   transition: color 0.25s ease;
 }
 
@@ -2727,7 +2728,7 @@ html {
 .persona-tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.5rem;
   margin-bottom: 2.25rem;
 }
 
@@ -2735,7 +2736,7 @@ html {
   background: transparent;
   border: 1.5px solid #ccc;
   border-radius: 999px;
-  padding: 0.4rem 1.1rem;
+  padding: 0.5rem 1rem;
   font-size: 0.85rem;
   font-family: inherit;
   color: #888;
@@ -2842,7 +2843,7 @@ html {
   align-items: center;
   border: 1.5px solid #ccc;
   border-radius: 999px;
-  padding: 0.35rem 0.9rem;
+  padding: 0.25rem 1rem;
   font-family: var(--body-font);
   font-size: 0.78rem;
   color: #555;
@@ -3080,7 +3081,7 @@ body.is-settled #heroCopy [data-copy-line] {
 
 /* tighter gap between the two subtitle lines than title → first subtitle */
 .home__subtitle + .home__subtitle {
-  margin-top: 0.35rem !important;
+  margin-top: 0.25rem !important;
 }
 
 .persona-tabs {
@@ -3170,7 +3171,7 @@ body.is-settled #heroCopy [data-copy-line] {
   border: 1px solid #e5e7eb;
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.5rem;
   height: auto;          /* ← 추가: 고정 height 제거 */
   min-height: 0;         /* ← 추가 */
   overflow: visible;  
@@ -3241,7 +3242,7 @@ body.is-settled #heroCopy [data-copy-line] {
   text-transform: uppercase;
   color: var(--text-color-light);
   display: block;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.5rem;
 }
 
 /* Larger intro lede */
@@ -3318,10 +3319,10 @@ body.is-settled #heroCopy [data-copy-line] {
 
 /* Data block */
 .portfolio__data {
-  padding: 1.1rem 0 0;
+  padding: 1rem 0 0;
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.25rem;
 }
 
 /* Title + year row */
@@ -3364,7 +3365,7 @@ body.is-settled #heroCopy [data-copy-line] {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 0.3rem;
+  gap: 0.25rem;
   margin: 0;
 }
 
@@ -3373,7 +3374,7 @@ body.is-settled #heroCopy [data-copy-line] {
   font-size: 0.58rem;
   letter-spacing: 0.13em;
   text-transform: uppercase;
-  padding: 0.2rem 0.6rem;
+  padding: 0.25rem 0.5rem;
   border-radius: 4px;
   border: 1px solid #d1d5db;
   background: transparent;
@@ -3404,7 +3405,7 @@ body.is-settled #heroCopy [data-copy-line] {
   width: 2px;
   height: 1.1em;
   background: var(--mint-color);
-  margin-left: 2px;
+  margin-left: 4px;
   vertical-align: text-bottom;
   animation: cursorBlink 0.9s step-end infinite;
 }
@@ -3501,7 +3502,7 @@ body.is-settled #heroCopy [data-copy-line] {
   align-items: flex-start;
   background: color-mix(in oklab, var(--mint-color) 6%, transparent);
   border-radius: 12px;
-  padding: clamp(1.1rem, 2.5vw, 1.5rem) clamp(1.25rem, 3vw, 1.75rem);
+  padding: clamp(1rem, 2.5vw, 1.5rem) clamp(1.25rem, 3vw, 1.75rem);
 }
 .alert-statement__icon {
   flex-shrink: 0;
@@ -3522,7 +3523,7 @@ body.is-settled #heroCopy [data-copy-line] {
   font-weight: 700;
   color: var(--title-color);
   line-height: 1.5;
-  margin: 0 0 0.35rem;
+  margin: 0 0 0.25rem;
 }
 .alert-statement__support {
   font-size: 0.9rem;
@@ -3554,13 +3555,13 @@ body.is-settled #heroCopy [data-copy-line] {
    instead of a single headline + support line. */
 .alert-statement__list {
   margin: 0.5rem 0 0;
-  padding-left: 1.1rem;
+  padding-left: 1rem;
   font-size: 0.9rem;
   color: var(--text-color-light);
   line-height: 1.6;
 }
 .alert-statement__list li {
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
 }
 .alert-statement__list li:last-child {
   margin-bottom: 0;
@@ -3583,7 +3584,7 @@ body.is-settled #heroCopy [data-copy-line] {
   font-size: clamp(1.6rem, 3.4vw, 2.2rem);
   font-weight: 700;
   color: var(--mint-color);
-  margin: 0 0 0.85rem;
+  margin: 0 0 0.75rem;
   line-height: 1.25;
 }
 .mint-pullquote-body {
@@ -3636,14 +3637,14 @@ body.is-settled #heroCopy [data-copy-line] {
   gap: 0.25rem;
   background: #f3f4f6;
   border-radius: 999px;
-  padding: 0.3rem;
+  padding: 0.25rem;
 }
 .hbom-tabs__tab {
   appearance: none;
   background: none;
   border: none;
   border-radius: 999px;
-  padding: 0.55rem 1.15rem;
+  padding: 0.5rem 1rem;
   font-family: inherit;
   font-size: 0.9rem;
   font-weight: 600;
@@ -3689,7 +3690,7 @@ body.is-settled #heroCopy [data-copy-line] {
   font-size: 1.15rem;
   font-weight: 700;
   color: var(--title-color);
-  margin: 0 0 0.6rem;
+  margin: 0 0 0.5rem;
 }
 .hbom-tabs__copy p {
   color: var(--text-color);
@@ -3712,7 +3713,7 @@ body.is-settled #heroCopy [data-copy-line] {
   border-left: 3px solid var(--mint-color);
   background: color-mix(in oklab, var(--mint-color) 6%, transparent);
   border-radius: 0 12px 12px 0;
-  padding: clamp(1.1rem, 2.5vw, 1.75rem) clamp(1.25rem, 3.5vw, 2.25rem);
+  padding: clamp(1rem, 2.5vw, 1.75rem) clamp(1.25rem, 3.5vw, 2.25rem);
 }
 .hmw-eyebrow {
   font-size: 11px;
@@ -3720,7 +3721,7 @@ body.is-settled #heroCopy [data-copy-line] {
   letter-spacing: 0.08em;
   font-weight: 600;
   color: var(--mint-color);
-  margin: 0 0 0.6rem;
+  margin: 0 0 0.5rem;
 }
 .hmw-callout p {
   font-family: var(--display-font);
@@ -3779,7 +3780,7 @@ body.is-settled #heroCopy [data-copy-line] {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 600;
-  margin: 0 0 0.4rem;
+  margin: 0 0 0.5rem;
 }
 .constraint-label--constraint {
   color: var(--text-color-light);
@@ -3852,7 +3853,7 @@ body.is-settled #heroCopy [data-copy-line] {
   background: #f9fafb;
   border: 1px solid #e5e7eb;
   border-radius: 16px;
-  padding: 1.1rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -3861,10 +3862,10 @@ body.is-settled #heroCopy [data-copy-line] {
   font-size: 0.95rem;
   font-weight: 700;
   color: var(--title-color);
-  margin: 0 0 0.15rem;
+  margin: 0 0 0.25rem;
 }
 .swimlane-row {
-  padding: 0.5rem 0.6rem;
+  padding: 0.5rem 0.5rem;
   border-radius: 10px;
 }
 .swimlane-row--sam {
@@ -3876,7 +3877,7 @@ body.is-settled #heroCopy [data-copy-line] {
   letter-spacing: 0.08em;
   font-weight: 600;
   color: var(--text-color-light);
-  margin: 0 0 0.3rem;
+  margin: 0 0 0.25rem;
 }
 .swimlane-row-text {
   font-size: 0.82rem;
@@ -3924,7 +3925,7 @@ body.is-settled #heroCopy [data-copy-line] {
 .failure-table th,
 .failure-table td {
   text-align: left;
-  padding: 0.9rem 1rem 0.9rem 0;
+  padding: 1rem 1rem 1rem 0;
   border-bottom: 1px solid #e5e7eb;
   font-size: 0.85rem;
   line-height: 1.6;
@@ -3954,11 +3955,11 @@ body.is-settled #heroCopy [data-copy-line] {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.5rem;
 }
 .failure-never-list li {
   position: relative;
-  padding-left: 1.1rem;
+  padding-left: 1rem;
   font-weight: 600;
   color: var(--title-color);
   font-size: 0.95rem;
@@ -3981,12 +3982,12 @@ body.is-settled #heroCopy [data-copy-line] {
     width: 100%;
   }
   .failure-table tr {
-    padding: 0.9rem 0;
+    padding: 1rem 0;
     border-bottom: 1px solid #e5e7eb;
   }
   .failure-table td {
     border: none;
-    padding: 0.35rem 0;
+    padding: 0.25rem 0;
   }
   .failure-table td::before {
     content: attr(data-label);
@@ -3996,7 +3997,7 @@ body.is-settled #heroCopy [data-copy-line] {
     letter-spacing: 0.06em;
     font-weight: 600;
     color: var(--text-color-light);
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.25rem;
   }
 }
 
@@ -4059,7 +4060,7 @@ body.is-settled #heroCopy [data-copy-line] {
 .vspec-icon-row {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
   margin-bottom: 0.25rem;
 }
 .vspec-icon {
@@ -4090,16 +4091,16 @@ body.is-settled #heroCopy [data-copy-line] {
 .deliverables-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: 0.5rem;
   margin-top: 1.25rem;
 }
 .deliverable-tag {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
   font-size: 0.82rem;
   font-weight: 500;
-  padding: 0.4rem 0.9rem;
+  padding: 0.5rem 1rem;
   border-radius: 999px;
   background: #f3f4f6;
   color: var(--title-color);
@@ -4173,7 +4174,7 @@ body.is-settled #heroCopy [data-copy-line] {
 .testing-outcome {
   display: flex;
   align-items: flex-start;
-  gap: 0.6rem;
+  gap: 0.5rem;
   margin-top: 1.25rem;
   padding-top: 1.25rem;
   border-top: 1px solid #e5e7eb;
@@ -4212,7 +4213,7 @@ body.is-settled #heroCopy [data-copy-line] {
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.5rem;
 }
 .testing-card i {
   font-size: 1.5rem;
@@ -4541,9 +4542,9 @@ body.is-settled #heroCopy [data-copy-line] {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.5rem;
   text-decoration: none;
-  padding: 0.35rem;
+  padding: 0.25rem;
   border-radius: 12px;
   transition: transform 0.15s ease;
 }
@@ -4599,13 +4600,13 @@ body.is-settled #heroCopy [data-copy-line] {
   left: 0;
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.25rem;
   background: var(--mint-color);
   color: #fdfcf9;
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.01em;
-  padding: 0.4rem 0.9rem 0.4rem 0.75rem;
+  padding: 0.5rem 1rem 0.5rem 0.75rem;
   border-radius: 999px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
   pointer-events: none;
@@ -4720,7 +4721,7 @@ body.is-settled #heroCopy [data-copy-line] {
 .iteration-label {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.25rem;
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -4763,7 +4764,7 @@ body.is-settled #heroCopy [data-copy-line] {
 .arc-legend-item {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
 }
 .arc-legend-swatch {
   display: inline-block;
@@ -4844,7 +4845,7 @@ body.is-settled #heroCopy [data-copy-line] {
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.5rem;
 }
 .impact-number {
   font-size: clamp(1.8rem, 3vw, 2.5rem);
@@ -4943,7 +4944,7 @@ body.is-settled #heroCopy [data-copy-line] {
   font-size: 0.95rem;
   color: var(--title-color);
   display: block;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.25rem;
 }
 
 .learning-item p {
@@ -4977,7 +4978,7 @@ body.is-settled #heroCopy [data-copy-line] {
 
 .portfolio__tags {
   justify-content: flex-start;
-  margin-top: 0.4rem;
+  margin-top: 0.5rem;
 }
 
 .portfolio__tags .tag {
@@ -5025,7 +5026,7 @@ body.is-settled #heroCopy [data-copy-line] {
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.5rem;
 }
 .persona-card--red {
   background: #fff5f5;
@@ -5115,7 +5116,7 @@ body.is-settled #heroCopy [data-copy-line] {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--mint-color);
-  padding-top: 0.15rem;
+  padding-top: 0.25rem;
 }
 .case-row__body {
   color: var(--text-color);
@@ -5128,7 +5129,7 @@ body.is-settled #heroCopy [data-copy-line] {
 @media (max-width: 700px) {
   .case-row {
     grid-template-columns: 1fr;
-    gap: 0.4rem;
+    gap: 0.5rem;
   }
 }
 
@@ -5140,22 +5141,22 @@ body.is-settled #heroCopy [data-copy-line] {
 .project-meta--details {
   margin-top: 0;
   gap: clamp(1.25rem, 2.5vw, 2.5rem);
-  padding-bottom: var(--project-meta-bottom-space, var(--project-context-divider-space, clamp(0.875rem, 1.25vw, 1.125rem)));
+  padding-bottom: var(--project-meta-bottom-space, var(--project-context-divider-space, clamp(1rem, 1.25vw, 1rem)));
 }
 .project-meta--details .meta-label {
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
 }
 .project-meta--details :is(.meta-value, .meta-list) {
   color: var(--project-context-body, var(--text-color));
-  font-size: 0.9375rem;
-  line-height: 1.55;
+  font-size: 1rem;
+  line-height: 1.6;
 }
 .project .project-section--context {
   border-top: 0;
   margin-top: clamp(2rem, 3.75vw, 4rem);
 }
 .project .project-section--context .project-section__eyebrow {
-  margin: 0 0 0.45rem;
+  margin: 0 0 0.5rem;
   color: var(--project-context-muted, var(--text-color-light));
   font-size: 0.8125rem;
   font-weight: 600;
@@ -5163,22 +5164,145 @@ body.is-settled #heroCopy [data-copy-line] {
   line-height: 1.2;
 }
 .project .project-section--context .project-section__title {
-  margin: 0 0 var(--project-context-divider-space, clamp(0.875rem, 1.25vw, 1.125rem));
+  margin: 0 0 var(--project-context-divider-space, clamp(1rem, 1.25vw, 1rem));
 }
 .project-section--context .project-section__body {
   max-width: none;
   margin-top: 0;
-  padding-top: var(--project-context-divider-space, clamp(0.875rem, 1.25vw, 1.125rem));
+  padding-top: var(--project-context-divider-space, clamp(1rem, 1.25vw, 1rem));
   border-top: 1px solid var(--project-context-rule, currentColor);
   color: var(--project-context-body, var(--text-color));
-  font-size: 0.9375rem;
-  line-height: 1.55;
+  font-size: 1rem;
+  line-height: 1.6;
 }
 .project-section--context .project-section__body p {
   margin: 0;
-  line-height: 1.55;
+  line-height: 1.6;
 }
 .project-section--context .project-section__body p + p { margin-top: 1rem; }
+.project-section__body a[target="_blank"],
+.project-section__body a[target="_blank"]:visited {
+  color: var(--project-context-body, var(--text-color));
+  text-decoration-line: underline !important;
+  text-decoration-color: #b8bdc7 !important;
+  text-decoration-thickness: 1px !important;
+  text-underline-offset: 0.15em;
+}
+.project-section__body a[target="_blank"]:is(:hover, :focus-visible) {
+  color: #2457c5;
+}
+.project-section__body a .external-link-indicator {
+  display: inline-block;
+  margin-inline-start: 0.16em;
+  font-size: 0.85em;
+  line-height: 1;
+  text-decoration: none;
+  transform: translateY(-0.06em);
+}
+
+/* Independent research finding cards. Each card remains a separate surface
+   so additional findings can be added without creating a parent container. */
+.research-insight-cards {
+  margin: var(--block-gap) 0;
+}
+.research-insight-cards__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem);
+  align-items: stretch;
+}
+.research-insight-card {
+  height: 100%;
+  box-sizing: border-box;
+  padding: clamp(1.25rem, 2vw, 1.5rem);
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(36, 35, 41, 0.06);
+  display: flex;
+  flex-direction: column;
+}
+.research-insight-card__media {
+  display: inline-flex;
+  width: 2rem;
+  height: 2rem;
+  margin: 0 0 1rem;
+  line-height: 0;
+}
+.research-insight-card__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.research-insight-card h3 {
+  margin: 0;
+  color: var(--title-color);
+  font-size: 1.125rem;
+  line-height: 1.3;
+  min-height: 2.6em;
+}
+.research-insight-card p {
+  margin: 0.75rem 0 0;
+  color: var(--project-context-body, var(--text-color));
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+.research-insight-card > p:not(.research-insight-card__implication) {
+  min-height: 4.8em;
+}
+.research-insight-card__implication {
+  margin-top: 1.5rem !important;
+  padding-top: 1rem;
+  border-top: 1px solid var(--project-context-rule, #e5e7eb);
+}
+/* OCT's design-criteria cards use the roomier, quieter editorial treatment
+   of the supplied reference without changing the survey statistic cards. */
+.research-insight-cards--criteria .research-insight-card {
+  padding: clamp(1.5rem, 2.5vw, 2rem);
+}
+.project-page--oct .research-insight-cards--criteria .research-insight-card h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+.project-page--oct .research-insight-cards--criteria .research-insight-card p {
+  margin: 0.5rem 0 0;
+  font-size: clamp(12px, 0.9vw, 14px);
+  line-height: 1.5;
+}
+.project-page--oct .research-insight-cards--criteria .research-insight-card__media {
+  margin-bottom: 0.5rem;
+}
+.project-page--oct .research-insight-cards--criteria .research-insight-card__implication {
+  margin-top: 0.625rem !important;
+  padding-top: 0.5rem;
+}
+.research-insight-card__arrow {
+  display: inline-block;
+  margin-right: 0.3em;
+  color: var(--title-color);
+  font-style: normal;
+  font-weight: 700;
+}
+.research-stat-card__value {
+  min-height: 0 !important;
+  margin: 0 !important;
+  color: var(--title-color) !important;
+  font-size: clamp(2rem, 3vw, 2.75rem) !important;
+  font-weight: var(--font-semi-bold);
+  line-height: 1.1 !important;
+  letter-spacing: -0.02em;
+}
+.project-page--oct .research-stat-card > p:not(.research-stat-card__value) {
+  min-height: 0;
+  margin: 1rem 0 0;
+  color: var(--project-context-body, var(--text-color));
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+@media (max-width: 760px) {
+  .research-insight-cards__grid { grid-template-columns: 1fr; }
+}
 
 /* ===== HBOM CASE-STUDY INTRO HIERARCHY =====
    Scoped to HBOM so the shared case-study rail, metadata, and problem /
@@ -5192,8 +5316,8 @@ body.is-settled #heroCopy [data-copy-line] {
   --hbom-body: #6a6874;
   --hbom-accent: #064e3b;
   --hbom-rule: #909099;
-  --hbom-divider-space: clamp(0.875rem, 1.25vw, 1.125rem);
-  --hbom-problem-divider-space: calc(var(--hbom-divider-space) + 1.03125rem);
+  --hbom-divider-space: clamp(1rem, 1.25vw, 1rem);
+  --hbom-problem-divider-space: calc(var(--hbom-divider-space) + 1rem);
   --hbom-context-divider-space: var(--hbom-divider-space);
   --project-context-muted: var(--hbom-secondary);
   --project-context-body: var(--hbom-body);
@@ -5218,11 +5342,11 @@ body.is-settled #heroCopy [data-copy-line] {
   line-height: 1.35;
   text-transform: none;
 }
-.project-page--hbom .ps-label { margin-bottom: 0.7rem; }
+.project-page--hbom .ps-label { margin-bottom: 0.75rem; }
 .project-page--hbom .ps-text {
   max-width: none;
-  font-size: 0.9375rem;
-  line-height: 1.55;
+  font-size: 1rem;
+  line-height: 1.6;
   color: var(--hbom-body);
   font-weight: 400;
 }
@@ -5316,7 +5440,7 @@ body.is-settled #heroCopy [data-copy-line] {
   background: #fff;
   border: 1px solid #e5e7eb;
   border-radius: 999px;
-  padding: 0.28rem 0.65rem;
+  padding: 0.25rem 0.75rem;
   font-size: 12px;
   font-weight: 600;
   color: var(--text-color);
@@ -5358,7 +5482,7 @@ body.is-settled #heroCopy [data-copy-line] {
   font-size: 1.05rem;
   font-weight: 600;
   color: #fff;
-  margin: 0 0 0.4rem;
+  margin: 0 0 0.5rem;
 }
 .character-overlay-desc {
   font-size: 0.82rem;
