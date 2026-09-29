@@ -2102,12 +2102,19 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   }
 }
 /* ===== ABOUT PAGE ===== */
+.about-page .main {
+  /* The body margin already reserves the fixed header; About does not need
+     the second shared main offset. */
+  padding-top: 0;
+}
+
 .about-hero.section {
-  padding-top: calc(var(--header-height) + clamp(2rem, 4vh, 3rem));
-  padding-bottom: clamp(2rem, 4vh, 3rem);
-  min-height: 100vh;
+  /* Keep the complete hero visible on a 13-inch laptop viewport. */
+  padding-top: clamp(1.5rem, 3vh, 2rem);
+  padding-bottom: clamp(1rem, 2vh, 1.5rem);
+  min-height: calc(100vh - var(--header-height));
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .about-hero {
@@ -2128,7 +2135,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
    its own name-heading size/weight. */
 .about-name {
   font-family: "Lora", "Inter", serif;
-  font-size: clamp(1.8rem, 3.6vw, 4rem);
+  font-size: clamp(1.65rem, 3vw, 3.25rem);
   font-weight: 500;
   line-height: 1.15;
   letter-spacing: -0.01em;
@@ -2140,17 +2147,18 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
    caregiver research..." on the OCT page) rather than the old
    ad-hoc size. */
 .about-subtitle {
-  font-size: clamp(1rem, 1.3vw, 1.25rem);
+  font-size: clamp(0.9rem, 1.1vw, 1.1rem);
   line-height: 1.6;
   color: var(--text-color);
-  max-width: 42ch;
-  margin-bottom: clamp(1rem, 3vw, 2rem);
+  max-width: none;
+  white-space: nowrap;
+  margin-bottom: clamp(0.75rem, 1.5vw, 1.25rem);
 }
 
 .about-avatar-row {
   width: 100%;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(auto, 42rem) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(auto, 37.5rem) minmax(0, 1fr);
   align-items: center;
   gap: clamp(0.5rem, 2vw, 2rem);
 }
@@ -2214,7 +2222,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 .about-avatar-stage {
   position: relative;
   width: 100%;
-  max-width: clamp(340px, 38vw, 640px);
+  max-width: clamp(420px, 40vw, 600px);
   margin-inline: auto;
   /* Matches jade_smile.png (2560x1920) / jade_still.png (1448x1086) /
      the intro video (2560x1920) -- all exactly 4:3. Getting this wrong
@@ -2248,7 +2256,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
    was only ever for the on-face 3D tilt). */
 .about-sticker {
   display: block;
-  width: clamp(4.5rem, 9vw, 7.5rem);
+  width: clamp(5rem, 9vw, 8rem);
   padding: 0;
   border: 0;
   background: transparent;
@@ -2370,32 +2378,20 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   text-align: center;
 }
 
-/* The masked shape is its own layer behind the text/close button,
-   rather than the mask living on --face--back itself, because CSS
-   masking clips an element's whole subtree -- with the mask on the
-   face, the close button (anchored to the box's literal corner) fell
-   inside the masked-out margin for every sticker shape and vanished.
-   Keeping text/button as unmasked siblings on top means they're
-   always visible regardless of how irregular the silhouette is;
-   padding on the face is what keeps them clear of the mask edges. */
+/* The card background is its own layer behind the text and close button,
+   keeping the back readable even for stickers with irregular transparent
+   PNG silhouettes. */
 .about-sticker-card__shape {
   position: absolute;
   inset: 0;
-  background-color: #faf9f7;
-  /* --card-mask (url() of the clicked sticker's own PNG) is set per-
-     sticker in JS, so the back takes the same silhouette as the front
-     instead of a generic card rectangle. mask-size is intentionally
-     under 100% to leave the same kind of breathing room the front
-     face gets from its own padding. */
-  -webkit-mask-image: var(--card-mask);
-  mask-image: var(--card-mask);
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-size: 82%;
-  mask-size: 82%;
-  filter: drop-shadow(0 1.1rem 1.4rem rgba(17, 24, 39, 0.22));
+  border: 1px solid #e2e4e9;
+  border-radius: 1.5rem;
+  background: #fff;
+  /* A reliable high-contrast back for every sticker, independent of a
+     PNG's transparent silhouette. */
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  box-shadow: 0 1.1rem 1.4rem rgba(17, 24, 39, 0.22);
 }
 
 .about-sticker-card__content {
@@ -2525,6 +2521,10 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   }
   .about-avatar-stage {
     max-width: min(100%, 340px);
+  }
+  .about-subtitle {
+    max-width: 42ch;
+    white-space: normal;
   }
   .about-sticker-card {
     --card-max-h: min(60vh, 18rem);
