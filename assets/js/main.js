@@ -738,7 +738,7 @@ document.querySelectorAll('.footer__back').forEach(function (link) {
 var PERSONA_COPY = {
   anyone: {
     titleMode: 'reveal',
-    title: "Hi, I'm Jade. Product designer with a statistics background.",
+    title: "Hi, I'm Jade. Product designer with\na [[statistics]] background.",
     line1Mode: 'text',
     line1: 'MEng Design & Technology Innovation @ Duke',
     line2: null,
@@ -797,7 +797,10 @@ var PERSONA_COPY = {
   // since there's no single mint span there.
   function renderTitleHTML(copy) {
     var t = splitTitle(copy.title);
-    if (t.mint === null) return escapeHTML(copy.title);
+    function formatTitleText(text) {
+      return escapeHTML(text).replace(/\n/g, '<br>');
+    }
+    if (t.mint === null) return formatTitleText(copy.title);
     var revealImg = copy.revealSrc
       ? '<img class="hero-reveal-img" src="' + escapeHTML(copy.revealSrc) + '" alt="' + escapeHTML(copy.revealAlt || '') + '">'
       : '';
@@ -809,15 +812,15 @@ var PERSONA_COPY = {
       var pipelineTrigger = copy.revealSrc
         ? '<span class="reveal-trigger" tabindex="0">' + wordsHTML + revealImg + '</span>'
         : wordsHTML;
-      return escapeHTML(t.before) + pipelineTrigger + escapeHTML(t.after);
+      return formatTitleText(t.before) + pipelineTrigger + formatTitleText(t.after);
     }
     var triggerAttrs = copy.revealSrc ? ' tabindex="0"' : '';
     // Mint text sits in its own inner span so scrambleReveal's
     // textContent rewrites (Tab 2) never wipe out the sibling reveal
     // image: only [data-mint] > .mint-text gets rewritten as text.
-    return escapeHTML(t.before) +
+    return formatTitleText(t.before) +
       '<span class="text-mint reveal-trigger" data-mint data-mint-mode="' + copy.titleMode + '"' + triggerAttrs + '><span class="mint-text">' + escapeHTML(t.mint) + '</span>' + revealImg + '</span>' +
-      escapeHTML(t.after);
+      formatTitleText(t.after);
   }
 
   // Plain text, or (titleMode-independent) arrow-separated segments
