@@ -738,7 +738,7 @@ document.querySelectorAll('.footer__back').forEach(function (link) {
 var PERSONA_COPY = {
   anyone: {
     titleMode: 'reveal',
-    title: "Hi, I'm Jade. I design products that work across screens and physical objects, and I care about [[why something ends up confusing people.]]",
+    title: "Hi, I'm Jade. Product designer with a statistics background.",
     line1Mode: 'text',
     line1: 'MEng Design & Technology Innovation @ Duke',
     line2: null,
@@ -747,7 +747,7 @@ var PERSONA_COPY = {
   },
   recruiters: {
     titleMode: 'scramble',
-    title: 'Product designer with a statistics background. I use data to back up design decisions, [[not just intuition.]]',
+    title: 'I design products across screens and physical objects, and I care about why something ends up confusing people.',
     line1Mode: 'text',
     line1: 'Seeking product design & UX internships for Summer 2027.',
     line2: null,
@@ -784,7 +784,7 @@ var PERSONA_COPY = {
 
   function splitTitle(title) {
     var parts = title.split(/\[\[|\]\]/);
-    return { before: parts[0], mint: parts[1], after: parts[2] || '' };
+    return { before: parts[0], mint: parts.length > 1 ? parts[1] : null, after: parts[2] || '' };
   }
 
   // "abc [[def]] ghi" -> "abc <span class="text-mint" data-mint>def</span> ghi",
@@ -797,6 +797,7 @@ var PERSONA_COPY = {
   // since there's no single mint span there.
   function renderTitleHTML(copy) {
     var t = splitTitle(copy.title);
+    if (t.mint === null) return escapeHTML(copy.title);
     var revealImg = copy.revealSrc
       ? '<img class="hero-reveal-img" src="' + escapeHTML(copy.revealSrc) + '" alt="' + escapeHTML(copy.revealAlt || '') + '">'
       : '';
