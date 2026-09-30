@@ -52,6 +52,7 @@
   if (!avatar) return;
 
   var intro = avatar.querySelector('[data-about-intro]');
+  var introReverse = avatar.querySelector('[data-about-intro-reverse]');
   var smile = avatar.querySelector('[data-about-smile]');
   // Stickers float in the side gutters now, not on the face, so they're
   // no longer inside `avatar` -- scoped from the document instead.
@@ -81,37 +82,40 @@
   var pendingCloseHandler = null;
   var pendingContentTimer = null;
   var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var avatarSequenceActive = false;
 
   var content = {
     uofm: {
       title: 'University of Michigan',
-      body: 'Graduated from the University of Michigan – Ann Arbor with a B.A. in Art & Design and a B.S. in Statistics.'
+      body: 'Go Blue! B.A. in Art & Design, B.S. in Statistics, University of Michigan, Ann Arbor.'
     },
     duke: {
       title: 'Duke',
-      body: 'Currently pursuing an MEng in Design & Technology Innovation at Duke.'
+      body: 'Go Duke! Currently pursuing an MEng in Design & Technology Innovation.'
     },
     earth: {
       title: 'Earth',
-      body: 'Born in Korea, raised across China, Singapore, and the U.S. — that background shapes how I think about diverse users, contexts, and the cultural assumptions built into design decisions.'
+      body: "Born in Korea, grew up between China, Singapore, and the U.S. I've been the new kid enough times to know what it feels like when a space wasn't built with you in mind."
     },
     film: {
       title: 'Film',
-      body: 'I love a good movie. Favorites: How to Train Your Dragon, Life Is Beautiful, Memento, and Arrival.'
+      body: 'Certified movie person. Rewatch pile: How to Train Your Dragon, Life Is Beautiful, Memento, Arrival. Ask me about any of them, I have opinions.'
     },
     pokemon: {
       title: 'Pokémon',
-      body: 'Been loving Pokémon and Nintendo since I was a kid.'
+      body: 'Nintendo kid, still Nintendo adult. Pokémon has had me since I was little and my favorite is Arceus and Serperior!'
     }
   };
 
   function showSmile() {
+    if (introReverse) introReverse.hidden = true;
     smile.hidden = false;
     intro.hidden = true;
   }
 
   function playIntro() {
     if (reducedMotion) return;
+    if (introReverse) introReverse.hidden = true;
     smile.hidden = true;
     intro.hidden = false;
     try {
@@ -123,17 +127,79 @@
     if (replay && replay.catch) replay.catch(showSmile);
   }
 
+  function playForwardAfterReverse() {
+    if (!avatarSequenceActive) return;
+    intro.pause();
+    intro.hidden = false;
+    intro.currentTime = 0;
+    // Leave the final reverse frame visible until the forward clip has
+    // rendered its first moving frame, avoiding a black/blank flash.
+    intro.addEventListener('playing', function () {
+      if (introReverse) introReverse.hidden = true;
+      smile.hidden = true;
+    }, { once: true });
+    var forward = intro.play();
+    if (forward && forward.catch) forward.catch(showSmile);
+  }
+
+  function startAvatarHoverLoop() {
+    if (reducedMotion || avatarSequenceActive || !introReverse) return;
+    avatarSequenceActive = true;
+    intro.pause();
+    introReverse.hidden = false;
+
+    function playReverse() {
+      try {
+        introReverse.currentTime = 0;
+      } catch (error) {
+        /* The browser will start at the first decodable frame instead. */
+      }
+      // Keep the still visible until the reverse clip has an actual frame
+      // in motion, rather than exposing an undecoded video surface.
+      introReverse.addEventListener('playing', function () {
+        smile.hidden = true;
+        intro.hidden = true;
+      }, { once: true });
+      var reverse = introReverse.play();
+      if (reverse && reverse.catch) reverse.catch(function () {
+        avatarSequenceActive = false;
+        showSmile();
+      });
+    }
+
+    // An MP4 can still be loading on the first hover. Wait for a usable
+    // frame rather than issuing play() against an unready video element.
+    if (introReverse.readyState >= 2) {
+      playReverse();
+    } else {
+      introReverse.addEventListener('canplay', playReverse, { once: true });
+      introReverse.load();
+    }
+  }
+
   if (reducedMotion) {
     showSmile();
   } else {
     smile.hidden = true;
     intro.hidden = false;
-    intro.addEventListener('ended', showSmile);
-    intro.addEventListener('error', showSmile, { once: true });
-    playIntro();
-    avatar.addEventListener('mouseenter', function () {
-      if (intro.hidden) playIntro();
+    intro.addEventListener('ended', function () {
+      avatarSequenceActive = false;
+      showSmile();
     });
+    intro.addEventListener('error', function () {
+      avatarSequenceActive = false;
+      showSmile();
+    }, { once: true });
+    if (introReverse) {
+      introReverse.addEventListener('ended', playForwardAfterReverse);
+      introReverse.addEventListener('error', function () {
+        avatarSequenceActive = false;
+        showSmile();
+      }, { once: true });
+      introReverse.load();
+    }
+    playIntro();
+    avatar.addEventListener('mouseenter', startAvatarHoverLoop);
   }
 
   if (!overlay || !card || !inner) return;

@@ -29,6 +29,7 @@
     .project-page--ootd .project-section__body > figure { margin: var(--block-gap) auto; }
     .project-page--ootd .project-section__body .figure-caption { margin: 8px 0 0; }
     .project-page--ootd .project-section__body strong { color: var(--ootd-ink); }
+    .project-page--ootd .text-mint { color: #2457c5; font-weight: 400; }
     .project-page--ootd .research-insight-cards--criteria .research-insight-card { padding: clamp(1.5rem, 2.5vw, 2rem); }
     .project-page--ootd .research-insight-cards--criteria .research-insight-card h3 { margin: 0; font-size: 1rem; }
     .project-page--ootd .research-insight-cards--criteria .research-insight-card p { margin: 0.5rem 0 0; font-size: clamp(12px, 0.9vw, 14px); line-height: 1.5; }
@@ -40,7 +41,18 @@
     .ootd-character-pair__caption { margin: 0.5rem 0 0; color: var(--text-color-light); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; text-align: center; text-transform: uppercase; }
     .ootd-character-pair__arrow { color: var(--ootd-accent); font-size: clamp(1.25rem, 2.5vw, 1.75rem); font-weight: 700; line-height: 1; }
     .ootd-screens img { display: block; width: auto; max-width: 100%; max-height: 75vh; margin: 0 auto; }
+    .project-page--ootd .ootd-reflection-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(2rem, 4vw, 4rem); align-items: start; }
+    .project-page--ootd .project-section__body .ootd-reflection-column__label { margin: 0 0 1rem; padding: 0.75rem 1rem; border-radius: 0.375rem; background: rgba(36, 35, 41, 0.04); color: var(--ootd-ink); font-size: 0.75rem; font-weight: 600; line-height: 1.2; text-align: center; letter-spacing: 0.04em; }
+    .project-page--ootd .ootd-reflection-item + .ootd-reflection-item { margin-top: 1rem; }
+    .project-page--ootd .ootd-reflection-grid h3.ootd-reflection-item__title { margin: 0 0 0.375rem; color: var(--ootd-ink); font-size: 1rem; font-weight: 600; line-height: 1.35; }
+    .project-page--ootd .ootd-reflection-grid p.ootd-reflection-item__body { margin: 0; color: var(--ootd-body); font-size: 0.9375rem; line-height: 1.6; }
+    .project-page--ootd .physical-thumb-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(1rem, 1.6vw, 1.5rem); padding: 0.5rem; overflow: visible; }
+    .project-page--ootd .physical-thumb { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); transform-origin: center; transition: transform 0.3s ease; }
+    @media (hover: hover) { .project-page--ootd .physical-thumb:hover { position: relative; z-index: 1; transform: translateY(-8px) scale(1.02); } }
     @media (max-width: 680px) { .project-page--ootd .problem-solution-row { grid-template-columns: 1fr; gap: 1.5rem; } .project-page--ootd .ps-block + .ps-block { border-top: 1px solid var(--ootd-rule); padding-top: var(--ootd-divider-space); } .ootd-character-pair { grid-template-columns: 1fr; } .ootd-character-pair__arrow { justify-self: center; transform: rotate(90deg); } }
+    @media (max-width: 760px) { .project-page--ootd .ootd-reflection-grid { grid-template-columns: 1fr; gap: 2rem; } }
+    @media (max-width: 640px) { .project-page--ootd .physical-thumb-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (prefers-reduced-motion: reduce) { .project-page--ootd .physical-thumb { transition: none; } .project-page--ootd .physical-thumb:hover { transform: none; } }
     @media (max-width: 1024px) { .project-page--ootd .section-nav__link.is-active { background: var(--ootd-accent); border-color: var(--ootd-accent); color: #fff; } }
   </style>
 </head>
@@ -65,6 +77,7 @@
           <li class="section-nav__item"><a class="section-nav__link" href="#research">Research</a></li>
           <li class="section-nav__item"><a class="section-nav__link" href="#ideation">Ideation</a></li>
           <li class="section-nav__item"><a class="section-nav__link" href="#final-solution">Final Solution</a></li>
+          <li class="section-nav__item"><a class="section-nav__link" href="#reflection">Reflection</a></li>
         </ul>
       </nav>
       <div class="section-nav-content">
@@ -89,7 +102,7 @@
           </div>
         </section>
         <section class="project-section project-section--context section-nav-target" id="background">
-          <div class="content-container"><p class="project-section__eyebrow">Background</p><h2 class="section-icon-title project-section__title">Personal Motivation</h2><div class="project-section__body"><p>This started as a personal project. I wanted a daily reflection habit, but existing journaling tools gave me nothing to work from beyond a blank page. I designed and built Wearby solo, as a way to reframe reflection as play instead of a writing task.</p></div></div>
+          <div class="content-container"><p class="project-section__eyebrow">Background</p><h2 class="section-icon-title project-section__title">Personal Motivation</h2><div class="project-section__body"><p>This started as a personal project. I wanted a low-pressure alternative to journaling, something with more to respond to than a blank page. I designed and built Wearby solo.</p></div></div>
         </section>
         <section class="project-section project-section--context section-nav-target" id="research">
           <div class="content-container">
@@ -105,16 +118,16 @@
           </div>
         </section>
         <section class="project-section project-section--context">
-          <div class="content-container"><p class="project-section__eyebrow">Research</p><h2 class="section-icon-title project-section__title">Moodboard</h2><div class="project-section__body"><p>I researched OOTD diaries, sticker books, and dress-up apps to identify a visual direction that felt playful rather than clinical. Two mood boards converged on four qualities: rounded shapes, an illustration-forward style, a calm palette, and sticker-book tactility, the foundation for every screen and physical asset that followed.</p><figure class="two-up-figure"><div class="two-up-grid"><figure class="two-up-tile"><img src="../../assets/img/ootd:board1.png" alt="Wearby inspiration board with rounded forms and calm colors"></figure><figure class="two-up-tile"><img src="../../assets/img/ootd:board2.png" alt="Wearby inspiration board with sticker-book illustrations"></figure></div><figcaption class="figure-caption">Inspiration boards: rounded shapes, illustration style, calm palette, and sticker-book tactility.</figcaption></figure></div></div>
+          <div class="content-container"><p class="project-section__eyebrow">Research</p><h2 class="section-icon-title project-section__title">Moodboard</h2><div class="project-section__body"><p>I researched OOTD diaries, sticker books, and dress-up apps to identify a visual direction that felt playful rather than clinical. Two mood boards converged on four qualities: rounded shapes, an illustration-forward style, a calm palette, and sticker-book tactility, the foundation for every screen and physical asset that followed.</p><figure class="two-up-figure"><div class="two-up-grid"><figure class="two-up-tile"><img src="../../assets/img/ootd:board1.png" alt="Wearby inspiration board with rounded forms and calm colors"></figure><figure class="two-up-tile"><img src="../../assets/img/ootd:board2.png" alt="Wearby inspiration board with sticker-book illustrations"></figure></div><figcaption class="figure-caption">Inspiration boards for Wearby's visual direction.</figcaption></figure></div></div>
         </section>
         <section class="project-section project-section--context">
-          <div class="content-container"><p class="project-section__eyebrow">Research</p><h2 class="section-icon-title project-section__title">Character Testing</h2><div class="project-section__body"><p>The challenge was that Ear's personality needed to feel emotionally safe without being flat. I sketched two directions, Friendly and Humorous, and ran a comparative preference test with 19 participants, showing both directions and asking which felt more aligned with daily reflection. Friendly was selected for its broader emotional fit. Humorous revealed a smaller but more strongly attached audience; participants who preferred it were more likely to say they'd want it as a standalone object, like a sticker, worth exploring for future merchandise.</p><figure class="ootd-character-pair"><div class="ootd-character-pair__item"><img src="../../assets/img/ootd-character-sketches.png" alt="Sketches of Friendly and Humorous directions for Ear"><p class="ootd-character-pair__caption">Before</p></div><span class="ootd-character-pair__arrow" aria-hidden="true">&rarr;</span><div class="ootd-character-pair__item"><img src="../../assets/img/ootd-character-final.png" alt="Final illustration of Ear"><p class="ootd-character-pair__caption">After</p></div></figure></div></div>
+          <div class="content-container"><p class="project-section__eyebrow">Research</p><h2 class="section-icon-title project-section__title">Character Testing</h2><div class="project-section__body"><p>Ear's personality needed to feel safe without being flat. I ran a <span class="text-mint">comparative preference test</span> with 19 participants, showing two directions, Friendly and Humorous, and collecting quantitative picks alongside qualitative feedback.</p><figure class="ootd-character-pair"><div class="ootd-character-pair__item"><img src="../../assets/img/ootd-character-sketches.png" alt="Sketches of Friendly and Humorous directions for Ear"><p class="ootd-character-pair__caption">Before</p></div><span class="ootd-character-pair__arrow" aria-hidden="true">&rarr;</span><div class="ootd-character-pair__item"><img src="../../assets/img/ootd-character-final.png" alt="Final illustration of Ear"><p class="ootd-character-pair__caption">After</p></div></figure><p>Friendly won on emotional fit. Humorous had fewer picks, but stronger attachment among those who chose it, worth exploring later.</p></div></div>
         </section>
         <section class="project-section project-section--context section-nav-target" id="ideation">
-          <div class="content-container"><p class="project-section__eyebrow">Ideation</p><h2 class="section-icon-title project-section__title">User Flow and Information Architecture</h2><div class="project-section__body"><p>A playful character couldn't come at the cost of usability, so I mapped WCAG AA requirements into the user flow at the wireframe stage rather than retrofitting accessibility after screens existed. That meant checking color contrast against AA thresholds, sizing every tap target to at least 44&times;44px, and pairing every icon with a text label at each decision point in the flow. The flow was structured as Open Diary &rarr; Meet Ear &rarr; Dress Ear &rarr; Reflect &rarr; Save Memory (or Skip).</p><figure class="single-tile-figure"><div class="single-tile"><img src="../../assets/img/ootd:userflow1.png" alt="Wearby user flow diagram with WCAG accessibility annotations"></div><figcaption class="figure-caption">User flow with WCAG annotations.</figcaption></figure></div></div>
+          <div class="content-container"><p class="project-section__eyebrow">Ideation</p><h2 class="section-icon-title project-section__title">User Flow and Information Architecture</h2><div class="project-section__body"><p>A playful character couldn't come at the cost of <span class="text-mint">usability.</span> I ran an accessibility audit against <span class="text-mint">WCAG AA</span> at the wireframe stage, checking contrast, tap targets, and labels, rather than retrofitting it after screens existed.</p><figure class="single-tile-figure"><div class="single-tile"><img src="../../assets/img/ootd:userflow1.png" alt="Wearby user flow diagram with WCAG accessibility annotations"></div><figcaption class="figure-caption">User flow with WCAG annotations.</figcaption></figure></div></div>
         </section>
         <section class="project-section project-section--context">
-          <div class="content-container"><p class="project-section__eyebrow">Ideation</p><h2 class="section-icon-title project-section__title">Design System</h2><div class="project-section__body"><p>Tokens were defined before any screen was built, so visual cohesion was a constraint from the start rather than a cleanup pass at the end. I built a token-based system covering primary, secondary, and neutral colors, along with core UI components such as form inputs and the navigation bar, and a typography scale ranging from Title/Header 1 down to a small body size and a hand-written accent style for diary entries. Every color pairing was verified against WCAG AA using the WebAIM Contrast Checker.</p><figure class="single-tile-figure"><div class="single-tile"><img src="../../assets/img/ootd:designSystem.png" alt="Wearby design system with color tokens, components, and typography scale"></div></figure></div></div>
+          <div class="content-container"><p class="project-section__eyebrow">Ideation</p><h2 class="section-icon-title project-section__title">Design System</h2><div class="project-section__body"><p>Visual cohesion was a constraint from the start, not a cleanup pass. I built a design system of color and typography tokens plus a <span class="text-mint">reusable component library</span>, every color pairing verified against <span class="text-mint">WCAG AA.</span></p><figure class="single-tile-figure"><div class="single-tile"><img src="../../assets/img/ootd:designSystem.png" alt="Wearby design system with color tokens, components, and typography scale"></div></figure></div></div>
         </section>
         <section class="project-section project-section--context">
           <div class="content-container"><p class="project-section__eyebrow">Ideation</p><h2 class="section-icon-title project-section__title">Component Library</h2><div class="project-section__body"><p>Every clothing item needed to work as a swappable variant without breaking visual consistency as outfits were added. I structured each clothing item as a named Figma component using hierarchical slash notation (Category/Type/Color), with color variants grouped into component sets. This gave fast lookup and consistent variant switching across all screens.</p><figure class="single-tile-figure"><div class="single-tile"><img src="../../assets/img/ootd:component.png" alt="Wearby Figma component library and clothing component variants"></div></figure></div></div>
@@ -130,6 +143,41 @@
             <button type="button" class="physical-thumb" data-caption="Second surprise: the end-page QR bridges to the digital companion." aria-label="View QR code page"><img src="../../assets/img/ootd-physical-qr.jpg" alt="Wearby physical diary QR code page" loading="lazy"></button>
             <button type="button" class="physical-thumb" data-caption="Cover and full sticker sheet." aria-label="View cover and sticker sheet"><img src="../../assets/img/ootd-physical-cover.jpg" alt="Wearby physical diary cover and sticker sheet" loading="lazy"></button>
           </figure></div></div>
+        </section>
+        <section class="project-section project-section--context section-nav-target" id="reflection">
+          <div class="content-container">
+            <p class="project-section__eyebrow">Reflection</p>
+            <h2 class="section-icon-title project-section__title">Post-Project Reflection</h2>
+            <div class="project-section__body">
+              <div class="ootd-reflection-grid">
+                <section class="ootd-reflection-column" aria-labelledby="ootd-reflection-constraints">
+                  <p class="ootd-reflection-column__label" id="ootd-reflection-constraints">Constraints</p>
+                  <div class="ootd-reflection-item">
+                    <h3 class="ootd-reflection-item__title">Working solo</h3>
+                    <p class="ootd-reflection-item__body">No one to check my decisions. I had to catch my own mistakes before testing with users.</p>
+                  </div>
+                  <div class="ootd-reflection-item">
+                    <h3 class="ootd-reflection-item__title">Digital and physical design</h3>
+                    <p class="ootd-reflection-item__body">The app and the physical diary had to feel like one product, but building them used different skills.</p>
+                  </div>
+                </section>
+                <section class="ootd-reflection-column" aria-labelledby="ootd-reflection-improvement">
+                  <p class="ootd-reflection-column__label" id="ootd-reflection-improvement">Room for Improvement</p>
+                  <div class="ootd-reflection-item">
+                    <h3 class="ootd-reflection-item__title">Usability testing</h3>
+                    <p class="ootd-reflection-item__body">I tested the character early, but never the full app. I'd test the whole flow next time.</p>
+                  </div>
+                </section>
+                <section class="ootd-reflection-column" aria-labelledby="ootd-reflection-next-steps">
+                  <p class="ootd-reflection-column__label" id="ootd-reflection-next-steps">Next Steps</p>
+                  <div class="ootd-reflection-item">
+                    <h3 class="ootd-reflection-item__title">Long-term testing</h3>
+                    <p class="ootd-reflection-item__body">One test session can't show if the habit sticks. I'd want to see if people keep using it after a few weeks.</p>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
         </section>
         <div class="physical-lightbox" id="physicalLightbox" hidden role="dialog" aria-modal="true" aria-label="Physical companion image viewer"><div class="physical-lightbox-backdrop" data-lightbox-close></div><div class="physical-lightbox-content"><button type="button" class="physical-lightbox-close" aria-label="Close" data-lightbox-close>&times;</button><button type="button" class="physical-lightbox-prev" aria-label="Previous image">&larr;</button><img class="physical-lightbox-img" src="" alt=""><p class="physical-lightbox-caption"></p><button type="button" class="physical-lightbox-next" aria-label="Next image">&rarr;</button></div></div>
         <nav class="project-pager"><div class="content-container project-pager__inner"><a class="project-pager__link project-pager__prev" href="../hbom"><i class="uil uil-arrow-left" aria-hidden="true"></i><span>Previous Project</span></a></div></nav>

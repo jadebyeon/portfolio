@@ -10,7 +10,11 @@
   <title>Nutrition Benefits Resource Hub: Jade Byeon</title>
   <meta name="description" content="Information architecture and web experience design for a filterable nutrition benefits resource hub for HBOM at the University of Michigan, by Jade Byeon." />
   <style>
-    .project-page--hbom .hero-subtitle { text-align: center; }
+    .project-page--hbom .hero-subtitle {
+      width: min(100%, 760px);
+      margin-inline: auto;
+      text-align: center;
+    }
     .project-page--hbom { --hbom-media-space: var(--block-gap); }
 
     /* Match OCT's visual rhythm: one shared gap around every standalone visual,
@@ -188,7 +192,10 @@
           <p class="hero-subtitle">A web experience for finding resources related to food and nutrition benefits.</p>
         </div>
         <div class="hero-media hero-media--device hero-media--hbom">
-          <img src="../../assets/img/hbom_hero.png" alt="Nutrition Benefits Resource Hub interface shown on a MacBook">
+          <img class="hbom-hero-frame" src="../../assets/img/hbom_hero.png" alt="" aria-hidden="true">
+          <video class="hbom-hero-screen" autoplay muted loop playsinline aria-label="Nutrition Benefits Resource Hub walkthrough shown on a MacBook">
+            <source src="../../assets/video/hbom_demo.mp4?v=6" type="video/mp4">
+          </video>
         </div>
       </div>
     </section>

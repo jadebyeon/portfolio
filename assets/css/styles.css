@@ -833,11 +833,29 @@ img { max-width: 100%; height: auto; }
   overflow: hidden;
 }
 
-/* .hero-media--oct: no adjustment needed. oct_banner.png's visible
-   tablet+pencil artwork already fills ~93-95% of its own canvas on every
-   edge (measured off the alpha channel), so .hero-media--padded's plain
-   padding is enough on its own -- it's the reference the other variant
-   below is calibrated against. */
+/* OCT keeps oct_banner.png as the tablet and pencil artwork, replacing
+   only the tablet display with the concept film. The nested wrapper makes
+   the screen coordinates relative to the image itself, so the outer hero
+   padding and its subtitle-to-frame spacing stay exactly as before. */
+.hero-media--oct .oct-hero-device {
+  position: relative;
+  width: 100%;
+}
+.hero-media--oct .oct-hero-frame {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.hero-media--oct .oct-hero-screen {
+  position: absolute;
+  z-index: 1;
+  top: 9.7%;
+  left: 7.3%;
+  width: 85.7%;
+  height: 80.5%;
+  display: block;
+  object-fit: cover;
+}
 
 /* .hero-media--hbom: hbom_hero.png is a square 2000x2000 export with the
    MacBook artwork vertically centered, occupying only x 23-1974 / y
@@ -868,13 +886,27 @@ img { max-width: 100%; height: auto; }
   aspect-ratio: 1955 / 1125;
   overflow: hidden;
 }
-.hero-media--hbom img {
+.hero-media--hbom .hbom-hero-frame {
   position: absolute;
   width: 102.30%;
   max-width: none;
   top: -38.84%;
   left: -1.07%;
   height: auto;
+}
+
+/* Keep hbom_hero.png as the precisely positioned laptop frame and replace
+   only its screen area with the walkthrough. This preserves the hero's
+   measured subtitle-to-frame spacing and visible MacBook size. */
+.hero-media--hbom .hbom-hero-screen {
+  position: absolute;
+  z-index: 1;
+  top: 5.9%;
+  left: 11.1%;
+  width: 78%;
+  height: 83%;
+  display: block;
+  object-fit: cover;
 }
 
 /* Wearby's 4000 × 3000 export has a 556px transparent band above the
@@ -2243,6 +2275,14 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+/* Keep hidden video elements decoded and ready. `display:none` can make a
+   browser drop a frame when the reverse and forward clips exchange places. */
+.about-avatar__intro[hidden] {
+  display: block;
+  visibility: hidden;
+  opacity: 0;
 }
 
 .about-avatar__intro { z-index: 1; }
