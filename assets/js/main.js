@@ -62,7 +62,7 @@
   var card = overlay && overlay.querySelector('[data-sticker-card]');
   var inner = overlay && overlay.querySelector('[data-sticker-card-inner]');
   var cardImg = overlay && overlay.querySelector('[data-sticker-card-img]');
-  var cardShape = overlay && overlay.querySelector('[data-sticker-card-shape]');
+  var cardBackImg = overlay && overlay.querySelector('[data-sticker-card-back-image]');
   var cardContent = overlay && overlay.querySelector('[data-sticker-card-content]');
   var cardTitle = overlay && overlay.querySelector('[data-sticker-card-title]');
   var cardCopy = overlay && overlay.querySelector('[data-sticker-card-copy]');
@@ -110,43 +110,47 @@
     intro.hidden = true;
   }
 
+  function playIntro() {
+    if (reducedMotion) return;
+    smile.hidden = true;
+    intro.hidden = false;
+    try {
+      intro.currentTime = 0;
+    } catch (error) {
+      /* The first frame is still shown if the browser cannot seek yet. */
+    }
+    var replay = intro.play();
+    if (replay && replay.catch) replay.catch(showSmile);
+  }
+
   if (reducedMotion) {
     showSmile();
   } else {
     smile.hidden = true;
     intro.hidden = false;
-    intro.addEventListener('ended', showSmile, { once: true });
+    intro.addEventListener('ended', showSmile);
     intro.addEventListener('error', showSmile, { once: true });
-    var play = intro.play();
-    if (play && play.catch) play.catch(showSmile);
+    playIntro();
+    avatar.addEventListener('mouseenter', function () {
+      if (intro.hidden) playIntro();
+    });
   }
 
   if (!overlay || !card || !inner) return;
-
-  function hideHint() {
-    if (hint) hint.classList.add('is-hidden');
-  }
 
   function setCardContent(button) {
     var entry = content[button.getAttribute('data-sticker')];
     if (!entry) return;
     var img = button.querySelector('img');
     if (cardImg && img) cardImg.src = img.src;
+    if (cardBackImg && img) cardBackImg.src = img.src;
     if (cardTitle) cardTitle.textContent = entry.title;
     if (cardCopy) cardCopy.textContent = entry.body;
-    // The card's shape follows this sticker's own silhouette: its
-    // aspect-ratio drives the card's box (see --card-ratio in CSS),
-    // and the same PNG is applied as a mask on the back face's shape
-    // layer so it reads as the same shape flipped over, not a
-    // generic rectangle.
+    // The sticker's aspect ratio drives the enlarged front/back card.
     if (img && img.naturalWidth && img.naturalHeight) {
       card.style.setProperty('--card-ratio', img.naturalWidth / img.naturalHeight);
     }
-    if (cardShape && img) {
-      var maskUrl = 'url(' + img.src + ')';
-      cardShape.style.webkitMaskImage = maskUrl;
-      cardShape.style.maskImage = maskUrl;
-    }
+    card.setAttribute('data-sticker-back', button.getAttribute('data-sticker'));
   }
 
   // FLIP technique: compute the transform that maps the card's resting
@@ -216,8 +220,6 @@
 
     button.classList.add('is-lifted');
     button.setAttribute('aria-expanded', 'true');
-    hideHint();
-
     requestAnimationFrame(function () {
       overlay.classList.add('is-visible');
       card.classList.add('is-open');
@@ -670,37 +672,30 @@ document.querySelectorAll('.footer__back').forEach(function (link) {
 var PERSONA_COPY = {
   anyone: {
     titleMode: 'reveal',
-    title: "Hi, I'm Jade. I design products that [[make hard situations feel less hard.]]",
+    title: "Hi, I'm Jade. I design products that work across screens and physical objects, and I care about [[why something ends up confusing people.]]",
     line1Mode: 'text',
     line1: 'MEng Design & Technology Innovation @ Duke',
-    line2: 'Previously BA Art & Design + BS Statistics @ University of Michigan',
+    line2: null,
     chips: null,
-    resume: null,
-    revealSrc: 'assets/img/oct_banner.png',
-    revealAlt: 'Pediatric Eye Exam Robot'
+    resume: null
   },
   recruiters: {
     titleMode: 'scramble',
-    title: 'Product designer with a statistics degree: I turn [[research into shipped, measurable design.]]',
+    title: 'Product designer with a statistics background. I use data to back up design decisions, [[not just intuition.]]',
     line1Mode: 'text',
-    line1: 'Seeking product design & UX internships (2026–27)',
+    line1: 'Seeking product design & UX internships for Summer 2027.',
     line2: null,
-    chips: ['3 shipped projects', 'ARVO 2026 co-author', '30+ research participants'],
-    // Résumé is already in the header nav, so no in-copy link here.
-    resume: null,
-    revealSrc: 'assets/img/hbom_hero.png',
-    revealAlt: 'NVP Knowledge Hub'
+    chips: null,
+    resume: null
   },
   designers: {
     titleMode: 'pipeline',
-    title: 'Every interface is a hypothesis: [[researched, prototyped, tested, shipped.]]',
-    line1Mode: 'pipeline',
-    line1: 'mixed-methods research → design systems → front-end handoff',
-    line2: 'Currently rebuilding this site in vanilla HTML/CSS/JS, one commit at a time',
+    title: 'I treat every interface as a [[hypothesis.]]',
+    line1Mode: 'text',
+    line1: "Even outside work I can't watch a movie without digging into why it worked afterward.",
+    line2: null,
     chips: null,
-    resume: null,
-    revealSrc: 'assets/img/ootd:mockup.png',
-    revealAlt: 'Wearby'
+    resume: null
   }
 };
 
@@ -773,7 +768,12 @@ var PERSONA_COPY = {
     container.querySelector('[data-copy-title]').innerHTML = renderTitleHTML(copy);
 
     var line1 = container.querySelector('[data-copy-line="1"]');
-    line1.innerHTML = renderLine1HTML(copy);
+    if (copy.line1) {
+      line1.innerHTML = renderLine1HTML(copy);
+      line1.hidden = false;
+    } else {
+      line1.hidden = true;
+    }
 
     var line2 = container.querySelector('[data-copy-line="2"]');
     if (copy.line2) {
@@ -963,11 +963,12 @@ var PERSONA_COPY = {
       revealPipelineSegments(copy);
     }
 
-    function switchTo(persona) {
+    function switchTo(persona, automatic) {
       var copy = PERSONA_COPY[persona];
       if (!copy) return;
 
       clearPending();
+      heroEl.setAttribute('aria-live', automatic ? 'off' : 'polite');
 
       if (reduceMotion) {
         populate(heroEl, copy);
@@ -1001,23 +1002,48 @@ var PERSONA_COPY = {
       }, EXIT_MS);
     }
 
+    function activateTab(tab, automatic) {
+      var target = tab.getAttribute('data-persona');
+
+      tabs.forEach(function (t) {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+
+      switchTo(target, automatic);
+    }
+
+    var autoCycleTimer = null;
+    function stopAutoCycle() {
+      if (!autoCycleTimer) return;
+      clearInterval(autoCycleTimer);
+      autoCycleTimer = null;
+    }
+
     tabs.forEach(function (tab) {
       tab.addEventListener('click', function () {
-        var target = tab.getAttribute('data-persona');
-
-        tabs.forEach(function (t) {
-          t.classList.remove('active');
-          t.setAttribute('aria-selected', 'false');
-        });
-        tab.classList.add('active');
-        tab.setAttribute('aria-selected', 'true');
-
-        switchTo(target);
+        stopAutoCycle();
+        activateTab(tab, false);
       });
     });
 
     // Initial fade-in for the "anyone" copy already baked into the HTML
     revealIn(PERSONA_COPY.anyone);
+
+    // Give passive visitors a chance to discover each introduction. Manual
+    // selection takes over permanently, and reduced-motion users never get
+    // automatic content changes.
+    if (!reduceMotion) {
+      autoCycleTimer = setInterval(function () {
+        if (document.hidden) return;
+        var current = tabs.findIndex(function (tab) {
+          return tab.getAttribute('aria-selected') === 'true';
+        });
+        activateTab(tabs[(current + 1) % tabs.length], true);
+      }, 15000);
+    }
 
     // ---- Reserve hero height across all three tabs (no layout shift) ----
     function computeMinHeight() {

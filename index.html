@@ -42,7 +42,7 @@
         <li><a class="nav-link active" href="#portfolio">Work</a></li>
         <li><a class="nav-link" href="about.html">About</a></li>
         <li><a class="nav-link" href="#footer">Contact</a></li>
-        <li><a class="nav-link" href="assets/pdf/Jade_Resume.pdf" target="_blank" rel="noopener">Resume</a></li>
+        <li><a class="nav-link" href="assets/pdf/Jade_Resume.pdf" target="_blank" rel="noopener" aria-label="Resume (opens in a new tab)">Resume <span class="nav-link__external" aria-hidden="true">↗</span></a></li>
       </ul>
     </nav>
   </header>
@@ -55,18 +55,18 @@
 
           <div class="persona-tabs" role="tablist" aria-label="View intro for different audiences">
             <button class="persona-tab active" data-persona="anyone"   role="tab" aria-selected="true">For Anyone</button>
-            <button class="persona-tab" data-persona="recruiters"      role="tab" aria-selected="false">Recruiters</button>
-            <button class="persona-tab" data-persona="designers"       role="tab" aria-selected="false">Designers</button>
+            <button class="persona-tab" data-persona="recruiters"      role="tab" aria-selected="false">For Recruiter</button>
+            <button class="persona-tab" data-persona="designers"       role="tab" aria-selected="false">For Designer</button>
           </div>
 
           <!-- Title + lines are fully driven by PERSONA_COPY in assets/js/main.js.
                Pre-filled with the "anyone" copy so it's meaningful before JS runs. -->
           <div class="hero-copy" id="heroCopy" aria-live="polite">
             <h1 class="home__title" data-copy-title>
-              Hi, I'm Jade. I design products that <span class="text-mint reveal-trigger" data-mint tabindex="0"><span class="mint-text">make hard situations feel less hard.</span><img class="hero-reveal-img" src="assets/img/oct_banner.png" alt="Pediatric Eye Exam Robot"></span>
+              Hi, I'm Jade. I design products that work across screens and physical objects, and I care about <span class="text-mint reveal-trigger" data-mint tabindex="0"><span class="mint-text">why something ends up confusing people.</span><img class="hero-reveal-img" src="assets/img/oct_banner.png" alt="Pediatric Eye Exam Robot"></span>
             </h1>
-            <p class="home__subtitle" data-copy-line="1">MEng Design &amp; Technology Innovation @ Duke</p>
-            <p class="home__subtitle" data-copy-line="2">Previously BA Art &amp; Design + BS Statistics @ University of Michigan</p>
+            <p class="home__subtitle" data-copy-line="1" hidden></p>
+            <p class="home__subtitle" data-copy-line="2" hidden></p>
             <div class="hero-chips" data-copy-chips hidden></div>
             <a class="home__resume-link" data-copy-link href="assets/pdf/Jade_Resume.pdf" target="_blank" rel="noopener" hidden>View Résumé →</a>
           </div>

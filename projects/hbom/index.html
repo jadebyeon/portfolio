@@ -109,6 +109,44 @@
       z-index: 2;
       border-radius: 6px;
     }
+
+    .project-page--hbom .hbom-reflection-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(2rem, 4vw, 4rem);
+      align-items: start;
+    }
+    .project-page--hbom .project-section__body .hbom-reflection-column__label {
+      margin: 0 0 1rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.375rem;
+      background: rgba(36, 35, 41, 0.04);
+      color: var(--hbom-ink);
+      font-size: 0.75rem;
+      font-weight: 600;
+      line-height: 1.2;
+      text-align: center;
+      letter-spacing: 0.04em;
+    }
+    .project-page--hbom .hbom-reflection-grid h3.hbom-reflection-item__title {
+      margin: 0 0 0.375rem;
+      color: var(--hbom-ink);
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+    .project-page--hbom .hbom-reflection-grid p.hbom-reflection-item__body {
+      margin: 0;
+      color: var(--hbom-body);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+    @media (max-width: 760px) {
+      .project-page--hbom .hbom-reflection-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
   </style>
 </head>
 <body class="project-page project-page--hbom">
@@ -120,7 +158,7 @@
         <li><a class="nav-link active" href="../../index.html#portfolio">Work</a></li>
         <li><a class="nav-link" href="../../about.html">About</a></li>
         <li><a class="nav-link" href="#footer">Contact</a></li>
-        <li><a class="nav-link" href="../../assets/pdf/Jade_Resume.pdf" target="_blank" rel="noopener">Resume</a></li>
+        <li><a class="nav-link" href="../../assets/pdf/Jade_Resume.pdf" target="_blank" rel="noopener" aria-label="Resume (opens in a new tab)">Resume <span class="nav-link__external" aria-hidden="true">↗</span></a></li>
       </ul>
     </nav>
   </header>
@@ -369,11 +407,33 @@
     <section class="project-section project-section--context section-nav-target" id="takeaways">
       <div class="content-container">
         <p class="project-section__eyebrow">Reflection</p>
-        <h2 class="section-icon-title project-section__title">Learnings</h2>
-
+        <h2 class="section-icon-title project-section__title">Post-Project Reflection</h2>
         <div class="project-section__body">
-          <p><strong>Reflection:</strong> The main challenge was not only deciding how the hub should look, but what each resource needed to communicate before someone opened it. Resource type, source, reading time, and audience became part of the interface rather than background content.</p>
-          <p>Moving from Figma into Webflow changed how I worked. I had to think about CMS fields, reusable content, and how the design would hold as more resources were added.</p>
+          <div class="hbom-reflection-grid">
+            <section class="hbom-reflection-column" aria-labelledby="hbom-reflection-constraints">
+              <p class="hbom-reflection-column__label" id="hbom-reflection-constraints">Constraints</p>
+              <div class="hbom-reflection-item">
+                <h3 class="hbom-reflection-item__title">Learning Webflow</h3>
+                <p class="hbom-reflection-item__body">This was my first Webflow project. I had to learn its classes and CMS while building the site.</p>
+              </div>
+            </section>
+
+            <section class="hbom-reflection-column" aria-labelledby="hbom-reflection-improvement">
+              <p class="hbom-reflection-column__label" id="hbom-reflection-improvement">Room for Improvement</p>
+              <div class="hbom-reflection-item">
+                <h3 class="hbom-reflection-item__title">Building trust earlier</h3>
+                <p class="hbom-reflection-item__body">For a health-related site, sources and update dates matter. I would plan these details earlier, starting with the first wireframes.</p>
+              </div>
+            </section>
+
+            <section class="hbom-reflection-column" aria-labelledby="hbom-reflection-next-steps">
+              <p class="hbom-reflection-column__label" id="hbom-reflection-next-steps">Next Steps</p>
+              <div class="hbom-reflection-item">
+                <h3 class="hbom-reflection-item__title">Growing the library</h3>
+                <p class="hbom-reflection-item__body">As HBOM adds more resources, I would test the filters and categories again to keep browsing simple.</p>
+              </div>
+            </section>
+          </div>
         </div>
       </div>
     </section>
