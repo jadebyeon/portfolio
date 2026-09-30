@@ -223,6 +223,53 @@
     @media (max-width: 640px) {
       .lightbox-char-grid { grid-template-columns: 1fr; }
     }
+
+    .project-page--oct .oct-reflection-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(2rem, 4vw, 4rem);
+      align-items: start;
+    }
+
+    .project-page--oct .project-section__body .oct-reflection-column__label {
+      margin: 0 0 1rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.375rem;
+      background: rgba(36, 35, 41, 0.04);
+      color: var(--oct-ink);
+      font-size: 0.75rem;
+      font-weight: 600;
+      line-height: 1.2;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .project-page--oct .oct-reflection-item + .oct-reflection-item {
+      margin-top: 1rem;
+    }
+
+    .project-page--oct .oct-reflection-grid h3.oct-reflection-item__title {
+      margin: 0 0 0.375rem;
+      color: var(--oct-ink);
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .project-page--oct .oct-reflection-grid p.oct-reflection-item__body {
+      margin: 0;
+      color: var(--oct-body);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 760px) {
+      .project-page--oct .oct-reflection-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
   </style>
 </head>
 <body class="project-page project-page--oct">
@@ -580,10 +627,35 @@
         <p class="project-section__eyebrow">Reflection</p>
         <h2 class="section-icon-title project-section__title">Post-Project Reflection</h2>
         <div class="project-section__body">
-          <p><strong>1. Cross-Functional Communication</strong><br>Working with engineers, field experts, and designers taught me to explain design decisions through constraints and trade-offs that other disciplines could act on.</p>
-          <p><strong>2. Turning Evidence into Direction</strong><br>I learned to combine observations, literature, caregiver feedback, and pairwise analysis without treating any single source as definitive.</p>
-          <p><strong>3. Designing for Real Constraints</strong><br>Working on a physical medical product made feasibility part of the design process from the beginning, including movement, materials, cleaning, and clinical workflow.</p>
-          <p><strong>4. Future Explorations and AI</strong><br>The project strengthened my ability to extend an early concept into a broader system and use emerging tools, including AI video generation, for rapid prototyping.</p>
+          <div class="oct-reflection-grid">
+            <section class="oct-reflection-column" aria-labelledby="reflection-constraints">
+              <p class="oct-reflection-column__label" id="reflection-constraints">Constraints</p>
+              <div class="oct-reflection-item">
+                <h3 class="oct-reflection-item__title">Learning an unfamiliar domain</h3>
+                <p class="oct-reflection-item__body">I knew little about medical devices or robotics going in. Working with engineers and clinicians meant learning enough, fast, to make design decisions they could trust.</p>
+              </div>
+              <div class="oct-reflection-item">
+                <h3 class="oct-reflection-item__title">Explaining across disciplines</h3>
+                <p class="oct-reflection-item__body">Design decisions had to be framed as constraints and trade-offs other fields could act on, not just visuals to approve.</p>
+              </div>
+            </section>
+
+            <section class="oct-reflection-column" aria-labelledby="reflection-improvement">
+              <p class="oct-reflection-column__label" id="reflection-improvement">Rooms for Improvement</p>
+              <div class="oct-reflection-item">
+                <h3 class="oct-reflection-item__title">Testing earlier</h3>
+                <p class="oct-reflection-item__body">Validation came late. I'd want to get a rough prototype in front of real testing sooner instead of refining internally first.</p>
+              </div>
+            </section>
+
+            <section class="oct-reflection-column" aria-labelledby="reflection-next-steps">
+              <p class="oct-reflection-column__label" id="reflection-next-steps">Next Steps</p>
+              <div class="oct-reflection-item">
+                <h3 class="oct-reflection-item__title">From concept to physical robot</h3>
+                <p class="oct-reflection-item__body">Carrying this from a concept film into an actual behavior on the robot itself.</p>
+              </div>
+            </section>
+          </div>
         </div>
       </div>
     </section>
