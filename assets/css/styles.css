@@ -923,7 +923,10 @@ img { max-width: 100%; height: auto; }
   top: 5.9%;
   left: 11.1%;
   width: 78%;
-  height: 83%;
+  /* The original laptop export includes a static screen image beneath
+     the video. Extend through the full display area so none of that
+     screenshot remains visible along the bottom edge. */
+  height: 87.5%;
   display: block;
   object-fit: cover;
 }
