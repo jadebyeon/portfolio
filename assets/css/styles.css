@@ -859,19 +859,27 @@ img { max-width: 100%; height: auto; }
 .hero-media--oct .oct-hero-device {
   position: relative;
   width: 100%;
+  aspect-ratio: 4096 / 3038;
 }
 .hero-media--oct .oct-hero-frame {
-  display: block;
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
+  display: block;
+  z-index: 2;
+  pointer-events: none;
 }
 .hero-media--oct .oct-hero-screen {
   position: absolute;
   z-index: 1;
-  top: 9.7%;
-  left: 7.3%;
-  width: 85.7%;
-  height: 80.5%;
+  /* Deliberately extend one pixel beneath the transparent frame opening.
+     The frame—not a clip on the video—hides that overlap and prevents
+     any seam at the edge of the tablet screen. */
+  top: calc(9.7% - 1px);
+  left: calc(7.3% - 5px);
+  width: calc(85.7% + 6px);
+  height: calc(80.5% + 2px);
   display: block;
   object-fit: cover;
 }
@@ -912,6 +920,8 @@ img { max-width: 100%; height: auto; }
   top: -38.84%;
   left: -1.07%;
   height: auto;
+  z-index: 2;
+  pointer-events: none;
 }
 
 /* Keep hbom_hero.png as the precisely positioned laptop frame and replace
@@ -920,13 +930,16 @@ img { max-width: 100%; height: auto; }
 .hero-media--hbom .hbom-hero-screen {
   position: absolute;
   z-index: 1;
-  top: 5.9%;
-  left: 11.1%;
-  width: 78%;
+  /* Like the OCT tablet, the video runs a pixel beneath the transparent
+     frame opening. The MacBook artwork masks the overlap instead of a
+     clip on the video, eliminating edge seams. */
+  top: calc(5.9% - 1px);
+  left: calc(11.1% - 1px);
+  width: calc(78% + 2px);
   /* The original laptop export includes a static screen image beneath
      the video. Extend through the full display area so none of that
      screenshot remains visible along the bottom edge. */
-  height: 87.5%;
+  height: calc(87.5% + 2px);
   display: block;
   object-fit: cover;
 }
@@ -5851,25 +5864,37 @@ body.is-settled #heroCopy [data-copy-line] {
   }
 }
 
-/* On phones the section strip becomes the second row of the fixed project
-   header, so it scrolls with the header as one unit instead of reading as a
-   separate bar beneath it. */
+/* On phones, keep the section path in the header's single row: favicon on
+   the left, a horizontally scrollable section path in the middle, and the
+   menu control on the right. */
 @media (max-width: 639px) {
   body.project-page {
-    --project-mobile-header-row: 72px;
-    --header-height: 120px;
+    --header-height: 72px;
   }
 
-  .project-page .site-nav { height: var(--project-mobile-header-row); }
+  .project-page .site-nav { height: var(--header-height); }
 
   .project-page .section-nav {
     position: fixed;
-    top: var(--project-mobile-header-row);
-    left: 0;
+    top: calc(var(--header-height) / 2);
+    left: calc(var(--page-gutter) + 3.5rem);
+    right: calc(var(--page-gutter) + 3.5rem);
     z-index: 101;
-    padding: 0.25rem 0 0.45rem;
+    width: auto;
+    padding: 0;
     background: transparent;
     box-shadow: none;
+    transform: translateY(-50%);
+  }
+
+  .project-page .section-nav__list {
+    gap: 0.2rem;
+    padding-inline: 0;
+  }
+
+  .project-page .section-nav__link {
+    padding: 0.45rem 0.65rem;
+    font-size: 0.8rem;
   }
 
   .project-page .section-nav-target {
