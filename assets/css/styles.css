@@ -2753,7 +2753,7 @@ html {
 /* Phone navigation: one quiet header row, then a true overlay rather than a
    squeezed row of links. The existing <ul> remains the navigation landmark,
    and [hidden] removes its links from the tab order while closed. */
-@media (max-width: 639px) {
+@media (max-width: 1024px) {
   :root { --header-height: 72px; }
 
   .site-menu[hidden] { display: none !important; }
@@ -5864,10 +5864,10 @@ body.is-settled #heroCopy [data-copy-line] {
   }
 }
 
-/* On phones, keep the section path in the header's single row: favicon on
-   the left, a horizontally scrollable section path in the middle, and the
-   menu control on the right. */
-@media (max-width: 639px) {
+/* On compact layouts, keep the section path in the header's single row:
+   favicon on the left, the active section in the middle, and the menu on
+   the right. Tapping or focusing the active pill reveals the full path. */
+@media (max-width: 1024px) {
   body.project-page {
     --header-height: 72px;
   }
@@ -5885,17 +5885,41 @@ body.is-settled #heroCopy [data-copy-line] {
     background: transparent;
     box-shadow: none;
     transform: translateY(-50%);
+    overflow: visible;
   }
 
   .project-page .section-nav__list {
-    gap: 0.2rem;
-    padding-inline: 0;
+    display: inline-flex;
+    width: auto;
+    max-width: 100%;
+    height: 2.5rem;
+    margin-inline: auto;
+    gap: 0;
+    padding: 0.25rem;
+    overflow: hidden;
+    background: transparent;
+    box-shadow: none;
   }
+
+  .project-page .section-nav__item { display: none; }
+  .project-page .section-nav__item:has(.is-active) { display: block; }
 
   .project-page .section-nav__link {
     padding: 0.45rem 0.65rem;
     font-size: 0.8rem;
   }
+
+  .project-page .section-nav.is-expanded .section-nav__list {
+    display: flex;
+    width: 100%;
+    margin-inline: 0;
+    gap: 0.2rem;
+    overflow-x: auto;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 10px 28px rgba(36, 35, 41, 0.12);
+  }
+
+  .project-page .section-nav.is-expanded .section-nav__item { display: block; }
 
   .project-page .section-nav-target {
     scroll-margin-top: var(--header-height);

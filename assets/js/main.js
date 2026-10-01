@@ -469,7 +469,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const siteNav = document.querySelector('.site-nav');
   const siteMenu = document.querySelector('.site-menu');
   const header = document.querySelector('.header');
-  const phoneMenuQuery = window.matchMedia('(max-width: 639px)');
+  const phoneMenuQuery = window.matchMedia('(max-width: 1024px)');
 
   if (siteNav && siteMenu && header) {
     const menuId = siteMenu.id || 'site-menu';
@@ -1664,6 +1664,37 @@ var PERSONA_COPY = {
 
     sections.forEach(function (section) { observer.observe(section); });
     setActive(sections[0].id);
+
+    // At smaller widths the header shows just the active section first.
+    // Tapping or focusing it expands the full path without needing hover.
+    var compactQuery = window.matchMedia('(max-width: 1024px)');
+    function closeCompactNav() { nav.classList.remove('is-expanded'); }
+
+    nav.addEventListener('click', function (event) {
+      var link = event.target.closest('.section-nav__link');
+      if (!link || !compactQuery.matches) return;
+      if (!nav.classList.contains('is-expanded')) {
+        event.preventDefault();
+        nav.classList.add('is-expanded');
+        return;
+      }
+      closeCompactNav();
+    });
+
+    nav.addEventListener('focusin', function () {
+      if (compactQuery.matches) nav.classList.add('is-expanded');
+    });
+    nav.addEventListener('focusout', function () {
+      setTimeout(function () {
+        if (!nav.contains(document.activeElement)) closeCompactNav();
+      }, 0);
+    });
+    document.addEventListener('click', function (event) {
+      if (compactQuery.matches && !nav.contains(event.target)) closeCompactNav();
+    });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') closeCompactNav();
+    });
   }
 
   function init() {
