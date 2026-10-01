@@ -1695,6 +1695,16 @@ var PERSONA_COPY = {
     document.addEventListener('keydown', function (event) {
       if (event.key === 'Escape') closeCompactNav();
     });
+
+    var hoverQuery = window.matchMedia('(hover: hover)');
+    nav.addEventListener('pointerenter', function () {
+      if (compactQuery.matches && hoverQuery.matches) {
+        nav.classList.add('is-expanded');
+      }
+    });
+    nav.addEventListener('pointerleave', function () {
+      if (compactQuery.matches && hoverQuery.matches) closeCompactNav();
+    });
   }
 
   function init() {

@@ -5877,28 +5877,29 @@ body.is-settled #heroCopy [data-copy-line] {
   .project-page .section-nav {
     position: fixed;
     top: calc(var(--header-height) / 2);
-    left: calc(var(--page-gutter) + 3.5rem);
-    right: calc(var(--page-gutter) + 3.5rem);
+    left: 50%;
+    right: auto;
     z-index: 101;
-    width: auto;
+    width: fit-content;
+    max-width: calc(100vw - 8rem);
     padding: 0;
-    background: transparent;
-    box-shadow: none;
-    transform: translateY(-50%);
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: translate(-50%, -50%);
     overflow: visible;
   }
 
   .project-page .section-nav__list {
     display: inline-flex;
-    width: auto;
+    width: fit-content;
     max-width: 100%;
     height: 2.5rem;
     margin-inline: auto;
     gap: 0;
     padding: 0.25rem;
     overflow: hidden;
-    background: transparent;
-    box-shadow: none;
+    background: transparent !important;
+    box-shadow: none !important;
   }
 
   .project-page .section-nav__item { display: none; }
@@ -5912,14 +5913,30 @@ body.is-settled #heroCopy [data-copy-line] {
   .project-page .section-nav.is-expanded .section-nav__list {
     display: flex;
     width: 100%;
+    height: 3rem;
     margin-inline: 0;
     gap: 0.2rem;
+    padding: 0.25rem;
     overflow-x: auto;
-    background: rgba(255, 255, 255, 0.94);
-    box-shadow: 0 10px 28px rgba(36, 35, 41, 0.12);
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.94) !important;
+    box-shadow: 0 10px 28px rgba(36, 35, 41, 0.12) !important;
   }
 
   .project-page .section-nav.is-expanded .section-nav__item { display: block; }
+  .project-page .section-nav.is-expanded .section-nav__link {
+    padding: 0.5rem 1rem;
+  }
+
+  .project-page .section-nav.is-expanded {
+    left: calc(var(--page-gutter) + 3.5rem);
+    right: calc(var(--page-gutter) + 3.5rem);
+    width: auto;
+    max-width: none;
+    transform: translateY(-50%);
+  }
 
   .project-page .section-nav-target {
     scroll-margin-top: var(--header-height);
