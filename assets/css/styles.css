@@ -3780,52 +3780,53 @@ body.is-settled #heroCopy [data-copy-line] {
 }
 
 /* ===== FEATURE TAB SHOWCASE (click-only ARIA tabs) =====
-   Reusable tabbed panel: a mint-underlined tab bar switches which
-   panel (image + heading + caption) is visible below it. Switching
-   is a hard show/hide via the `hidden` attribute, no animation to
-   gate under prefers-reduced-motion, only the tab underline's own
-   color transition needs disabling there. See assets/js/main.js for
-   the click/arrow-key switching logic (role=tablist/tab/tabpanel). */
+   Uses the same soft, pill-tab treatment as the homepage audience
+   control. Selecting a tab switches its image, heading, and caption. */
 .hbom-tabs__bar {
   display: flex;
+  align-items: center;
+  justify-content: flex-start;
   width: fit-content;
   max-width: 100%;
   margin: 1.5rem auto 0;
-  gap: 0.25rem;
-  background: #f3f4f6;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.94);
   border-radius: 999px;
   padding: 0.25rem;
+  box-shadow: 0 10px 28px rgba(36, 35, 41, 0.12);
 }
 .hbom-tabs__tab {
   appearance: none;
-  background: none;
-  border: none;
+  background: transparent;
+  border: 0;
   border-radius: 999px;
   padding: 0.5rem 1rem;
   font-family: inherit;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--text-color-light);
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: #76747d;
   white-space: nowrap;
   cursor: pointer;
-  transition: color 0.2s ease, background 0.2s ease;
+  letter-spacing: 0.01em;
+  transition: color 180ms ease, background-color 180ms ease;
 }
 .hbom-tabs__tab:hover {
-  color: var(--title-color);
+  color: #242329;
 }
 .hbom-tabs__tab:focus-visible {
   outline: 2px solid var(--mint-color);
   outline-offset: 2px;
 }
 .hbom-tabs__tab[aria-selected="true"] {
-  background: var(--mint-color);
-  color: #fff;
+  background: rgba(36, 35, 41, 0.08);
+  color: #242329;
+  font-weight: 700;
 }
 .hbom-tabs__panel {
   display: none;
   grid-template-columns: 1.85fr 1fr;
   gap: clamp(1.5rem, 3vw, 3rem);
-  align-items: center;
+  align-items: start;
   margin-top: 2rem;
 }
 .hbom-tabs__panel.is-active {
@@ -3848,6 +3849,9 @@ body.is-settled #heroCopy [data-copy-line] {
   font-weight: 700;
   color: var(--title-color);
   margin: 0 0 0.5rem;
+}
+.hbom-tabs__copy {
+  align-self: start;
 }
 .hbom-tabs__copy p {
   color: var(--text-color);
