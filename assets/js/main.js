@@ -607,6 +607,62 @@ document.querySelectorAll('.footer__back').forEach(function (link) {
   }
 })();
 
+/*==================== OCT PROJECT: SURVEY STAT COUNT-UP ====================
+  Starts the caregiver-survey statistics at 1 when they enter the viewport,
+  then counts to their displayed value once. */
+(function () {
+  function animateCount(el, target, suffix) {
+    var duration = 1000;
+    var startTime = null;
+    el.textContent = '1' + suffix;
+
+    function tick(timestamp) {
+      if (startTime === null) startTime = timestamp;
+      var progress = Math.min((timestamp - startTime) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(1 + ((target - 1) * eased)) + suffix;
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        el.textContent = target + suffix;
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function init() {
+    var numbers = document.querySelectorAll('.research-stat-card__value');
+    if (!numbers.length) return;
+
+    var reduceMotion = window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    numbers.forEach(function (el) {
+      var match = el.textContent.trim().match(/^(\d+)(%?\+?)$/);
+      if (!match) return;
+      var target = parseInt(match[1], 10);
+      var suffix = match[2];
+
+      if (reduceMotion || !('IntersectionObserver' in window)) return;
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          animateCount(el, target, suffix);
+          observer.unobserve(el);
+        });
+      }, { threshold: 0.4 });
+      observer.observe(el);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
 /*==================== OCT PROJECT: CHARACTER OVERLAY ====================
   Click a character tile to reveal its name + description; click again
   (or another tile) to close. No-ops on pages without .character-tile. */
@@ -1099,7 +1155,9 @@ var PERSONA_COPY = {
       });
     });
 
-    // Initial fade-in for the "anyone" copy already baked into the HTML
+    // Populate the initially selected tab too: its supporting lines are
+    // intentionally empty/hidden in the static markup until JavaScript runs.
+    populate(heroEl, PERSONA_COPY.anyone);
     revealIn(PERSONA_COPY.anyone);
 
     // Give passive visitors a chance to discover each introduction. Manual

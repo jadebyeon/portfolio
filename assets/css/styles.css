@@ -2876,34 +2876,41 @@ html {
 
 /* ===== PERSONA SWITCHER ===== */
 .persona-tabs {
-  display: flex;
-  flex-wrap: wrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: fit-content;
+  max-width: 100%;
   gap: 0.5rem;
+  padding: 0.25rem;
   margin-bottom: 2.25rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 10px 28px rgba(36, 35, 41, 0.12);
 }
 
 .persona-tab {
   background: transparent;
-  border: 1.5px solid #ccc;
+  border: 0;
   border-radius: 999px;
   padding: 0.5rem 1rem;
   font-size: 0.85rem;
   font-family: inherit;
-  color: #888;
+  color: #76747d;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: color 180ms ease, background-color 180ms ease;
   letter-spacing: 0.01em;
+  white-space: nowrap;
 }
 
 .persona-tab:hover {
-  border-color: #555;
-  color: #333;
+  color: #242329;
 }
 
 .persona-tab.active {
-  background: #111;
-  border-color: #111;
-  color: #fff;
+  background: rgba(36, 35, 41, 0.08);
+  color: #242329;
+  font-weight: 700;
 }
 
 .home__resume-link {
@@ -5810,4 +5817,55 @@ body.is-settled #heroCopy [data-copy-line] {
   .section-nav__list,
   .section-nav__item,
   body.project-page .section-nav .section-nav__link { transition: none; }
+}
+
+/* Mobile keeps every section immediately reachable by horizontal scroll,
+   while matching the quieter desktop navigation treatment. */
+@media (max-width: 1024px) {
+  body.project-page .section-nav {
+    border-bottom: 0;
+    box-shadow: 0 7px 18px rgba(36, 35, 41, 0.08);
+  }
+
+  body.project-page .section-nav .section-nav__list { gap: 0.3rem; }
+
+  body.project-page .section-nav .section-nav__link {
+    border: 0 !important;
+    background: transparent;
+    color: #76747d;
+    font-weight: 500;
+  }
+
+  body.project-page .section-nav .section-nav__link.is-active {
+    border: 0 !important;
+    background: rgba(36, 35, 41, 0.08);
+    color: #242329;
+    font-weight: 700;
+  }
+}
+
+/* On phones the section strip becomes the second row of the fixed project
+   header, so it scrolls with the header as one unit instead of reading as a
+   separate bar beneath it. */
+@media (max-width: 639px) {
+  body.project-page {
+    --project-mobile-header-row: 72px;
+    --header-height: 120px;
+  }
+
+  .project-page .site-nav { height: var(--project-mobile-header-row); }
+
+  .project-page .section-nav {
+    position: fixed;
+    top: var(--project-mobile-header-row);
+    left: 0;
+    z-index: 101;
+    padding: 0.25rem 0 0.45rem;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .project-page .section-nav-target {
+    scroll-margin-top: var(--header-height);
+  }
 }
