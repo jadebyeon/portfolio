@@ -1968,12 +1968,9 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
 }
 
-/* HBOM's homepage asset is a square transparent canvas with a centered
-   MacBook. This wrapper keeps the tile's existing surface treatment while
-   sizing the visible laptop to OCT's tablet width. The image stays fully
-   contained—its extra scale reaches only transparent canvas pixels—so no
-   part of the MacBook is cropped. Scoped to the homepage mockup class;
-   it does not affect the HBOM case-study hero. */
+/* HBOM's homepage MacBook uses the same transparent frame as its case-study
+   hero. The walkthrough runs a pixel beneath the screen opening, so the
+   frame—not a clipped video—creates the display edge and hides any seams. */
 .hbom-tile-mockup {
   position: absolute;
   inset: 0;
@@ -1983,15 +1980,34 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   border-radius: 16px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
 }
-.hbom-tile-mockup__image {
+.hbom-tile-device {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 135%;
-  height: 135%;
+  width: 75.9375%;
+  aspect-ratio: 1;
   max-width: none;
-  object-fit: contain;
   transform: translate(-50%, -50%);
+}
+.hbom-tile-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+.hbom-tile-screen {
+  position: absolute !important;
+  inset: auto !important;
+  /* Measured from hbom_hero-frame.png's transparent screen opening. */
+  top: calc(25.15% - 1px);
+  left: calc(11.8% - 1px);
+  width: calc(76.5% + 2px);
+  height: calc(49.3% + 2px);
+  z-index: 1;
+  border-radius: 0 !important;
+  box-shadow: none !important;
 }
 
 /* ===== OCT HOMEPAGE TILE: TABLET MOCKUP =====
@@ -2048,14 +2064,13 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 .oct-tile-screen {
   position: absolute;
-  left: 7.17%;
-  top: 9.67%;
-  width: 85.62%;
-  height: 80.61%;
-  box-sizing: border-box;
-  overflow: hidden;
+  /* Extend beneath the transparent tablet opening rather than clipping the
+     video at its rounded corners; the frame masks the extra pixel. */
+  left: calc(7.17% - 1px);
+  top: calc(9.67% - 1px);
+  width: calc(85.62% + 2px);
+  height: calc(80.61% + 2px);
   z-index: 1;
-  border-radius: 1.34% / 1.92%; /* matches the frame art's own screen-corner curvature (measured, not guessed) */
 }
 .oct-tile-screen video.tile-media {
   position: static; /* override .tile-framed .tile-media's position:absolute/inset:0 above */
@@ -2063,7 +2078,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   width: 100%;
   height: 100%;
   object-fit: cover; /* fills the screen cutout edge-to-edge; crops only the outer edges if aspect ratios differ */
-  border-radius: inherit;
+  border-radius: 0;
   box-shadow: none;
 }
 

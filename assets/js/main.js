@@ -1141,16 +1141,43 @@ var PERSONA_COPY = {
       switchTo(target, automatic);
     }
 
+    var AUTO_CYCLE_MS = 10000;
+    var MANUAL_PAUSE_MS = 60000;
     var autoCycleTimer = null;
+    var resumeAutoCycleTimer = null;
+
+    function cycleToNext() {
+      if (document.hidden) return;
+      var current = tabs.findIndex(function (tab) {
+        return tab.getAttribute('aria-selected') === 'true';
+      });
+      activateTab(tabs[(current + 1) % tabs.length], true);
+    }
+
+    function startAutoCycle() {
+      if (reduceMotion || autoCycleTimer) return;
+      autoCycleTimer = setInterval(cycleToNext, AUTO_CYCLE_MS);
+    }
+
     function stopAutoCycle() {
       if (!autoCycleTimer) return;
       clearInterval(autoCycleTimer);
       autoCycleTimer = null;
     }
 
+    function pauseThenResumeAutoCycle() {
+      stopAutoCycle();
+      if (resumeAutoCycleTimer) clearTimeout(resumeAutoCycleTimer);
+      resumeAutoCycleTimer = setTimeout(function () {
+        resumeAutoCycleTimer = null;
+        cycleToNext();
+        startAutoCycle();
+      }, MANUAL_PAUSE_MS);
+    }
+
     tabs.forEach(function (tab) {
       tab.addEventListener('click', function () {
-        stopAutoCycle();
+        pauseThenResumeAutoCycle();
         activateTab(tab, false);
       });
     });
@@ -1160,17 +1187,11 @@ var PERSONA_COPY = {
     populate(heroEl, PERSONA_COPY.anyone);
     revealIn(PERSONA_COPY.anyone);
 
-    // Give passive visitors a chance to discover each introduction. Manual
-    // selection takes over permanently, and reduced-motion users never get
-    // automatic content changes.
+    // Give passive visitors a chance to discover each introduction. A manual
+    // selection pauses the rotation for one minute; reduced-motion users never
+    // get automatic content changes.
     if (!reduceMotion) {
-      autoCycleTimer = setInterval(function () {
-        if (document.hidden) return;
-        var current = tabs.findIndex(function (tab) {
-          return tab.getAttribute('aria-selected') === 'true';
-        });
-        activateTab(tabs[(current + 1) % tabs.length], true);
-      }, 15000);
+      startAutoCycle();
     }
 
     // ---- Reserve hero height across all three tabs (no layout shift) ----
