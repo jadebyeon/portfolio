@@ -1997,17 +1997,18 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   z-index: 2;
   pointer-events: none;
 }
-.hbom-tile-screen {
-  position: absolute !important;
-  inset: auto !important;
+.hbom-tile-device .hbom-tile-screen {
+  position: absolute;
+  display: block;
   /* Measured from hbom_hero-frame.png's transparent screen opening. */
   top: calc(25.15% - 1px);
   left: calc(11.8% - 1px);
   width: calc(76.5% + 2px);
   height: calc(49.3% + 2px);
   z-index: 1;
-  border-radius: 0 !important;
-  box-shadow: none !important;
+  object-fit: cover;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 /* ===== OCT HOMEPAGE TILE: TABLET MOCKUP =====

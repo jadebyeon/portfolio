@@ -10,7 +10,7 @@
   pages without .tile-media or without IntersectionObserver. */
 (function () {
   function init() {
-    var videos = document.querySelectorAll('.tile-media');
+    var videos = document.querySelectorAll('.tile-media, .hbom-tile-screen');
     if (!videos.length) return;
 
     var reduceMotion = window.matchMedia &&
@@ -965,7 +965,7 @@ var PERSONA_COPY = {
   }
 
   function initPersona() {
-    var tabs = document.querySelectorAll('.persona-tab');
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('.persona-tab'));
     var heroEl = document.getElementById('heroCopy');
     if (!tabs.length || !heroEl) return;
 
@@ -1141,7 +1141,7 @@ var PERSONA_COPY = {
       switchTo(target, automatic);
     }
 
-    var AUTO_CYCLE_MS = 10000;
+    var AUTO_CYCLE_MS = 7000;
     var MANUAL_PAUSE_MS = 60000;
     var autoCycleTimer = null;
     var resumeAutoCycleTimer = null;
