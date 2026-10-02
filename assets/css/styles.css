@@ -3170,8 +3170,6 @@ body.is-settled #heroCopy [data-copy-line] {
   flex-direction: column;
   justify-content: flex-start;
   box-sizing: border-box;
-  /* very faint depth wash behind the hero copy */
-  background-image: radial-gradient(ellipse at 20% 30%, rgba(26, 122, 94, 0.04), transparent 60%);
 }
 
 /* Hero uses the same .container box as the nav and the portfolio grid
