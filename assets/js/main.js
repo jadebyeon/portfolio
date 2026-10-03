@@ -128,7 +128,7 @@
     },
     duke: {
       title: 'Duke',
-      body: 'Go Duke! Currently pursuing an MEng in Design & Technology Innovation.'
+      body: 'Go Duke! Currently pursuing an MEng in\nDesign & Technology Innovation.'
     },
     earth: {
       title: 'Where I’ve Lived',

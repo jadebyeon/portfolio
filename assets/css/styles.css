@@ -2653,6 +2653,23 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   transform: translateX(-50%);
 }
 
+.about-sticker-card__duke-image {
+  display: none;
+}
+
+.about-sticker-card[data-sticker-back="duke"] .about-sticker-card__duke-image {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  left: 50%;
+  bottom: 13%;
+  width: 42.9%;
+  max-height: 42%;
+  object-fit: contain;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 0.55rem 0.55rem rgba(17, 24, 39, 0.18));
+}
+
 .about-sticker-card__pokemon {
   display: none;
 }
@@ -2811,6 +2828,18 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 .about-sticker-card[data-sticker-back="duke"] .about-sticker-card__close {
   top: 12%;
   right: 24%;
+}
+.about-sticker-card[data-sticker-back="duke"] .about-sticker-card__content {
+  position: absolute;
+  z-index: 3;
+  top: 22%;
+  left: 19%;
+  width: 62%;
+  max-width: none;
+  text-align: center;
+}
+.about-sticker-card[data-sticker-back="duke"] .about-sticker-card__face--back p:last-child {
+  white-space: pre-line;
 }
 .about-sticker-card[data-sticker-back="earth"] .about-sticker-card__close {
   /* A circular sticker has no usable corner: inset the entire 48px
@@ -3043,6 +3072,33 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   }
   .about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__face--back p:last-child {
     font-size: clamp(0.66rem, 2.8vw, 0.8rem);
+  }
+  /* The Duke wordmark and Pokémon silhouette have much narrower safe text
+     areas than their outer card boxes. Compact only these mobile cards so
+     their copy stays inside the artwork instead of spilling over it. */
+  .about-sticker-card[data-sticker-back="duke"] .about-sticker-card__content {
+    top: 22%;
+    left: 19%;
+    width: 62%;
+  }
+  .about-sticker-card[data-sticker-back="duke"] .about-sticker-card__duke-image {
+    bottom: 12%;
+    width: 45.76%;
+  }
+  .about-sticker-card[data-sticker-back="duke"] .about-sticker-card__face--back h2,
+  .about-sticker-card[data-sticker-back="pokemon"] .about-sticker-card__face--back h2 {
+    font-size: clamp(0.7rem, 3vw, 0.86rem);
+    margin-bottom: 0.2rem;
+  }
+  .about-sticker-card[data-sticker-back="duke"] .about-sticker-card__face--back p:last-child,
+  .about-sticker-card[data-sticker-back="pokemon"] .about-sticker-card__face--back p:last-child {
+    font-size: clamp(0.56rem, 2.35vw, 0.7rem);
+    line-height: 1.28;
+  }
+  .about-sticker-card[data-sticker-back="pokemon"] .about-sticker-card__content {
+    top: 40%;
+    left: 29%;
+    width: 42%;
   }
   .about-two-col {
     grid-template-columns: 1fr;
