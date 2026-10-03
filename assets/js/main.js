@@ -39,6 +39,43 @@
   }
 })();
 
+/*==================== OCT HERO DEMO PLAYBACK ====================
+  This targets only the full OCT case-study hero, not the homepage tile. */
+(function () {
+  function init() {
+    var video = document.querySelector('[data-oct-hero-video]');
+    var button = document.querySelector('[data-oct-hero-playback]');
+    if (!video || !button) return;
+
+    function updateButton() {
+      var paused = video.paused || video.ended;
+      button.classList.toggle('is-playing', !paused);
+      button.setAttribute('aria-label', paused ? 'Play demo video' : 'Pause demo video');
+    }
+
+    button.addEventListener('click', function () {
+      if (video.paused || video.ended) {
+        if (video.ended) video.currentTime = 0;
+        var playPromise = video.play();
+        if (playPromise && playPromise.catch) playPromise.catch(function () {});
+      } else {
+        video.pause();
+      }
+    });
+
+    video.addEventListener('play', updateButton);
+    video.addEventListener('pause', updateButton);
+    video.addEventListener('ended', updateButton);
+    updateButton();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
 /*==================== ABOUT STICKER INTRO ====================
   One short Memoji intro, then a still smiling image and independently
   interactive sticker buttons floating in the side gutters. Clicking a
@@ -87,7 +124,7 @@
   var content = {
     uofm: {
       title: 'University of Michigan',
-      body: 'Go Blue! B.A. in Art & Design, B.S. in Statistics, University of Michigan, Ann Arbor.'
+      body: 'Go Blue! Dual-degree graduate with\nB.A. in Art & Design and B.S. in Statistics'
     },
     duke: {
       title: 'Duke',
@@ -98,8 +135,8 @@
       body: "Born in Korea, grew up between China, Singapore, and the U.S. I've been the new kid enough times to know what it feels like when a space wasn't built with you in mind."
     },
     film: {
-      title: 'Film',
-      body: 'Certified movie person. Rewatch pile: How to Train Your Dragon, Life Is Beautiful, Memento, Arrival. Ask me about any of them, I have opinions.'
+      title: 'Movie Lover',
+      body: 'Favorite movies, open to recommendations!'
     },
     pokemon: {
       title: 'Pokémon',
@@ -201,6 +238,95 @@
     playIntro();
     avatar.addEventListener('mouseenter', startAvatarHoverLoop);
   }
+
+  // Turn the resting sticker layout into a small rearrangeable canvas. Capture
+  // every flow position before taking any sticker out of
+  // flow, then keep its coordinates as percentages of the About hero so a
+  // resized viewport preserves the arrangement. A short movement threshold
+  // keeps a normal click available for opening the sticker card.
+  (function enableStickerDragging() {
+    var surface = document.querySelector('.about-hero');
+    if (!surface || !window.PointerEvent) return;
+
+    var drag = null;
+
+    function setPosition(button, x, y, surfaceRect) {
+      var maxX = Math.max(0, surfaceRect.width - button.offsetWidth);
+      var maxY = Math.max(0, surfaceRect.height - button.offsetHeight);
+      var clampedX = Math.min(Math.max(0, x), maxX);
+      var clampedY = Math.min(Math.max(0, y), maxY);
+      button.style.left = (clampedX / surfaceRect.width * 100) + '%';
+      button.style.top = (clampedY / surfaceRect.height * 100) + '%';
+    }
+
+    function activateCanvas() {
+      var surfaceRect = surface.getBoundingClientRect();
+      var positions = stickers.map(function (button) {
+        var rect = button.getBoundingClientRect();
+        return { button: button, x: rect.left - surfaceRect.left, y: rect.top - surfaceRect.top };
+      });
+
+      positions.forEach(function (entry) {
+        entry.button.classList.add('is-draggable');
+        entry.button.style.position = 'absolute';
+        setPosition(entry.button, entry.x, entry.y, surfaceRect);
+      });
+    }
+
+    function constrainCanvas() {
+      var surfaceRect = surface.getBoundingClientRect();
+      stickers.forEach(function (button) {
+        if (!button.classList.contains('is-draggable')) return;
+        var rect = button.getBoundingClientRect();
+        setPosition(button, rect.left - surfaceRect.left, rect.top - surfaceRect.top, surfaceRect);
+      });
+    }
+
+    stickers.forEach(function (button) {
+      button.addEventListener('pointerdown', function (event) {
+        if (isOpen || (event.pointerType === 'mouse' && event.button !== 0)) return;
+        var rect = button.getBoundingClientRect();
+        drag = {
+          button: button,
+          pointerId: event.pointerId,
+          offsetX: event.clientX - rect.left,
+          offsetY: event.clientY - rect.top,
+          startX: event.clientX,
+          startY: event.clientY,
+          moved: false
+        };
+        button.setPointerCapture(event.pointerId);
+      });
+
+      button.addEventListener('pointermove', function (event) {
+        if (!drag || drag.button !== button || drag.pointerId !== event.pointerId) return;
+        var distance = Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY);
+        if (distance > 6) drag.moved = true;
+        if (!drag.moved) return;
+        event.preventDefault();
+        var surfaceRect = surface.getBoundingClientRect();
+        setPosition(button, event.clientX - surfaceRect.left - drag.offsetX, event.clientY - surfaceRect.top - drag.offsetY, surfaceRect);
+        button.classList.add('is-dragging');
+      });
+
+      function finishDrag(event) {
+        if (!drag || drag.button !== button || drag.pointerId !== event.pointerId) return;
+        if (button.hasPointerCapture(event.pointerId)) button.releasePointerCapture(event.pointerId);
+        if (drag.moved) {
+          button.dataset.ignoreStickerClick = 'true';
+          window.setTimeout(function () { delete button.dataset.ignoreStickerClick; }, 350);
+        }
+        button.classList.remove('is-dragging');
+        drag = null;
+      }
+
+      button.addEventListener('pointerup', finishDrag);
+      button.addEventListener('pointercancel', finishDrag);
+    });
+
+    activateCanvas();
+    window.addEventListener('resize', constrainCanvas);
+  })();
 
   if (!overlay || !card || !inner) return;
 
@@ -370,6 +496,10 @@
 
   stickers.forEach(function (button) {
     button.addEventListener('click', function () {
+      if (button.dataset.ignoreStickerClick === 'true') {
+        delete button.dataset.ignoreStickerClick;
+        return;
+      }
       if (isOpen && activeButton === button) {
         close();
       } else if (isOpen) {

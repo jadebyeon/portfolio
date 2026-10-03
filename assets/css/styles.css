@@ -884,6 +884,72 @@ img { max-width: 100%; height: auto; }
   object-fit: cover;
 }
 
+/* This stays inside OCT's tablet screen, so visitors can control the case
+   study demo without altering the existing device frame or its spacing. */
+.hero-media--oct .oct-hero-playback {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  width: clamp(2.7rem, 4.5vw, 3.4rem);
+  height: clamp(1.7rem, 2.9vw, 2.1rem);
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(235, 235, 237, 0.72);
+  box-shadow: none;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: opacity 180ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.hero-media--oct .oct-hero-device:hover .oct-hero-playback,
+.hero-media--oct .oct-hero-device:focus-within .oct-hero-playback {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.hero-media--oct .oct-hero-playback:hover,
+.hero-media--oct .oct-hero-playback:focus-visible {
+  background: rgba(235, 235, 237, 0.9);
+  transform: translate(-50%, calc(-50% - 1px));
+}
+
+.hero-media--oct .oct-hero-playback:focus-visible {
+  outline: 2px solid var(--mint-color);
+  outline-offset: 3px;
+}
+
+.oct-hero-playback__icon {
+  position: relative;
+  display: block;
+  width: 0;
+  height: 0;
+  margin-left: 0.17em;
+  border-top: 0.45em solid transparent;
+  border-bottom: 0.45em solid transparent;
+  border-left: 0.65em solid #242329;
+}
+
+.oct-hero-playback.is-playing .oct-hero-playback__icon {
+  width: 0.62em;
+  height: 0.9em;
+  margin-left: 0;
+  border: 0;
+  background: linear-gradient(to right, #242329 0 34%, transparent 34% 66%, #242329 66% 100%);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .hero-media--oct .oct-hero-playback {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
 /* .hero-media--hbom: hbom_hero.png is a square 2000x2000 export with the
    MacBook artwork vertically centered, occupying only x 23-1974 / y
    439-1560 of the canvas (measured off the alpha channel, not guessed)
@@ -2223,7 +2289,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   line-height: 1.15;
   letter-spacing: -0.01em;
   color: #1f1f29;
-  margin-bottom: clamp(0.5rem, 1.4vw, 1rem);
+  margin-bottom: clamp(0.25rem, 0.6vw, 0.5rem);
 }
 
 /* Matches .hero-subtitle (the project case-study subtitle, e.g. "Using
@@ -2241,7 +2307,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 .about-avatar-row {
   width: 100%;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(auto, 37.5rem) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(auto, 42.5rem) minmax(0, 1fr);
   align-items: center;
   gap: clamp(0.5rem, 2vw, 2rem);
 }
@@ -2266,8 +2332,18 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   gap: clamp(1rem, 3vw, 2rem);
 }
 
+/* Dragging takes the sticker buttons out of normal flow. Reserve the two
+   left-sticker slots so the speech bubble keeps its intended place below
+   them instead of re-centering over Duke. */
+@media (min-width: 769px) {
+  .about-avatar-gutter--left .about-gutter-stickers {
+    min-height: clamp(23rem, 29vw, 31rem);
+  }
+}
+
 .about-hint {
   position: relative;
+  z-index: 4;
   max-width: 12rem;
   margin: 0;
   padding: 0.75rem 1rem;
@@ -2304,8 +2380,9 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 
 .about-avatar-stage {
   position: relative;
+  z-index: 1;
   width: 100%;
-  max-width: clamp(420px, 40vw, 600px);
+  max-width: clamp(450px, 44vw, 680px);
   margin-inline: auto;
   /* Matches jade_smile.png (2560x1920) / jade_still.png (1448x1086) /
      the intro video (2560x1920) -- all exactly 4:3. Getting this wrong
@@ -2347,7 +2424,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
    was only ever for the on-face 3D tilt). */
 .about-sticker {
   display: block;
-  width: clamp(5rem, 9vw, 8rem);
+  width: var(--sticker-size, clamp(5.5rem, 10vw, 9rem));
   padding: 0;
   border: 0;
   background: transparent;
@@ -2357,13 +2434,35 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   filter: drop-shadow(0 0.25rem 0.24rem rgba(17, 24, 39, 0.2));
 }
 
-.about-sticker img { display: block; width: 100%; height: auto; }
+.about-sticker img {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  -webkit-user-drag: none;
+  user-select: none;
+}
 
-.about-sticker--uofm { --sticker-rotate: -6deg; }
-.about-sticker--duke { --sticker-rotate: 5deg; }
-.about-sticker--earth { --sticker-rotate: 6deg; }
-.about-sticker--film { --sticker-rotate: -5deg; }
-.about-sticker--pokemon { --sticker-rotate: -8deg; }
+.about-sticker--uofm { --sticker-rotate: -6deg; --sticker-size: clamp(8.5rem, 15vw, 14rem); }
+.about-sticker--duke { --sticker-rotate: 5deg; --sticker-size: clamp(8.5rem, 15vw, 14rem); }
+.about-sticker--earth { --sticker-rotate: 6deg; --sticker-size: clamp(5.5rem, 8.5vw, 8rem); }
+.about-sticker--film { --sticker-rotate: -5deg; --sticker-size: clamp(7.5rem, 12.5vw, 12rem); }
+.about-sticker--pokemon { --sticker-rotate: -8deg; --sticker-size: clamp(4.75rem, 7vw, 6.5rem); }
+
+/* Desktop stickers can be rearranged within the About hero. Their original
+   positions are captured in JS, then each stays a real button: click to
+   open its card, or drag to move it without activating the card. */
+.about-sticker.is-draggable {
+  z-index: 3;
+  touch-action: none;
+  user-select: none;
+  cursor: grab;
+}
+.about-sticker.is-dragging {
+  z-index: 3;
+  cursor: grabbing;
+  filter: drop-shadow(0 0.55rem 0.45rem rgba(17, 24, 39, 0.28));
+}
 
 .about-sticker.is-lifted { visibility: hidden; }
 
@@ -2394,7 +2493,9 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
    of a click on this element. */
 .about-sticker-overlay {
   position: fixed;
-  inset: 0;
+  /* Keep expanded cards inside the viewable area below the persistent
+     header, rather than centering a tall silhouette underneath it. */
+  inset: var(--header-height) 0 0;
   z-index: 50;
   display: flex;
   align-items: center;
@@ -2420,9 +2521,11 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
      cap into an equivalent width cap (calc) rather than setting width
      and height independently -- aspect-ratio then derives the actual
      height, so the two constraints can't fight and skew the shape. */
-  --card-max-h: min(85vh, 36rem);
+  /* Leave generous room for future portrait/card additions while keeping
+     every sticker silhouette fully inside the viewport. */
+  --card-max-h: min(calc(100dvh - var(--header-height) - 2rem), 38rem);
   aspect-ratio: var(--card-ratio, 1);
-  width: min(94vw, 45rem, calc(var(--card-max-h) * var(--card-ratio, 1)));
+  width: min(96vw, 56rem, calc(var(--card-max-h) * var(--card-ratio, 1)));
   pointer-events: auto;
   transition: transform 480ms cubic-bezier(0.22, 0.8, 0.32, 1);
 }
@@ -2480,6 +2583,45 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
      every opaque pixel into the white paper back while preserving its
      transparent outside edge. */
   filter: brightness(0) invert(1) drop-shadow(0 1.1rem 1.4rem rgba(17, 24, 39, 0.22));
+}
+
+/* The Michigan card has a small portrait tucked into the left side of the
+   flipped M. It is hidden for every other sticker so their existing layouts
+   stay untouched. */
+.about-sticker-card__uofm-portrait {
+  display: none;
+}
+
+.about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__uofm-portrait {
+  display: block;
+  position: absolute;
+  z-index: 2;
+  /* The portrait's left shoulder and right arm are its visual edges. This
+     placement balances those real edges between the M's left side and the
+     centre-bottom notch, instead of balancing the PNG's transparent box. */
+  left: 12.5%;
+  bottom: 12%;
+  width: 27%;
+  max-height: 70%;
+  object-fit: contain;
+  filter: drop-shadow(0 0.55rem 0.55rem rgba(17, 24, 39, 0.18));
+}
+
+.about-sticker-card__film-list {
+  display: none;
+}
+
+.about-sticker-card[data-sticker-back="film"] .about-sticker-card__film-list {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  left: 14%;
+  bottom: 15%;
+  width: 72%;
+  height: auto;
+  max-height: 29%;
+  object-fit: contain;
+  filter: drop-shadow(0 0.55rem 0.55rem rgba(17, 24, 39, 0.18));
 }
 
 /* Duke's wordmark has an intentional transparent center. Keep the outer
@@ -2572,6 +2714,26 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   top: 8%;
   right: 8%;
 }
+
+.about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__content {
+  position: absolute;
+  z-index: 3;
+  top: 42%;
+  left: 44%;
+  width: 43%;
+  max-width: none;
+  text-align: left;
+}
+
+.about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__face--back h2 {
+  font-size: clamp(1rem, 2.1vw, 1.35rem);
+}
+
+.about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__face--back p:last-child {
+  font-size: clamp(0.8rem, 1.55vw, 1rem);
+  line-height: 1.45;
+  white-space: pre-line;
+}
 .about-sticker-card[data-sticker-back="duke"] .about-sticker-card__close {
   top: 12%;
   right: 24%;
@@ -2591,10 +2753,27 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   right: 15%;
 }
 
-/* The clapper's large lower slate is its readable surface; reserve the
-   diagonal top bar for the close control and center the copy below it. */
+/* The clapper's title and short prompt sit high on the lower slate, leaving
+   a dedicated area below for the movie-poster strip. */
 .about-sticker-card[data-sticker-back="film"] .about-sticker-card__content {
-  transform: translateY(3rem);
+  position: absolute;
+  z-index: 3;
+  /* The clapper's diagonal hinge cuts across the upper third. Keep copy in
+     the rectangular lower slate instead of merely inside the PNG's box. */
+  top: 43%;
+  left: 10%;
+  width: 80%;
+  max-width: none;
+  text-align: center;
+  transform: none;
+}
+
+.about-sticker-card[data-sticker-back="film"] .about-sticker-card__face--back h2 {
+  margin-bottom: 0.35rem;
+}
+
+.about-sticker-card[data-sticker-back="film"] .about-sticker-card__face--back p:last-child {
+  line-height: 1.4;
 }
 
 .about-sticker-card__close:focus-visible {
@@ -2615,6 +2794,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   margin: 0 0 0.5rem;
   color: var(--title-color);
   font-size: 1.15rem;
+  text-wrap: balance;
 }
 
 .about-sticker-card__face--back p:last-child {
@@ -2622,6 +2802,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   color: var(--text-color);
   font-size: 0.95rem;
   line-height: 1.6;
+  text-wrap: pretty;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2694,15 +2875,26 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
     display: none;
   }
   .about-avatar-stage {
-    max-width: min(100%, 340px);
+    max-width: min(100%, 370px);
   }
   .about-subtitle {
-    max-width: 42ch;
+    max-width: 31ch;
     white-space: normal;
+    text-wrap: balance;
   }
   .about-sticker-card {
-    --card-max-h: min(70vh, 27rem);
-    width: min(94vw, 30rem, calc(var(--card-max-h) * var(--card-ratio, 1)));
+    --card-max-h: min(calc(100dvh - var(--header-height) - 2rem), 28rem);
+    width: min(96vw, 34rem, calc(var(--card-max-h) * var(--card-ratio, 1)));
+  }
+  .about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__uofm-portrait {
+    left: 11%;
+    bottom: 12%;
+    width: 29%;
+  }
+  .about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__content {
+    top: 41%;
+    left: 43%;
+    width: 45%;
   }
   .about-two-col {
     grid-template-columns: 1fr;

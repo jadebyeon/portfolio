@@ -312,7 +312,10 @@
         <div class="hero-media hero-media--device hero-media--padded hero-media--oct">
           <div class="oct-hero-device">
             <img class="oct-hero-frame" src="../../assets/img/oct_banner-frame.png" alt="" aria-hidden="true">
-            <video class="oct-hero-screen" autoplay muted loop playsinline aria-label="Pediatric Eye Exam Robot interaction shown on a tablet" src="../../assets/video/oct_sam-demo%20video.mp4"></video>
+            <video class="oct-hero-screen" data-oct-hero-video autoplay muted loop playsinline aria-label="Pediatric Eye Exam Robot interaction shown on a tablet" src="../../assets/video/oct_sam-demo%20video.mp4"></video>
+            <button class="oct-hero-playback" type="button" data-oct-hero-playback aria-label="Pause demo video">
+              <span class="oct-hero-playback__icon" aria-hidden="true"></span>
+            </button>
           </div>
         </div>
       </div>
@@ -611,7 +614,6 @@
               <iframe
                 src="https://player.vimeo.com/video/1213024532?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
                 loading="lazy"
-                frameborder="0"
                 allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
                 referrerpolicy="strict-origin-when-cross-origin"
                 title="AI-generated Sam concept film">
