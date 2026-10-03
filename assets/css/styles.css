@@ -5845,24 +5845,33 @@ body.is-settled #heroCopy [data-copy-line] {
 }
 /* OCT's design-criteria cards use the roomier, quieter editorial treatment
    of the supplied reference without changing the survey statistic cards. */
+.research-insight-cards--criteria .research-insight-cards__grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
 .research-insight-cards--criteria .research-insight-card {
   padding: clamp(1.5rem, 2.5vw, 2rem);
 }
 .project-page--oct .research-insight-cards--criteria .research-insight-card h3 {
   margin: 0;
   font-size: 1rem;
+  min-height: 0;
 }
 .project-page--oct .research-insight-cards--criteria .research-insight-card p {
-  margin: 0.5rem 0 0;
+  margin: 0.9375rem 0 0;
   font-size: clamp(12px, 0.9vw, 14px);
   line-height: 1.5;
+}
+.project-page--oct .research-insight-cards--criteria .research-insight-card > p:not(.research-insight-card__implication) {
+  /* Reserve exactly two body-text lines in both cards so their dividers
+     remain vertically aligned without recreating the earlier oversized gap. */
+  min-height: 3em;
 }
 .project-page--oct .research-insight-cards--criteria .research-insight-card__media {
   margin-bottom: 0.5rem;
 }
 .project-page--oct .research-insight-cards--criteria .research-insight-card__implication {
-  margin-top: 0.625rem !important;
-  padding-top: 0.5rem;
+  margin-top: 1.171875rem !important;
+  padding-top: 0.9375rem;
 }
 .research-insight-card__arrow {
   display: inline-block;
@@ -5889,6 +5898,7 @@ body.is-settled #heroCopy [data-copy-line] {
 }
 @media (max-width: 760px) {
   .research-insight-cards__grid { grid-template-columns: 1fr; }
+  .research-insight-cards--criteria .research-insight-cards__grid { grid-template-columns: 1fr; }
 }
 
 /* ===== HBOM CASE-STUDY INTRO HIERARCHY =====
