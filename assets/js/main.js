@@ -131,8 +131,8 @@
       body: 'Go Duke! Currently pursuing an MEng in Design & Technology Innovation.'
     },
     earth: {
-      title: 'Earth',
-      body: "Born in Korea, grew up between China, Singapore, and the U.S. I've been the new kid enough times to know what it feels like when a space wasn't built with you in mind."
+      title: 'Where I’ve Lived',
+      body: 'Korea, China, Singapore, and the U.S.\nStill collecting places.'
     },
     film: {
       title: 'Movie Lover',
@@ -140,7 +140,7 @@
     },
     pokemon: {
       title: 'Pokémon',
-      body: 'Nintendo kid, still Nintendo adult. Pokémon has had me since I was little and my favorite is Arceus and Serperior!'
+      body: 'Nintendo kid, Nintendo adult.\nFavorites: Arceus and Serperior.'
     }
   };
 
@@ -249,6 +249,17 @@
     if (!surface || !window.PointerEvent) return;
 
     var drag = null;
+    var desktopInitialPositions = {
+      uofm: { left: 7.5, top: 31, shiftX: -0.18, drop: 1.1 },
+      duke: { left: 26, top: 22, shiftX: -0.22, drop: 1.1 },
+      earth: { left: 82, top: 28 },
+      // Use hero coordinates for the resting layout: five percentage points
+      // left and three points up from the former film position.
+      film: { left: 63, top: 38 },
+      // Lift Pokémon by twice its own height so it clears the bottom edge
+      // at every desktop size, rather than relying on a fixed pixel offset.
+      pokemon: { left: 78, top: 82, lift: 2 }
+    };
 
     function setPosition(button, x, y, surfaceRect) {
       var maxX = Math.max(0, surfaceRect.width - button.offsetWidth);
@@ -261,9 +272,19 @@
 
     function activateCanvas() {
       var surfaceRect = surface.getBoundingClientRect();
+      var useDesktopLayout = window.matchMedia('(min-width: 769px)').matches;
       var positions = stickers.map(function (button) {
         var rect = button.getBoundingClientRect();
-        return { button: button, x: rect.left - surfaceRect.left, y: rect.top - surfaceRect.top };
+        var preset = useDesktopLayout && desktopInitialPositions[button.getAttribute('data-sticker')];
+        return {
+          button: button,
+          x: preset
+            ? surfaceRect.width * preset.left / 100 + button.offsetWidth * (preset.shiftX || 0)
+            : rect.left - surfaceRect.left,
+          y: preset
+            ? surfaceRect.height * preset.top / 100 + button.offsetHeight * ((preset.drop || 0) - (preset.lift || 0))
+            : rect.top - surfaceRect.top
+        };
       });
 
       positions.forEach(function (entry) {

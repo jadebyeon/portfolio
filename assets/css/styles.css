@@ -2257,6 +2257,10 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   padding-top: 0;
 }
 
+/* The About page ends at its hero; do not insert the shared footer gap
+   before the next scroll section. */
+.about-page .footer { margin-top: 0; }
+
 .about-hero.section {
   /* Keep the complete hero visible on a 13-inch laptop viewport. */
   padding-top: clamp(1.5rem, 3vh, 2rem);
@@ -2333,43 +2337,51 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 
 /* Dragging takes the sticker buttons out of normal flow. Reserve the two
-   left-sticker slots so the speech bubble keeps its intended place below
-   them instead of re-centering over Duke. */
+   left-sticker slots while keeping their containing block as .about-hero,
+   so drag coordinates continue to span the entire illustration. */
 @media (min-width: 769px) {
   .about-avatar-gutter--left .about-gutter-stickers {
     min-height: clamp(23rem, 29vw, 31rem);
+  }
+  .about-avatar-gutter--left { grid-column: 1; grid-row: 1; }
+  .about-avatar-stage { grid-column: 2; grid-row: 1; }
+  .about-avatar-gutter--right { grid-column: 3; grid-row: 1; }
+
+  /* Put the hint in the left cell of the avatar row, not in a new grid row.
+     Its bottom edge therefore follows the avatar stage exactly. */
+  .about-hint {
+    position: relative;
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: end;
+    align-self: end;
+    transform: translate(75%, -638%);
+  }
+  .about-avatar-gutter--left {
+    align-self: stretch;
+  }
+  .about-hero .about-hint.is-hidden {
+    transform: translate(calc(75% - 0.5rem), -638%);
   }
 }
 
 .about-hint {
   position: relative;
   z-index: 4;
-  max-width: 12rem;
+  width: min(100%, clamp(16rem, 24vw, 23rem));
+  max-width: none;
   margin: 0;
-  padding: 0.75rem 1rem;
-  border: 1px solid #d8dce2;
-  border-radius: 1.1rem;
-  background: #fff;
-  color: var(--title-color);
-  box-shadow: 0 10px 24px rgba(17, 24, 39, 0.08);
-  font-size: 0.85rem;
-  line-height: 1.4;
-  text-align: left;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  display: block;
+  height: auto;
   transition: opacity 220ms ease, transform 220ms ease;
 }
 
 .about-hint::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  right: -0.4rem;
-  width: 0.8rem;
-  height: 0.8rem;
-  margin-top: -0.4rem;
-  border-right: 1px solid #d8dce2;
-  border-bottom: 1px solid #d8dce2;
-  background: #fff;
-  transform: rotate(-45deg);
+  display: none;
 }
 
 .about-hint.is-hidden {
@@ -2445,9 +2457,9 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 
 .about-sticker--uofm { --sticker-rotate: -6deg; --sticker-size: clamp(8.5rem, 15vw, 14rem); }
 .about-sticker--duke { --sticker-rotate: 5deg; --sticker-size: clamp(8.5rem, 15vw, 14rem); }
-.about-sticker--earth { --sticker-rotate: 6deg; --sticker-size: clamp(5.5rem, 8.5vw, 8rem); }
+.about-sticker--earth { --sticker-rotate: 6deg; --sticker-size: clamp(7.15rem, 11.05vw, 10.4rem); }
 .about-sticker--film { --sticker-rotate: -5deg; --sticker-size: clamp(7.5rem, 12.5vw, 12rem); }
-.about-sticker--pokemon { --sticker-rotate: -8deg; --sticker-size: clamp(4.75rem, 7vw, 6.5rem); }
+.about-sticker--pokemon { --sticker-rotate: -8deg; --sticker-size: clamp(6.175rem, 9.1vw, 8.45rem); }
 
 /* Desktop stickers can be rearranged within the About hero. Their original
    positions are captured in JS, then each stays a real button: click to
@@ -2624,6 +2636,49 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   filter: drop-shadow(0 0.55rem 0.55rem rgba(17, 24, 39, 0.18));
 }
 
+.about-sticker-card__world-map {
+  display: none;
+}
+
+.about-sticker-card[data-sticker-back="earth"] .about-sticker-card__world-map {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  left: 50%;
+  bottom: 26%;
+  width: 45.36%;
+  height: auto;
+  max-height: 33%;
+  object-fit: contain;
+  transform: translateX(-50%);
+}
+
+.about-sticker-card__pokemon {
+  display: none;
+}
+
+.about-sticker-card[data-sticker-back="pokemon"] .about-sticker-card__pokemon {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 18%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Both character centres sit the same distance from the card centre;
+   Serperior is deliberately 85% of Arceus's size. */
+.about-sticker-card[data-sticker-back="pokemon"] .about-sticker-card__pokemon--arceus {
+  top: 35.5%;
+  left: 14%;
+}
+
+.about-sticker-card[data-sticker-back="pokemon"] .about-sticker-card__pokemon--serperior {
+  top: 36.85%;
+  right: 15.35%;
+  width: 15.3%;
+}
+
 /* Duke's wordmark has an intentional transparent center. Keep the outer
    sticker contour but fill only that inner cutout on the flipped side so
    the copy remains readable. */
@@ -2726,13 +2781,32 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 
 .about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__face--back h2 {
-  font-size: clamp(1rem, 2.1vw, 1.35rem);
+  font-size: clamp(0.82rem, 2.1vw, 1.35rem);
 }
 
 .about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__face--back p:last-child {
-  font-size: clamp(0.8rem, 1.55vw, 1rem);
+  font-size: clamp(0.68rem, 1.55vw, 1rem);
   line-height: 1.45;
   white-space: pre-line;
+}
+
+/* The expanded Michigan M can be fairly wide while its usable copy area is
+   still narrow. Apply a compact type scale before the phone breakpoint so
+   its text never reaches the centre notch on tablet-sized screens. */
+@media (max-width: 1100px) {
+  .about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__content {
+    top: 40%;
+    left: 43%;
+    width: 45%;
+  }
+  .about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__face--back h2 {
+    font-size: clamp(0.78rem, 1.55vw, 0.98rem);
+    margin-bottom: 0.3rem;
+  }
+  .about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__face--back p:last-child {
+    font-size: clamp(0.65rem, 1.25vw, 0.82rem);
+    line-height: 1.32;
+  }
 }
 .about-sticker-card[data-sticker-back="duke"] .about-sticker-card__close {
   top: 12%;
@@ -2741,8 +2815,28 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 .about-sticker-card[data-sticker-back="earth"] .about-sticker-card__close {
   /* A circular sticker has no usable corner: inset the entire 48px
      target far enough that its hover surface stays within the circle. */
+  z-index: 4;
   top: 24%;
   right: 24%;
+}
+
+.about-sticker-card[data-sticker-back="earth"] .about-sticker-card__content {
+  position: absolute;
+  z-index: 3;
+  top: 27%;
+  left: 18%;
+  width: 64%;
+  max-width: none;
+  text-align: center;
+}
+
+.about-sticker-card[data-sticker-back="earth"] .about-sticker-card__face--back h2 {
+  margin-bottom: 0.45rem;
+}
+
+.about-sticker-card[data-sticker-back="earth"] .about-sticker-card__face--back p:last-child {
+  line-height: 1.4;
+  white-space: pre-line;
 }
 .about-sticker-card[data-sticker-back="film"] .about-sticker-card__close {
   top: 7%;
@@ -2751,6 +2845,25 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 .about-sticker-card[data-sticker-back="pokemon"] .about-sticker-card__close {
   top: 25%;
   right: 15%;
+}
+
+.about-sticker-card[data-sticker-back="pokemon"] .about-sticker-card__content {
+  position: absolute;
+  z-index: 3;
+  top: 41.5%;
+  left: 31%;
+  width: 38%;
+  max-width: none;
+  text-align: center;
+}
+
+.about-sticker-card[data-sticker-back="pokemon"] .about-sticker-card__face--back h2 {
+  margin-bottom: 0.35rem;
+}
+
+.about-sticker-card[data-sticker-back="pokemon"] .about-sticker-card__face--back p:last-child {
+  line-height: 1.4;
+  white-space: pre-line;
 }
 
 /* The clapper's title and short prompt sit high on the lower slate, leaving
@@ -2793,14 +2906,14 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 .about-sticker-card__face--back h2 {
   margin: 0 0 0.5rem;
   color: var(--title-color);
-  font-size: 1.15rem;
+  font-size: clamp(0.82rem, 1.8vw, 1.15rem);
   text-wrap: balance;
 }
 
 .about-sticker-card__face--back p:last-child {
   margin: 0;
   color: var(--text-color);
-  font-size: 0.95rem;
+  font-size: clamp(0.68rem, 1.5vw, 0.95rem);
   line-height: 1.6;
   text-wrap: pretty;
 }
@@ -2854,7 +2967,10 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
      option now that it holds real stickers, not just the hint. */
   .about-avatar-row {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    /* Leave a clear visual break below the wrapped subtitle before the
+       desktop-sized Michigan and Duke stickers begin. */
+    gap: 1.75rem;
+    margin-top: 1.5rem;
   }
   .about-avatar-gutter {
     flex-direction: row;
@@ -2867,13 +2983,24 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
     flex-wrap: wrap;
     justify-content: center;
   }
+  /* Dragging removes these buttons from flow after their initial layout is
+     captured. Reserve their visual height so the hint never jumps up and
+     overlaps the two stickers on phones. */
+  .about-avatar-gutter--left .about-gutter-stickers {
+    min-height: clamp(9rem, 30vw, 12rem);
+  }
   .about-hint {
-    max-width: 16rem;
-    text-align: center;
+    position: relative;
+    grid-column: auto;
+    grid-row: auto;
+    justify-self: center;
+    align-self: auto;
+    left: auto;
+    bottom: auto;
+    transform: none;
+    width: min(78%, 14rem);
   }
-  .about-hint::after {
-    display: none;
-  }
+  .about-hint.is-hidden { transform: translateX(-0.5rem); }
   .about-avatar-stage {
     max-width: min(100%, 370px);
   }
@@ -2895,6 +3022,19 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
     top: 41%;
     left: 43%;
     width: 45%;
+  }
+  .about-sticker-card__face--back h2 {
+    font-size: clamp(0.8rem, 3.6vw, 1rem);
+  }
+  .about-sticker-card__face--back p:last-child {
+    font-size: clamp(0.68rem, 3vw, 0.84rem);
+    line-height: 1.45;
+  }
+  .about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__face--back h2 {
+    font-size: clamp(0.78rem, 3.4vw, 0.96rem);
+  }
+  .about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__face--back p:last-child {
+    font-size: clamp(0.66rem, 2.8vw, 0.8rem);
   }
   .about-two-col {
     grid-template-columns: 1fr;
