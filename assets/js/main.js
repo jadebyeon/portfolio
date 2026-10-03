@@ -260,6 +260,11 @@
       // at every desktop size, rather than relying on a fixed pixel offset.
       pokemon: { left: 78, top: 82, lift: 2 }
     };
+    var mobileStickerOffsetY = {
+      earth: -16,
+      film: -16,
+      pokemon: -16
+    };
 
     function setPosition(button, x, y, surfaceRect) {
       var maxX = Math.max(0, surfaceRect.width - button.offsetWidth);
@@ -275,7 +280,9 @@
       var useDesktopLayout = window.matchMedia('(min-width: 769px)').matches;
       var positions = stickers.map(function (button) {
         var rect = button.getBoundingClientRect();
-        var preset = useDesktopLayout && desktopInitialPositions[button.getAttribute('data-sticker')];
+        var stickerName = button.getAttribute('data-sticker');
+        var preset = useDesktopLayout && desktopInitialPositions[stickerName];
+        var mobileOffsetY = useDesktopLayout ? 0 : (mobileStickerOffsetY[stickerName] || 0);
         return {
           button: button,
           x: preset
@@ -283,7 +290,7 @@
             : rect.left - surfaceRect.left,
           y: preset
             ? surfaceRect.height * preset.top / 100 + button.offsetHeight * ((preset.drop || 0) - (preset.lift || 0))
-            : rect.top - surfaceRect.top
+            : rect.top - surfaceRect.top + mobileOffsetY
         };
       });
 

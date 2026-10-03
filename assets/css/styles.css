@@ -2989,15 +2989,23 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   .about-avatar-gutter--left .about-gutter-stickers {
     min-height: clamp(9rem, 30vw, 12rem);
   }
+  /* Keep the hint directly beneath the avatar on phones, regardless of its
+     earlier position in the DOM, and pull it closer to the portrait. */
+  .about-avatar-stage {
+    grid-column: 1;
+    grid-row: 2;
+    transform: translateY(-5.7rem);
+  }
   .about-hint {
     position: relative;
-    grid-column: auto;
-    grid-row: auto;
+    grid-column: 1;
+    grid-row: 3;
     justify-self: center;
     align-self: auto;
     left: auto;
     bottom: auto;
-    transform: none;
+    transform: translateY(-6.3rem);
+    margin-top: -2.2rem;
     width: min(78%, 14rem);
   }
   .about-hint.is-hidden { transform: translateX(-0.5rem); }
