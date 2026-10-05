@@ -124,7 +124,7 @@
   var content = {
     uofm: {
       title: 'University of Michigan',
-      body: 'Go Blue! Dual-degree graduate with\nB.A. in Art & Design and B.S. in Statistics'
+      body: 'Go Blue! Dual-degree graduate with\nB.A. in Art & Design and B.S. in Statistics\n\nFavorite Place: Moge Tea 🧋 & Hatcher\u00a0Library 📚'
     },
     duke: {
       title: 'Duke',
