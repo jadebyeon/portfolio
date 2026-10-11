@@ -239,6 +239,7 @@ img { max-width: 100%; height: auto; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.55rem;
   color: var(--title-color) !important;
   font-weight: 700;
   letter-spacing: .2px;
@@ -249,6 +250,12 @@ img { max-width: 100%; height: auto; }
   width: 32px;
   height: 32px;
   object-fit: contain;
+}
+.brand__name {
+  font-family: var(--display-font);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
 }
 .brand:hover img,
 .brand:focus-visible img { animation: brand-flip 700ms cubic-bezier(0.22, 1, 0.36, 1); }
@@ -899,7 +906,7 @@ img { max-width: 100%; height: auto; }
   border: 0;
   border-radius: 999px;
   background: rgba(235, 235, 237, 0.72);
-  box-shadow: none;
+  box-shadow: 0 1rem 2.25rem rgba(36, 35, 41, 0.09);
   cursor: pointer;
   opacity: 0;
   pointer-events: none;
@@ -3115,7 +3122,7 @@ html {
 .site-menu {
   list-style: none;
   display: flex;
-  gap: 3rem;                 /* adjust spacing between items if you like */
+  gap: 1.25rem;
   align-items: center;
   margin: 0;
   padding: 0;
@@ -3123,11 +3130,16 @@ html {
 
 .site-menu .nav-link {
   position: relative;
+  display: inline-flex;
+  align-items: center;
   color: #6b7280;            /* grey */
   text-decoration: none;
+  font-size: 0.86rem;
   font-weight: 500;
-  padding-bottom: 0.25rem;
-  transition: color 0.25s ease;
+  line-height: 1.2;
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  transition: color 0.25s ease, background-color 0.25s ease;
 }
 
 .nav-link__external {
@@ -3138,26 +3150,18 @@ html {
   transform: translateY(-0.16em);
 }
 
-/* single underline that animates in */
 .site-menu .nav-link::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -0.4rem;
-  width: 0;
-  height: 2px;
-  background-color: #111827; /* black */
-  transition: width 0.25s ease;
+  display: none;
 }
 
-/* active state: black text + full-width underline */
 .site-menu .nav-link.active {
+  margin-inline: -0.25rem;
+  padding-inline: 1.1rem;
+  background: rgba(36, 35, 41, 0.08);
   color: #111827;
+  font-weight: 700;
 }
-
-.site-menu .nav-link.active::after {
-  width: 100%;
-}
+.site-menu .nav-link:hover { background: rgba(36, 35, 41, 0.05); }
 
 /* The control is injected once by main.js because every page already shares
    the same header markup. It stays out of desktop layout entirely. */
@@ -3752,7 +3756,7 @@ body.is-settled #heroCopy [data-copy-line] {
   background: #ffffff;
   border-radius: 20px;
   padding: 2rem 1.75rem;
-  border: 0;
+  border: 1px solid #e5e7eb;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -5919,9 +5923,9 @@ body.is-settled #heroCopy [data-copy-line] {
   box-sizing: border-box;
   padding: clamp(1.25rem, 2vw, 1.5rem);
   background: #fff;
-  border: 1px solid #e5e7eb;
+  border: 0;
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(36, 35, 41, 0.06);
+  box-shadow: 0 1rem 2.25rem rgba(36, 35, 41, 0.09);
   display: flex;
   flex-direction: column;
 }
@@ -6369,7 +6373,7 @@ body.is-settled #heroCopy [data-copy-line] {
   /* Keep the complete path available by default on screens that can
      accommodate it; compact layouts below retain the single-pill mode. */
   .section-nav {
-    width: clamp(32rem, 45vw, 42rem);
+    width: clamp(30rem, 42vw, 40rem);
   }
   .section-nav__list {
     height: 3rem;
