@@ -934,6 +934,186 @@ document.querySelectorAll('.footer__back').forEach(function (link) {
   }
 })();
 
+/*==================== OCT RESEARCH IMAGE LIGHTBOX ====================
+  Opens related persona, journey-map, and character-direction visuals at a
+  readable scale. Enter/Space opens a visual; Left/Right and the side
+  controls move within its image group; dots jump directly to an image. */
+(function () {
+  function init() {
+    var triggers = Array.prototype.slice.call(document.querySelectorAll('.oct-lightbox-trigger'));
+    var lightbox = document.getElementById('octImageLightbox');
+    if (!triggers.length || !lightbox) return;
+
+    var image = lightbox.querySelector('[data-oct-image-lightbox-image]');
+    var caption = lightbox.querySelector('[data-oct-image-lightbox-caption]');
+    var closeButton = lightbox.querySelector('.lightbox-close');
+    var previousButton = lightbox.querySelector('[data-oct-image-lightbox-previous]');
+    var nextButton = lightbox.querySelector('[data-oct-image-lightbox-next]');
+    var dots = lightbox.querySelector('[data-oct-image-lightbox-dots]');
+    var closeTimer = null;
+    var activeTrigger = null;
+    var activeGroup = [];
+    var activeIndex = 0;
+    var CLOSE_MS = 150;
+
+    function onKeydown(event) {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeLightbox();
+      } else if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        showImage(activeIndex - 1);
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        showImage(activeIndex + 1);
+      }
+    }
+
+    function setArrowState() {
+      var hasMultipleImages = activeGroup.length > 1;
+      previousButton.disabled = !hasMultipleImages;
+      nextButton.disabled = !hasMultipleImages;
+      previousButton.setAttribute('aria-label', 'Previous image');
+      nextButton.setAttribute('aria-label', 'Next image');
+    }
+
+    function renderDots() {
+      dots.innerHTML = '';
+      activeGroup.forEach(function (trigger, index) {
+        var dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'oct-image-lightbox__dot';
+        dot.setAttribute('aria-label', 'View image ' + (index + 1) + ' of ' + activeGroup.length + ': ' + trigger.alt);
+        dot.setAttribute('aria-current', index === activeIndex ? 'true' : 'false');
+        dot.addEventListener('click', function () {
+          showImage(index);
+        });
+        dots.appendChild(dot);
+      });
+    }
+
+    function showImage(index) {
+      if (!activeGroup.length) return;
+      activeIndex = (index + activeGroup.length) % activeGroup.length;
+      var trigger = activeGroup[activeIndex];
+      image.src = trigger.currentSrc || trigger.src;
+      image.alt = trigger.alt;
+      caption.textContent = trigger.alt;
+      renderDots();
+      setArrowState();
+    }
+
+    function openLightbox(trigger) {
+      if (closeTimer) {
+        clearTimeout(closeTimer);
+        closeTimer = null;
+      }
+
+      activeTrigger = trigger;
+      var groupName = trigger.getAttribute('data-oct-lightbox-group');
+      activeGroup = triggers.filter(function (item) {
+        return item.getAttribute('data-oct-lightbox-group') === groupName;
+      });
+      activeIndex = activeGroup.indexOf(trigger);
+      showImage(activeIndex);
+      lightbox.hidden = false;
+      void lightbox.offsetWidth;
+      lightbox.classList.add('is-open');
+      document.addEventListener('keydown', onKeydown);
+      if (closeButton) closeButton.focus();
+    }
+
+    function closeLightbox() {
+      if (lightbox.hidden) return;
+      lightbox.classList.remove('is-open');
+      document.removeEventListener('keydown', onKeydown);
+      closeTimer = setTimeout(function () {
+        lightbox.hidden = true;
+        image.removeAttribute('src');
+        if (activeTrigger) activeTrigger.focus();
+        activeTrigger = null;
+        activeGroup = [];
+        activeIndex = 0;
+        dots.innerHTML = '';
+      }, CLOSE_MS);
+    }
+
+    triggers.forEach(function (trigger) {
+      trigger.addEventListener('click', function () {
+        openLightbox(trigger);
+      });
+      trigger.addEventListener('keydown', function (event) {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        openLightbox(trigger);
+      });
+    });
+
+    lightbox.addEventListener('click', function (event) {
+      if (event.target.closest('.oct-image-lightbox__image, .oct-image-lightbox__caption, .oct-image-lightbox__arrow, .oct-image-lightbox__dots')) return;
+      closeLightbox();
+    });
+    previousButton.addEventListener('click', function () { showImage(activeIndex - 1); });
+    nextButton.addEventListener('click', function () { showImage(activeIndex + 1); });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+/*==================== PROJECT SECTION KEYBOARD NAVIGATION ====================
+  On project pages, Shift + Up/Down moves to the previous/next section and
+  places focus on its heading so the destination is announced. The shortcut
+  is ignored while a form field or editable content is active. */
+(function () {
+  function init() {
+    if (!document.body.classList.contains('project-page')) return;
+
+    function isEditable(element) {
+      return element && (element.matches('input, textarea, select, [contenteditable="true"]') || element.isContentEditable);
+    }
+
+    function currentSection(sections) {
+      var focusedSection = document.activeElement && document.activeElement.closest('.project-section');
+      if (focusedSection) return focusedSection;
+
+      var targetY = window.innerHeight * 0.25;
+      return sections.reduce(function (closest, section) {
+        return Math.abs(section.getBoundingClientRect().top - targetY) < Math.abs(closest.getBoundingClientRect().top - targetY) ? section : closest;
+      }, sections[0]);
+    }
+
+    document.addEventListener('keydown', function (event) {
+      if (!event.shiftKey || event.altKey || event.ctrlKey || event.metaKey || (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') || isEditable(document.activeElement)) return;
+
+      var sections = Array.prototype.slice.call(document.querySelectorAll('.project-section'));
+      if (!sections.length) return;
+      var current = currentSection(sections);
+      var currentIndex = sections.indexOf(current);
+      var nextIndex = event.key === 'ArrowDown' ? currentIndex + 1 : currentIndex - 1;
+      if (nextIndex < 0 || nextIndex >= sections.length) return;
+
+      event.preventDefault();
+      var destination = sections[nextIndex];
+      var heading = destination.querySelector('h1, h2, h3');
+      destination.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+      if (heading) {
+        heading.setAttribute('tabindex', '-1');
+        heading.focus({ preventScroll: true });
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
 /*==================== PERSONA COPY ====================
   Single place to edit the hero copy per audience tab.
 
