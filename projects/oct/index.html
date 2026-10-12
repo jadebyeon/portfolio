@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
-  <link rel="stylesheet" href="../../assets/css/styles.css"/>
+  <link rel="stylesheet" href="../../assets/css/styles.css?v=20261011"/>
   <link rel="icon" type="image/png" href="../../assets/img/favicon.png?v=2" />
   <title>Pediatric Eye Exam Robot: Jade Byeon</title>
   <meta name="description" content="Character design system and caregiver research for a pediatric OCT eye-exam robot at Kellogg Eye Center. Bradley-Terry preference modeling, storyboarding, and pre-exposure media by Jade Byeon." />
@@ -243,6 +243,16 @@
       text-align: center;
       text-transform: none;
       letter-spacing: 0.04em;
+    }
+    .project-page--oct .oct-reflection-column__emoji {
+      display: inline-block;
+      font-size: 1.3em;
+      line-height: 0;
+      margin-right: 0.15em;
+      vertical-align: -0.08em;
+    }
+    .project-page--oct .oct-reflection-column__emoji--spaced {
+      margin-right: 0.32em;
     }
 
     .project-page--oct .oct-reflection-item + .oct-reflection-item {
@@ -625,7 +635,7 @@
         <div class="project-section__body">
           <div class="oct-reflection-grid">
             <section class="oct-reflection-column" aria-labelledby="reflection-constraints">
-              <p class="oct-reflection-column__label" id="reflection-constraints">Constraints</p>
+              <p class="oct-reflection-column__label" id="reflection-constraints"><span class="oct-reflection-column__emoji" aria-hidden="true">❗</span>Constraints</p>
               <div class="oct-reflection-item">
                 <h3 class="oct-reflection-item__title">Learning an unfamiliar domain</h3>
                 <p class="oct-reflection-item__body">I knew little about medical devices or robotics going in. Working with engineers and clinicians meant learning enough, fast, to make design decisions they could trust.</p>
@@ -637,7 +647,7 @@
             </section>
 
             <section class="oct-reflection-column" aria-labelledby="reflection-improvement">
-              <p class="oct-reflection-column__label" id="reflection-improvement">Room for Improvement</p>
+              <p class="oct-reflection-column__label" id="reflection-improvement"><span class="oct-reflection-column__emoji oct-reflection-column__emoji--spaced" aria-hidden="true">💪</span>Room for Improvement</p>
               <div class="oct-reflection-item">
                 <h3 class="oct-reflection-item__title">Testing earlier</h3>
                 <p class="oct-reflection-item__body">Validation came late. I'd want to get a rough prototype in front of real testing sooner instead of refining internally first.</p>
@@ -645,7 +655,7 @@
             </section>
 
             <section class="oct-reflection-column" aria-labelledby="reflection-next-steps">
-              <p class="oct-reflection-column__label" id="reflection-next-steps">Next Steps</p>
+              <p class="oct-reflection-column__label" id="reflection-next-steps"><span class="oct-reflection-column__emoji oct-reflection-column__emoji--spaced" aria-hidden="true">➡️</span>Next Steps</p>
               <div class="oct-reflection-item">
                 <h3 class="oct-reflection-item__title">From concept to physical robot</h3>
                 <p class="oct-reflection-item__body">Carrying this from a concept film into an actual behavior on the robot itself.</p>

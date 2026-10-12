@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" />
-  <link rel="stylesheet" href="../../assets/css/styles.css" />
+  <link rel="stylesheet" href="../../assets/css/styles.css?v=20261011" />
   <link rel="icon" type="image/png" href="../../assets/img/favicon.png?v=2" />
   <title>Wearby: OOTD Diary Companion</title>
   <meta name="description" content="Wearby, a playful OOTD diary companion for daily reflection, designed and built by Jade Byeon." />
@@ -43,6 +43,8 @@
     .ootd-screens img { display: block; width: auto; max-width: 100%; max-height: 75vh; margin: 0 auto; }
     .project-page--ootd .ootd-reflection-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(2rem, 4vw, 4rem); align-items: start; }
     .project-page--ootd .project-section__body .ootd-reflection-column__label { margin: 0 0 1rem; padding: 0.75rem 1rem; border-radius: 0.375rem; background: rgba(36, 35, 41, 0.04); color: var(--ootd-ink); font-size: 0.75rem; font-weight: 600; line-height: 1.2; text-align: center; letter-spacing: 0.04em; }
+    .project-page--ootd .ootd-reflection-column__emoji { display: inline-block; font-size: 1.3em; line-height: 0; margin-right: 0.15em; vertical-align: -0.08em; }
+    .project-page--ootd .ootd-reflection-column__emoji--spaced { margin-right: 0.32em; }
     .project-page--ootd .ootd-reflection-item + .ootd-reflection-item { margin-top: 1rem; }
     .project-page--ootd .ootd-reflection-grid h3.ootd-reflection-item__title { margin: 0 0 0.375rem; color: var(--ootd-ink); font-size: 1rem; font-weight: 600; line-height: 1.35; }
     .project-page--ootd .ootd-reflection-grid p.ootd-reflection-item__body { margin: 0; color: var(--ootd-body); font-size: 0.9375rem; line-height: 1.6; }
@@ -150,7 +152,7 @@
             <div class="project-section__body">
               <div class="ootd-reflection-grid">
                 <section class="ootd-reflection-column" aria-labelledby="ootd-reflection-constraints">
-                  <p class="ootd-reflection-column__label" id="ootd-reflection-constraints">Constraints</p>
+                  <p class="ootd-reflection-column__label" id="ootd-reflection-constraints"><span class="ootd-reflection-column__emoji" aria-hidden="true">❗</span>Constraints</p>
                   <div class="ootd-reflection-item">
                     <h3 class="ootd-reflection-item__title">Working solo</h3>
                     <p class="ootd-reflection-item__body">No one to check my decisions. I had to catch my own mistakes before testing with users.</p>
@@ -161,14 +163,14 @@
                   </div>
                 </section>
                 <section class="ootd-reflection-column" aria-labelledby="ootd-reflection-improvement">
-                  <p class="ootd-reflection-column__label" id="ootd-reflection-improvement">Room for Improvement</p>
+                  <p class="ootd-reflection-column__label" id="ootd-reflection-improvement"><span class="ootd-reflection-column__emoji ootd-reflection-column__emoji--spaced" aria-hidden="true">💪</span>Room for Improvement</p>
                   <div class="ootd-reflection-item">
                     <h3 class="ootd-reflection-item__title">Usability testing</h3>
                     <p class="ootd-reflection-item__body">I tested the character early, but never the full app. I'd test the whole flow next time.</p>
                   </div>
                 </section>
                 <section class="ootd-reflection-column" aria-labelledby="ootd-reflection-next-steps">
-                  <p class="ootd-reflection-column__label" id="ootd-reflection-next-steps">Next Steps</p>
+                  <p class="ootd-reflection-column__label" id="ootd-reflection-next-steps"><span class="ootd-reflection-column__emoji ootd-reflection-column__emoji--spaced" aria-hidden="true">➡️</span>Next Steps</p>
                   <div class="ootd-reflection-item">
                     <h3 class="ootd-reflection-item__title">Long-term testing</h3>
                     <p class="ootd-reflection-item__body">One test session can't show if the habit sticks. I'd want to see if people keep using it after a few weeks.</p>

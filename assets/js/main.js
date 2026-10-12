@@ -93,7 +93,7 @@
   var smile = avatar.querySelector('[data-about-smile]');
   // Stickers float in the side gutters now, not on the face, so they're
   // no longer inside `avatar` -- scoped from the document instead.
-  var stickers = Array.prototype.slice.call(document.querySelectorAll('[data-sticker]'));
+  var stickers = Array.prototype.slice.call(document.querySelectorAll('[data-sticker], [data-sticker-decorative]'));
   var hint = document.querySelector('[data-about-hint]');
 
   var overlay = document.querySelector('[data-sticker-overlay]');
@@ -255,10 +255,14 @@
       earth: { left: 82, top: 28 },
       // Use hero coordinates for the resting layout: five percentage points
       // left and three points up from the former film position.
-      film: { left: 63, top: 38 },
+      film: { left: 63, top: 22 },
       // Lift Pokémon by twice its own height so it clears the bottom edge
       // at every desktop size, rather than relying on a fixed pixel offset.
-      pokemon: { left: 78, top: 82, lift: 2 }
+      pokemon: { left: 84, top: 82, lift: 2 },
+      // The new photo stickers frame the illustration without competing with
+      // the central avatar: one sits high on the left, the other low right.
+      birthday: { left: 8, top: 17 },
+      'uofm-jade': { left: 69, top: 56 }
     };
     var mobileStickerOffsetY = {
       earth: -16,
@@ -280,7 +284,7 @@
       var useDesktopLayout = window.matchMedia('(min-width: 769px)').matches;
       var positions = stickers.map(function (button) {
         var rect = button.getBoundingClientRect();
-        var stickerName = button.getAttribute('data-sticker');
+        var stickerName = button.getAttribute('data-sticker') || button.getAttribute('data-sticker-decorative');
         var preset = useDesktopLayout && desktopInitialPositions[stickerName];
         var mobileOffsetY = useDesktopLayout ? 0 : (mobileStickerOffsetY[stickerName] || 0);
         return {
@@ -528,6 +532,9 @@
         delete button.dataset.ignoreStickerClick;
         return;
       }
+      // These photo stickers are part of the movable composition only; they
+      // deliberately do not open a duplicate information card.
+      if (button.hasAttribute('data-sticker-decorative')) return;
       if (isOpen && activeButton === button) {
         close();
       } else if (isOpen) {
@@ -1042,6 +1049,132 @@ document.querySelectorAll('.footer__back').forEach(function (link) {
       trigger.addEventListener('click', function () {
         openLightbox(trigger);
       });
+      trigger.addEventListener('keydown', function (event) {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        openLightbox(trigger);
+      });
+    });
+
+    lightbox.addEventListener('click', function (event) {
+      if (event.target.closest('.oct-image-lightbox__image, .oct-image-lightbox__caption, .oct-image-lightbox__arrow, .oct-image-lightbox__dots')) return;
+      closeLightbox();
+    });
+    previousButton.addEventListener('click', function () { showImage(activeIndex - 1); });
+    nextButton.addEventListener('click', function () { showImage(activeIndex + 1); });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+/*==================== HBOM RESEARCH IMAGE LIGHTBOX ====================
+  Uses the same interaction model as OCT: keyboard activation, grouped
+  arrow-key navigation, side controls, dots, backdrop close, and Escape. */
+(function () {
+  function init() {
+    var triggers = Array.prototype.slice.call(document.querySelectorAll('.hbom-lightbox-trigger'));
+    var lightbox = document.getElementById('hbomImageLightbox');
+    if (!triggers.length || !lightbox) return;
+
+    var image = lightbox.querySelector('[data-hbom-image-lightbox-image]');
+    var caption = lightbox.querySelector('[data-hbom-image-lightbox-caption]');
+    var dialog = lightbox.querySelector('.lightbox-content');
+    var previousButton = lightbox.querySelector('[data-hbom-image-lightbox-previous]');
+    var nextButton = lightbox.querySelector('[data-hbom-image-lightbox-next]');
+    var dots = lightbox.querySelector('[data-hbom-image-lightbox-dots]');
+    var closeTimer = null;
+    var activeTrigger = null;
+    var activeGroup = [];
+    var activeIndex = 0;
+    var CLOSE_MS = 150;
+
+    function onKeydown(event) {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeLightbox();
+      } else if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        showImage(activeIndex - 1);
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        showImage(activeIndex + 1);
+      }
+    }
+
+    function setArrowState() {
+      var hasMultipleImages = activeGroup.length > 1;
+      previousButton.disabled = !hasMultipleImages;
+      nextButton.disabled = !hasMultipleImages;
+    }
+
+    function renderDots() {
+      dots.innerHTML = '';
+      activeGroup.forEach(function (trigger, index) {
+        var dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'oct-image-lightbox__dot';
+        dot.setAttribute('aria-label', 'View image ' + (index + 1) + ' of ' + activeGroup.length + ': ' + trigger.alt);
+        dot.setAttribute('aria-current', index === activeIndex ? 'true' : 'false');
+        dot.addEventListener('click', function () { showImage(index); });
+        dots.appendChild(dot);
+      });
+    }
+
+    function showImage(index) {
+      if (!activeGroup.length) return;
+      activeIndex = (index + activeGroup.length) % activeGroup.length;
+      var trigger = activeGroup[activeIndex];
+      image.src = trigger.currentSrc || trigger.src;
+      image.alt = trigger.alt;
+      caption.textContent = trigger.alt;
+      renderDots();
+      setArrowState();
+    }
+
+    function openLightbox(trigger) {
+      if (closeTimer) {
+        clearTimeout(closeTimer);
+        closeTimer = null;
+      }
+      activeTrigger = trigger;
+      var groupName = trigger.getAttribute('data-hbom-lightbox-group');
+      activeGroup = triggers.filter(function (item) {
+        return item.getAttribute('data-hbom-lightbox-group') === groupName;
+      });
+      activeIndex = activeGroup.indexOf(trigger);
+      showImage(activeIndex);
+      lightbox.hidden = false;
+      void lightbox.offsetWidth;
+      lightbox.classList.add('is-open');
+      document.addEventListener('keydown', onKeydown);
+      if (activeGroup.length > 1 && previousButton) {
+        previousButton.focus();
+      } else if (dialog) {
+        dialog.focus();
+      }
+    }
+
+    function closeLightbox() {
+      if (lightbox.hidden) return;
+      lightbox.classList.remove('is-open');
+      document.removeEventListener('keydown', onKeydown);
+      closeTimer = setTimeout(function () {
+        lightbox.hidden = true;
+        image.removeAttribute('src');
+        if (activeTrigger) activeTrigger.focus();
+        activeTrigger = null;
+        activeGroup = [];
+        activeIndex = 0;
+        dots.innerHTML = '';
+      }, CLOSE_MS);
+    }
+
+    triggers.forEach(function (trigger) {
+      trigger.addEventListener('click', function () { openLightbox(trigger); });
       trigger.addEventListener('keydown', function (event) {
         if (event.key !== 'Enter' && event.key !== ' ') return;
         event.preventDefault();
@@ -2085,38 +2218,38 @@ var PERSONA_COPY = {
   No hover-triggered switching anywhere. No-ops on pages without .hbom-tabs. */
 (function () {
   function init() {
-    var root = document.querySelector('.hbom-tabs');
-    if (!root) return;
+    var roots = Array.prototype.slice.call(document.querySelectorAll('.hbom-tabs'));
+    roots.forEach(function (root) {
+      var tabs = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));
+      if (!tabs.length) return;
 
-    var tabs = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));
-    if (!tabs.length) return;
+      function activate(tab) {
+        tabs.forEach(function (t) {
+          var selected = t === tab;
+          t.setAttribute('aria-selected', selected ? 'true' : 'false');
+          t.tabIndex = selected ? 0 : -1;
+          var panel = document.getElementById(t.getAttribute('aria-controls'));
+          if (panel) panel.classList.toggle('is-active', selected);
+        });
+      }
 
-    function activate(tab) {
-      tabs.forEach(function (t) {
-        var selected = t === tab;
-        t.setAttribute('aria-selected', selected ? 'true' : 'false');
-        t.tabIndex = selected ? 0 : -1;
-        var panel = document.getElementById(t.getAttribute('aria-controls'));
-        if (panel) panel.classList.toggle('is-active', selected);
-      });
-    }
-
-    tabs.forEach(function (tab, i) {
-      tab.addEventListener('click', function () {
-        activate(tab);
-      });
-      tab.addEventListener('keydown', function (e) {
-        var next;
-        if (e.key === 'ArrowRight') {
-          next = tabs[(i + 1) % tabs.length];
-        } else if (e.key === 'ArrowLeft') {
-          next = tabs[(i - 1 + tabs.length) % tabs.length];
-        } else {
-          return;
-        }
-        e.preventDefault();
-        next.focus();
-        activate(next);
+      tabs.forEach(function (tab, i) {
+        tab.addEventListener('click', function () {
+          activate(tab);
+        });
+        tab.addEventListener('keydown', function (e) {
+          var next;
+          if (e.key === 'ArrowRight') {
+            next = tabs[(i + 1) % tabs.length];
+          } else if (e.key === 'ArrowLeft') {
+            next = tabs[(i - 1 + tabs.length) % tabs.length];
+          } else {
+            return;
+          }
+          e.preventDefault();
+          next.focus();
+          activate(next);
+        });
       });
     });
   }

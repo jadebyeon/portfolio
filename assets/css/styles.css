@@ -239,7 +239,7 @@ img { max-width: 100%; height: auto; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.55rem;
+  gap: 0.9rem;
   color: var(--title-color) !important;
   font-weight: 700;
   letter-spacing: .2px;
@@ -2467,6 +2467,8 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 .about-sticker--earth { --sticker-rotate: 6deg; --sticker-size: clamp(7.15rem, 11.05vw, 10.4rem); }
 .about-sticker--film { --sticker-rotate: -5deg; --sticker-size: clamp(7.5rem, 12.5vw, 12rem); }
 .about-sticker--pokemon { --sticker-rotate: -8deg; --sticker-size: clamp(6.175rem, 9.1vw, 8.45rem); }
+.about-sticker--birthday { --sticker-rotate: -12deg; --sticker-size: clamp(6.75rem, 9.5vw, 9.5rem); }
+.about-sticker--uofm-jade { --sticker-rotate: 10deg; --sticker-size: clamp(6.75rem, 9.5vw, 9.5rem); }
 
 /* Desktop stickers can be rearranged within the About hero. Their original
    positions are captured in JS, then each stays a real button: click to
@@ -5011,9 +5013,19 @@ body.is-settled #heroCopy [data-copy-line] {
 .project-page--oct .oct-lightbox-trigger {
   cursor: zoom-in;
 }
+.project-page--hbom .hbom-lightbox-trigger {
+  cursor: zoom-in;
+}
 .project-page--oct .oct-lightbox-trigger:focus-visible {
   outline: 3px solid #2457c5;
   outline-offset: 4px;
+}
+.project-page--hbom .hbom-lightbox-trigger:focus-visible {
+  outline: 3px solid #2457c5;
+  outline-offset: 4px;
+}
+.hbom-image-lightbox .lightbox-content:focus {
+  outline: none;
 }
 .oct-image-lightbox__content {
   width: 100%;

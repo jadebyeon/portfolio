@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
-  <link rel="stylesheet" href="../../assets/css/styles.css"/>
+  <link rel="stylesheet" href="../../assets/css/styles.css?v=20261011"/>
   <link rel="icon" type="image/png" href="../../assets/img/favicon.png?v=2" />
   <title>Nutrition Benefits Resource Hub: Jade Byeon</title>
   <meta name="description" content="Information architecture and web experience design for a filterable nutrition benefits resource hub for HBOM at the University of Michigan, by Jade Byeon." />
@@ -25,6 +25,35 @@
     }
     .project-page--hbom .project-section__body .figure-caption {
       margin: 8px 0 0;
+    }
+
+    /* Use one measured panel offset for both tab groups, so the first line
+       of a design decision sits at the same distance as a Features image. */
+    .project-page--hbom .hbom-tabs__panel {
+      margin-top: 1.5rem;
+    }
+    /* Text has a small visual offset from its line box after the divider.
+       Match that optical gap for the pill bar rather than making it tighter. */
+    .project-page--hbom .hbom-tabs__bar {
+      margin-top: 0.5rem;
+      box-shadow: 0 0.5rem 1.5rem rgba(36, 35, 41, 0.07);
+    }
+
+    /* Design decisions retain their original reading order inside tabs:
+       the full-width rationale comes first, followed by the visual. */
+    .project-page--hbom .hbom-decision-tabs .hbom-tabs__panel.is-active {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .project-page--hbom .hbom-decision-tabs .hbom-tabs__copy {
+      order: 1;
+      width: 100%;
+    }
+    .project-page--hbom .hbom-decision-tabs .hbom-tabs__media {
+      order: 2;
+      width: 100%;
+      margin-top: var(--hbom-media-space);
     }
 
     .hbom-decision-beat {
@@ -131,6 +160,16 @@
       line-height: 1.2;
       text-align: center;
       letter-spacing: 0.04em;
+    }
+    .project-page--hbom .hbom-reflection-column__emoji {
+      display: inline-block;
+      font-size: 1.3em;
+      line-height: 0;
+      margin-right: 0.15em;
+      vertical-align: -0.08em;
+    }
+    .project-page--hbom .hbom-reflection-column__emoji--spaced {
+      margin-right: 0.32em;
     }
     .project-page--hbom .hbom-reflection-grid h3.hbom-reflection-item__title {
       margin: 0 0 0.375rem;
@@ -292,7 +331,7 @@
           <p>I compared existing food and health resource sites to understand how they organize resources and support browsing.</p>
           <figure class="single-tile-figure">
             <div class="single-tile">
-              <img src="../../assets/img/hbom-audit.png?v=2" alt="Competitive audit of three existing food-as-medicine and health resource site homepages">
+              <img class="hbom-lightbox-trigger" data-hbom-lightbox-group="comparative-audit" src="../../assets/img/hbom-audit.png?v=2" alt="Competitive audit of three existing food-as-medicine and health resource site homepages" role="button" tabindex="0" aria-label="Open competitive audit enlarged">
             </div>
           </figure>
           <p>The review showed that visitors needed a clearer starting point and more context before opening a resource. These findings informed the hub’s filters and resource-card design.</p>
@@ -306,38 +345,44 @@
         <p class="project-section__eyebrow">Ideation</p>
         <h2 class="section-icon-title project-section__title">Design decisions</h2>
         <div class="project-section__body">
+          <div class="hbom-tabs hbom-decision-tabs" id="hbomDecisionTabs">
+            <div class="hbom-tabs__bar" role="tablist" aria-label="Design decisions">
+              <button type="button" class="hbom-tabs__tab" id="hbomDecisionTab-filter" role="tab" aria-selected="true" aria-controls="hbomDecisionPanel-filter">01. Filter placement</button>
+              <button type="button" class="hbom-tabs__tab" id="hbomDecisionTab-layout" role="tab" aria-selected="false" aria-controls="hbomDecisionPanel-layout" tabindex="-1">02. Resource detail layout</button>
+              <button type="button" class="hbom-tabs__tab" id="hbomDecisionTab-cards" role="tab" aria-selected="false" aria-controls="hbomDecisionPanel-cards" tabindex="-1">03. Resource cards</button>
+            </div>
 
-          <div class="hbom-decision-beat">
-            <h3 class="hbom-decision-beat__heading">01. Filter placement</h3>
-            <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__challenge-label">Challenge:</span> Visitors needed to narrow resources, while filters had to stay visible as categories grew.</p>
-            <p class="hbom-decision-beat__explanation">Side and top filters solved different parts of the problem. I developed both directions and presented their trade-offs to the project team in a <span class="text-mint" style="color: #2457c5; font-weight: 400;">comparative evaluation</span>. We combined them in the final layout: a top filter for visibility and a side filter for depth.</p>
-            <figure class="single-tile-figure">
-              <div class="single-tile hbom-crop-top">
-                <img src="../../assets/img/hbom_Filter%20placement.png" alt="Filter placement options compared: top, side, and combined filters">
+            <div class="hbom-tabs__panels">
+              <div class="hbom-tabs__panel is-active" id="hbomDecisionPanel-filter" role="tabpanel" aria-labelledby="hbomDecisionTab-filter" tabindex="0">
+                <div class="hbom-tabs__media single-tile hbom-crop-top">
+                  <img class="hbom-lightbox-trigger" data-hbom-lightbox-group="design-decisions" src="../../assets/img/hbom_Filter%20placement.png" alt="Filter placement options compared: top, side, and combined filters" role="button" tabindex="0" aria-label="Open filter placement options enlarged">
+                </div>
+                <div class="hbom-tabs__copy">
+                  <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__challenge-label"><span aria-hidden="true">❗</span>Challenge:</span> Visitors needed to narrow resources, while filters had to stay visible as categories grew.</p>
+                  <p class="hbom-decision-beat__explanation">Side and top filters solved different parts of the problem. I developed both directions and presented their trade-offs to the project team in a <span class="text-mint" style="color: #2457c5; font-weight: 400;">comparative evaluation</span>. We combined them in the final layout: a top filter for visibility and a side filter for depth.</p>
+                </div>
               </div>
-            </figure>
-          </div>
 
-          <div class="hbom-decision-beat">
-            <h3 class="hbom-decision-beat__heading">02. Resource detail layout</h3>
-            <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__challenge-label">Challenge:</span> The page needed to support both reading and requesting resources without letting either compete with the other.</p>
-            <p class="hbom-decision-beat__explanation">I explored two ways to place the request form alongside the resource. A <span class="text-mint" style="color: #2457c5; font-weight: 400;">comparative evaluation</span> with the project team showed the full-width layout kept the resource easier to focus on, so I moved the form below the content.</p>
-            <figure class="single-tile-figure">
-              <div class="single-tile hbom-crop-top">
-                <img src="../../assets/img/hbom_Resource%20detail%20layout.png" alt="Resource detail layout options compared">
+              <div class="hbom-tabs__panel" id="hbomDecisionPanel-layout" role="tabpanel" aria-labelledby="hbomDecisionTab-layout" tabindex="0">
+                <div class="hbom-tabs__media single-tile hbom-crop-top">
+                  <img class="hbom-lightbox-trigger" data-hbom-lightbox-group="design-decisions" src="../../assets/img/hbom_Resource%20detail%20layout.png" alt="Resource detail layout options compared" role="button" tabindex="0" aria-label="Open resource detail layout options enlarged">
+                </div>
+                <div class="hbom-tabs__copy">
+                  <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__challenge-label"><span aria-hidden="true">❗</span>Challenge:</span> The page needed to support both reading and requesting resources without letting either compete with the other.</p>
+                  <p class="hbom-decision-beat__explanation">I explored two ways to place the request form alongside the resource. A <span class="text-mint" style="color: #2457c5; font-weight: 400;">comparative evaluation</span> with the project team showed the full-width layout kept the resource easier to focus on, so I moved the form below the content.</p>
+                </div>
               </div>
-            </figure>
-          </div>
 
-          <div class="hbom-decision-beat">
-            <h3 class="hbom-decision-beat__heading">03. Resource cards</h3>
-            <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__challenge-label">Challenge:</span> Visitors needed enough context to judge a resource before opening it.</p>
-            <p class="hbom-decision-beat__explanation">I designed eight card variations, each with a different information hierarchy and use case. After <span class="text-mint" style="color: #2457c5; font-weight: 400;">preference testing</span> with the project team, I developed the preferred direction further and kept the resource type, source, and reading time visible before the click.</p>
-            <figure class="single-tile-figure">
-              <div class="single-tile">
-                <img src="../../assets/img/hbom-feedback.png" alt="Resource card variations and final direction">
+              <div class="hbom-tabs__panel" id="hbomDecisionPanel-cards" role="tabpanel" aria-labelledby="hbomDecisionTab-cards" tabindex="0">
+                <div class="hbom-tabs__media single-tile">
+                  <img class="hbom-lightbox-trigger" data-hbom-lightbox-group="design-decisions" src="../../assets/img/hbom-feedback.png" alt="Resource card variations and final direction" role="button" tabindex="0" aria-label="Open resource card design options enlarged">
+                </div>
+                <div class="hbom-tabs__copy">
+                  <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__challenge-label"><span aria-hidden="true">❗</span>Challenge:</span> Visitors needed enough context to judge a resource before opening it.</p>
+                  <p class="hbom-decision-beat__explanation">I designed eight card variations, each with a different information hierarchy and use case. After <span class="text-mint" style="color: #2457c5; font-weight: 400;">preference testing</span> with the project team, I developed the preferred direction further and kept the resource type, source, and reading time visible before the click.</p>
+                </div>
               </div>
-            </figure>
+            </div>
           </div>
         </div>
       </div>
@@ -347,10 +392,10 @@
     <section class="project-section project-section--context final-outcome section-nav-target hbom-final-solution" id="outcome">
       <div class="content-container">
         <p class="project-section__eyebrow">Final Solution</p>
-        <h2 class="section-icon-title project-section__title">Inside the Hub</h2>
+        <h2 class="section-icon-title project-section__title">Features</h2>
         <div class="project-section__body">
           <div class="hbom-tabs" id="hbomFeatureTabs">
-            <div class="hbom-tabs__bar" role="tablist" aria-label="Inside the Hub">
+            <div class="hbom-tabs__bar" role="tablist" aria-label="Features">
               <button type="button" class="hbom-tabs__tab" id="hbomTab-filters" role="tab" aria-selected="true" aria-controls="hbomPanel-filters">Filters</button>
               <button type="button" class="hbom-tabs__tab" id="hbomTab-form" role="tab" aria-selected="false" aria-controls="hbomPanel-form" tabindex="-1">Request form</button>
               <button type="button" class="hbom-tabs__tab" id="hbomTab-detail" role="tab" aria-selected="false" aria-controls="hbomPanel-detail" tabindex="-1">Detail page</button>
@@ -417,7 +462,7 @@
         <div class="project-section__body">
           <div class="hbom-reflection-grid">
             <section class="hbom-reflection-column" aria-labelledby="hbom-reflection-constraints">
-              <p class="hbom-reflection-column__label" id="hbom-reflection-constraints">Constraints</p>
+              <p class="hbom-reflection-column__label" id="hbom-reflection-constraints"><span class="hbom-reflection-column__emoji" aria-hidden="true">❗</span>Constraints</p>
               <div class="hbom-reflection-item">
                 <h3 class="hbom-reflection-item__title">Learning Webflow</h3>
                 <p class="hbom-reflection-item__body">This was my first Webflow project. I had to learn its classes and CMS while building the site.</p>
@@ -425,7 +470,7 @@
             </section>
 
             <section class="hbom-reflection-column" aria-labelledby="hbom-reflection-improvement">
-              <p class="hbom-reflection-column__label" id="hbom-reflection-improvement">Room for Improvement</p>
+              <p class="hbom-reflection-column__label" id="hbom-reflection-improvement"><span class="hbom-reflection-column__emoji hbom-reflection-column__emoji--spaced" aria-hidden="true">💪</span>Room for Improvement</p>
               <div class="hbom-reflection-item">
                 <h3 class="hbom-reflection-item__title">Building trust earlier</h3>
                 <p class="hbom-reflection-item__body">For a health-related site, sources and update dates matter. I would plan these details earlier, starting with the first wireframes.</p>
@@ -433,7 +478,7 @@
             </section>
 
             <section class="hbom-reflection-column" aria-labelledby="hbom-reflection-next-steps">
-              <p class="hbom-reflection-column__label" id="hbom-reflection-next-steps">Next Steps</p>
+              <p class="hbom-reflection-column__label" id="hbom-reflection-next-steps"><span class="hbom-reflection-column__emoji hbom-reflection-column__emoji--spaced" aria-hidden="true">➡️</span>Next Steps</p>
               <div class="hbom-reflection-item">
                 <h3 class="hbom-reflection-item__title">Growing the library</h3>
                 <p class="hbom-reflection-item__body">As HBOM adds more resources, I would test the filters and categories again to keep browsing simple.</p>
@@ -461,6 +506,22 @@
       </div>
     </div>
   </main>
+
+  <!-- HBOM RESEARCH IMAGE LIGHTBOX -->
+  <div class="lightbox oct-image-lightbox hbom-image-lightbox" id="hbomImageLightbox" hidden>
+    <div class="lightbox-backdrop" data-hbom-image-lightbox-close></div>
+    <div class="lightbox-content oct-image-lightbox__content" role="dialog" aria-modal="true" aria-label="Expanded HBOM research image" tabindex="-1">
+      <div class="oct-image-lightbox__panel">
+        <div class="oct-image-lightbox__visual">
+          <img class="oct-image-lightbox__image" data-hbom-image-lightbox-image src="" alt="">
+          <button type="button" class="oct-image-lightbox__arrow oct-image-lightbox__arrow--previous" data-hbom-image-lightbox-previous aria-label="Previous image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8"></path></svg></button>
+          <button type="button" class="oct-image-lightbox__arrow oct-image-lightbox__arrow--next" data-hbom-image-lightbox-next aria-label="Next image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 4 8 8-8 8"></path></svg></button>
+        </div>
+        <p class="oct-image-lightbox__caption" data-hbom-image-lightbox-caption aria-live="polite"></p>
+        <div class="oct-image-lightbox__dots" data-hbom-image-lightbox-dots aria-label="Image navigation"></div>
+      </div>
+    </div>
+  </div>
 
   <footer class="footer" id="footer">
     <div class="container footer__inner">
