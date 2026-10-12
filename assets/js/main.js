@@ -94,17 +94,26 @@
   // Stickers float in the side gutters now, not on the face, so they're
   // no longer inside `avatar` -- scoped from the document instead.
   var stickers = Array.prototype.slice.call(document.querySelectorAll('[data-sticker], [data-sticker-decorative]'));
+  // Keep the keyboard route aligned with the visual circuit, while preserving
+  // Pokémon → Michigan as the wraparound step.
+  var stickerNavigationOrder = ['uofm', 'duke', 'earth', 'film', 'child', 'birthday', 'pokemon'];
+  var interactiveStickers = stickerNavigationOrder.map(function (name) {
+    return stickers.find(function (button) {
+      return button.getAttribute('data-sticker') === name;
+    });
+  }).filter(Boolean);
   var hint = document.querySelector('[data-about-hint]');
 
   var overlay = document.querySelector('[data-sticker-overlay]');
   var card = overlay && overlay.querySelector('[data-sticker-card]');
   var inner = overlay && overlay.querySelector('[data-sticker-card-inner]');
+  var cardBack = overlay && overlay.querySelector('.about-sticker-card__face--back');
   var cardImg = overlay && overlay.querySelector('[data-sticker-card-img]');
   var cardBackImg = overlay && overlay.querySelector('[data-sticker-card-back-image]');
   var cardContent = overlay && overlay.querySelector('[data-sticker-card-content]');
   var cardTitle = overlay && overlay.querySelector('[data-sticker-card-title]');
   var cardCopy = overlay && overlay.querySelector('[data-sticker-card-copy]');
-  var closeButtons = overlay ? Array.prototype.slice.call(overlay.querySelectorAll('[data-sticker-close]')) : [];
+  var stickerHitMap = null;
 
   var activeButton = null;
   // True only once a card is fully committed to being open (set the
@@ -117,25 +126,34 @@
   var pendingCloseButton = null;
   var pendingCloseTimer = null;
   var pendingCloseHandler = null;
-  var pendingContentTimer = null;
   var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var avatarSequenceActive = false;
 
   var content = {
+    birthday: {
+      title: '💡 Product Design',
+      body: 'Product designer with a background in statistics. I enjoy using evidence to work through ambiguous problems.\n\nFun Fact: My birthday is Christmas Eve! ❄️',
+      bodyHtml: 'Product designer with a background in statistics. I enjoy using evidence to work through ambiguous problems.<br><br><strong>Fun Fact: My birthday is Christmas Eve! ❄️</strong>'
+    },
     uofm: {
-      title: 'University of Michigan',
-      body: 'Go Blue! Dual-degree graduate with\nB.A. in Art & Design and B.S. in Statistics\n\nFavorite Place: Moge Tea 🧋 & Hatcher\u00a0Library 📚'
+      title: '〽️ University of Michigan',
+      body: 'Go Blue! Dual-degree graduate\nwith B.A. in Art & Design and\nB.S. in Statistics.\n\nSomehow survived.'
+    },
+    child: {
+      title: '😎 Child Me',
+      body: 'Rocking 🕶️ sunglasses and 👕 pajamas.'
     },
     duke: {
       title: 'Duke',
-      body: 'Go Duke! Currently pursuing an MEng in\nDesign & Technology Innovation.'
+      body: 'Currently pursuing an MEng in\nDesign & Technology Innovation.\n\nAdding an engineering lens to design.',
+      bodyHtml: 'Currently pursuing an MEng in<br><a href="https://masters.pratt.duke.edu/design-technology-innovation/" target="_blank" rel="noopener noreferrer">Design &amp; Technology Innovation</a>.<br><br>Adding an engineering lens to design.'
     },
     earth: {
-      title: 'Where I’ve Lived',
+      title: '🌍 Where I’ve Lived',
       body: 'Korea, China, Singapore, and the U.S.\nStill collecting places.'
     },
     film: {
-      title: 'Movie Lover',
+      title: '🎬 Movie Lover',
       body: 'Favorite movies, open to recommendations!'
     },
     pokemon: {
@@ -250,19 +268,14 @@
 
     var drag = null;
     var desktopInitialPositions = {
-      uofm: { left: 7.5, top: 31, shiftX: -0.18, drop: 1.1 },
-      duke: { left: 26, top: 22, shiftX: -0.22, drop: 1.1 },
-      earth: { left: 82, top: 28 },
-      // Use hero coordinates for the resting layout: five percentage points
-      // left and three points up from the former film position.
-      film: { left: 63, top: 22 },
-      // Lift Pokémon by twice its own height so it clears the bottom edge
-      // at every desktop size, rather than relying on a fixed pixel offset.
-      pokemon: { left: 84, top: 82, lift: 2 },
-      // The new photo stickers frame the illustration without competing with
-      // the central avatar: one sits high on the left, the other low right.
-      birthday: { left: 8, top: 17 },
-      'uofm-jade': { left: 69, top: 56 }
+      // Desktop resting composition, matching the approved 13-inch layout.
+      uofm: { left: 6.5, top: 42 },
+      duke: { left: 17, top: 52 },
+      earth: { left: 80, top: 41 },
+      film: { left: 70, top: 22 },
+      pokemon: { left: 84, top: 70 },
+      birthday: { left: 5, top: 8 },
+      child: { left: 65, top: 63 }
     };
     var mobileStickerOffsetY = {
       earth: -16,
@@ -367,14 +380,72 @@
     if (!entry) return;
     var img = button.querySelector('img');
     if (cardImg && img) cardImg.src = img.src;
-    if (cardBackImg && img) cardBackImg.src = img.src;
+    var cardBackSource = null;
+    if (cardBackImg && img) {
+      cardBackImg.src = img.src;
+      cardBackSource = cardBackImg.src;
+    }
     if (cardTitle) cardTitle.textContent = entry.title;
-    if (cardCopy) cardCopy.textContent = entry.body;
+    if (cardCopy) {
+      if (entry.bodyHtml) cardCopy.innerHTML = entry.bodyHtml;
+      else cardCopy.textContent = entry.body;
+    }
     // The sticker's aspect ratio drives the enlarged front/back card.
     if (img && img.naturalWidth && img.naturalHeight) {
       card.style.setProperty('--card-ratio', img.naturalWidth / img.naturalHeight);
     }
     card.setAttribute('data-sticker-back', button.getAttribute('data-sticker'));
+    prepareStickerHitMap(cardBackSource);
+  }
+
+  // Card containers are rectangular, but the artwork inside them is not.
+  // Keep a compact alpha map of the source sticker so backdrop clicks in a
+  // transparent corner of that rectangle still close the lightbox.
+  function prepareStickerHitMap(expectedSource) {
+    stickerHitMap = null;
+    if (!cardBackImg || !expectedSource) return;
+    // Assigning a new src can leave the previous image's decoded pixels
+    // briefly available. Wait for the current source before sampling alpha.
+    if (!cardBackImg.complete || cardBackImg.currentSrc !== expectedSource || !cardBackImg.naturalWidth || !cardBackImg.naturalHeight) {
+      cardBackImg.addEventListener('load', function () {
+        prepareStickerHitMap(expectedSource);
+      }, { once: true });
+      return;
+    }
+    try {
+      var longestSide = 512;
+      var scale = Math.min(1, longestSide / Math.max(cardBackImg.naturalWidth, cardBackImg.naturalHeight));
+      var width = Math.max(1, Math.round(cardBackImg.naturalWidth * scale));
+      var height = Math.max(1, Math.round(cardBackImg.naturalHeight * scale));
+      var canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      var context = canvas.getContext('2d', { willReadFrequently: true });
+      context.drawImage(cardBackImg, 0, 0, width, height);
+      stickerHitMap = { context: context, width: width, height: height, source: expectedSource };
+    } catch (error) {
+      // If a browser cannot sample the image, retain the conservative
+      // rectangular card hit area instead of risking accidental closes.
+      stickerHitMap = null;
+    }
+  }
+
+  function isPointOnVisibleSticker(event) {
+    if (!cardBackImg || !stickerHitMap || stickerHitMap.source !== cardBackImg.currentSrc) return true;
+    var rect = cardBackImg.getBoundingClientRect();
+    if (!rect.width || !rect.height) return true;
+    var x = Math.floor((event.clientX - rect.left) / rect.width * stickerHitMap.width);
+    var y = Math.floor((event.clientY - rect.top) / rect.height * stickerHitMap.height);
+    if (x < 0 || y < 0 || x >= stickerHitMap.width || y >= stickerHitMap.height) return false;
+    try {
+      return stickerHitMap.context.getImageData(x, y, 1, 1).data[3] > 24;
+    } catch (error) {
+      return true;
+    }
+  }
+
+  function isCardContentTarget(target) {
+    return target.closest('[data-sticker-card-content], .about-sticker-card__uofm-graduate, .about-sticker-card__child-cool, .about-sticker-card__film-list, .about-sticker-card__world-map, .about-sticker-card__duke-image, .about-sticker-card__pokemon');
   }
 
   // FLIP technique: compute the transform that maps the card's resting
@@ -393,7 +464,23 @@
   }
 
   function onKeydown(event) {
-    if (event.key === 'Escape') close();
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      close();
+    } else if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      moveToAdjacentSticker(-1);
+    } else if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      moveToAdjacentSticker(1);
+    }
+  }
+
+  function moveToAdjacentSticker(direction) {
+    if (!interactiveStickers.length || !activeButton) return;
+    var currentIndex = interactiveStickers.indexOf(activeButton);
+    var nextIndex = (currentIndex + direction + interactiveStickers.length) % interactiveStickers.length;
+    switchSticker(interactiveStickers[nextIndex]);
   }
 
   // A prior close() may still be waiting on its transitionend/timeout
@@ -412,10 +499,6 @@
     if (pendingCloseHandler) {
       card.removeEventListener('transitionend', pendingCloseHandler);
       pendingCloseHandler = null;
-    }
-    if (pendingContentTimer) {
-      window.clearTimeout(pendingContentTimer);
-      pendingContentTimer = null;
     }
     if (cardContent) cardContent.style.opacity = '';
     if (pendingCloseButton) {
@@ -452,7 +535,7 @@
     });
 
     document.addEventListener('keydown', onKeydown);
-    if (closeButtons[0]) closeButtons[0].focus();
+    if (cardBack) cardBack.focus({ preventScroll: true });
   }
 
   function switchSticker(button) {
@@ -465,17 +548,10 @@
     button.classList.add('is-lifted');
     button.setAttribute('aria-expanded', 'true');
 
-    if (cardContent) {
-      cardContent.style.opacity = '0';
-      pendingContentTimer = window.setTimeout(function () {
-        pendingContentTimer = null;
-        setCardContent(button);
-        cardContent.style.opacity = '1';
-      }, 140);
-    } else {
-      setCardContent(button);
-    }
-    if (closeButtons[0]) closeButtons[0].focus();
+    // Update the whole card in one frame. Delaying only the text left the
+    // previous sticker visible without its copy during keyboard navigation.
+    setCardContent(button);
+    if (cardBack) cardBack.focus({ preventScroll: true });
   }
 
   function finishClose(button) {
@@ -486,6 +562,12 @@
     card.style.transform = '';
     button.classList.remove('is-lifted');
     button.setAttribute('aria-expanded', 'false');
+    // Return keyboard focus to the originating sticker without showing a
+    // misleading focus ring after an Escape/backdrop dismissal.
+    button.classList.add('is-returned-from-card');
+    button.addEventListener('blur', function () {
+      button.classList.remove('is-returned-from-card');
+    }, { once: true });
     button.focus();
     if (activeButton === button) activeButton = null;
   }
@@ -523,43 +605,46 @@
     }
     pendingCloseHandler = onEnd;
     card.addEventListener('transitionend', onEnd);
-    pendingCloseTimer = window.setTimeout(settle, 800);
+    pendingCloseTimer = window.setTimeout(settle, 500);
   }
 
   stickers.forEach(function (button) {
-    button.addEventListener('click', function () {
+    button.addEventListener('click', function (event) {
       if (button.dataset.ignoreStickerClick === 'true') {
         delete button.dataset.ignoreStickerClick;
         return;
       }
-      // These photo stickers are part of the movable composition only; they
-      // deliberately do not open a duplicate information card.
-      if (button.hasAttribute('data-sticker-decorative')) return;
-      if (isOpen && activeButton === button) {
+      button.classList.remove('is-returned-from-card');
+      // Do not let the same click that opens a card reach the document-level
+      // backdrop handler below; it would immediately close the new card.
+      event.stopPropagation();
+      // An open card is modal: any click outside it returns to the default
+      // About composition instead of jumping to a different sticker.
+      if (isOpen) {
         close();
-      } else if (isOpen) {
-        switchSticker(button);
       } else {
         openFresh(button);
       }
     });
+    button.addEventListener('keydown', function () {
+      button.classList.remove('is-returned-from-card');
+    });
   });
 
-  // The overlay's dim/blur backdrop has pointer-events: none (so the
-  // stickers it visually sits over stay clickable underneath it), so a
-  // "click the backdrop to close" listener can't live on the overlay
-  // itself -- it has to catch clicks that land on whatever real element
-  // is under the backdrop instead.
-  document.addEventListener('click', function (event) {
+  // The active overlay receives backdrop clicks directly. Keep the document
+  // listener too for the persistent header, which sits above the overlay.
+  overlay.addEventListener('click', function (event) {
     if (!isOpen) return;
-    if (event.target.closest('[data-sticker-card]')) return;
-    if (event.target.closest('.about-sticker')) return;
+    if (isCardContentTarget(event.target) || (event.target.closest('[data-sticker-card]') && isPointOnVisibleSticker(event))) return;
     close();
   });
 
-  closeButtons.forEach(function (button) {
-    button.addEventListener('click', close);
+  document.addEventListener('click', function (event) {
+    if (!isOpen) return;
+    if (isCardContentTarget(event.target) || (event.target.closest('[data-sticker-card]') && isPointOnVisibleSticker(event))) return;
+    close();
   });
+
 })();
 
 /*==================== HERO LOAD-IN ====================
@@ -2202,6 +2287,69 @@ var PERSONA_COPY = {
   function init() {
     var navs = document.querySelectorAll('.section-nav');
     navs.forEach(initSectionNav);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+/*==================== FOOTER EMAIL COPY ====================*/
+(function () {
+  function fallbackCopy(text) {
+    var field = document.createElement('textarea');
+    field.value = text;
+    field.setAttribute('readonly', '');
+    field.style.position = 'fixed';
+    field.style.opacity = '0';
+    document.body.appendChild(field);
+    field.select();
+    var copied = false;
+    try { copied = document.execCommand('copy'); } catch (error) { /* no-op */ }
+    field.remove();
+    return copied;
+  }
+
+  function copyEmail(email) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(email).catch(function () {
+        fallbackCopy(email);
+      });
+    }
+    fallbackCopy(email);
+    return Promise.resolve();
+  }
+
+  function init() {
+    document.querySelectorAll('.footer__btn[aria-label="Email"]').forEach(function (link) {
+      if (link.dataset.copyEmailReady) return;
+      var email = (link.getAttribute('href') || '').replace(/^mailto:/i, '');
+      if (!email) return;
+      link.dataset.copyEmailReady = 'true';
+      link.classList.add('footer__btn--copy');
+      var label = document.createElement('span');
+      label.className = 'footer__copy-label';
+      label.textContent = link.textContent.trim();
+      link.textContent = '';
+      link.appendChild(label);
+      link.insertAdjacentHTML('beforeend', '<span class="footer__copy-icon" aria-hidden="true"></span>');
+
+      link.addEventListener('click', function (event) {
+        event.preventDefault();
+        copyEmail(email).then(function () {
+          link.classList.add('is-copied');
+          label.textContent = 'Copied!';
+          link.setAttribute('aria-label', 'Email address copied');
+          window.setTimeout(function () {
+            link.classList.remove('is-copied');
+            label.textContent = 'Email';
+            link.setAttribute('aria-label', 'Email');
+          }, 1600);
+        });
+      });
+    });
   }
 
   if (document.readyState === 'loading') {

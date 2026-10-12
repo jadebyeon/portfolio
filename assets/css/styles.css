@@ -501,24 +501,22 @@ img { max-width: 100%; height: auto; }
 /*==================== FOOTER – LET'S TALK ====================*/
 
 .footer {
-  background-color: #f3f4f6;                /* light cool gray tint */
+  background-color: var(--body-color);
   margin-top: clamp(4rem, 8vw, 6rem);
-  padding: clamp(3rem, 6vw, 5rem) 0 3rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem) 0;
   color: #111827;
 }
 
 .footer__inner {
   /* .container already sets max-width + side padding */
+  border-top: 1px solid #e5e7eb;
+  padding-top: clamp(1.5rem, 3vw, 2.25rem);
 }
 
 /* ---------- top row (headline + back to top) ---------- */
 
 .footer__top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 2.5rem;
-  margin-bottom: clamp(2rem, 4vw, 3rem);
+  display: none;
 }
 
 .footer__headline {
@@ -528,20 +526,23 @@ img { max-width: 100%; height: auto; }
 .footer__eyebrow {
   margin: 0 0 0.75rem;
   font-family: var(--body-font);
-  font-size: 0.9rem;
-  letter-spacing: 0.16em;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #4b5563;
 }
 
-/* big ghost "LET'S TALK" text */
+/* Match the site's editorial title face without the old display-only
+   tracking treatment. */
 .footer__title {
   margin: 0;
-  font-weight: 700;
+  font-family: var(--display-font);
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: clamp(3.8rem, 11vw, 7rem);
-  line-height: 0.9;
+  letter-spacing: 0;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  line-height: 1;
   color: rgba(15, 23, 42, 0.06);  
   white-space: nowrap;   /* very light gray */
 }
@@ -553,9 +554,11 @@ img { max-width: 100%; height: auto; }
   align-items: center;
   gap: 0.75rem;
   text-decoration: none;
-  text-transform: uppercase;
-  font-size: 0.8rem;
-  letter-spacing: 0.16em;
+  font-family: var(--body-font);
+  font-weight: 600;
+  text-transform: none;
+  font-size: 0.95rem;
+  letter-spacing: 0;
   color: #111827;
   white-space: nowrap;
   cursor: pointer;
@@ -595,56 +598,111 @@ img { max-width: 100%; height: auto; }
 /* ---------- bottom row (buttons + credits) ---------- */
 
 .footer__bottom {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
   gap: 2rem;
-  flex-wrap: wrap;
-  margin-top: clamp(1.75rem, 3vw, 2.5rem);
+  margin: 0;
+}
+
+.footer__contact {
+  margin: 0;
+  justify-self: start;
+  font-family: var(--body-font);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--title-color);
 }
 
 /* pill button row */
 .footer__links {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  justify-self: center;
+  gap: 0.6rem;
 }
 
-/* pill buttons – same vibe as reference */
+/* Footer links follow the header menu's understated pill treatment. */
 .footer__btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.75rem 2rem;
-  border-radius: 999px;                       /* rounded rectangle / pill */
-  border: 1px solid #d4d4d8;                 /* light gray outline */
-  background-color: #ffffff;
-  color: #111827;
-  font-size: 0.9rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  border: 0;
+  background-color: transparent;
+  color: #6b7280;
+  font-family: var(--body-font);
+  font-size: 0.86rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
   text-decoration: none;
   transition:
     background-color 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
+    color 0.2s ease;
 }
 
 .footer__btn:hover {
-  background-color: var(--mint-color);
-  border-color: #10b981;
-  color: #ffffff;
-  transform: translateY(-1px);
-  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.18);
+  background: rgba(36, 35, 41, 0.05);
+  color: #111827;
+}
+
+.footer__btn--copy {
+  gap: 0;
+}
+
+.footer__copy-icon {
+  position: relative;
+  display: inline-block;
+  width: 0;
+  height: 0.9em;
+  margin-left: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateX(-0.2rem);
+  transition: width 160ms ease, margin-left 160ms ease, opacity 160ms ease, transform 160ms ease;
+}
+
+.footer__copy-icon::before,
+.footer__copy-icon::after {
+  content: '';
+  position: absolute;
+  width: 0.52em;
+  height: 0.62em;
+  border: 1.4px solid currentColor;
+  border-radius: 0.1em;
+}
+
+.footer__copy-icon::before {
+  top: 0.18em;
+  left: 0.08em;
+}
+
+.footer__copy-icon::after {
+  top: 0.04em;
+  left: 0.26em;
+  background: #f3f4f6;
+}
+
+.footer__btn--copy:hover .footer__copy-icon,
+.footer__btn--copy:focus-visible .footer__copy-icon,
+.footer__btn--copy.is-copied .footer__copy-icon {
+  width: 0.92em;
+  margin-left: 0.32rem;
+  opacity: 1;
+  overflow: visible;
+  transform: translateX(0);
 }
 
 /* credits bottom-right */
 .footer__meta {
+  justify-self: end;
   text-align: right;
   font-family: var(--body-font);
   font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.5;
   color: #4b5563;
 }
 
@@ -670,9 +728,13 @@ img { max-width: 100%; height: auto; }
   }
 
   .footer__bottom {
-    flex-direction: column;
-    align-items: flex-start;
+    grid-template-columns: 1fr;
+    justify-items: start;
+    gap: 1rem;
   }
+
+  .footer__links,
+  .footer__meta { justify-self: start; }
 
   .footer__meta {
     text-align: left;
@@ -2462,13 +2524,13 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   user-select: none;
 }
 
-.about-sticker--uofm { --sticker-rotate: -6deg; --sticker-size: clamp(8.5rem, 15vw, 14rem); }
+.about-sticker--uofm { --sticker-rotate: -6deg; --sticker-size: clamp(7.75rem, 13.5vw, 12.75rem); }
 .about-sticker--duke { --sticker-rotate: 5deg; --sticker-size: clamp(8.5rem, 15vw, 14rem); }
 .about-sticker--earth { --sticker-rotate: 6deg; --sticker-size: clamp(7.15rem, 11.05vw, 10.4rem); }
 .about-sticker--film { --sticker-rotate: -5deg; --sticker-size: clamp(7.5rem, 12.5vw, 12rem); }
 .about-sticker--pokemon { --sticker-rotate: -8deg; --sticker-size: clamp(6.175rem, 9.1vw, 8.45rem); }
 .about-sticker--birthday { --sticker-rotate: -12deg; --sticker-size: clamp(6.75rem, 9.5vw, 9.5rem); }
-.about-sticker--uofm-jade { --sticker-rotate: 10deg; --sticker-size: clamp(6.75rem, 9.5vw, 9.5rem); }
+.about-sticker--uofm-jade { --sticker-rotate: 10deg; --sticker-size: clamp(7.75rem, 11vw, 11.25rem); }
 
 /* Desktop stickers can be rearranged within the About hero. Their original
    positions are captured in JS, then each stays a real button: click to
@@ -2501,17 +2563,20 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 
 .about-sticker:focus-visible {
-  outline: 2px solid var(--mint-color);
-  outline-offset: 4px;
-  animation: about-sticker-wiggle 380ms ease-in-out;
+  outline: none;
+  animation: none;
 }
 
-/* The overlay is a full-viewport backdrop for the dim/blur look, but it
-   never intercepts clicks (pointer-events: none) so the stickers it
-   visually sits over stay clickable underneath it -- switching to a
-   different sticker while one is open relies on that. Closing on a
-   backdrop click is handled by a document-level listener in JS instead
-   of a click on this element. */
+/* Focus returns here after closing a card so keyboard users do not lose their
+   place. It is programmatic, not a fresh navigation action, so suppress only
+   this transient ring; normal Tab focus continues to receive the indicator. */
+.about-sticker.is-returned-from-card:focus {
+  outline: none;
+  animation: none;
+}
+
+/* The overlay is a full-viewport backdrop for the dim/blur look. Once open,
+   it owns clicks outside the card so they reliably dismiss the lightbox. */
 .about-sticker-overlay {
   position: fixed;
   /* Keep expanded cards inside the viewable area below the persistent
@@ -2532,7 +2597,10 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   display: none;
 }
 
-.about-sticker-overlay.is-visible { opacity: 1; }
+.about-sticker-overlay.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
 
 .about-sticker-card {
   position: relative;
@@ -2548,14 +2616,14 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   aspect-ratio: var(--card-ratio, 1);
   width: min(96vw, 56rem, calc(var(--card-max-h) * var(--card-ratio, 1)));
   pointer-events: auto;
-  transition: transform 480ms cubic-bezier(0.22, 0.8, 0.32, 1);
+  transition: transform 280ms cubic-bezier(0.22, 0.8, 0.32, 1);
 }
 
 .about-sticker-card__inner {
   position: absolute;
   inset: 0;
   transform-style: preserve-3d;
-  transition: transform 390ms ease 255ms;
+  transition: transform 260ms ease 80ms;
 }
 
 .about-sticker-card__inner.is-flipped {
@@ -2593,6 +2661,28 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   text-align: center;
 }
 
+/* Keep the birthday sticker's cutout outline, while a smaller inner white
+   shape fills only the transparent gaps behind its informational copy. */
+.about-sticker-card[data-sticker-back="birthday"] .about-sticker-card__face--back {
+  background: transparent;
+}
+
+.about-sticker-card[data-sticker-back="birthday"] .about-sticker-card__face--back::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: 3%;
+  right: 15%;
+  bottom: 3%;
+  left: 15%;
+  border-radius: 46% 46% 28% 28% / 35% 35% 18% 18%;
+  background: #fff;
+}
+
+.about-sticker-card__face--back:focus {
+  outline: none;
+}
+
 .about-sticker-card__back-image {
   position: absolute;
   z-index: 0;
@@ -2603,29 +2693,51 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   /* The source PNG supplies the exact sticker outline. This filter turns
      every opaque pixel into the white paper back while preserving its
      transparent outside edge. */
-  filter: brightness(0) invert(1) drop-shadow(0 1.1rem 1.4rem rgba(17, 24, 39, 0.22));
+  filter: brightness(0) invert(1);
 }
 
-/* The Michigan card has a small portrait tucked into the left side of the
-   flipped M. It is hidden for every other sticker so their existing layouts
-   stay untouched. */
-.about-sticker-card__uofm-portrait {
+/* The Michigan card mirrors Duke's layout: centered copy above a dedicated
+   image, with the rest of the sticker cards left untouched. */
+.about-sticker-card__uofm-graduate {
   display: none;
 }
 
-.about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__uofm-portrait {
+.about-sticker-card__child-cool {
+  display: none;
+}
+
+.about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__uofm-graduate {
   display: block;
   position: absolute;
   z-index: 2;
-  /* The portrait's left shoulder and right arm are its visual edges. This
-     placement balances those real edges between the M's left side and the
-     centre-bottom notch, instead of balancing the PNG's transparent box. */
-  left: 12.5%;
-  bottom: 12%;
-  width: 27%;
-  max-height: 70%;
+  left: 50%;
+  /* A wider photo with a dedicated lower area keeps the copy comfortably
+     clear of both the photo and the M silhouette's centre cutout. */
+  bottom: 6%;
+  width: 60%;
+  max-height: 48%;
   object-fit: contain;
+  transform: translateX(-50%);
   filter: drop-shadow(0 0.55rem 0.55rem rgba(17, 24, 39, 0.18));
+}
+
+.about-sticker-card[data-sticker-back="child"] .about-sticker-card__child-cool {
+  display: block;
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: 6%;
+  width: 60%;
+  max-height: 56%;
+  object-fit: contain;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 0.55rem 0.55rem rgba(17, 24, 39, 0.18));
+}
+
+/* The child silhouette has a denser visible shape than the globe. A slightly
+   smaller card cap makes its expanded footprint match the Earth card. */
+.about-sticker-card[data-sticker-back="child"] {
+  --card-max-h: min(calc(100dvh - var(--header-height) - 2rem), 32rem);
 }
 
 .about-sticker-card__film-list {
@@ -2799,21 +2911,41 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 .about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__content {
   position: absolute;
   z-index: 3;
-  top: 40%;
-  left: 44%;
-  width: 43%;
+  top: 22%;
+  left: 17%;
+  width: 66%;
   max-width: none;
-  text-align: left;
+  text-align: center;
 }
 
 .about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__face--back h2 {
-  font-size: clamp(0.8rem, 2vw, 1.2rem);
+  font-size: clamp(0.68rem, 1.6vw, 1rem);
 }
 
 .about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__face--back p:last-child {
-  font-size: clamp(0.65rem, 1.45vw, 0.9rem);
+  font-size: clamp(0.55rem, 1.18vw, 0.75rem);
   line-height: 1.35;
   white-space: pre-line;
+}
+
+.about-sticker-card[data-sticker-back="child"] .about-sticker-card__content {
+  position: absolute;
+  z-index: 3;
+  top: 21%;
+  left: 46%;
+  width: 70%;
+  max-width: none;
+  text-align: center;
+  transform: translateX(-50%);
+}
+
+.about-sticker-card[data-sticker-back="child"] .about-sticker-card__face--back h2 {
+  font-size: clamp(0.82rem, 1.8vw, 1.15rem);
+}
+
+.about-sticker-card[data-sticker-back="child"] .about-sticker-card__face--back p:last-child {
+  font-size: clamp(0.68rem, 1.5vw, 0.95rem);
+  line-height: 1.4;
 }
 
 /* The expanded Michigan M can be fairly wide while its usable copy area is
@@ -2821,17 +2953,21 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
    its text never reaches the centre notch on tablet-sized screens. */
 @media (max-width: 1100px) {
   .about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__content {
-    top: 36%;
-    left: 43%;
-    width: 45%;
+    top: 20%;
+    left: 16%;
+    width: 68%;
   }
   .about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__face--back h2 {
-    font-size: clamp(0.74rem, 1.45vw, 0.92rem);
+    font-size: clamp(0.66rem, 1.25vw, 0.8rem);
     margin-bottom: 0.3rem;
   }
   .about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__face--back p:last-child {
-    font-size: clamp(0.6rem, 1.15vw, 0.76rem);
+    font-size: clamp(0.54rem, 1vw, 0.66rem);
     line-height: 1.28;
+  }
+  .about-sticker-card[data-sticker-back="child"] .about-sticker-card__content {
+    top: 20%;
+    width: 72%;
   }
 }
 .about-sticker-card[data-sticker-back="duke"] .about-sticker-card__close {
@@ -2841,14 +2977,29 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 .about-sticker-card[data-sticker-back="duke"] .about-sticker-card__content {
   position: absolute;
   z-index: 3;
-  top: 22%;
-  left: 19%;
+  top: 20%;
+  left: 50%;
   width: 62%;
   max-width: none;
   text-align: center;
+  transform: translateX(-50%);
 }
 .about-sticker-card[data-sticker-back="duke"] .about-sticker-card__face--back p:last-child {
   white-space: pre-line;
+}
+
+/* Match the understated external-link treatment used in project copy. */
+.about-sticker-card__face--back p:last-child a,
+.about-sticker-card__face--back p:last-child a:visited {
+  color: var(--text-color);
+  text-decoration-line: underline;
+  text-decoration-color: #b8bdc7;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+.about-sticker-card__face--back p:last-child a:is(:hover, :focus-visible) {
+  color: #2457c5;
 }
 .about-sticker-card[data-sticker-back="earth"] .about-sticker-card__close {
   /* A circular sticker has no usable corner: inset the entire 48px
@@ -3059,15 +3210,27 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
     --card-max-h: min(calc(100dvh - var(--header-height) - 2rem), 28rem);
     width: min(96vw, 34rem, calc(var(--card-max-h) * var(--card-ratio, 1)));
   }
-  .about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__uofm-portrait {
-    left: 11%;
-    bottom: 12%;
-    width: 29%;
+  .about-sticker-card[data-sticker-back="child"] {
+    --card-max-h: min(calc(100dvh - var(--header-height) - 2rem), 24rem);
+  }
+  .about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__uofm-graduate {
+    bottom: 6%;
+    width: 62%;
+    max-height: 48%;
   }
   .about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__content {
-    top: 36%;
-    left: 43%;
-    width: 45%;
+    top: 19%;
+    left: 12%;
+    width: 76%;
+  }
+  .about-sticker-card[data-sticker-back="child"] .about-sticker-card__child-cool {
+    bottom: 6%;
+    width: 62%;
+    max-height: 56%;
+  }
+  .about-sticker-card[data-sticker-back="child"] .about-sticker-card__content {
+    top: 19%;
+    width: 76%;
   }
   .about-sticker-card__face--back h2 {
     font-size: clamp(0.8rem, 3.6vw, 1rem);
@@ -3077,19 +3240,20 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
     line-height: 1.45;
   }
   .about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__face--back h2 {
-    font-size: clamp(0.72rem, 3.2vw, 0.9rem);
+    font-size: clamp(0.62rem, 2.7vw, 0.75rem);
   }
   .about-sticker-card[data-sticker-back="uofm"] .about-sticker-card__face--back p:last-child {
-    font-size: clamp(0.58rem, 2.55vw, 0.72rem);
+    font-size: clamp(0.52rem, 2.2vw, 0.62rem);
     line-height: 1.25;
   }
   /* The Duke wordmark and Pokémon silhouette have much narrower safe text
      areas than their outer card boxes. Compact only these mobile cards so
      their copy stays inside the artwork instead of spilling over it. */
   .about-sticker-card[data-sticker-back="duke"] .about-sticker-card__content {
-    top: 22%;
-    left: 19%;
+    top: 20%;
+    left: 50%;
     width: 62%;
+    transform: translateX(-50%);
   }
   .about-sticker-card[data-sticker-back="duke"] .about-sticker-card__duke-image {
     bottom: 12%;

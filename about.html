@@ -7,6 +7,9 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
   <link rel="stylesheet" href="assets/css/styles.css?v=20261011" />
   <link rel="icon" type="image/png" href="assets/img/favicon.png?v=2" />
+  <link rel="preload" as="image" href="assets/img/about/sticker-uofm-display.png" />
+  <link rel="preload" as="image" href="assets/img/about/sticker-uofm-graduate-display.png" />
+  <link rel="preload" as="image" href="assets/img/about/sticker-child-cool.png" />
   <title>About: Jade Byeon</title>
 </head>
 
@@ -31,16 +34,16 @@
         <div class="about-hero__stack">
           <h1 class="about-name">Jade Byeon</h1>
           <!-- Alt copy (longer): "I design at the intersection of evidence and expression — turning research into products people actually keep using." -->
-          <p class="about-subtitle">I turn research into products people keep coming back to.</p>
+          <p class="about-subtitle">I turn complex information into human-centered and visually engaging design.</p>
 
           <div class="about-avatar-row">
             <div class="about-avatar-gutter about-avatar-gutter--left">
               <div class="about-gutter-stickers" aria-label="Learn more about Jade">
-                <button class="about-sticker about-sticker--birthday" type="button" data-sticker-decorative="birthday" aria-label="Birthday photo sticker. Drag to move it.">
+                <button class="about-sticker about-sticker--birthday" type="button" data-sticker="birthday" aria-haspopup="dialog" aria-expanded="false" aria-label="Learn about Jade’s product design approach">
                   <img src="assets/img/about/sticker-birthday.png" alt="" draggable="false" />
                 </button>
                 <button class="about-sticker about-sticker--uofm" type="button" data-sticker="uofm" aria-haspopup="dialog" aria-expanded="false" aria-label="Learn about Jade’s University of Michigan background">
-                  <img src="assets/img/about/sticker-uofm.png" alt="" draggable="false" />
+                  <img src="assets/img/about/sticker-uofm-display.png" alt="" draggable="false" />
                 </button>
                 <button class="about-sticker about-sticker--duke" type="button" data-sticker="duke" aria-haspopup="dialog" aria-expanded="false" aria-label="Learn about Jade’s Duke studies">
                   <img src="assets/img/about/sticker-duke.png" alt="" draggable="false" />
@@ -73,8 +76,8 @@
                 <button class="about-sticker about-sticker--pokemon" type="button" data-sticker="pokemon" aria-haspopup="dialog" aria-expanded="false" aria-label="Learn about Jade’s interest in Pokémon">
                   <img src="assets/img/about/sticker-pokemon.png" alt="" draggable="false" />
                 </button>
-                <button class="about-sticker about-sticker--uofm-jade" type="button" data-sticker-decorative="uofm-jade" aria-label="Jade at the University of Michigan sticker. Drag to move it.">
-                  <img src="assets/img/about/sticker-uofm-jade.png" alt="" draggable="false" />
+                <button class="about-sticker about-sticker--uofm-jade" type="button" data-sticker="child" aria-haspopup="dialog" aria-expanded="false" aria-label="Learn about Jade as a cool kid">
+                  <img src="assets/img/about/sticker-child.png" alt="" draggable="false" />
                 </button>
               </div>
             </div>
@@ -88,15 +91,15 @@
             <div class="about-sticker-card__face about-sticker-card__face--front" aria-hidden="true">
               <img data-sticker-card-img src="" alt="" />
             </div>
-            <div class="about-sticker-card__face about-sticker-card__face--back" role="dialog" aria-modal="true" aria-labelledby="about-sticker-card-title">
+            <div class="about-sticker-card__face about-sticker-card__face--back" role="dialog" aria-modal="true" aria-labelledby="about-sticker-card-title" tabindex="-1">
               <img class="about-sticker-card__back-image" data-sticker-card-back-image src="" alt="" aria-hidden="true" />
-              <img class="about-sticker-card__uofm-portrait" src="assets/img/about/sticker-uofm-jade.png" alt="" aria-hidden="true" />
+              <img class="about-sticker-card__uofm-graduate" src="assets/img/about/sticker-uofm-graduate-display.png" alt="Jade's University of Michigan graduation photo" />
+              <img class="about-sticker-card__child-cool" src="assets/img/about/sticker-child-cool.png" alt="Jade as a child in sunglasses and pajamas" />
               <img class="about-sticker-card__film-list" src="assets/img/about/sticker-film-list.png" alt="Four favorite movie posters" />
               <img class="about-sticker-card__world-map" src="assets/img/about/sticker-world-map.png" alt="Dotted world map" />
               <img class="about-sticker-card__duke-image" src="assets/img/about/sticker-duke-duke.png" alt="Duke Chapel" />
               <img class="about-sticker-card__pokemon about-sticker-card__pokemon--arceus" src="assets/img/about/sticker-pokemon-arceus.png" alt="Arceus" />
               <img class="about-sticker-card__pokemon about-sticker-card__pokemon--serperior" src="assets/img/about/sticker-pokemon-serperior.png" alt="Serperior" />
-              <button class="about-sticker-card__close" type="button" data-sticker-close aria-label="Close">×</button>
               <div class="about-sticker-card__content" data-sticker-card-content>
                 <h2 id="about-sticker-card-title" data-sticker-card-title></h2>
                 <p data-sticker-card-copy></p>
@@ -124,15 +127,13 @@
         </a>
       </div>
       <div class="footer__bottom">
+        <p class="footer__contact">Contact me</p>
         <div class="footer__links">
           <a href="mailto:jadebyeonj@gmail.com" class="footer__btn" aria-label="Email">Email</a>
           <a href="https://www.linkedin.com/in/jadebyeon" target="_blank" rel="noopener noreferrer" class="footer__btn" aria-label="LinkedIn">LinkedIn</a>
           <a href="assets/pdf/Jade_Resume.pdf" target="_blank" rel="noopener noreferrer" class="footer__btn" aria-label="Resume (opens in a new tab)">Resume <span aria-hidden="true">↗</span></a>
         </div>
-        <div class="footer__meta">
-          <p>Designed and developed by Jade Byeon</p>
-          <p>© 2026</p>
-        </div>
+        <div class="footer__meta"><p>© 2026 Jade Byeon</p></div>
       </div>
     </div>
   </footer>
