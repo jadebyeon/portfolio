@@ -1350,7 +1350,7 @@ document.querySelectorAll('.footer__back').forEach(function (link) {
 var PERSONA_COPY = {
   anyone: {
     titleMode: 'reveal',
-    title: "Hi, I'm Jade. Product designer with\na [[statistics]] background.",
+    title: 'Jade is a product designer\nwith a [[statistics]] background.',
     line1Mode: 'text',
     line1: 'MEng Design & Technology Innovation @ Duke',
     line2: null,
@@ -1359,18 +1359,18 @@ var PERSONA_COPY = {
   },
   recruiters: {
     titleMode: 'scramble',
-    title: 'I design products across screens and physical objects, and I care about why something ends up confusing people.',
+    title: 'I solve complex problems\nthrough design and data.',
     line1Mode: 'text',
-    line1: 'Seeking product design & UX internships for Summer 2027.',
+    line1: 'Seeking UX & product design internships for Summer 2027.',
     line2: null,
     chips: null,
     resume: null
   },
   designers: {
-    titleMode: 'pipeline',
-    title: 'I treat every interface as a [[hypothesis.]]',
+    titleMode: 'text',
+    title: 'Like problems where the cause\nisn’t obvious. Yes, even movies.',
     line1Mode: 'text',
-    line1: "Even outside work I can't watch a movie without digging into why it worked afterward.",
+    line1: null,
     line2: null,
     chips: null,
     resume: null
@@ -1698,9 +1698,7 @@ var PERSONA_COPY = {
     }
 
     var AUTO_CYCLE_MS = 7000;
-    var MANUAL_PAUSE_MS = 60000;
     var autoCycleTimer = null;
-    var resumeAutoCycleTimer = null;
 
     function cycleToNext() {
       if (document.hidden) return;
@@ -1721,19 +1719,13 @@ var PERSONA_COPY = {
       autoCycleTimer = null;
     }
 
-    function pauseThenResumeAutoCycle() {
+    function stopAutoCycleAfterManualSelection() {
       stopAutoCycle();
-      if (resumeAutoCycleTimer) clearTimeout(resumeAutoCycleTimer);
-      resumeAutoCycleTimer = setTimeout(function () {
-        resumeAutoCycleTimer = null;
-        cycleToNext();
-        startAutoCycle();
-      }, MANUAL_PAUSE_MS);
     }
 
     tabs.forEach(function (tab) {
       tab.addEventListener('click', function () {
-        pauseThenResumeAutoCycle();
+        stopAutoCycleAfterManualSelection();
         activateTab(tab, false);
       });
     });
@@ -1743,9 +1735,8 @@ var PERSONA_COPY = {
     populate(heroEl, PERSONA_COPY.anyone);
     revealIn(PERSONA_COPY.anyone);
 
-    // Give passive visitors a chance to discover each introduction. A manual
-    // selection pauses the rotation for one minute; reduced-motion users never
-    // get automatic content changes.
+    // Give passive visitors a chance to discover each introduction. Once a
+    // visitor selects a tab, keep their chosen introduction in place.
     if (!reduceMotion) {
       startAutoCycle();
     }

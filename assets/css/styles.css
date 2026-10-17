@@ -311,7 +311,7 @@ img { max-width: 100%; height: auto; }
 
 /* ==================== PORTFOLIO ==================== */
 /* Less top padding than other sections. The hero is already capped
-   to ~65vh specifically so the first card row peeks into view */
+   so the first card row peeks into view. */
 .portfolio.section {
   padding-top: clamp(16px, 2vw, 32px);
 }
@@ -462,6 +462,13 @@ img { max-width: 100%; height: auto; }
 .portfolio__title-link:focus-visible{
   color: var(--mint-color);
   outline: none;
+}
+
+/* A card is one interactive unit: hovering its media, body, or title
+   gives the project name the same mint affordance as hovering the link. */
+.portfolio__content:hover .portfolio__title a,
+.portfolio__content:hover .portfolio__title-link {
+  color: var(--mint-color);
 }
 
 /* Optional: give keyboard users a subtle focus ring on the title link */
@@ -3777,9 +3784,8 @@ body.is-settled #heroCopy [data-copy-line] {
 .home.section {
   padding-top: calc(var(--header-height) + clamp(1rem, 2vh, 1.5rem));
   padding-bottom: clamp(1.5rem, 3vh, 2.5rem);
-  /* no max-height: #heroCopy reserves its own min-height (main.js) to
-     fit the tallest persona's copy, so this can grow past 65vh rather
-     than clip/overlap the portfolio section on longer copy */
+  /* #heroCopy reserves its own min-height (main.js) for the tallest
+     persona message, so this can grow when the copy needs more room. */
   min-height: calc(65vh - var(--header-height));
   display: flex;
   flex-direction: column;
@@ -3793,6 +3799,69 @@ body.is-settled #heroCopy [data-copy-line] {
    the tiles instead of sitting one grid column further in. */
 .home__data {
   width: 100%;
+}
+
+/* Homepage visual: the screen recording sits behind the transparent laptop
+   frame, with Jade's Memoji in front. The frame masks any video overflow. */
+.home__container {
+  position: relative;
+}
+.home__visual {
+  width: min(85%, 544px);
+  aspect-ratio: 15520 / 9600;
+  margin-left: auto;
+  /* Align the laptop with the default intro rather than the reserved
+     height used for the longer persona messages. */
+  position: absolute;
+  top: clamp(-3.5rem, -5vw, -2rem);
+  /* .container includes its horizontal gutter; align the visible laptop
+     to the inner content edge used by the project-tile grid. */
+  right: var(--page-gutter);
+}
+.home__macbook {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.home__macbook-screen {
+  position: absolute;
+  z-index: 1;
+  top: 10%;
+  left: 10.7%;
+  width: 78.6%;
+  height: 81.3%;
+  object-fit: contain;
+  object-position: center;
+  background: #0b0b0b;
+}
+.home__macbook-frame {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.home__jade-icon {
+  position: absolute;
+  z-index: 3;
+  bottom: -3%;
+  left: -5%;
+  width: 34%;
+  height: auto;
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .home.section { min-height: 0; }
+  .home__visual {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: min(100%, 600px);
+    margin: 0 auto;
+  }
 }
 
 /* ===== HERO REVEAL IMAGE (see assets/js/main.js renderTitleHTML) =====
@@ -3856,6 +3925,15 @@ body.is-settled #heroCopy [data-copy-line] {
   width: 100%;
   color: #1f1f29;
   text-wrap: balance;
+}
+
+/* The default introduction intentionally overlaps the visual column a
+   little on wide screens so its two editorial lines never become three. */
+@media (min-width: 901px) {
+  .home__data:has(.persona-tab[data-persona="anyone"].active) .home__title {
+    width: max-content;
+    max-width: none;
+  }
 }
 
 .home__subtitle {
