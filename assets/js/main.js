@@ -46,11 +46,26 @@
     var video = document.querySelector('[data-oct-hero-video]');
     var button = document.querySelector('[data-oct-hero-playback]');
     if (!video || !button) return;
+    var progress = document.querySelector('[data-oct-hero-progress]');
 
     function updateButton() {
       var paused = video.paused || video.ended;
       button.classList.toggle('is-playing', !paused);
       button.setAttribute('aria-label', paused ? 'Play demo video' : 'Pause demo video');
+    }
+
+    function updateProgress() {
+      if (!progress || !isFinite(video.duration) || video.duration <= 0) return;
+      var percent = Math.max(0, Math.min(100, (video.currentTime / video.duration) * 100));
+      progress.value = percent;
+      progress.style.setProperty('--oct-progress', percent + '%');
+      progress.setAttribute('aria-valuetext', Math.round(percent) + '% watched');
+    }
+
+    function seekVideo() {
+      if (!progress || !isFinite(video.duration) || video.duration <= 0) return;
+      video.currentTime = video.duration * (Number(progress.value) / 100);
+      updateProgress();
     }
 
     button.addEventListener('click', function () {
@@ -66,7 +81,32 @@
     video.addEventListener('play', updateButton);
     video.addEventListener('pause', updateButton);
     video.addEventListener('ended', updateButton);
+    video.addEventListener('loadedmetadata', updateProgress);
+    video.addEventListener('durationchange', updateProgress);
+    video.addEventListener('timeupdate', updateProgress);
+    video.addEventListener('seeked', updateProgress);
+    if (progress) progress.addEventListener('input', seekVideo);
     updateButton();
+    updateProgress();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+/*==================== OCT MOCKUP BEFORE/AFTER ====================*/
+(function () {
+  function init() {
+    document.querySelectorAll('[data-oct-before-after]').forEach(function (comparison) {
+      var range = comparison.querySelector('.oct-before-after__range');
+      if (!range) return;
+      range.addEventListener('input', function () {
+        comparison.style.setProperty('--position', range.value + '%');
+      });
+    });
   }
 
   if (document.readyState === 'loading') {

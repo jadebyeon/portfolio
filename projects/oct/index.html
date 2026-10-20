@@ -73,6 +73,127 @@
     }
     .project-page--oct .oct-character-directions-panel { min-width: 0; }
     .project-page--oct .oct-character-directions-panel .single-tile { border-radius: 16px; }
+    .project-page--oct .oct-research-publications {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(1.25rem, 3vw, 3rem);
+      margin: var(--oct-media-space) auto 0;
+    }
+    .project-page--oct .oct-research-publication {
+      display: grid;
+      gap: 0.75rem;
+      min-width: 0;
+      text-align: center;
+    }
+    .project-page--oct .oct-research-publication__link {
+      justify-self: center;
+      color: inherit;
+      font-weight: 400;
+      text-decoration: underline;
+      text-underline-offset: 0.15em;
+    }
+    .project-page--oct .oct-research-publication__image {
+      display: block;
+      width: 100%;
+      /* Visually trim the 2px source edge without changing either
+         publication image's matching dimensions. */
+      margin-top: -2px;
+      clip-path: inset(2px 0 0 0 round 16px);
+      border-radius: 16px;
+    }
+    .project-page--oct .oct-mockup-stack {
+      display: grid;
+      gap: var(--oct-media-space);
+      margin: var(--oct-media-space) auto;
+    }
+    .project-page--oct .oct-mockup-full { margin: 0; }
+    .project-page--oct .oct-mockup-full > img {
+      display: block;
+      width: 100%;
+      border-radius: 16px;
+    }
+    .project-page--oct .oct-mockup-full .figure-caption {
+      margin: 0;
+      margin-top: 8px;
+      text-align: center;
+    }
+    .project-page--oct .oct-before-after {
+      --position: 50%;
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1672 / 941;
+      overflow: hidden;
+      border-radius: 16px;
+      background: #f5f6f7;
+      touch-action: none;
+    }
+    .project-page--oct .oct-before-after__image {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .project-page--oct .oct-before-after__after {
+      position: absolute;
+      inset: 0;
+      clip-path: inset(0 0 0 var(--position));
+    }
+    .project-page--oct .oct-before-after__line {
+      position: absolute;
+      z-index: 2;
+      top: 0;
+      bottom: 0;
+      left: var(--position);
+      width: 2px;
+      transform: translateX(-50%);
+      background: #fff;
+      pointer-events: none;
+    }
+    .project-page--oct .oct-before-after__range {
+      position: absolute;
+      z-index: 4;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      opacity: 0;
+      cursor: ew-resize;
+    }
+    .project-page--oct .oct-before-after__handle {
+      position: absolute;
+      z-index: 3;
+      top: 50%;
+      left: var(--position);
+      display: grid;
+      width: 3rem;
+      height: 3rem;
+      place-items: center;
+      transform: translate(-50%, -50%);
+      border-radius: .75rem;
+      background: #fff;
+      color: var(--title-color);
+      box-shadow: 0 .5rem 1.25rem rgba(36,35,41,.16);
+      pointer-events: none;
+    }
+    .project-page--oct .oct-before-after__handle::before { content: "↔"; font-size: 1.5rem; line-height: 1; }
+    .project-page--oct .oct-before-after__label {
+      position: absolute;
+      z-index: 3;
+      top: 1rem;
+      padding: .35rem .7rem;
+      border-radius: .4rem;
+      background: rgba(255,255,255,.94);
+      color: var(--title-color);
+      font-size: .8rem;
+      font-weight: 700;
+      line-height: 1.2;
+      pointer-events: none;
+    }
+    .project-page--oct .oct-before-after__label--before { left: 1rem; }
+    .project-page--oct .oct-before-after__label--after { right: 1rem; }
+    .project-page--oct .oct-before-after__range:focus-visible ~ .oct-before-after__handle { outline: 2px solid var(--mint-color); outline-offset: 3px; }
     .project-page--oct .oct-selected-directions {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -118,6 +239,43 @@
       font-size: clamp(12px, .9vw, 14px);
       line-height: 1.4;
     }
+    .project-page--oct .oct-robot-views {
+      margin: var(--oct-media-space) auto;
+    }
+    .project-page--oct .oct-robot-views__grid {
+      display: grid;
+      /* Keep the full height of the two camera views. The first overhead
+         shot alone trims slightly at its left/right edges so the three
+         original canvases share one height within the content width. */
+      grid-template-columns: 1.6fr 1.986fr 0.902fr;
+      align-items: start;
+      gap: clamp(12px, 2vw, 24px);
+    }
+    .project-page--oct .oct-robot-views__item { min-width: 0; margin: 0; }
+    .project-page--oct .oct-robot-views__tile {
+      min-width: 0;
+      overflow: hidden;
+      border-radius: 16px;
+      background: #000;
+    }
+    .project-page--oct .oct-robot-views__item:nth-child(1) .oct-robot-views__tile { aspect-ratio: 1.6 / 1; }
+    .project-page--oct .oct-robot-views__item:nth-child(2) .oct-robot-views__tile { aspect-ratio: 1494 / 752; }
+    .project-page--oct .oct-robot-views__item:nth-child(3) .oct-robot-views__tile { aspect-ratio: 920 / 1020; }
+    .project-page--oct .oct-robot-views__tile img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      object-fit: contain;
+    }
+    .project-page--oct .oct-robot-views__item:nth-child(1) .oct-robot-views__tile img { object-fit: cover; }
+    .project-page--oct .oct-robot-views__caption {
+      margin: 8px 0 0;
+      text-align: center;
+      color: var(--text-color-light);
+      font-size: clamp(12px, .9vw, 14px);
+      line-height: 1.4;
+    }
     @media (max-width: 680px) {
       .project-page--oct .problem-solution-row {
         grid-template-columns: 1fr;
@@ -131,6 +289,10 @@
       }
       .project-page--oct .project-meta { gap: 1.5rem; }
       .project-page--oct .oct-character-directions-grid { grid-template-columns: 1fr; }
+      .project-page--oct .oct-research-publications { grid-template-columns: 1fr; }
+      .project-page--oct .oct-robot-views__grid { grid-template-columns: 1fr; }
+      .project-page--oct .oct-robot-views__tile { aspect-ratio: auto; background: transparent; }
+      .project-page--oct .oct-robot-views__tile img { width: 100%; height: auto; }
     }
 
     /* Survey Results stat grid: down to 3 cards after dropping the
@@ -320,12 +482,18 @@
           <p class="hero-subtitle">Using caregiver research to shape a robot’s character and interaction design.</p>
         </div>
         <div class="hero-media hero-media--device hero-media--padded hero-media--oct">
-          <div class="oct-hero-device">
-            <img class="oct-hero-frame" src="../../assets/img/oct_banner-frame.png" alt="" aria-hidden="true">
-            <video class="oct-hero-screen" data-oct-hero-video autoplay muted loop playsinline aria-label="Pediatric Eye Exam Robot interaction shown on a tablet" src="../../assets/video/oct_sam-demo%20video.mp4"></video>
-            <button class="oct-hero-playback" type="button" data-oct-hero-playback aria-label="Pause demo video">
-              <span class="oct-hero-playback__icon" aria-hidden="true"></span>
-            </button>
+          <div class="oct-hero-composition">
+            <div class="oct-hero-device">
+              <img class="oct-hero-frame" src="../../assets/img/oct_banner-frame.png" alt="" aria-hidden="true">
+              <video class="oct-hero-screen" data-oct-hero-video autoplay muted loop playsinline aria-label="Pediatric Eye Exam Robot interaction shown on a tablet" src="../../assets/video/oct_sam-demo%20video.mp4"></video>
+              <button class="oct-hero-playback" type="button" data-oct-hero-playback aria-label="Pause demo video">
+                <span class="oct-hero-playback__icon" aria-hidden="true"></span>
+              </button>
+              <div class="oct-hero-progress">
+                <input class="oct-hero-progress__range" data-oct-hero-progress type="range" min="0" max="100" value="0" step="0.1" aria-label="Seek through demo video">
+              </div>
+            </div>
+            <img class="oct-hero-robot" src="../../assets/img/oct_hero%20robot.png" alt="Sam the Ranger robotic eye exam character">
           </div>
         </div>
       </div>
@@ -387,7 +555,7 @@
         <p class="project-section__eyebrow">Background</p>
     <h2 class="section-icon-title project-section__title">Optical Coherence Tomography</h2>
     <div class="project-section__body">
-      <p>Optical coherence tomography (OCT) is an eye scan that requires children to keep their eyes on a target while the scanner moves close to their face. If they look away or move, the scan may be repeated, straining the child, caregiver, and clinical team.</p>
+      <p><a href="https://www.aao.org/eye-health/treatments/what-is-optical-coherence-tomography" target="_blank" rel="noopener noreferrer" aria-label="Optical coherence tomography (OCT) overview from the American Academy of Ophthalmology (opens in a new tab)">Optical coherence tomography (OCT)<span class="external-link-indicator" aria-hidden="true">↗</span></a> is an eye scan that requires children to keep their eyes on a target while the scanner moves close to their face. If they look away or move, the scan may be repeated, straining the child, caregiver, and clinical team.</p>
           <figure class="film-frame oct-robot-arm-demo">
             <div class="film-embed">
               <iframe
@@ -400,6 +568,22 @@
               </iframe>
             </div>
         <figcaption class="figure-caption">Pediatric OCT robot arm prototype demo</figcaption>
+          </figure>
+          <figure class="oct-robot-views">
+            <div class="oct-robot-views__grid">
+              <figure class="oct-robot-views__item">
+                <div class="oct-robot-views__tile"><img class="oct-lightbox-trigger" data-oct-lightbox-group="robot-views" src="../../assets/img/oct_external%20view.png" alt="The robotic OCT arm viewed from above" role="button" tabindex="0" aria-label="Open robotic arm view enlarged"></div>
+                <figcaption class="oct-robot-views__caption">The robotic arm from above.</figcaption>
+              </figure>
+              <figure class="oct-robot-views__item">
+                <div class="oct-robot-views__tile"><img class="oct-lightbox-trigger" data-oct-lightbox-group="robot-views" src="../../assets/img/oct_pupil%20view.png" alt="Pupil cameras tracking each eye during an OCT scan" role="button" tabindex="0" aria-label="Open pupil camera view enlarged"></div>
+                <figcaption class="oct-robot-views__caption">Pupil cameras tracking the left, right, and downward eye position.</figcaption>
+              </figure>
+              <figure class="oct-robot-views__item">
+                <div class="oct-robot-views__tile"><img class="oct-lightbox-trigger" data-oct-lightbox-group="robot-views" src="../../assets/img/oct_face%20identification%20view.png" alt="Resulting face detection locating the eyes from the camera feeds" role="button" tabindex="0" aria-label="Open resulting face detection enlarged"></div>
+                <figcaption class="oct-robot-views__caption">Resulting face detection.</figcaption>
+              </figure>
+            </div>
           </figure>
         </div>
       </div>
@@ -427,7 +611,9 @@
       </figure>
       <p>The walkthrough gave us an initial hypothesis about where the experience could break down.</p>
       <figure class="single-tile-figure oct-user-needs-figure">
-        <div class="single-tile" style="width: 90%; margin: 0 auto;"><img src="../../assets/img/oct_user-needs.png" alt="Two speech bubbles, one from a child and caregiver about long waits, one from clinical staff about repeated scans, converging into the design question: how might we make the OCT experience easier for children to understand and participate in."></div>
+        <div class="single-tile" style="width: 90%; margin: 0 auto;">
+          <img src="../../assets/img/oct_user-needs_after.png" alt="Two speech bubbles, one from a child and caregiver about long waits, one from clinical staff about repeated scans, followed by the design question: how might we make the OCT experience easier for children to understand and participate in.">
+        </div>
       </figure>
         </div>
       </div>
@@ -592,7 +778,16 @@
         <h2 class="section-icon-title project-section__title">Research Outcome</h2>
         <div class="project-section__body">
           <p>I co-authored two <a style="font-weight: 400; text-decoration: underline; text-underline-offset: 0.15em;" href="https://www.arvo.org/" target="_blank" rel="noopener noreferrer" aria-label="Association for Research in Vision and Ophthalmology (ARVO) (opens in a new tab)">Association for Research in Vision and Ophthalmology (ARVO)<span class="external-link-indicator" aria-hidden="true">↗</span></a> 2026 conference abstracts published in <em>Investigative Ophthalmology &amp; Visual Science</em>. Covering the robotic character prototype and caregiver perspectives on pediatric OCT characters, I led the quantitative analysis sections.</p>
-          <p>[<a style="font-weight: 400; text-decoration: underline; text-underline-offset: 0.15em;" href="https://iovs.arvojournals.org/article.aspx?articleid=2813626" target="_blank" rel="noopener noreferrer" aria-label="Robotic character prototype (opens in a new tab)">Robotic character prototype<span class="external-link-indicator" aria-hidden="true">↗</span></a>] [<a style="font-weight: 400; text-decoration: underline; text-underline-offset: 0.15em;" href="https://iovs.arvojournals.org/article.aspx?articleid=2813627" target="_blank" rel="noopener noreferrer" aria-label="Caregiver perspectives (opens in a new tab)">Caregiver perspectives<span class="external-link-indicator" aria-hidden="true">↗</span></a>]</p>
+          <div class="oct-research-publications">
+            <figure class="oct-research-publication">
+              <a class="oct-research-publication__link" href="https://iovs.arvojournals.org/article.aspx?articleid=2813626" target="_blank" rel="noopener noreferrer" aria-label="Robotic character prototype (opens in a new tab)">Robotic character prototype<span class="external-link-indicator" aria-hidden="true">↗</span></a>
+              <img class="oct-research-publication__image" src="../../assets/img/oct_research%20prototype.png" alt="Research abstract for the robotic character prototype">
+            </figure>
+            <figure class="oct-research-publication">
+              <a class="oct-research-publication__link" href="https://iovs.arvojournals.org/article.aspx?articleid=2813627" target="_blank" rel="noopener noreferrer" aria-label="Caregiver perspectives (opens in a new tab)">Caregiver perspectives<span class="external-link-indicator" aria-hidden="true">↗</span></a>
+              <img class="oct-research-publication__image" src="../../assets/img/oct_research%20caregiver.png" alt="Research abstract for caregiver perspectives">
+            </figure>
+          </div>
         </div>
       </div>
     </section>
@@ -603,26 +798,33 @@
         <p class="project-section__eyebrow">Final Solution</p>
         <h2 class="section-icon-title project-section__title">Future Exploration - AI</h2>
         <div class="project-section__body">
-          <p>I wanted to further explore how to make an idea evolve from a character concept into a scalable interaction system. I mapped the storyboard into a <span class="text-mint" style="color: #2457c5; font-weight: 400;">service blueprint</span> for a broader experience easier to review and extend to future character directions.</p>
+          <p>I wanted to further explore how to make an idea evolve from a character concept into a scalable interaction system.</p>
+          <div class="oct-mockup-stack">
+            <figure class="oct-mockup-full">
+              <img src="../../assets/img/oct_mockup1.png" alt="Sam the Ranger facing a seated patient">
+              <figcaption class="figure-caption">Sam the Ranger faces a seated patient.</figcaption>
+            </figure>
+            <figure class="oct-mockup-full">
+              <div class="oct-before-after" data-oct-before-after>
+                <img class="oct-before-after__image" src="../../assets/img/oct_mockup2_before.png" alt="Before: Sam's hat and camera housing without the ranger costume">
+                <div class="oct-before-after__after"><img class="oct-before-after__image" src="../../assets/img/oct_mockup2_after.png" alt=""></div>
+                <span class="oct-before-after__line" aria-hidden="true"></span>
+                <input class="oct-before-after__range" type="range" min="0" max="100" value="50" aria-label="Drag to compare before and after mockup images">
+                <span class="oct-before-after__handle" aria-hidden="true"></span>
+                <span class="oct-before-after__label oct-before-after__label--before" aria-hidden="true">Before</span>
+                <span class="oct-before-after__label oct-before-after__label--after" aria-hidden="true">After</span>
+              </div>
+              <figcaption class="figure-caption">Detail of Sam’s hat and camera housing, wrapped in the ranger costume.</figcaption>
+            </figure>
+          </div>
+          <p>I mapped the storyboard into a <span class="text-mint" style="color: #2457c5; font-weight: 400;">service blueprint</span> for a broader experience easier to review and extend to future character directions.</p>
           <figure class="single-tile-figure oct-iteration-blueprint">
             <div class="single-tile">
-              <img src="../../assets/img/oct_spec.png" alt="Sam the Ranger service blueprint: journey phases (Pre-Exposure, First Contact, Calibration, The Game, Success &amp; Goodbye) mapped across child actions, Sam's front-stage dialogue, and the system's back-stage mechanism for each phase.">
+              <img class="oct-lightbox-trigger" data-oct-lightbox-group="service-blueprint" src="../../assets/img/oct_spec.png" alt="Sam the Ranger service blueprint: journey phases (Pre-Exposure, First Contact, Calibration, The Game, Success &amp; Goodbye) mapped across child actions, Sam's front-stage dialogue, and the system's back-stage mechanism for each phase." role="button" tabindex="0" aria-label="Open Sam the Ranger service blueprint enlarged">
             </div>
             <figcaption class="figure-caption">Sam the Ranger service blueprint, exported from Figma</figcaption>
           </figure>
-          <p>I was curious on how I can use generative AI as a tool for <span class="text-mint" style="color: #2457c5; font-weight: 400;">rapid prototyping</span> in a field where physical iteration is slow. I prompted a concept film to visualize the interaction before committing to another physical build. Using Higgsfield, I generated keyframe images of the robot in the clinic environment, converted them into short video clips, and edited the sequence in Canva.</p>
-          <figure class="film-frame oct-iteration-film">
-            <div class="film-embed">
-              <iframe
-                src="https://player.vimeo.com/video/1213024532?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                loading="lazy"
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                title="AI-generated Sam concept film">
-              </iframe>
-            </div>
-            <figcaption class="figure-caption">This is an AI-generated concept, not footage of a working prototype.</figcaption>
-          </figure>
+          <p>I was curious on how I can use generative AI as a tool for <span class="text-mint" style="color: #2457c5; font-weight: 400;">rapid prototyping</span> in a field where physical iteration is slow. I prompted a <span class="text-mint" style="color: #2457c5; font-weight: 400;">concept film</span> to visualize the interaction before committing to another physical build. Using <span class="text-mint" style="color: #2457c5; font-weight: 400;">Higgsfield</span>, I generated keyframe images of the robot in the clinic environment, converted them into short video clips, and edited the sequence in Canva.</p>
         </div>
       </div>
     </section>

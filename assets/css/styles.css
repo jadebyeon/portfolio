@@ -937,8 +937,32 @@ img { max-width: 100%; height: auto; }
    padding and its subtitle-to-frame spacing stay exactly as before. */
 .hero-media--oct .oct-hero-device {
   position: relative;
-  width: 100%;
+  z-index: 1;
+  width: 68%;
   aspect-ratio: 4096 / 3038;
+}
+
+/* The robot acts as a foreground character instead of a separate tile:
+   it overlaps the tablet at the right edge while leaving the demo itself
+   readable on the left. */
+.hero-media--oct .oct-hero-composition {
+  position: relative;
+  left: 0;
+  width: 100%;
+  margin-inline: auto;
+  aspect-ratio: 1.6 / 1;
+}
+
+.hero-media--oct .oct-hero-robot {
+  position: absolute;
+  z-index: 2;
+  /* Match the visible bottom edge of the tablet artwork (rather than the
+     PNG canvas, which includes transparent space under the frame). */
+  top: 23%;
+  right: 0;
+  width: 47%;
+  height: auto;
+  pointer-events: none;
 }
 .hero-media--oct .oct-hero-frame {
   position: absolute;
@@ -1048,6 +1072,106 @@ img { max-width: 100%; height: auto; }
   margin-left: 0;
   border: 0;
   background: linear-gradient(to right, #242329 0 34%, transparent 34% 66%, #242329 66% 100%);
+}
+
+/* A YouTube-style timeline sits inside the video screen. The native range
+   control keeps seeking precise for both pointer and keyboard users. */
+.hero-media--oct .oct-hero-progress {
+  position: absolute;
+  z-index: 3;
+  width: 78%;
+  left: 11%;
+  bottom: 12.5%;
+}
+
+.hero-media--oct .oct-hero-progress__range {
+  --oct-progress: 0%;
+  display: block;
+  width: 100%;
+  height: 0.85rem;
+  margin: 0;
+  padding: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.hero-media--oct .oct-hero-progress__range::-webkit-slider-runnable-track {
+  height: 0.25rem;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--mint-color) 0 var(--oct-progress), rgba(255, 255, 255, 0.42) var(--oct-progress) 100%);
+}
+
+.hero-media--oct .oct-hero-progress__range::-webkit-slider-thumb {
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-top: -0.25rem;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: var(--mint-color);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+.hero-media--oct .oct-hero-progress__range::-moz-range-track {
+  height: 0.25rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.42);
+}
+
+.hero-media--oct .oct-hero-progress__range::-moz-range-progress {
+  height: 0.25rem;
+  border-radius: 999px;
+  background: var(--mint-color);
+}
+
+.hero-media--oct .oct-hero-progress__range::-moz-range-thumb {
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: var(--mint-color);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+.hero-media--oct .oct-hero-progress__range:focus-visible {
+  outline: 2px solid var(--mint-color);
+  outline-offset: 3px;
+  border-radius: 999px;
+}
+
+/* Unlike the other device heroes, OCT's robot intentionally shares the
+   full content width with its tablet. This lets both subjects breathe
+   while keeping the foreground overlap limited to a narrow handoff. */
+.hero-media--oct {
+  width: min(100%, 1320px);
+  max-width: 1320px;
+  padding-inline: 0;
+  overflow: visible;
+}
+
+@media (max-width: 680px) {
+  .hero-media--oct .oct-hero-composition {
+    left: 0;
+    aspect-ratio: 1.05 / 1;
+  }
+
+  .hero-media--oct .oct-hero-device { width: 68%; }
+
+  .hero-media--oct .oct-hero-robot {
+    top: 16%;
+    right: -2%;
+    width: 51%;
+  }
+
+  .hero-media--oct .oct-hero-progress {
+    width: 78%;
+    left: 11%;
+    bottom: 12.5%;
+  }
 }
 
 @media (hover: none), (pointer: coarse) {
