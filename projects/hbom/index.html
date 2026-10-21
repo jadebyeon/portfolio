@@ -27,8 +27,8 @@
       margin: 8px 0 0;
     }
 
-    /* Use one measured panel offset for both tab groups, so the first line
-       of a design decision sits at the same distance as a Features image. */
+    /* Use one measured panel offset so every design-decision tab begins
+       at the same distance from its divider. */
     .project-page--hbom .hbom-tabs__panel {
       margin-top: 1.5rem;
     }
@@ -94,27 +94,47 @@
       color: var(--hbom-body);
       line-height: 1.6;
     }
+    .project-page--hbom .hbom-decision-beat__result-label {
+      color: var(--mint-color);
+      font-size: inherit;
+      font-weight: 700;
+      letter-spacing: normal;
+      line-height: inherit;
+    }
+    .project-page--hbom .hbom-decision-tabs .hbom-decision-visual {
+      width: 100%;
+      margin: var(--hbom-media-space) auto;
+    }
+    /* Figures already carry the shared media margin on both sides. Do not
+       add a second top margin to the Result copy, so the whitespace above
+       and below every comparison image stays equal. */
+    .project-page--hbom .hbom-decision-tabs .hbom-decision-visual + .hbom-decision-beat__explanation {
+      margin-top: 0;
+    }
+    .project-page--hbom .hbom-decision-tabs .hbom-decision-visual--cards {
+      width: 80%;
+    }
     .project-page--hbom .project-section__body strong {
       color: var(--hbom-ink);
     }
     .project-page--hbom .hbom-final-solution .mac-mockup {
       margin: var(--hbom-media-space) auto;
     }
-    /* Crop out the blank top margin baked into the Filter placement /
-       Resource detail layout exports (measured directly off the PNGs:
-       ~220px of 1709px is empty background before the cards start).
-       object-position:bottom crops from the top only, so the real
-       content and captions at the bottom stay untouched. Higher
-       specificity + !important needed to beat .single-tile's own
-       !important aspect-ratio/object-fit reset. */
-    .single-tile.hbom-crop-top {
-      aspect-ratio: 3448 / 1489 !important;
+    /* Both comparison exports have excess canvas above and below the
+       layouts. Crop them evenly so their visual bounds match. */
+    .single-tile.hbom-crop-vertical {
+      aspect-ratio: 3448 / 1269 !important;
     }
-    .single-tile.hbom-crop-top > img {
+    .single-tile.hbom-crop-vertical > img {
       width: 100% !important;
       height: 100% !important;
       object-fit: cover !important;
-      object-position: center bottom !important;
+      object-position: center center !important;
+    }
+    @media (max-width: 680px) {
+      .project-page--hbom .hbom-decision-tabs .hbom-decision-visual--cards {
+        width: 100%;
+      }
     }
     .mac-mockup {
       position: relative;
@@ -314,7 +334,7 @@
           <p>Through <span class="text-mint" style="color: #2457c5; font-weight: 400;">interview content audit</span> and <span class="text-mint" style="color: #2457c5; font-weight: 400;">secondary research</span>, I reviewed how patients and providers might use shared health information. This identified two core use cases: patients looking for understandable information about food benefits, and providers looking for materials to learn from or share.</p>
           <figure class="single-tile-figure">
             <div class="single-tile" style="width: 90%; margin: 0 auto;">
-              <img src="../../assets/img/hbom-user-needs.png" alt="Patients and providers ask where to find relevant nutrition benefits resources; Jade frames the opportunity and design question for a browsable resource hub.">
+              <img src="../../assets/img/hbom_user-needs.png" alt="Patients and providers ask where to find relevant nutrition benefits resources; Jade frames the opportunity and design question for a browsable resource hub.">
             </div>
           </figure>
           <p>I was assigned to design the hub in Figma. After completing the information architecture and wireframes early, I proposed extending the work into a Webflow CMS implementation.</p>
@@ -354,92 +374,54 @@
 
             <div class="hbom-tabs__panels">
               <div class="hbom-tabs__panel is-active" id="hbomDecisionPanel-filter" role="tabpanel" aria-labelledby="hbomDecisionTab-filter" tabindex="0">
-                <div class="hbom-tabs__media single-tile hbom-crop-top">
-                  <img class="hbom-lightbox-trigger" data-hbom-lightbox-group="design-decisions" src="../../assets/img/hbom_Filter%20placement.png" alt="Filter placement options compared: top, side, and combined filters" role="button" tabindex="0" aria-label="Open filter placement options enlarged">
-                </div>
                 <div class="hbom-tabs__copy">
                   <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__challenge-label"><span aria-hidden="true">❗</span>Challenge:</span> Visitors needed to narrow resources, while filters had to stay visible as categories grew.</p>
-                  <p class="hbom-decision-beat__explanation">Side and top filters solved different parts of the problem. I developed both directions and presented their trade-offs to the project team in a <span class="text-mint" style="color: #2457c5; font-weight: 400;">comparative evaluation</span>. We combined them in the final layout: a top filter for visibility and a side filter for depth.</p>
+                  <p class="hbom-decision-beat__explanation">I developed a side filter and a top filter, then presented their trade-offs to the project team in a <span class="text-mint" style="color: #2457c5; font-weight: 400;">comparative evaluation</span>.</p>
+                  <figure class="hbom-decision-visual single-tile hbom-crop-vertical">
+                    <img class="hbom-lightbox-trigger" data-hbom-lightbox-group="design-decisions" src="../../assets/img/hbom_Filter%20placement.png" alt="Filter placement options compared: top, side, and combined filters" role="button" tabindex="0" aria-label="Open filter placement options enlarged">
+                  </figure>
+                  <p class="hbom-decision-beat__explanation"><span class="hbom-decision-beat__result-label"><span aria-hidden="true">✅</span> Result:</span> The final layout combines both. A top tab handles user-type entry; a side panel supports topic and media type filtering below.</p>
+                  <figure class="hbom-decision-visual single-tile">
+                    <img class="hbom-lightbox-trigger" data-hbom-lightbox-group="design-decisions" src="../../assets/img/hbom-filters.png?v=3" alt="Final resource hub filters with user-type tabs and a side filtering panel" role="button" tabindex="0" aria-label="Open final filter layout enlarged">
+                  </figure>
                 </div>
               </div>
 
               <div class="hbom-tabs__panel" id="hbomDecisionPanel-layout" role="tabpanel" aria-labelledby="hbomDecisionTab-layout" tabindex="0">
-                <div class="hbom-tabs__media single-tile hbom-crop-top">
-                  <img class="hbom-lightbox-trigger" data-hbom-lightbox-group="design-decisions" src="../../assets/img/hbom_Resource%20detail%20layout.png" alt="Resource detail layout options compared" role="button" tabindex="0" aria-label="Open resource detail layout options enlarged">
-                </div>
                 <div class="hbom-tabs__copy">
-                  <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__challenge-label"><span aria-hidden="true">❗</span>Challenge:</span> The page needed to support both reading and requesting resources without letting either compete with the other.</p>
-                  <p class="hbom-decision-beat__explanation">I explored two ways to place the request form alongside the resource. A <span class="text-mint" style="color: #2457c5; font-weight: 400;">comparative evaluation</span> with the project team showed the full-width layout kept the resource easier to focus on, so I moved the form below the content.</p>
+                  <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__challenge-label"><span aria-hidden="true">❗</span>Challenge:</span> The page needed to support both reading and requesting a resource without letting either compete with the other.</p>
+                  <p class="hbom-decision-beat__explanation">I explored two layouts for placing the request form alongside the resource and ran a <span class="text-mint" style="color: #2457c5; font-weight: 400;">comparative evaluation</span> with the project team.</p>
+                  <figure class="hbom-decision-visual single-tile hbom-crop-vertical">
+                    <img class="hbom-lightbox-trigger" data-hbom-lightbox-group="design-decisions" src="../../assets/img/hbom_Resource%20detail%20layout.png" alt="Resource detail layout options compared" role="button" tabindex="0" aria-label="Open resource detail layout options enlarged">
+                  </figure>
+                  <p class="hbom-decision-beat__explanation"><span class="hbom-decision-beat__result-label"><span aria-hidden="true">✅</span> Result:</span> The form sits below the content. Metadata was added to each detail page to build <span class="text-mint" style="color: #2457c5; font-weight: 400;">trust</span>.</p>
+                  <figure class="hbom-decision-visual single-tile">
+                    <img class="hbom-lightbox-trigger" data-hbom-lightbox-group="design-decisions" src="../../assets/img/hbom-detail.png?v=3" alt="Final full-width resource detail page" role="button" tabindex="0" aria-label="Open final resource detail page enlarged">
+                  </figure>
                 </div>
               </div>
 
               <div class="hbom-tabs__panel" id="hbomDecisionPanel-cards" role="tabpanel" aria-labelledby="hbomDecisionTab-cards" tabindex="0">
-                <div class="hbom-tabs__media single-tile">
-                  <img class="hbom-lightbox-trigger" data-hbom-lightbox-group="design-decisions" src="../../assets/img/hbom-feedback.png" alt="Resource card variations and final direction" role="button" tabindex="0" aria-label="Open resource card design options enlarged">
-                </div>
                 <div class="hbom-tabs__copy">
                   <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__challenge-label"><span aria-hidden="true">❗</span>Challenge:</span> Visitors needed enough context to judge a resource before opening it.</p>
-                  <p class="hbom-decision-beat__explanation">I designed eight card variations, each with a different information hierarchy and use case. After <span class="text-mint" style="color: #2457c5; font-weight: 400;">preference testing</span> with the project team, I developed the preferred direction further and kept the resource type, source, and reading time visible before the click.</p>
+                  <p class="hbom-decision-beat__explanation">I designed eight card variations, each with a different information hierarchy and use case. After a <span class="text-mint" style="color: #2457c5; font-weight: 400;">preference testing</span> with the project team, I developed the selected direction further.</p>
+                  <figure class="hbom-decision-visual hbom-decision-visual--cards single-tile">
+                    <img class="hbom-lightbox-trigger" data-hbom-lightbox-group="design-decisions" src="../../assets/img/hbom-feedback.png" alt="Resource card variations and final direction" role="button" tabindex="0" aria-label="Open resource card design options enlarged">
+                  </figure>
+                  <p class="hbom-decision-beat__explanation"><span class="hbom-decision-beat__result-label"><span aria-hidden="true">✅</span> Result:</span> Key details are visible before the click.</p>
+                  <figure class="hbom-decision-visual single-tile">
+                    <img class="hbom-lightbox-trigger" data-hbom-lightbox-group="design-decisions" src="../../assets/img/hbom-resource%20cards.png" alt="Final resource cards with key details visible before opening" role="button" tabindex="0" aria-label="Open final resource cards enlarged">
+                  </figure>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FINAL SOLUTION -->
-    <section class="project-section project-section--context final-outcome section-nav-target hbom-final-solution" id="outcome">
-      <div class="content-container">
-        <p class="project-section__eyebrow">Final Solution</p>
-        <h2 class="section-icon-title project-section__title">Features</h2>
-        <div class="project-section__body">
-          <div class="hbom-tabs" id="hbomFeatureTabs">
-            <div class="hbom-tabs__bar" role="tablist" aria-label="Features">
-              <button type="button" class="hbom-tabs__tab" id="hbomTab-filters" role="tab" aria-selected="true" aria-controls="hbomPanel-filters">Filters</button>
-              <button type="button" class="hbom-tabs__tab" id="hbomTab-form" role="tab" aria-selected="false" aria-controls="hbomPanel-form" tabindex="-1">Request form</button>
-              <button type="button" class="hbom-tabs__tab" id="hbomTab-detail" role="tab" aria-selected="false" aria-controls="hbomPanel-detail" tabindex="-1">Detail page</button>
-            </div>
-
-            <div class="hbom-tabs__panels">
-              <div class="hbom-tabs__panel is-active" id="hbomPanel-filters" role="tabpanel" aria-labelledby="hbomTab-filters" tabindex="0">
-                <div class="hbom-tabs__media">
-                  <img src="../../assets/img/hbom-filters.png?v=3" alt="User type, topic, and media type filter panels">
-                </div>
-                <div class="hbom-tabs__copy">
-                  <h3>Non-gating filters</h3>
-                  <p>Visitors can enter through a user type, topic, or media type. “All” stays selected by default, so people with overlapping needs can browse without choosing a label first.</p>
-                </div>
-              </div>
-
-              <div class="hbom-tabs__panel" id="hbomPanel-form" role="tabpanel" aria-labelledby="hbomTab-form" tabindex="0">
-                <div class="hbom-tabs__media">
-                  <img src="../../assets/img/hbom-form.png?v=3" alt="Combined request and suggestion form">
-                </div>
-                <div class="hbom-tabs__copy">
-                  <h3>One form, two paths</h3>
-                  <p>The same form supports both requesting a resource and suggesting one.</p>
-                </div>
-              </div>
-
-              <div class="hbom-tabs__panel" id="hbomPanel-detail" role="tabpanel" aria-labelledby="hbomTab-detail" tabindex="0">
-                <div class="hbom-tabs__media">
-                  <img src="../../assets/img/hbom-detail.png?v=3" alt="Resource detail page">
-                </div>
-                <div class="hbom-tabs__copy">
-                  <h3>Information before the click</h3>
-                  <p>Each resource includes its source, format, reading time, and last-updated date so visitors can decide whether it is worth opening.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
     </section>
 
     <!-- WEBFLOW BUILD -->
-    <section class="project-section project-section--context final-outcome hbom-final-solution">
+    <section class="project-section project-section--context final-outcome section-nav-target hbom-final-solution" id="outcome">
       <div class="content-container">
         <p class="project-section__eyebrow">Final Solution</p>
         <h2 class="section-icon-title project-section__title">Webflow build</h2>
