@@ -131,6 +131,11 @@
       object-fit: cover !important;
       object-position: center center !important;
     }
+    /* The filter comparison includes its labels near the lower edge, so it
+       needs a little more vertical canvas than the detail-layout comparison. */
+    .single-tile.hbom-crop-filter {
+      aspect-ratio: 3448 / 1500 !important;
+    }
     @media (max-width: 680px) {
       .project-page--hbom .hbom-decision-tabs .hbom-decision-visual--cards {
         width: 100%;
@@ -377,7 +382,7 @@
                 <div class="hbom-tabs__copy">
                   <p class="hbom-decision-beat__pain"><span class="hbom-decision-beat__challenge-label"><span aria-hidden="true">❗</span>Challenge:</span> Visitors needed to narrow resources, while filters had to stay visible as categories grew.</p>
                   <p class="hbom-decision-beat__explanation">I developed a side filter and a top filter, then presented their trade-offs to the project team in a <span class="text-mint" style="color: #2457c5; font-weight: 400;">comparative evaluation</span>.</p>
-                  <figure class="hbom-decision-visual single-tile hbom-crop-vertical">
+                  <figure class="hbom-decision-visual single-tile hbom-crop-vertical hbom-crop-filter">
                     <img class="hbom-lightbox-trigger" data-hbom-lightbox-group="design-decisions" src="../../assets/img/hbom_Filter%20placement.png" alt="Filter placement options compared: top, side, and combined filters" role="button" tabindex="0" aria-label="Open filter placement options enlarged">
                   </figure>
                   <p class="hbom-decision-beat__explanation"><span class="hbom-decision-beat__result-label"><span aria-hidden="true">✅</span> Result:</span> The final layout combines both. A top tab handles user-type entry; a side panel supports topic and media type filtering below.</p>
