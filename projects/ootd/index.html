@@ -35,6 +35,7 @@
     .project-page--ootd .research-insight-cards--criteria .research-insight-card p { margin: 0.5rem 0 0; font-size: clamp(12px, 0.9vw, 14px); line-height: 1.5; }
     .project-page--ootd .research-insight-cards--criteria .research-insight-card__media { margin-bottom: 0.5rem; }
     .project-page--ootd .research-insight-cards--criteria .research-insight-card__implication { margin-top: 0.625rem !important; padding-top: 0.5rem; }
+    .project-page--ootd .research-insight-cards--criteria .research-insight-cards__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .ootd-character-pair { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: var(--block-gap); align-items: center; }
     .ootd-character-pair__item { min-width: 0; }
     .ootd-character-pair img { display: block; width: 100%; height: auto; border-radius: 16px; }
@@ -52,7 +53,7 @@
     .project-page--ootd .physical-thumb { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); transform-origin: center; transition: transform 0.3s ease; }
     @media (hover: hover) { .project-page--ootd .physical-thumb:hover { position: relative; z-index: 1; transform: translateY(-8px) scale(1.02); } }
     @media (max-width: 680px) { .project-page--ootd .problem-solution-row { grid-template-columns: 1fr; gap: 1.5rem; } .project-page--ootd .ps-block + .ps-block { border-top: 1px solid var(--ootd-rule); padding-top: var(--ootd-divider-space); } .ootd-character-pair { grid-template-columns: 1fr; } .ootd-character-pair__arrow { justify-self: center; transform: rotate(90deg); } }
-    @media (max-width: 760px) { .project-page--ootd .ootd-reflection-grid { grid-template-columns: 1fr; gap: 2rem; } }
+    @media (max-width: 760px) { .project-page--ootd .research-insight-cards--criteria .research-insight-cards__grid { grid-template-columns: 1fr; } .project-page--ootd .ootd-reflection-grid { grid-template-columns: 1fr; gap: 2rem; } }
     @media (max-width: 640px) { .project-page--ootd .physical-thumb-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     @media (prefers-reduced-motion: reduce) { .project-page--ootd .physical-thumb { transition: none; } .project-page--ootd .physical-thumb:hover { transform: none; } }
     @media (max-width: 1024px) { .project-page--ootd .section-nav__link.is-active { background: var(--ootd-accent); border-color: var(--ootd-accent); color: #fff; } }
@@ -103,7 +104,7 @@
           </div>
         </section>
         <section class="project-section project-section--context section-nav-target" id="background">
-          <div class="content-container"><p class="project-section__eyebrow">Background</p><h2 class="section-icon-title project-section__title">Personal Motivation</h2><div class="project-section__body"><p>This started as a personal project. I wanted a low-pressure alternative to journaling, something with more to respond to than a blank page. I designed and built Wearby solo.</p></div></div>
+          <div class="content-container"><p class="project-section__eyebrow">Background</p><h2 class="section-icon-title project-section__title">Personal Motivation</h2><div class="project-section__body"><p>This started as a personal project. I wanted a low-pressure alternative to journaling, something with more to respond to than a blank page. I designed and built Wearby solo.</p><figure class="single-tile-figure"><div class="single-tile"><img src="../../assets/img/ootd_user-needs.png" alt="Wearby's user needs and opportunity framing for a low-pressure daily reflection companion"></div></figure></div></div>
         </section>
         <section class="project-section project-section--context section-nav-target" id="research">
           <div class="content-container">

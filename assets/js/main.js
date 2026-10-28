@@ -322,6 +322,7 @@
       film: -16,
       pokemon: -16
     };
+    var desktopLayoutActive = window.matchMedia('(min-width: 769px)').matches;
 
     function setPosition(button, x, y, surfaceRect) {
       var maxX = Math.max(0, surfaceRect.width - button.offsetWidth);
@@ -409,8 +410,31 @@
       button.addEventListener('pointercancel', finishDrag);
     });
 
+    function resetCanvasForBreakpoint() {
+      /* A mobile layout records flow positions near the left edge. Those
+         coordinates are not meaningful after switching to desktop (and vice
+         versa), so clear them before capturing the new layout. */
+      stickers.forEach(function (button) {
+        button.classList.remove('is-draggable', 'is-dragging');
+        button.style.position = '';
+        button.style.left = '';
+        button.style.top = '';
+      });
+      window.requestAnimationFrame(activateCanvas);
+    }
+
+    function handleCanvasResize() {
+      var useDesktopLayout = window.matchMedia('(min-width: 769px)').matches;
+      if (useDesktopLayout !== desktopLayoutActive) {
+        desktopLayoutActive = useDesktopLayout;
+        resetCanvasForBreakpoint();
+        return;
+      }
+      constrainCanvas();
+    }
+
     activateCanvas();
-    window.addEventListener('resize', constrainCanvas);
+    window.addEventListener('resize', handleCanvasResize);
   })();
 
   if (!overlay || !card || !inner) return;
