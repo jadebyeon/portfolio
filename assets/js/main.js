@@ -1863,7 +1863,7 @@ var PERSONA_COPY = {
   var CLOSE_MS = 150;
 
   function init() {
-    var thumbs = Array.prototype.slice.call(document.querySelectorAll('.physical-thumb'));
+    var thumbs = Array.prototype.slice.call(document.querySelectorAll('.physical-thumb, .ootd-lightbox-trigger'));
     var lightbox = document.getElementById('physicalLightbox');
     if (!thumbs.length || !lightbox) return;
 
@@ -1875,19 +1875,24 @@ var PERSONA_COPY = {
     var focusable = [closeBtn, prevBtn, nextBtn];
 
     var items = thumbs.map(function (thumb) {
-      var thumbImg = thumb.querySelector('img');
-      return { src: thumbImg.getAttribute('src'), caption: thumb.getAttribute('data-caption') || '' };
+      var thumbImg = thumb.matches('img') ? thumb : thumb.querySelector('img');
+      return {
+        src: thumbImg.getAttribute('src'),
+        caption: thumb.getAttribute('data-caption') || thumbImg.getAttribute('alt') || '',
+        group: thumb.getAttribute('data-ootd-lightbox-group') || 'physical'
+      };
     });
 
     var currentIndex = 0;
+    var activeItems = items;
     var triggerEl = null;
     var closeTimer = null;
 
     function render(index) {
       currentIndex = index;
-      img.setAttribute('src', items[index].src);
-      img.setAttribute('alt', items[index].caption);
-      caption.textContent = items[index].caption;
+      img.setAttribute('src', activeItems[index].src);
+      img.setAttribute('alt', activeItems[index].caption);
+      caption.textContent = activeItems[index].caption;
     }
 
     function onKeydown(e) {
@@ -1896,10 +1901,10 @@ var PERSONA_COPY = {
         closeLightbox();
       } else if (e.key === 'ArrowLeft') {
         e.preventDefault();
-        render((currentIndex - 1 + items.length) % items.length);
+        render((currentIndex - 1 + activeItems.length) % activeItems.length);
       } else if (e.key === 'ArrowRight') {
         e.preventDefault();
-        render((currentIndex + 1) % items.length);
+        render((currentIndex + 1) % activeItems.length);
       } else if (e.key === 'Tab') {
         var first = focusable[0];
         var last = focusable[focusable.length - 1];
@@ -1916,7 +1921,9 @@ var PERSONA_COPY = {
     function openLightbox(index, trigger) {
       triggerEl = trigger;
       if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
-      render(index);
+      var group = trigger.getAttribute('data-ootd-lightbox-group') || 'physical';
+      activeItems = items.filter(function (item) { return item.group === group; });
+      render(activeItems.indexOf(items[index]));
       lightbox.hidden = false;
       void lightbox.offsetWidth; // force layout so opacity transitions from 0 instead of jumping straight to 1
       lightbox.classList.add('is-open');
@@ -1937,13 +1944,19 @@ var PERSONA_COPY = {
       thumb.addEventListener('click', function () {
         openLightbox(index, thumb);
       });
+      thumb.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openLightbox(index, thumb);
+        }
+      });
     });
 
     prevBtn.addEventListener('click', function () {
-      render((currentIndex - 1 + items.length) % items.length);
+      render((currentIndex - 1 + activeItems.length) % activeItems.length);
     });
     nextBtn.addEventListener('click', function () {
-      render((currentIndex + 1) % items.length);
+      render((currentIndex + 1) % activeItems.length);
     });
 
     Array.prototype.slice.call(lightbox.querySelectorAll('[data-lightbox-close]')).forEach(function (el) {
