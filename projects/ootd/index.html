@@ -37,9 +37,14 @@
     .project-page--ootd .research-insight-cards--criteria .research-insight-card__implication { margin-top: 0.625rem !important; padding-top: 0.5rem; }
     .project-page--ootd .research-insight-cards--criteria .research-insight-cards__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .project-page--ootd .ootd-decision-tabs .hbom-tabs__panel { margin-top: 1.5rem; }
-    .project-page--ootd .ootd-decision-tabs .hbom-tabs__bar { margin-top: 0.5rem; box-shadow: 0 0.5rem 1.5rem rgba(36, 35, 41, 0.07); }
+    .project-page--ootd .ootd-decision-tabs .hbom-tabs__bar { margin-top: 0.5rem; box-shadow: 0 0.5rem 1.5rem rgba(36, 35, 41, 0.07); max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+    .project-page--ootd .ootd-decision-tabs .hbom-tabs__bar::-webkit-scrollbar { display: none; }
     .project-page--ootd .ootd-decision-tabs .hbom-tabs__panel.is-active { display: flex; flex-direction: column; gap: 0; }
     .project-page--ootd .ootd-decision-tabs .hbom-tabs__copy { width: 100%; }
+    .project-page--ootd .ootd-decision-tabs .hbom-tabs__copy .ootd-decision-point { margin: 0; color: var(--ootd-body); font-size: 1rem; line-height: 1.6; }
+    .project-page--ootd .ootd-decision-tabs .hbom-tabs__copy .ootd-decision-point + .ootd-decision-point { margin-top: 0.75rem; }
+    .project-page--ootd .ootd-decision-point strong { color: var(--ootd-ink); }
+    .project-page--ootd .ootd-decision-point__emoji { display: inline-block; margin-right: 0.4em; }
     .project-page--ootd .ootd-decision-tabs .ootd-decision-visual { width: 100%; margin: var(--block-gap) auto; }
     .ootd-character-pair { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: var(--block-gap); align-items: center; }
     .ootd-character-pair__item { min-width: 0; }
@@ -103,10 +108,10 @@
               <div class="ps-block"><p class="ps-label">Solution</p><p class="ps-text">A companion app where dressing up a character named Ear becomes a daily ritual, turning reflection into play.</p></div>
             </div>
             <div class="project-meta project-meta--details">
-              <div class="meta-item"><div class="meta-label">Project Type</div><ul class="meta-list"><li>Product</li><li>UX/UI</li><li>Physical Design</li></ul></div>
+              <div class="meta-item"><div class="meta-label">Project Type</div><ul class="meta-list"><li>Product</li><li>UX/UI</li><li>AI feature</li><li>Physical Design</li></ul></div>
               <div class="meta-item"><div class="meta-label">Team</div><div class="meta-value">1 Designer (me)</div></div>
               <div class="meta-item"><div class="meta-label">Timeline</div><div class="meta-value">Feb 2026 &ndash; May 2026</div></div>
-              <div class="meta-item"><div class="meta-label">Tools</div><ul class="meta-list"><li>Figma</li><li>Procreate</li><li>Adobe Photoshop</li><li>Cricut</li></ul></div>
+              <div class="meta-item"><div class="meta-label">Tools</div><ul class="meta-list"><li>Figma</li><li>Procreate</li><li>Adobe Photoshop</li><li>Cricut</li><li>Vercel</li><li>Claude Code</li></ul></div>
             </div>
           </div>
         </section>
@@ -146,23 +151,38 @@
             <p class="project-section__eyebrow">Ideation</p>
             <h2 class="section-icon-title project-section__title">Design decisions</h2>
             <div class="project-section__body">
+              <p>After wireframing, I ran <span class="text-mint">usability tests</span> with 9 participants and made three key changes based on their feedback.</p>
               <div class="hbom-tabs ootd-decision-tabs" id="ootdDecisionTabs">
                 <div class="hbom-tabs__bar" role="tablist" aria-label="Design decisions">
-                  <button type="button" class="hbom-tabs__tab" id="ootdDecisionTab-welcome" role="tab" aria-selected="true" aria-controls="ootdDecisionPanel-welcome">01. Welcome</button>
+                  <button type="button" class="hbom-tabs__tab" id="ootdDecisionTab-home" role="tab" aria-selected="true" aria-controls="ootdDecisionPanel-home">01. Home</button>
                   <button type="button" class="hbom-tabs__tab" id="ootdDecisionTab-reflection" role="tab" aria-selected="false" aria-controls="ootdDecisionPanel-reflection" tabindex="-1">02. Reflection</button>
+                  <button type="button" class="hbom-tabs__tab" id="ootdDecisionTab-insights" role="tab" aria-selected="false" aria-controls="ootdDecisionPanel-insights" tabindex="-1">03. Insights</button>
                 </div>
                 <div class="hbom-tabs__panels">
-                  <div class="hbom-tabs__panel is-active" id="ootdDecisionPanel-welcome" role="tabpanel" aria-labelledby="ootdDecisionTab-welcome" tabindex="0">
+                  <div class="hbom-tabs__panel is-active" id="ootdDecisionPanel-home" role="tabpanel" aria-labelledby="ootdDecisionTab-home" tabindex="0">
                     <div class="hbom-tabs__copy">
+                      <p class="ootd-decision-point"><span class="ootd-decision-point__emoji" aria-hidden="true">❗</span><strong>Challenge:</strong> Home had several actions, but nothing showed which mattered most.</p>
+                      <p class="ootd-decision-point"><span class="ootd-decision-point__emoji" aria-hidden="true">✅</span><strong>Result:</strong> I ranked the actions by priority and rebuilt the visual weight around that order, with WCAG AA in mind.</p>
                       <figure class="ootd-decision-visual single-tile">
-                        <img src="../../assets/img/ootd_DD_welcome.png" alt="Wearby welcome design decision">
+                        <img src="../../assets/img/ootd_DD_welcome.png?v=20261031" alt="Wearby Home design decision">
                       </figure>
                     </div>
                   </div>
                   <div class="hbom-tabs__panel" id="ootdDecisionPanel-reflection" role="tabpanel" aria-labelledby="ootdDecisionTab-reflection" tabindex="0">
                     <div class="hbom-tabs__copy">
+                      <p class="ootd-decision-point"><span class="ootd-decision-point__emoji" aria-hidden="true">❗</span><strong>Challenge:</strong> Form-like fields felt like homework, and users reflect late in the day, when energy is low.</p>
+                      <p class="ootd-decision-point"><span class="ootd-decision-point__emoji" aria-hidden="true">✅</span><strong>Result:</strong> I designed for low cognitive load, keeping the screen as simple and easy to finish as possible.</p>
                       <figure class="ootd-decision-visual single-tile">
-                        <img src="../../assets/img/ootd_DD_reflection.png" alt="Wearby reflection design decision">
+                        <img src="../../assets/img/ootd_DD_reflection.png?v=20261031" alt="Wearby Reflection design decision">
+                      </figure>
+                    </div>
+                  </div>
+                  <div class="hbom-tabs__panel" id="ootdDecisionPanel-insights" role="tabpanel" aria-labelledby="ootdDecisionTab-insights" tabindex="0">
+                    <div class="hbom-tabs__copy">
+                      <p class="ootd-decision-point"><span class="ootd-decision-point__emoji" aria-hidden="true">❗</span><strong>Challenge:</strong> Insights showed what was easy to compute, not what users wanted to know.</p>
+                      <p class="ootd-decision-point"><span class="ootd-decision-point__emoji" aria-hidden="true">✅</span><strong>Result:</strong> I rebuilt the screen around what users asked to see, in a layout consistent with other screens.</p>
+                      <figure class="ootd-decision-visual single-tile">
+                        <img src="../../assets/img/ootd_DD_insights.png?v=20261031" alt="Wearby Insights design decision">
                       </figure>
                     </div>
                   </div>
@@ -171,8 +191,11 @@
             </div>
           </div>
         </section>
+        <section class="project-section project-section--context">
+          <div class="content-container"><p class="project-section__eyebrow">Ideation</p><h2 class="section-icon-title project-section__title">AI Feature</h2><div class="project-section__body"><p>Dressing Ear is the core of Wearby, but a fixed closet limits it. I added an AI generator so users can create clothes from a photo or a short description, and the items fit Ear&rsquo;s style.</p><figure class="single-tile-figure"><div class="single-tile"><img class="ootd-lightbox-trigger" data-ootd-lightbox-group="ideation" src="../../assets/img/ootd_ai.png?v=20261031" alt="AI colors on a Wearby shape: the AI generator creating clothes for Ear from a photo or description" role="button" tabindex="0" aria-label="Open AI feature enlarged"></div><figcaption class="figure-caption">AI colors on a Wearby shape</figcaption></figure></div></div>
+        </section>
         <section class="project-section project-section--context section-nav-target" id="final-solution">
-          <div class="content-container"><p class="project-section__eyebrow">Final Solution</p><h2 class="section-icon-title project-section__title">App Prototype</h2><div class="project-section__body"><p>Sage green and warm cream carry a calm, non-clinical tone. Ear's presence creates emotional continuity across the flow: Splash, Welcome, Dress Up, Reflection, Confirm Memory.</p><figure class="single-tile-figure ootd-screens"><div class="single-tile"><img src="../../assets/img/ootd_hi-fi%20screens.png?v=20261028" alt="Wearby high-fidelity app prototype screens"></div></figure><figure class="single-tile-figure ootd-screens"><div class="single-tile"><img src="../../assets/img/ootd_final%20screens.png?v=20261028" alt="Final Wearby app prototype screens"></div></figure></div></div>
+          <div class="content-container"><p class="project-section__eyebrow">Final Solution</p><h2 class="section-icon-title project-section__title">App Prototype</h2><div class="project-section__body"><p>Sage green and warm cream carry a calm, non-clinical tone. Ear's presence creates emotional continuity across the flow: Splash, Welcome, Dress Up, Reflection, Confirm Memory.</p><p>Beyond a Figma prototype, I built Wearby as a working web app and deployed it on Vercel. <a href="https://wearby-one.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Try the live app (opens in a new tab)">Try the live app<span class="external-link-indicator" aria-hidden="true">↗</span></a></p><figure class="single-tile-figure ootd-screens"><div class="single-tile"><img src="../../assets/img/ootd_final%20screens.png?v=20261031" alt="Final Wearby app prototype screens"></div></figure></div></div>
         </section>
         <section class="project-section project-section--context">
           <div class="content-container"><p class="project-section__eyebrow">Final Solution</p><h2 class="section-icon-title project-section__title">Design System</h2><div class="project-section__body"><p>Visual cohesion was a constraint from the start, not a cleanup pass. I built a design system of color and typography tokens plus a <span class="text-mint">reusable component library</span>, every color pairing verified against <span class="text-mint">WCAG AA.</span></p><figure class="single-tile-figure"><div class="single-tile"><img class="ootd-lightbox-trigger" data-ootd-lightbox-group="final-solution" src="../../assets/img/ootd:designSystem.png" alt="Wearby design system with color tokens, components, and typography scale" role="button" tabindex="0" aria-label="Open design system enlarged"></div></figure></div></div>
