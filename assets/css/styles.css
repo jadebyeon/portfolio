@@ -7105,7 +7105,9 @@ body.project-page .header::before {
 }
 .hero-chat__memoji img {
   display: block;
-  width: min(100%, 400px);
+  /* main.js sets the exact size so the Memoji's top meets the video
+     message's top; this is the no-JS fallback. */
+  width: min(100%, 328px);
   height: auto;
 }
 .hero-chat__stage {

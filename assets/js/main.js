@@ -130,13 +130,38 @@
       return;
     }
 
-    // Reserve the height of the finished conversation.
-    messages.forEach(function (m) { m.classList.add('is-shown'); });
-    stage.style.minHeight = stage.offsetHeight + 'px';
-    messages.forEach(function (m) { m.classList.remove('is-shown'); });
+    // Reserve the height of the finished conversation, and size the Memoji
+    // so its top lines up with the top of the last message (the video) once
+    // everything has arrived. Measured with all messages showing.
+    var memoji = document.querySelector('.hero-chat__memoji img');
+    var compact = window.matchMedia ? window.matchMedia('(max-width: 900px)') : null;
+    function measure() {
+      var wasShown = messages.map(function (m) { return m.classList.contains('is-shown'); });
+      var typingWasShown = typing.classList.contains('is-shown');
+      typing.classList.remove('is-shown');
+      messages.forEach(function (m) { m.classList.add('is-shown'); });
+      stage.style.minHeight = '';
+      stage.style.minHeight = stage.offsetHeight + 'px';
+      if (memoji) {
+        memoji.style.height = '';
+        memoji.style.width = '';
+        if (!(compact && compact.matches)) {
+          var height = memoji.getBoundingClientRect().bottom - messages[messages.length - 1].getBoundingClientRect().top;
+          if (height > 120) {
+            memoji.style.width = 'auto';
+            memoji.style.height = Math.round(height) + 'px';
+          }
+        }
+      }
+      messages.forEach(function (m, i) { m.classList.toggle('is-shown', wasShown[i]); });
+      if (typingWasShown) typing.classList.add('is-shown');
+    }
+    measure();
+    var resizeTimer = null;
     window.addEventListener('resize', function () {
       if (stage.dataset.chatDone !== 'true') return;
-      stage.style.minHeight = '';
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(measure, 120);
     });
 
     function shownBubbles() {
