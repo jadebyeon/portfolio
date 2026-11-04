@@ -97,6 +97,121 @@
   }
 })();
 
+/*==================== HOMEPAGE HERO: MESSAGES ====================
+  Plays once on load: typing dots, a text message pops in, typing again,
+  then a video message pops in while the earlier bubble slides up. The
+  stage reserves the finished conversation's height up front so nothing
+  else on the page jumps, and movement is done with FLIP (measure, change
+  the DOM, animate each older bubble from where it was). Reduced-motion
+  visitors, or browsers without the Web Animations API, just get the
+  finished conversation. No-ops on pages without [data-hero-chat]. */
+(function () {
+  var TYPING_MS = 1300;
+  var GAP_MS = 650;
+
+  function init() {
+    var stage = document.querySelector('[data-hero-chat]');
+    if (!stage) return;
+    var messages = Array.prototype.slice.call(stage.querySelectorAll('[data-chat-message]'));
+    var typing = stage.querySelector('[data-chat-typing]');
+    var video = stage.querySelector('video');
+    if (!messages.length || !typing) return;
+
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function playVideo() {
+      if (!video) return;
+      var started = video.play();
+      if (started && started.catch) started.catch(function () {});
+    }
+
+    if (reduce || !stage.animate) {
+      messages.forEach(function (m) { m.classList.add('is-shown'); });
+      playVideo();
+      return;
+    }
+
+    // Reserve the height of the finished conversation.
+    messages.forEach(function (m) { m.classList.add('is-shown'); });
+    stage.style.minHeight = stage.offsetHeight + 'px';
+    messages.forEach(function (m) { m.classList.remove('is-shown'); });
+    window.addEventListener('resize', function () {
+      if (stage.dataset.chatDone !== 'true') return;
+      stage.style.minHeight = '';
+    });
+
+    function shownBubbles() {
+      return Array.prototype.slice.call(stage.children).filter(function (el) {
+        return el.classList.contains('is-shown');
+      });
+    }
+
+    // FLIP: remember where the visible bubbles are, change the DOM, then
+    // animate every bubble that was already there from its old position.
+    function flip(change) {
+      var before = shownBubbles().map(function (el) { return { el: el, top: el.getBoundingClientRect().top }; });
+      change();
+      before.forEach(function (item) {
+        if (!item.el.classList.contains('is-shown')) return;
+        var dy = item.top - item.el.getBoundingClientRect().top;
+        if (Math.abs(dy) < 1) return;
+        item.el.animate(
+          [{ transform: 'translateY(' + dy + 'px)' }, { transform: 'translateY(0)' }],
+          { duration: 560, easing: 'cubic-bezier(0.25, 0.9, 0.3, 1.08)' }
+        );
+      });
+    }
+
+    function pop(el) {
+      el.animate([
+        { transform: 'scale(0.2)', opacity: 0 },
+        { transform: 'scale(1.06)', opacity: 1, offset: 0.7 },
+        { transform: 'scale(1)', opacity: 1 }
+      ], { duration: 380, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' });
+    }
+
+    function showTyping(beforeEl) {
+      flip(function () {
+        stage.insertBefore(typing, beforeEl || null);
+        typing.classList.add('is-shown');
+      });
+      pop(typing);
+    }
+
+    function showMessage(message) {
+      flip(function () {
+        typing.classList.remove('is-shown');
+        message.classList.add('is-shown');
+      });
+      pop(message);
+      if (message.contains(video)) playVideo();
+    }
+
+    var queue = messages.slice();
+    function next() {
+      var message = queue.shift();
+      if (!message) {
+        stage.dataset.chatDone = 'true';
+        return;
+      }
+      showTyping(message);
+      setTimeout(function () {
+        showMessage(message);
+        setTimeout(next, GAP_MS);
+      }, TYPING_MS);
+    }
+
+    var start = function () { setTimeout(next, 500); };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(start);
+    else start();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
 /*==================== BRAND LOGO: FLIP ONCE PER HOVER ====================
   Hovering (or keyboard-focusing) the header logo plays one full turn. The
   class stays until the animation ends, so leaving the logo never cuts the

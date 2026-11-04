@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>document.documentElement.classList.add("chat-js");</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -56,36 +57,25 @@
 
   <main class="main">
 
-    <section class="home section" id="home">
-      <div class="home__container container">
-        <div class="home__data">
-
-          <div class="persona-tabs" role="tablist" aria-label="View intro for different audiences">
-            <button class="persona-tab active" data-persona="anyone"   role="tab" aria-selected="true">Anyone</button>
-            <button class="persona-tab" data-persona="recruiters"      role="tab" aria-selected="false">For Recruiter</button>
-            <button class="persona-tab" data-persona="designers"       role="tab" aria-selected="false">For Designer</button>
-          </div>
-
-          <!-- Title + lines are fully driven by PERSONA_COPY in assets/js/main.js.
-               Pre-filled with the "anyone" copy so it's meaningful before JS runs. -->
-          <div class="hero-copy" id="heroCopy" aria-live="polite">
-            <h1 class="home__title" data-copy-title>
-              Jade is a product designer<br>with a <span class="text-mint">statistics</span> background.
-            </h1>
-            <p class="home__subtitle" data-copy-line="1">MEng Design &amp; Technology Innovation @ Duke</p>
-            <p class="home__subtitle" data-copy-line="2" hidden></p>
-            <div class="hero-chips" data-copy-chips hidden></div>
-            <a class="home__resume-link" data-copy-link href="assets/pdf/Jade_Resume.pdf" target="_blank" rel="noopener" hidden>View Résumé →</a>
-          </div>
+    <section class="home section hero-chat" id="home" aria-labelledby="heroTitle">
+      <h1 class="visually-hidden" id="heroTitle">Jade Byeon is a product designer with a statistics background.</h1>
+      <div class="hero-chat__inner container">
+        <div class="hero-chat__memoji" aria-hidden="true">
+          <img src="assets/img/jade_icon-optimized.png" alt="" width="800" height="667">
         </div>
-        <div class="home__visual" aria-hidden="true">
-          <div class="home__macbook">
-            <video class="home__macbook-screen" autoplay muted loop playsinline preload="metadata">
-              <source src="assets/video/portfolio_mockup.mp4" type="video/mp4">
-            </video>
-            <img class="home__macbook-frame" src="assets/img/macpro_frame-optimized.png" alt="">
+        <div class="hero-chat__stage" data-hero-chat role="log" aria-label="Introduction messages from Jade">
+          <div class="chat-bubble chat-bubble--text" data-chat-message>
+            <span class="chat-bubble__gloss" aria-hidden="true"></span>
+            <p>Hi, I&rsquo;m Jade. I&rsquo;m a product designer with a statistics background.</p>
           </div>
-          <img class="home__jade-icon" src="assets/img/jade_icon-optimized.png" alt="">
+          <div class="chat-bubble chat-bubble--media" data-chat-message>
+            <span class="chat-bubble__gloss" aria-hidden="true"></span>
+            <video class="chat-bubble__video" muted loop playsinline preload="auto" aria-label="A walkthrough of this portfolio" src="assets/video/portfolio_mockup.mp4"></video>
+          </div>
+          <div class="chat-bubble chat-bubble--typing" data-chat-typing aria-hidden="true">
+            <span class="chat-bubble__gloss"></span>
+            <span class="chat-dot"></span><span class="chat-dot"></span><span class="chat-dot"></span>
+          </div>
         </div>
       </div>
     </section>
