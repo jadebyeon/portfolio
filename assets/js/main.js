@@ -2313,7 +2313,7 @@ var PERSONA_COPY = {
       var spanRight = Math.max(fromLeft + fromWidth, left + width);
       slide = indicator.animate([
         { transform: 'translateX(' + fromLeft + 'px) scaleY(1)', width: fromWidth + 'px', easing: 'cubic-bezier(0.3, 0, 0.2, 1)' },
-        { transform: 'translateX(' + spanLeft + 'px) scaleY(0.86)', width: (spanRight - spanLeft) + 'px', offset: 0.34, easing: 'cubic-bezier(0.34, 1.5, 0.64, 1)' },
+        { transform: 'translateX(' + spanLeft + 'px) scaleY(0.92)', width: (spanRight - spanLeft) + 'px', offset: 0.34, easing: 'cubic-bezier(0.3, 1.12, 0.6, 1)' },
         { transform: 'translateX(' + left + 'px) scaleY(1)', width: width + 'px' }
       ], { duration: 400 });
       var thisSlide = slide;
