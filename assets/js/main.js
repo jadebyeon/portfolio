@@ -2387,7 +2387,18 @@ var PERSONA_COPY = {
           t.setAttribute('aria-selected', selected ? 'true' : 'false');
           t.tabIndex = selected ? 0 : -1;
           var panel = document.getElementById(t.getAttribute('aria-controls'));
-          if (panel) panel.classList.toggle('is-active', selected);
+          if (panel) {
+            panel.classList.toggle('is-active', selected);
+            // Walkthrough videos only play while their tab is showing.
+            Array.prototype.forEach.call(panel.querySelectorAll('video'), function (video) {
+              if (selected) {
+                var started = video.play();
+                if (started && started.catch) started.catch(function () {});
+              } else {
+                video.pause();
+              }
+            });
+          }
         });
       }
 

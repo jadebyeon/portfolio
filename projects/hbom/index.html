@@ -123,7 +123,10 @@
     /* Future Exploration - Redesign: walkthrough videos reuse the Webflow
        MacBook frame (its screen is 1.6:1, matching the 1440 x 900 recordings). */
     .project-page--hbom .hbom-redesign-figure { margin: var(--hbom-media-space) 0 0; }
-    .project-page--hbom .hbom-redesign-figure .mac-mockup { margin: 0 auto; }
+    .project-page--hbom .hbom-redesign-figure .mac-mockup { width: 80%; margin: 0 auto; }
+    .project-page--hbom .hbom-redesign-tabs .hbom-tabs__panel.is-active { display: block; }
+    .project-page--hbom .hbom-redesign-tabs .hbom-tabs__panel { margin-top: var(--hbom-media-space); }
+    @media (max-width: 680px) { .project-page--hbom .hbom-redesign-figure .mac-mockup { width: 100%; } }
     .project-page--hbom .hbom-redesign-figure .figure-caption { margin-bottom: 0; }
     .project-page--hbom .hbom-redesign-figure .figure-caption strong { color: var(--hbom-ink); font-weight: 600; }
     .project-page--hbom .hbom-before-after { --position: 50%; position: relative; width: 100%; aspect-ratio: 1440 / 900; overflow: hidden; border-radius: 16px; background: #f5f6f7; touch-action: none; }
@@ -480,30 +483,54 @@
             <figcaption class="figure-caption"><strong>Homepage.</strong> [One line on what changed and why.]</figcaption>
           </figure>
           -->
-          <figure class="hbom-redesign-figure">
-            <div class="mac-mockup">
-              <video class="mac-screen" autoplay muted loop playsinline preload="metadata" aria-label="Redesigned resource library: filtering by user type"
-                     src="../../assets/video/hbom_walkthrough_home.mp4?v=20261104"></video>
-              <img class="mac-frame" src="../../assets/img/mac-frame.png" alt="" aria-hidden="true">
+          <div class="hbom-tabs hbom-redesign-tabs" id="hbomRedesignTabs">
+            <div class="hbom-tabs__bar" role="tablist" aria-label="Redesigned pages">
+              <button type="button" class="hbom-tabs__tab" id="hbomRedesignTab-library" role="tab" aria-selected="true" aria-controls="hbomRedesignPanel-library">01. Resource Library</button>
+              <button type="button" class="hbom-tabs__tab" id="hbomRedesignTab-detail" role="tab" aria-selected="false" aria-controls="hbomRedesignPanel-detail" tabindex="-1">02. Resource Detail</button>
+              <button type="button" class="hbom-tabs__tab" id="hbomRedesignTab-form" role="tab" aria-selected="false" aria-controls="hbomRedesignPanel-form" tabindex="-1">03. Request Form</button>
             </div>
-            <figcaption class="figure-caption">Filtering by user type</figcaption>
-          </figure>
-          <figure class="hbom-redesign-figure">
-            <div class="mac-mockup">
-              <video class="mac-screen" autoplay muted loop playsinline preload="metadata" aria-label="Redesigned resource detail page"
-                     src="../../assets/video/hbom_walkthrough_resource.mp4?v=20261104"></video>
-              <img class="mac-frame" src="../../assets/img/mac-frame.png" alt="" aria-hidden="true">
+
+            <div class="hbom-tabs__panels">
+              <div class="hbom-tabs__panel is-active" id="hbomRedesignPanel-library" role="tabpanel" aria-labelledby="hbomRedesignTab-library" tabindex="0">
+                <div class="hbom-tabs__copy">
+                  <figure class="hbom-redesign-figure">
+                    <div class="mac-mockup">
+                      <video class="mac-screen" autoplay muted loop playsinline preload="metadata" aria-label="Redesigned resource library: filtering by user type"
+                             src="../../assets/video/hbom_walkthrough_home.mp4?v=20261104"></video>
+                      <img class="mac-frame" src="../../assets/img/mac-frame.png" alt="" aria-hidden="true">
+                    </div>
+                    <figcaption class="figure-caption">Filtering by user type</figcaption>
+                  </figure>
+                </div>
+              </div>
+
+              <div class="hbom-tabs__panel" id="hbomRedesignPanel-detail" role="tabpanel" aria-labelledby="hbomRedesignTab-detail" tabindex="0">
+                <div class="hbom-tabs__copy">
+                  <figure class="hbom-redesign-figure">
+                    <div class="mac-mockup">
+                      <video class="mac-screen" muted loop playsinline preload="metadata" aria-label="Redesigned resource detail page"
+                             src="../../assets/video/hbom_walkthrough_resource.mp4?v=20261104"></video>
+                      <img class="mac-frame" src="../../assets/img/mac-frame.png" alt="" aria-hidden="true">
+                    </div>
+                    <figcaption class="figure-caption">Opening resource and checking source to verify credibility</figcaption>
+                  </figure>
+                </div>
+              </div>
+
+              <div class="hbom-tabs__panel" id="hbomRedesignPanel-form" role="tabpanel" aria-labelledby="hbomRedesignTab-form" tabindex="0">
+                <div class="hbom-tabs__copy">
+                  <figure class="hbom-redesign-figure">
+                    <div class="mac-mockup">
+                      <video class="mac-screen" muted loop playsinline preload="metadata" aria-label="Redesigned request form: scrolling through the full form"
+                             src="../../assets/video/hbom_walkthrough_form.mp4?v=20261104"></video>
+                      <img class="mac-frame" src="../../assets/img/mac-frame.png" alt="" aria-hidden="true">
+                    </div>
+                    <figcaption class="figure-caption">Scrolling through the full request form</figcaption>
+                  </figure>
+                </div>
+              </div>
             </div>
-            <figcaption class="figure-caption">Opening resource and checking source to verify credibility</figcaption>
-          </figure>
-          <figure class="hbom-redesign-figure">
-            <div class="mac-mockup">
-              <video class="mac-screen" autoplay muted loop playsinline preload="metadata" aria-label="Redesigned request form: scrolling through the full form"
-                     src="../../assets/video/hbom_walkthrough_form.mp4?v=20261104"></video>
-              <img class="mac-frame" src="../../assets/img/mac-frame.png" alt="" aria-hidden="true">
-            </div>
-            <figcaption class="figure-caption">Scrolling through the full request form</figcaption>
-          </figure>
+          </div>
         </div>
       </div>
     </section>
