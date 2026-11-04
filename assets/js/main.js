@@ -2272,20 +2272,52 @@ var PERSONA_COPY = {
     var settled = false;
     if (list) {
       indicator = document.createElement('span');
-      indicator.className = 'section-nav__indicator is-instant';
+      indicator.className = 'section-nav__indicator';
       indicator.setAttribute('aria-hidden', 'true');
       list.insertBefore(indicator, list.firstChild);
       nav.classList.add('has-indicator');
       setTimeout(function () { settled = true; }, 800);
     }
 
-    function placeIndicator() {
+    // Magic-slide motion: the pill first stretches across to cover both the
+    // old and new pill (and squashes a touch), then snaps into the new one
+    // with a small spring overshoot. It starts on the click itself and, if
+    // interrupted, restarts from wherever it currently is.
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var targetLeft = null;
+    var targetWidth = null;
+    var slide = null;
+
+    function placeIndicator(animate) {
       if (!indicator) return;
       var active = links.filter(function (link) { return link.classList.contains('is-active'); })[0];
       if (!active || !active.offsetWidth) return;
-      indicator.classList.toggle('is-instant', !settled);
-      indicator.style.width = active.offsetWidth + 'px';
-      indicator.style.transform = 'translateX(' + active.offsetLeft + 'px)';
+      var left = active.offsetLeft;
+      var width = active.offsetWidth;
+      if (targetLeft !== null && Math.abs(left - targetLeft) < 0.5 && Math.abs(width - targetWidth) < 0.5) return;
+
+      var listRect = list.getBoundingClientRect();
+      var from = indicator.getBoundingClientRect();
+      var fromLeft = from.left - listRect.left;
+      var fromWidth = from.width;
+      var hadTarget = targetLeft !== null;
+      targetLeft = left;
+      targetWidth = width;
+
+      if (slide) { slide.cancel(); slide = null; }
+      indicator.style.width = width + 'px';
+      indicator.style.transform = 'translateX(' + left + 'px)';
+
+      if (!animate || !settled || !hadTarget || reduceMotion || !indicator.animate || !fromWidth) return;
+      var spanLeft = Math.min(fromLeft, left);
+      var spanRight = Math.max(fromLeft + fromWidth, left + width);
+      slide = indicator.animate([
+        { transform: 'translateX(' + fromLeft + 'px) scaleY(1)', width: fromWidth + 'px', easing: 'cubic-bezier(0.3, 0, 0.2, 1)' },
+        { transform: 'translateX(' + spanLeft + 'px) scaleY(0.86)', width: (spanRight - spanLeft) + 'px', offset: 0.34, easing: 'cubic-bezier(0.34, 1.5, 0.64, 1)' },
+        { transform: 'translateX(' + left + 'px) scaleY(1)', width: width + 'px' }
+      ], { duration: 400 });
+      var thisSlide = slide;
+      slide.onfinish = function () { if (slide === thisSlide) slide = null; };
     }
 
     function setActive(id) {
@@ -2295,11 +2327,11 @@ var PERSONA_COPY = {
         if (isActive) link.setAttribute('aria-current', 'true');
         else link.removeAttribute('aria-current');
       });
-      placeIndicator();
+      placeIndicator(true);
     }
 
     if (indicator && 'ResizeObserver' in window) {
-      var resizeObserver = new ResizeObserver(placeIndicator);
+      var resizeObserver = new ResizeObserver(function () { placeIndicator(false); });
       resizeObserver.observe(list);
       links.forEach(function (link) { resizeObserver.observe(link); });
     }
@@ -2308,10 +2340,19 @@ var PERSONA_COPY = {
     // ignore the sections the smooth scroll passes on the way, so the pills
     // don't flicker through every one in between.
     var lockTimer = null;
+    var settleTimer = null;
     var locked = false;
     function releaseLock() {
       locked = false;
       clearTimeout(lockTimer);
+      clearTimeout(settleTimer);
+    }
+    // The lock ends once the page has actually stopped scrolling (no scroll
+    // event for a moment), not on a possibly stale "scrollend" from an
+    // earlier, interrupted scroll.
+    function armSettle(ms) {
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(releaseLock, ms);
     }
 
     // Sections without their own pill can opt into one with data-nav-group="<pill id>"
@@ -2364,9 +2405,12 @@ var PERSONA_COPY = {
       setActive(id);
       locked = true;
       clearTimeout(lockTimer);
-      lockTimer = setTimeout(releaseLock, 1600);
+      lockTimer = setTimeout(releaseLock, 2500);
+      armSettle(300);
     });
-    window.addEventListener('scrollend', releaseLock);
+    window.addEventListener('scroll', function () {
+      if (locked) armSettle(140);
+    }, { passive: true });
     ['wheel', 'touchstart', 'keydown'].forEach(function (type) {
       window.addEventListener(type, function (event) {
         if (type === 'keydown' && event.key === 'Tab') return;

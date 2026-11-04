@@ -6838,15 +6838,15 @@ body.is-settled #heroCopy [data-copy-line] {
     border-radius: 999px;
     background: rgba(36, 35, 41, 0.08);
     pointer-events: none;
-    transition:
-      transform 460ms cubic-bezier(0.22, 1, 0.36, 1),
-      width 460ms cubic-bezier(0.22, 1, 0.36, 1);
+    transform-origin: 0 50%;
+    will-change: transform, width;
   }
-  .section-nav.has-indicator .section-nav__indicator.is-instant { transition: none; }
+  /* Motion is driven by the Web Animations API in main.js (stretch, then
+     spring into place), so no CSS transition here. */
   body.project-page .section-nav.has-indicator .section-nav__link {
     position: relative;
     z-index: 1;
-    transition: color 260ms ease;
+    transition: color 140ms ease;
   }
   body.project-page .section-nav.has-indicator .section-nav__link.is-active { background: transparent; }
 }
