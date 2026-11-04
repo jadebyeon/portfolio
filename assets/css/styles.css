@@ -6995,12 +6995,12 @@ body.is-settled #heroCopy [data-copy-line] {
 /* ===== BEFORE/AFTER SLIDERS: visible divider =====
    The comparison screenshots are mostly white, so the draggable divider
    (a plain white line) vanished against them. The line itself is now the
-   page's body-text color. */
+   same color as the figure captions (--text-color-light). */
 body.project-page .oct-before-after__line,
 body.project-page .hbom-before-after__line,
 body.project-page .mbti-before-after__line {
   width: 2px;
-  background: var(--hbom-body, var(--text-color));
+  background: var(--text-color-light);
   box-shadow: none;
 }
 
