@@ -1090,6 +1090,55 @@ document.querySelectorAll('.footer__back').forEach(function (link) {
   }
 })();
 
+/*==================== LIGHTBOX: TRIM TRANSPARENT EDGES ====================
+  Some exports (OCT pupil / face views) carry empty transparent bands that
+  are fine inside their fixed-ratio page tiles but read as dead space in a
+  lightbox. Images opted in with data-lightbox-trim are re-drawn to their
+  opaque bounding box for the lightbox only; the page keeps the full file.
+  Falls back to the original source if the canvas can't be read. */
+(function () {
+  var cache = {};
+  window.lightboxTrimmedSrc = function (img) {
+    if (!img || !img.hasAttribute('data-lightbox-trim')) return null;
+    var key = img.currentSrc || img.src;
+    if (Object.prototype.hasOwnProperty.call(cache, key)) return cache[key];
+    var w = img.naturalWidth, h = img.naturalHeight;
+    if (!w || !h) return null; // not decoded yet; try again next time
+    var result = null;
+    try {
+      var full = document.createElement('canvas');
+      full.width = w;
+      full.height = h;
+      var ctx = full.getContext('2d', { willReadFrequently: true });
+      ctx.drawImage(img, 0, 0);
+      var data = ctx.getImageData(0, 0, w, h).data;
+      var top = h, bottom = -1, left = w, right = -1;
+      for (var y = 0; y < h; y++) {
+        for (var x = 0; x < w; x++) {
+          if (data[(y * w + x) * 4 + 3] > 8) {
+            if (y < top) top = y;
+            if (y > bottom) bottom = y;
+            if (x < left) left = x;
+            if (x > right) right = x;
+          }
+        }
+      }
+      if (right >= left && bottom >= top && (left > 0 || top > 0 || right < w - 1 || bottom < h - 1)) {
+        var cw = right - left + 1, ch = bottom - top + 1;
+        var out = document.createElement('canvas');
+        out.width = cw;
+        out.height = ch;
+        out.getContext('2d').drawImage(full, left, top, cw, ch, 0, 0, cw, ch);
+        result = out.toDataURL('image/png');
+      }
+    } catch (e) {
+      result = null;
+    }
+    cache[key] = result;
+    return result;
+  };
+})();
+
 /*==================== OCT RESEARCH IMAGE LIGHTBOX ====================
   Opens related persona, journey-map, and character-direction visuals at a
   readable scale. Enter/Space opens a visual; Left/Right and the side
@@ -1152,7 +1201,7 @@ document.querySelectorAll('.footer__back').forEach(function (link) {
       if (!activeGroup.length) return;
       activeIndex = (index + activeGroup.length) % activeGroup.length;
       var trigger = activeGroup[activeIndex];
-      image.src = trigger.currentSrc || trigger.src;
+      image.src = window.lightboxTrimmedSrc(trigger) || trigger.currentSrc || trigger.src;
       image.alt = trigger.alt;
       caption.textContent = trigger.alt;
       renderDots();
@@ -1294,7 +1343,7 @@ document.querySelectorAll('.footer__back').forEach(function (link) {
       activeIndex = (index + activeGroup.length) % activeGroup.length;
       var trigger = activeGroup[activeIndex];
       var source = imageOf(trigger);
-      image.src = source.currentSrc || source.src;
+      image.src = window.lightboxTrimmedSrc(source) || source.currentSrc || source.src;
       image.alt = labelOf(trigger);
       caption.textContent = labelOf(trigger);
       renderDots();
