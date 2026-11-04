@@ -7076,11 +7076,11 @@ body.project-page .header::before {
      pull the hero back up under the header to fill the whole first screen. */
   margin-top: calc(-2 * var(--header-height));
   /* Breathing room between the Memoji and the case-study tiles below. */
-  margin-bottom: clamp(2rem, 4.5vw, 3.75rem);
+  margin-bottom: clamp(0.25rem, 0.8vw, 0.65rem);
   /* About the old hero's footprint, so the first case-study tiles peek in
      under it on a laptop screen. */
-  min-height: max(540px, 66vh);
-  min-height: max(540px, 66svh);
+  min-height: max(556px, 69vh);
+  min-height: max(556px, 69svh);
   /* Generous space between the header and the scene. */
   padding: calc(var(--header-height) + clamp(2rem, 7vh, 4.5rem)) 0 0;
   display: flex;
