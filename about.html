@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>document.documentElement.classList.add("chat-js");</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" />
@@ -51,7 +52,28 @@
               </div>
             </div>
 
-            <img class="about-hint" data-about-hint src="assets/img/about/about%20message.png" alt="Click and drag the stickers!" />
+            <div class="about-hint" data-about-hint role="log" aria-label="Messages from Jade">
+              <div class="about-chat" data-about-chat>
+                <div class="chat-bubble chat-bubble--sent" data-chat-message>
+                  <span class="chat-bubble__gloss" aria-hidden="true"></span>
+                  <p><strong>Click</strong> and <strong>Drag</strong> the Stickers!</p>
+                </div>
+                <!-- Voice memo: set the audio file on the <audio> below (for example
+                     src="assets/audio/voice-memo.m4a"). Without a source the button only
+                     runs the waveform animation. -->
+                <div class="chat-bubble chat-bubble--sent chat-bubble--voice" data-chat-message>
+                  <span class="chat-bubble__gloss" aria-hidden="true"></span>
+                  <button class="voice-play" type="button" data-voice-play aria-label="Play voice memo" aria-pressed="false">
+                    <svg class="voice-play__icon voice-play__icon--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.6-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg>
+                    <svg class="voice-play__icon voice-play__icon--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4.2" height="14" rx="1.4"/><rect x="13.8" y="5" width="4.2" height="14" rx="1.4"/></svg>
+                  </button>
+                  <span class="voice-wave" data-voice-wave aria-hidden="true"><span style="--h:0.35;--i:0"></span><span style="--h:0.55;--i:1"></span><span style="--h:0.8;--i:2"></span><span style="--h:0.5;--i:3"></span><span style="--h:0.95;--i:4"></span><span style="--h:0.7;--i:5"></span><span style="--h:0.4;--i:6"></span><span style="--h:0.85;--i:7"></span><span style="--h:0.6;--i:8"></span><span style="--h:1;--i:9"></span><span style="--h:0.75;--i:10"></span><span style="--h:0.45;--i:11"></span><span style="--h:0.9;--i:12"></span><span style="--h:0.55;--i:13"></span><span style="--h:0.7;--i:14"></span><span style="--h:0.35;--i:15"></span><span style="--h:0.8;--i:16"></span><span style="--h:0.6;--i:17"></span><span style="--h:0.95;--i:18"></span><span style="--h:0.5;--i:19"></span><span style="--h:0.7;--i:20"></span><span style="--h:0.4;--i:21"></span><span style="--h:0.85;--i:22"></span><span style="--h:0.55;--i:23"></span><span style="--h:0.3;--i:24"></span></span>
+                  <span class="voice-time" data-voice-time aria-hidden="true"></span>
+                  <audio data-voice-audio preload="none"></audio>
+                </div>
+                <p class="chat-delivered">Delivered Quietly</p>
+              </div>
+            </div>
 
             <div class="about-avatar-stage">
               <div class="about-avatar" data-about-avatar>

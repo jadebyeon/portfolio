@@ -237,6 +237,125 @@
   }
 })();
 
+/*==================== ABOUT: MESSAGES + VOICE MEMO ====================
+  The About page's "Click and Drag the Stickers!" hint is a short sent
+  conversation: that message pops in, then a voice memo pops in and the
+  first slides up (same FLIP movement as the homepage hero), and the
+  "Delivered Quietly" caption follows the last message. The voice memo's
+  button plays/pauses its <audio> (when it has a source) while the waveform
+  moves; without a source it just runs the waveform. Reduced-motion
+  visitors get everything at once. No-ops without [data-about-chat]. */
+(function () {
+  var FIRST_MS = 900;
+  var GAP_MS = 1300;
+
+  function init() {
+    var chat = document.querySelector('[data-about-chat]');
+    if (!chat) return;
+    var messages = Array.prototype.slice.call(chat.querySelectorAll('[data-chat-message]'));
+    var delivered = chat.querySelector('.chat-delivered');
+    if (!messages.length) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ---- voice memo ---- */
+    var voice = chat.querySelector('.chat-bubble--voice');
+    if (voice) {
+      var button = voice.querySelector('[data-voice-play]');
+      var audio = voice.querySelector('[data-voice-audio]');
+      var bars = Array.prototype.slice.call(voice.querySelectorAll('[data-voice-wave] span'));
+      var timeEl = voice.querySelector('[data-voice-time]');
+
+      var hasAudio = function () { return !!(audio && (audio.getAttribute('src') || audio.querySelector('source'))); };
+      var format = function (seconds) {
+        seconds = Math.max(0, Math.round(seconds));
+        return Math.floor(seconds / 60) + ':' + ('0' + (seconds % 60)).slice(-2);
+      };
+      var setPlaying = function (on) {
+        voice.classList.toggle('is-playing', on);
+        button.setAttribute('aria-pressed', on ? 'true' : 'false');
+        button.setAttribute('aria-label', on ? 'Pause voice memo' : 'Play voice memo');
+      };
+      var showProgress = function () {
+        if (!audio || !isFinite(audio.duration) || !audio.duration) return;
+        var done = audio.currentTime / audio.duration;
+        bars.forEach(function (bar, i) { bar.classList.toggle('is-played', i / bars.length < done); });
+        if (timeEl) timeEl.textContent = format(audio.duration - audio.currentTime);
+      };
+      var resetProgress = function () {
+        bars.forEach(function (bar) { bar.classList.remove('is-played'); });
+        if (timeEl && audio && isFinite(audio.duration) && audio.duration) timeEl.textContent = format(audio.duration);
+      };
+
+      button.addEventListener('click', function () {
+        var playing = voice.classList.contains('is-playing');
+        if (!hasAudio()) { setPlaying(!playing); return; }
+        if (playing) { audio.pause(); return; }
+        var started = audio.play();
+        if (started && started.catch) started.catch(function () { setPlaying(false); });
+      });
+      if (audio) {
+        audio.addEventListener('play', function () { setPlaying(true); });
+        audio.addEventListener('pause', function () { setPlaying(false); });
+        audio.addEventListener('ended', function () { setPlaying(false); audio.currentTime = 0; resetProgress(); });
+        audio.addEventListener('timeupdate', showProgress);
+        audio.addEventListener('loadedmetadata', resetProgress);
+        if (hasAudio()) audio.preload = 'metadata';
+      }
+    }
+
+    /* ---- the sequence ---- */
+    if (reduce || !chat.animate) {
+      messages.forEach(function (m) { m.classList.add('is-shown'); });
+      if (delivered) delivered.classList.add('is-shown');
+      return;
+    }
+
+    function visible() {
+      return Array.prototype.slice.call(chat.children).filter(function (el) { return el.classList.contains('is-shown'); });
+    }
+    function flip(change) {
+      var before = visible().map(function (el) { return { el: el, top: el.getBoundingClientRect().top }; });
+      change();
+      before.forEach(function (item) {
+        var dy = item.top - item.el.getBoundingClientRect().top;
+        if (Math.abs(dy) < 1) return;
+        item.el.animate(
+          [{ transform: 'translateY(' + dy + 'px)' }, { transform: 'translateY(0)' }],
+          { duration: 560, easing: 'cubic-bezier(0.25, 0.9, 0.3, 1.08)' }
+        );
+      });
+    }
+    function pop(el) {
+      el.animate([
+        { transform: 'scale(0.2)', opacity: 0 },
+        { transform: 'scale(1.06)', opacity: 1, offset: 0.7 },
+        { transform: 'scale(1)', opacity: 1 }
+      ], { duration: 380, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' });
+    }
+
+    var queue = messages.slice();
+    function next() {
+      var message = queue.shift();
+      if (!message) return;
+      flip(function () {
+        message.classList.add('is-shown');
+        if (delivered) delivered.classList.add('is-shown');
+      });
+      pop(message);
+      if (queue.length) setTimeout(next, GAP_MS);
+    }
+    var start = function () { setTimeout(next, FIRST_MS); };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(start);
+    else start();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
 /*==================== BRAND LOGO: FLIP ONCE PER HOVER ====================
   Hovering (or keyboard-focusing) the header logo plays one full turn. The
   class stays until the animation ends, so leaving the logo never cuts the
