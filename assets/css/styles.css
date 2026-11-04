@@ -704,7 +704,9 @@ img { max-width: 100%; height: auto; }
 }
 
 /* Links that open in a new tab (LinkedIn, Resume) reveal a small arrow on
-   hover or keyboard focus, sliding in the same way as Email's copy icon. */
+   hover or keyboard focus: it slides up-right out of the text with a little
+   spring, then keeps nudging along the same diagonal while hovered. Email's
+   copy icon pops in the same way. */
 .footer__btn[target="_blank"]::after {
   content: "\2197";
   content: "\2197" / "";
@@ -714,18 +716,44 @@ img { max-width: 100%; height: auto; }
   overflow: hidden;
   opacity: 0;
   white-space: nowrap;
-  transform: translateX(-0.2rem);
-  transition: width 160ms ease, margin-left 160ms ease, opacity 160ms ease, transform 160ms ease;
+  transform: translate(-0.35em, 0.35em) scale(0.7);
+  transition:
+    width 180ms ease,
+    margin-left 180ms ease,
+    opacity 160ms ease,
+    transform 360ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .footer__btn[target="_blank"]:hover::after,
 .footer__btn[target="_blank"]:focus-visible::after {
   width: 0.9em;
   margin-left: 0.32rem;
   opacity: 1;
-  transform: translateX(0);
+  overflow: visible;
+  transform: translate(0, 0) scale(1);
+  animation: footer-arrow-nudge 1100ms ease-in-out 380ms infinite;
+}
+@keyframes footer-arrow-nudge {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(0.14em, -0.14em) scale(1); }
+}
+.footer__copy-icon {
+  transition:
+    width 180ms ease,
+    margin-left 180ms ease,
+    opacity 160ms ease,
+    transform 360ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform: translateX(-0.3rem) scale(0.7);
+}
+.footer__btn--copy:hover .footer__copy-icon,
+.footer__btn--copy:focus-visible .footer__copy-icon,
+.footer__btn--copy.is-copied .footer__copy-icon {
+  transform: translateX(0) scale(1);
 }
 @media (prefers-reduced-motion: reduce) {
-  .footer__btn[target="_blank"]::after { transition: none; }
+  .footer__btn[target="_blank"]::after,
+  .footer__copy-icon { transition: none; }
+  .footer__btn[target="_blank"]:hover::after,
+  .footer__btn[target="_blank"]:focus-visible::after { animation: none; }
 }
 
 /* credits bottom-right */
@@ -6966,12 +6994,13 @@ body.is-settled #heroCopy [data-copy-line] {
 
 /* ===== BEFORE/AFTER SLIDERS: visible divider =====
    The comparison screenshots are mostly white, so the draggable divider
-   (a plain white line) vanished against them. The line itself is now dark. */
+   (a plain white line) vanished against them. The line itself is now the
+   page's body-text color. */
 body.project-page .oct-before-after__line,
 body.project-page .hbom-before-after__line,
 body.project-page .mbti-before-after__line {
   width: 2px;
-  background: #242329;
+  background: var(--hbom-body, var(--text-color));
   box-shadow: none;
 }
 
