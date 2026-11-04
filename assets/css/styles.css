@@ -1242,38 +1242,24 @@ img { max-width: 100%; height: auto; }
   object-fit: cover;
 }
 
-/* Wearby's hero is the walkthrough recording inside iPhone16_frame.png.
-   Same layering as the OCT/HBOM device heroes: the transparent-screen
-   frame sits on top and the video runs a pixel beneath its opening, so
-   the bezel masks the overlap instead of a clip on the video. The
-   percentages are the opening measured off the frame's alpha channel
-   (x 67-1245, y 59-2614 of a 1313 x 2674 canvas). The width is capped
-   so a portrait phone stays a comfortable height next to the copy. */
+/* Wearby's 4000 × 3000 export has a 556px transparent band above the
+   phones. Like HBOM, this wrapper removes only transparent canvas margin,
+   allowing the visible phone pair to begin at the shared device-banner
+   interval without cropping any artwork. */
 .hero-media--wearby {
-  position: relative;
-  width: clamp(240px, 26vw, 330px);
-  max-width: 100%;
-  aspect-ratio: 1313 / 2674;
   padding: 0;
-  box-sizing: border-box;
+  box-sizing: content-box;
+  position: relative;
+  aspect-ratio: 4000 / 2100;
+  overflow: hidden;
 }
-.hero-media--wearby .wearby-hero-frame {
+.hero-media--wearby img {
   position: absolute;
-  inset: 0;
   width: 100%;
-  height: 100%;
-  z-index: 2;
-  pointer-events: none;
-}
-.hero-media--wearby .wearby-hero-screen {
-  position: absolute;
-  z-index: 1;
-  top: calc(2.206% - 1px);
-  left: calc(5.103% - 1px);
-  width: calc(89.795% + 2px);
-  height: calc(95.587% + 2px);
-  display: block;
-  object-fit: cover;
+  max-width: none;
+  top: -26.19%;
+  left: 0;
+  height: auto;
 }
 
 /* ===== Project detail: 4×2 meta ===== */
@@ -2318,6 +2304,52 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   width: calc(76.5% + 2px);
   height: calc(49.3% + 2px);
   z-index: 1;
+  object-fit: cover;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Wearby's homepage tile: the walkthrough inside iPhone16_frame.png, same
+   card as the HBOM/OCT tiles with a portrait phone centered in it. The
+   video runs a pixel beneath the frame's transparent screen opening
+   (x 67-1245, y 59-2614 of its 1313 x 2674 canvas, measured off the alpha
+   channel) so the bezel hides any seam. */
+.wearby-tile-mockup {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #f5f6f7;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
+}
+@media (min-width: 992px) {
+  .wearby-tile-mockup { border-radius: 24px; }
+}
+.wearby-tile-device {
+  position: relative;
+  display: block;
+  height: 88%;
+  aspect-ratio: 1313 / 2674;
+}
+.wearby-tile-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+.wearby-tile-device .wearby-tile-screen {
+  position: absolute;
+  z-index: 1;
+  display: block;
+  top: calc(2.206% - 1px);
+  left: calc(5.103% - 1px);
+  width: calc(89.795% + 2px);
+  height: calc(95.587% + 2px);
   object-fit: cover;
   border-radius: 0;
   box-shadow: none;

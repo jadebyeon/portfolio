@@ -10,7 +10,7 @@
   pages without .tile-media or without IntersectionObserver. */
 (function () {
   function init() {
-    var videos = document.querySelectorAll('.tile-media, .hbom-tile-screen');
+    var videos = document.querySelectorAll('.tile-media, .hbom-tile-screen, .wearby-tile-screen');
     if (!videos.length) return;
 
     var reduceMotion = window.matchMedia &&
