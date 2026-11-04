@@ -129,7 +129,7 @@
     @media (max-width: 680px) { .project-page--hbom .hbom-redesign-figure .mac-mockup { width: 100%; } }
     .project-page--hbom .hbom-redesign-figure .figure-caption { margin-bottom: 0; }
     .project-page--hbom .hbom-redesign-figure .figure-caption strong { color: var(--hbom-ink); font-weight: 600; }
-    .project-page--hbom .hbom-before-after { --position: 50%; position: relative; width: 100%; aspect-ratio: 1440 / 900; overflow: hidden; border-radius: 16px; background: #f5f6f7; touch-action: none; }
+    .project-page--hbom .hbom-before-after { --position: 50%; position: relative; width: 100%; aspect-ratio: 1470 / 835; overflow: hidden; border-radius: 16px; background: #fff; touch-action: none; }
     .project-page--hbom .hbom-before-after__image { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
     .project-page--hbom .hbom-before-after__after { position: absolute; inset: 0; clip-path: inset(0 0 0 var(--position)); }
     .project-page--hbom .hbom-before-after__line { position: absolute; z-index: 2; top: 0; bottom: 0; left: var(--position); width: 2px; transform: translateX(-50%); background: #fff; pointer-events: none; }
@@ -276,9 +276,7 @@
         </div>
         <div class="hero-media hero-media--device hero-media--hbom">
           <img class="hbom-hero-frame" src="../../assets/img/hbom_hero-frame.png" alt="" aria-hidden="true">
-          <video class="hbom-hero-screen" autoplay muted loop playsinline aria-label="Nutrition Benefits Resource Hub walkthrough shown on a MacBook">
-            <source src="../../assets/video/hbom_demo.mp4?v=6" type="video/mp4">
-          </video>
+          <img class="hbom-hero-screen" src="../../assets/img/hbom_after.png" alt="Redesigned Nutrition Benefits Resource Hub homepage shown on a MacBook">
         </div>
       </div>
     </section>
@@ -468,21 +466,18 @@
         <h2 class="section-icon-title project-section__title">Future Exploration - Redesign</h2>
         <div class="project-section__body">
           <p>The internship design worked within NVP&rsquo;s existing design system, color palette, and typography, and the design team already had a strong direction. After the internship, I redesigned the pages on my own to see what I could do with more freedom. This is a personal exploration, not the live NVP site.</p>
-          <!-- Homepage before/after slider: enable once the before/after images are added.
-               Styles and script are already in place (.hbom-before-after, data-hbom-before-after).
-          <figure class="hbom-redesign-figure">
+          <figure class="hbom-redesign-figure hbom-redesign-figure--slider">
             <div class="hbom-before-after" data-hbom-before-after>
-              <img class="hbom-before-after__image" src="../../assets/img/hbom_home_before.png" alt="Before: the homepage as designed during the internship">
-              <div class="hbom-before-after__after"><img class="hbom-before-after__image" src="../../assets/img/hbom_home_after.png" alt=""></div>
+              <img class="hbom-before-after__image" src="../../assets/img/hbom_before.png" alt="Before: the Knowledge Hub homepage built during the internship, with an intro paragraph and audience tabs">
+              <div class="hbom-before-after__after"><img class="hbom-before-after__image" src="../../assets/img/hbom_after.png" alt="After: the redesigned homepage asking what visitors want to find, with user-type choices, search, and topic shortcuts"></div>
               <span class="hbom-before-after__line" aria-hidden="true"></span>
-              <input class="hbom-before-after__range" type="range" min="0" max="100" value="50" aria-label="Drag to compare the internship and redesigned homepage">
+              <input class="hbom-before-after__range" type="range" min="0" max="100" value="50" aria-label="Drag to compare the internship homepage and the redesigned homepage">
               <span class="hbom-before-after__handle" aria-hidden="true"></span>
               <span class="hbom-before-after__label hbom-before-after__label--before" aria-hidden="true">Before</span>
               <span class="hbom-before-after__label hbom-before-after__label--after" aria-hidden="true">After</span>
             </div>
-            <figcaption class="figure-caption"><strong>Homepage.</strong> [One line on what changed and why.]</figcaption>
+            <figcaption class="figure-caption">Homepage: from a long intro to choosing a user type or searching</figcaption>
           </figure>
-          -->
           <div class="hbom-tabs hbom-redesign-tabs" id="hbomRedesignTabs">
             <div class="hbom-tabs__bar" role="tablist" aria-label="Redesigned pages">
               <button type="button" class="hbom-tabs__tab" id="hbomRedesignTab-library" role="tab" aria-selected="true" aria-controls="hbomRedesignPanel-library">01. Resource Library</button>
