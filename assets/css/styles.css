@@ -1242,24 +1242,38 @@ img { max-width: 100%; height: auto; }
   object-fit: cover;
 }
 
-/* Wearby's 4000 × 3000 export has a 556px transparent band above the
-   phones. Like HBOM, this wrapper removes only transparent canvas margin,
-   allowing the visible phone pair to begin at the shared device-banner
-   interval without cropping any artwork. */
+/* Wearby's hero is the walkthrough recording inside iPhone16_frame.png.
+   Same layering as the OCT/HBOM device heroes: the transparent-screen
+   frame sits on top and the video runs a pixel beneath its opening, so
+   the bezel masks the overlap instead of a clip on the video. The
+   percentages are the opening measured off the frame's alpha channel
+   (x 67-1245, y 59-2614 of a 1313 x 2674 canvas). The width is capped
+   so a portrait phone stays a comfortable height next to the copy. */
 .hero-media--wearby {
-  padding: 0;
-  box-sizing: content-box;
   position: relative;
-  aspect-ratio: 4000 / 2100;
-  overflow: hidden;
+  width: clamp(240px, 26vw, 330px);
+  max-width: 100%;
+  aspect-ratio: 1313 / 2674;
+  padding: 0;
+  box-sizing: border-box;
 }
-.hero-media--wearby img {
+.hero-media--wearby .wearby-hero-frame {
   position: absolute;
+  inset: 0;
   width: 100%;
-  max-width: none;
-  top: -26.19%;
-  left: 0;
-  height: auto;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+.hero-media--wearby .wearby-hero-screen {
+  position: absolute;
+  z-index: 1;
+  top: calc(2.206% - 1px);
+  left: calc(5.103% - 1px);
+  width: calc(89.795% + 2px);
+  height: calc(95.587% + 2px);
+  display: block;
+  object-fit: cover;
 }
 
 /* ===== Project detail: 4×2 meta ===== */
