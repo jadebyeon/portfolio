@@ -97,6 +97,39 @@
   }
 })();
 
+/*==================== BRAND LOGO: FLIP ONCE PER HOVER ====================
+  Hovering (or keyboard-focusing) the header logo plays one full turn. The
+  class stays until the animation ends, so leaving the logo never cuts the
+  turn short, and re-entering mid-turn is ignored; a new hover is needed
+  to flip again. */
+(function () {
+  function init() {
+    Array.prototype.forEach.call(document.querySelectorAll('.brand'), function (brand) {
+      var logo = brand.querySelector('img');
+      if (!logo) return;
+
+      function flip() {
+        if (logo.classList.contains('is-flipping')) return;
+        logo.classList.add('is-flipping');
+      }
+
+      logo.addEventListener('animationend', function () {
+        logo.classList.remove('is-flipping');
+      });
+      brand.addEventListener('pointerenter', flip);
+      brand.addEventListener('focus', function () {
+        if (brand.matches(':focus-visible')) flip();
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
 /*==================== OCT + HBOM BEFORE/AFTER SLIDER ====================*/
 (function () {
   function init() {

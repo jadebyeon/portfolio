@@ -257,15 +257,16 @@ img { max-width: 100%; height: auto; }
   font-weight: 600;
   line-height: 1.2;
 }
-.brand:hover img,
-.brand:focus-visible img { animation: brand-flip 700ms cubic-bezier(0.22, 1, 0.36, 1); }
+/* One full flip per hover. main.js adds .is-flipping on pointer-enter and
+   removes it when the animation ends, so the turn always finishes even if
+   the pointer leaves mid-way, and it only plays again on a fresh hover. */
+.brand img.is-flipping { animation: brand-flip 700ms cubic-bezier(0.45, 0, 0.2, 1) 1; }
 @keyframes brand-flip {
-  0%, 100% { transform: perspective(160px) rotateY(0); }
-  50% { transform: perspective(160px) rotateY(180deg); }
+  from { transform: perspective(160px) rotateY(0deg); }
+  to   { transform: perspective(160px) rotateY(360deg); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .brand:hover img,
-  .brand:focus-visible img { animation: none; }
+  .brand img.is-flipping { animation: none; }
 }
 
 /* Right menu: horizontal row */
