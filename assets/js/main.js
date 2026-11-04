@@ -2264,6 +2264,30 @@ var PERSONA_COPY = {
       .filter(Boolean);
     if (!sections.length || !('IntersectionObserver' in window)) return;
 
+    // A single highlight slides to the active pill (desktop bar only; the
+    // CSS hides it elsewhere). Placement is instant until the page has
+    // settled so fonts loading doesn't animate it on arrival.
+    var list = nav.querySelector('.section-nav__list');
+    var indicator = null;
+    var settled = false;
+    if (list) {
+      indicator = document.createElement('span');
+      indicator.className = 'section-nav__indicator is-instant';
+      indicator.setAttribute('aria-hidden', 'true');
+      list.insertBefore(indicator, list.firstChild);
+      nav.classList.add('has-indicator');
+      setTimeout(function () { settled = true; }, 800);
+    }
+
+    function placeIndicator() {
+      if (!indicator) return;
+      var active = links.filter(function (link) { return link.classList.contains('is-active'); })[0];
+      if (!active || !active.offsetWidth) return;
+      indicator.classList.toggle('is-instant', !settled);
+      indicator.style.width = active.offsetWidth + 'px';
+      indicator.style.transform = 'translateX(' + active.offsetLeft + 'px)';
+    }
+
     function setActive(id) {
       links.forEach(function (link) {
         var isActive = link.getAttribute('href') === '#' + id;
@@ -2271,18 +2295,49 @@ var PERSONA_COPY = {
         if (isActive) link.setAttribute('aria-current', 'true');
         else link.removeAttribute('aria-current');
       });
+      placeIndicator();
     }
+
+    if (indicator && 'ResizeObserver' in window) {
+      var resizeObserver = new ResizeObserver(placeIndicator);
+      resizeObserver.observe(list);
+      links.forEach(function (link) { resizeObserver.observe(link); });
+    }
+
+    // After clicking a pill, jump the highlight straight to that section and
+    // ignore the sections the smooth scroll passes on the way, so the pills
+    // don't flicker through every one in between.
+    var lockTimer = null;
+    var locked = false;
+    function releaseLock() {
+      locked = false;
+      clearTimeout(lockTimer);
+    }
+
+    // Sections without their own pill can opt into one with data-nav-group="<pill id>"
+    // (e.g. a second Deliverable section), so that pill stays lit while reading them.
+    var extras = Array.prototype.slice.call(document.querySelectorAll('[data-nav-group]')).filter(function (el) {
+      return el.id && links.some(function (link) { return link.getAttribute('href') === '#' + el.getAttribute('data-nav-group'); });
+    });
+    var observed = sections.concat(extras).sort(function (x, y) {
+      return x.compareDocumentPosition(y) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
+    });
 
     var visible = Object.create(null);
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         visible[entry.target.id] = entry.isIntersecting;
       });
-      var topmost = sections.find(function (s) { return visible[s.id]; });
-      if (topmost) setActive(topmost.id);
+      if (locked) return;
+      var topmost = observed.find(function (s) { return visible[s.id]; });
+      if (topmost) setActive(topmost.getAttribute('data-nav-group') || topmost.id);
+      // Back above the first section (e.g. scrolled up to the hero): no
+      // section is in the band, so fall back to the first pill.
+      else if (sections[0].getBoundingClientRect().top > window.innerHeight * 0.3) setActive(sections[0].id);
     }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
 
     sections.forEach(function (section) { observer.observe(section); });
+    extras.forEach(function (section) { observer.observe(section); });
     setActive(sections[0].id);
 
     // At smaller widths the header shows just the active section first.
@@ -2299,6 +2354,24 @@ var PERSONA_COPY = {
         return;
       }
       closeCompactNav();
+    });
+
+    nav.addEventListener('click', function (event) {
+      var link = event.target.closest('.section-nav__link');
+      if (!link || event.defaultPrevented) return;
+      var id = link.getAttribute('href').slice(1);
+      if (!document.getElementById(id)) return;
+      setActive(id);
+      locked = true;
+      clearTimeout(lockTimer);
+      lockTimer = setTimeout(releaseLock, 1600);
+    });
+    window.addEventListener('scrollend', releaseLock);
+    ['wheel', 'touchstart', 'keydown'].forEach(function (type) {
+      window.addEventListener(type, function (event) {
+        if (type === 'keydown' && event.key === 'Tab') return;
+        releaseLock();
+      }, { passive: true });
     });
 
     nav.addEventListener('focusin', function () {

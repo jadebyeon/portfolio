@@ -703,6 +703,31 @@ img { max-width: 100%; height: auto; }
   transform: translateX(0);
 }
 
+/* Links that open in a new tab (LinkedIn, Resume) reveal a small arrow on
+   hover or keyboard focus, sliding in the same way as Email's copy icon. */
+.footer__btn[target="_blank"]::after {
+  content: "\2197";
+  content: "\2197" / "";
+  display: inline-block;
+  width: 0;
+  margin-left: 0;
+  overflow: hidden;
+  opacity: 0;
+  white-space: nowrap;
+  transform: translateX(-0.2rem);
+  transition: width 160ms ease, margin-left 160ms ease, opacity 160ms ease, transform 160ms ease;
+}
+.footer__btn[target="_blank"]:hover::after,
+.footer__btn[target="_blank"]:focus-visible::after {
+  width: 0.9em;
+  margin-left: 0.32rem;
+  opacity: 1;
+  transform: translateX(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .footer__btn[target="_blank"]::after { transition: none; }
+}
+
 /* credits bottom-right */
 .footer__meta {
   justify-self: end;
@@ -6799,13 +6824,39 @@ body.is-settled #heroCopy [data-copy-line] {
   }
   body.project-page .section-nav .section-nav__link.is-active { width: auto; }
 
+  /* One highlight that slides to whichever pill becomes active (placed by
+     main.js), instead of each pill switching its own background on/off. */
+  .section-nav__indicator { display: none; }
+  .section-nav.has-indicator .section-nav__list { position: relative; }
+  .section-nav.has-indicator .section-nav__indicator {
+    display: block;
+    position: absolute;
+    top: 0.25rem;
+    bottom: 0.25rem;
+    left: 0;
+    width: 0;
+    border-radius: 999px;
+    background: rgba(36, 35, 41, 0.08);
+    pointer-events: none;
+    transition:
+      transform 460ms cubic-bezier(0.22, 1, 0.36, 1),
+      width 460ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .section-nav.has-indicator .section-nav__indicator.is-instant { transition: none; }
+  body.project-page .section-nav.has-indicator .section-nav__link {
+    position: relative;
+    z-index: 1;
+    transition: color 260ms ease;
+  }
+  body.project-page .section-nav.has-indicator .section-nav__link.is-active { background: transparent; }
 }
 
 @media (min-width: 1025px) and (hover: hover) and (prefers-reduced-motion: reduce) {
   .section-nav,
   .section-nav__list,
   .section-nav__item,
-  body.project-page .section-nav .section-nav__link { transition: none; }
+  body.project-page .section-nav .section-nav__link,
+  .section-nav__indicator { transition: none !important; }
 }
 
 /* Mobile keeps every section immediately reachable by horizontal scroll,
@@ -6823,6 +6874,7 @@ body.is-settled #heroCopy [data-copy-line] {
     background: transparent;
     color: #76747d;
     font-weight: 500;
+    transition: color 280ms ease, background-color 280ms ease;
   }
 
   body.project-page .section-nav .section-nav__link.is-active {
@@ -6910,4 +6962,20 @@ body.is-settled #heroCopy [data-copy-line] {
   .project-page .section-nav-target {
     scroll-margin-top: var(--header-height);
   }
+}
+
+/* ===== BEFORE/AFTER SLIDERS: visible edge =====
+   The comparison screenshots are mostly white, so a hairline drawn above
+   the images (inset ring on an overlay, ignoring pointer events) marks
+   where each slider ends. */
+.oct-before-after::after,
+.hbom-before-after::after,
+.mbti-before-after::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(36, 35, 41, 0.2);
+  pointer-events: none;
 }
