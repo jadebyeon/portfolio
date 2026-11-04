@@ -7075,8 +7075,10 @@ body.project-page .header::before {
   /* The page is already offset by the header height twice (body/main), so
      pull the hero back up under the header to fill the whole first screen. */
   margin-top: calc(-2 * var(--header-height));
-  min-height: 100vh;
-  min-height: 100svh;
+  /* About the old hero's footprint, so the first case-study tiles peek in
+     under it on a laptop screen. */
+  min-height: max(540px, 66vh);
+  min-height: max(540px, 66svh);
   padding: var(--header-height) 0 0;
   display: flex;
   overflow: hidden;
@@ -7097,7 +7099,7 @@ body.project-page .header::before {
 }
 .hero-chat__memoji img {
   display: block;
-  width: min(100%, 680px);
+  width: min(100%, 520px);
   height: auto;
 }
 .hero-chat__stage {
@@ -7108,7 +7110,7 @@ body.project-page .header::before {
   align-items: flex-start;
   gap: 0.9rem;
   width: 100%;
-  max-width: 640px;
+  max-width: 460px;
   /* Below: the stage keeps the height of the finished conversation (set
      by main.js) so bubbles arrive in place and older ones move up. */
 }
@@ -7120,7 +7122,7 @@ body.project-page .header::before {
   box-sizing: border-box;
   background: var(--bubble);
   color: #fff;
-  font-size: clamp(1.05rem, 2.1vw, 1.9rem);
+  font-size: clamp(1rem, 1.7vw, 1.5rem);
   line-height: 1.3;
   border-radius: 1.2em;
   padding: 0.62em 0.95em 0.66em;
@@ -7165,10 +7167,16 @@ body.project-page .header::before {
   font-weight: 400;
 }
 .chat-bubble--text { max-width: 22em; }
+/* Video message: like an iMessage link preview. A light-gray bubble with the
+   video edge to edge on top and a caption underneath. */
 .chat-bubble--media {
+  --bubble: #e9e9eb;
   width: 100%;
-  padding: 0.26em;
+  padding: 0;
+  background: var(--bubble);
+  color: #1c1c1e;
   border-radius: 1.1em;
+  font-size: clamp(0.95rem, 1.4vw, 1.3rem);
 }
 .chat-bubble__video {
   position: relative;
@@ -7176,8 +7184,17 @@ body.project-page .header::before {
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-  border-radius: 0.86em;
+  border-radius: 1.1em 1.1em 0 0;
   background: #0b0b0b;
+}
+.chat-bubble__caption {
+  margin: 0;
+  padding: 0.7em 1em 0.8em;
+  font-family: var(--body-font);
+  font-size: 0.9em;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #1c1c1e;
 }
 .chat-bubble--typing {
   display: inline-flex;
@@ -7207,7 +7224,7 @@ body.project-page .header::before {
 html:not(.chat-js) .hero-chat [data-chat-typing] { display: none; }
 
 @media (max-width: 900px) {
-  .home.section.hero-chat { min-height: 100vh; min-height: 100svh; }
+  .home.section.hero-chat { min-height: 0; }
   .hero-chat__inner {
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto auto;
