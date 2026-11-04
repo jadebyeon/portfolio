@@ -1220,13 +1220,17 @@ document.querySelectorAll('.footer__back').forEach(function (link) {
   }
 })();
 
-/*==================== HBOM RESEARCH IMAGE LIGHTBOX ====================
+/*==================== HBOM + WEARBY IMAGE LIGHTBOX ====================
   Uses the same interaction model as OCT: keyboard activation, grouped
-  arrow-key navigation, side controls, dots, backdrop close, and Escape. */
+  arrow-key navigation, side controls, dots, backdrop close, and Escape.
+  Shared by the HBOM page (.hbom-lightbox-trigger) and the Wearby page
+  (.ootd-lightbox-trigger images plus the .physical-thumb buttons, whose
+  data-caption supplies the caption), so both open identical, equally
+  large viewers. */
 (function () {
   function init() {
-    var triggers = Array.prototype.slice.call(document.querySelectorAll('.hbom-lightbox-trigger'));
-    var lightbox = document.getElementById('hbomImageLightbox');
+    var triggers = Array.prototype.slice.call(document.querySelectorAll('.hbom-lightbox-trigger, .ootd-lightbox-trigger, .physical-thumb'));
+    var lightbox = document.querySelector('.hbom-image-lightbox');
     if (!triggers.length || !lightbox) return;
 
     var image = lightbox.querySelector('[data-hbom-image-lightbox-image]');
@@ -1240,6 +1244,18 @@ document.querySelectorAll('.footer__back').forEach(function (link) {
     var activeGroup = [];
     var activeIndex = 0;
     var CLOSE_MS = 150;
+
+    // A trigger is either the image itself or a button wrapping one.
+    function imageOf(trigger) {
+      return trigger.matches('img') ? trigger : trigger.querySelector('img');
+    }
+    function labelOf(trigger) {
+      return trigger.getAttribute('data-caption') || imageOf(trigger).alt;
+    }
+    function groupOf(trigger) {
+      return trigger.getAttribute('data-hbom-lightbox-group') ||
+        trigger.getAttribute('data-ootd-lightbox-group') || 'physical';
+    }
 
     function onKeydown(event) {
       if (event.key === 'Escape') {
@@ -1266,7 +1282,7 @@ document.querySelectorAll('.footer__back').forEach(function (link) {
         var dot = document.createElement('button');
         dot.type = 'button';
         dot.className = 'oct-image-lightbox__dot';
-        dot.setAttribute('aria-label', 'View image ' + (index + 1) + ' of ' + activeGroup.length + ': ' + trigger.alt);
+        dot.setAttribute('aria-label', 'View image ' + (index + 1) + ' of ' + activeGroup.length + ': ' + labelOf(trigger));
         dot.setAttribute('aria-current', index === activeIndex ? 'true' : 'false');
         dot.addEventListener('click', function () { showImage(index); });
         dots.appendChild(dot);
@@ -1277,9 +1293,10 @@ document.querySelectorAll('.footer__back').forEach(function (link) {
       if (!activeGroup.length) return;
       activeIndex = (index + activeGroup.length) % activeGroup.length;
       var trigger = activeGroup[activeIndex];
-      image.src = trigger.currentSrc || trigger.src;
-      image.alt = trigger.alt;
-      caption.textContent = trigger.alt;
+      var source = imageOf(trigger);
+      image.src = source.currentSrc || source.src;
+      image.alt = labelOf(trigger);
+      caption.textContent = labelOf(trigger);
       renderDots();
       setArrowState();
     }
@@ -1290,9 +1307,9 @@ document.querySelectorAll('.footer__back').forEach(function (link) {
         closeTimer = null;
       }
       activeTrigger = trigger;
-      var groupName = trigger.getAttribute('data-hbom-lightbox-group');
+      var groupName = groupOf(trigger);
       activeGroup = triggers.filter(function (item) {
-        return item.getAttribute('data-hbom-lightbox-group') === groupName;
+        return groupOf(item) === groupName;
       });
       activeIndex = activeGroup.indexOf(trigger);
       showImage(activeIndex);
@@ -1844,130 +1861,6 @@ var PERSONA_COPY = {
     document.addEventListener('DOMContentLoaded', initPersona);
   } else {
     initPersona();
-  }
-})();
-
-/*==================== OOTD PROJECT: PHYSICAL COMPANION LIGHTBOX ====================
-  Click a thumbnail to open a centered lightbox with the full image and
-  caption; Prev/Next buttons or Left/Right arrow keys move through the
-  set (wraps), Esc/backdrop/close button closes it. Focus moves into
-  the lightbox on open, is trapped there (Tab cycles among its three
-  buttons), and returns to the triggering thumbnail on close. The only
-  motion is a ~150ms opacity fade, which resolves instantly under
-  prefers-reduced-motion via the CSS media query on .physical-lightbox;
-  the fixed CLOSE_MS timeout below matches that duration so the
-  underlying [hidden] attribute is restored right after the fade
-  finishes rather than snapping the content away mid-transition.
-  No-ops on pages without .physical-thumb. */
-(function () {
-  var CLOSE_MS = 150;
-
-  function init() {
-    var thumbs = Array.prototype.slice.call(document.querySelectorAll('.physical-thumb, .ootd-lightbox-trigger'));
-    var lightbox = document.getElementById('physicalLightbox');
-    if (!thumbs.length || !lightbox) return;
-
-    var img = lightbox.querySelector('.physical-lightbox-img');
-    var caption = lightbox.querySelector('.physical-lightbox-caption');
-    var closeBtn = lightbox.querySelector('.physical-lightbox-close');
-    var prevBtn = lightbox.querySelector('.physical-lightbox-prev');
-    var nextBtn = lightbox.querySelector('.physical-lightbox-next');
-    var focusable = [closeBtn, prevBtn, nextBtn];
-
-    var items = thumbs.map(function (thumb) {
-      var thumbImg = thumb.matches('img') ? thumb : thumb.querySelector('img');
-      return {
-        src: thumbImg.getAttribute('src'),
-        caption: thumb.getAttribute('data-caption') || thumbImg.getAttribute('alt') || '',
-        group: thumb.getAttribute('data-ootd-lightbox-group') || 'physical'
-      };
-    });
-
-    var currentIndex = 0;
-    var activeItems = items;
-    var triggerEl = null;
-    var closeTimer = null;
-
-    function render(index) {
-      currentIndex = index;
-      img.setAttribute('src', activeItems[index].src);
-      img.setAttribute('alt', activeItems[index].caption);
-      caption.textContent = activeItems[index].caption;
-    }
-
-    function onKeydown(e) {
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        closeLightbox();
-      } else if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        render((currentIndex - 1 + activeItems.length) % activeItems.length);
-      } else if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        render((currentIndex + 1) % activeItems.length);
-      } else if (e.key === 'Tab') {
-        var first = focusable[0];
-        var last = focusable[focusable.length - 1];
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
-    }
-
-    function openLightbox(index, trigger) {
-      triggerEl = trigger;
-      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
-      var group = trigger.getAttribute('data-ootd-lightbox-group') || 'physical';
-      activeItems = items.filter(function (item) { return item.group === group; });
-      render(activeItems.indexOf(items[index]));
-      lightbox.hidden = false;
-      void lightbox.offsetWidth; // force layout so opacity transitions from 0 instead of jumping straight to 1
-      lightbox.classList.add('is-open');
-      document.addEventListener('keydown', onKeydown);
-      closeBtn.focus();
-    }
-
-    function closeLightbox() {
-      lightbox.classList.remove('is-open');
-      document.removeEventListener('keydown', onKeydown);
-      closeTimer = setTimeout(function () {
-        lightbox.hidden = true;
-      }, CLOSE_MS);
-      if (triggerEl) triggerEl.focus();
-    }
-
-    thumbs.forEach(function (thumb, index) {
-      thumb.addEventListener('click', function () {
-        openLightbox(index, thumb);
-      });
-      thumb.addEventListener('keydown', function (event) {
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault();
-          openLightbox(index, thumb);
-        }
-      });
-    });
-
-    prevBtn.addEventListener('click', function () {
-      render((currentIndex - 1 + activeItems.length) % activeItems.length);
-    });
-    nextBtn.addEventListener('click', function () {
-      render((currentIndex + 1) % activeItems.length);
-    });
-
-    Array.prototype.slice.call(lightbox.querySelectorAll('[data-lightbox-close]')).forEach(function (el) {
-      el.addEventListener('click', closeLightbox);
-    });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
   }
 })();
 

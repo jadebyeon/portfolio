@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" />
-  <link rel="stylesheet" href="../../assets/css/styles.css?v=20261011" />
+  <link rel="stylesheet" href="../../assets/css/styles.css?v=20261104" />
   <link rel="icon" type="image/png" href="../../assets/img/favicon.png?v=2" />
   <title>Wearby: OOTD Diary Companion</title>
   <meta name="description" content="Wearby, a playful OOTD diary companion for daily reflection, designed and built by Jade Byeon." />
@@ -67,7 +67,6 @@
     .project-page--ootd .ootd-reflection-grid p.ootd-reflection-item__body { margin: 0; color: var(--ootd-body); font-size: 0.9375rem; line-height: 1.6; }
     .project-page--ootd .physical-thumb-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, 1.6vw, 1.5rem); padding: 0.5rem; overflow: visible; }
     .project-page--ootd .physical-thumb { aspect-ratio: 1 / 1; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); }
-    .project-page--ootd :is(.ootd-lightbox-trigger, .physical-thumb) { cursor: url("../../assets/img/cursor-zoom-pixel.svg?v=2") 8 8, zoom-in; }
     .project-page--ootd :is(.ootd-lightbox-trigger, .physical-thumb):focus-visible { outline: 3px solid var(--ootd-accent); outline-offset: 4px; }
     @media (max-width: 680px) { .project-page--ootd .problem-solution-row { grid-template-columns: 1fr; gap: 1.5rem; } .project-page--ootd .ps-block + .ps-block { border-top: 1px solid var(--ootd-rule); padding-top: var(--ootd-divider-space); } .ootd-character-pair { grid-template-columns: 1fr; } .ootd-character-pair__arrow { justify-self: center; transform: rotate(90deg); } }
     @media (max-width: 760px) { .project-page--ootd .research-insight-cards--criteria .research-insight-cards__grid { grid-template-columns: 1fr; } .project-page--ootd .ootd-reflection-grid { grid-template-columns: 1fr; gap: 2rem; } }
@@ -251,7 +250,20 @@
             </div>
           </div>
         </section>
-        <div class="physical-lightbox" id="physicalLightbox" hidden role="dialog" aria-modal="true" aria-label="Physical companion image viewer"><div class="physical-lightbox-backdrop" data-lightbox-close></div><div class="physical-lightbox-content"><button type="button" class="physical-lightbox-close" aria-label="Close" data-lightbox-close>&times;</button><button type="button" class="physical-lightbox-prev" aria-label="Previous image">&larr;</button><img class="physical-lightbox-img" src="" alt=""><p class="physical-lightbox-caption"></p><button type="button" class="physical-lightbox-next" aria-label="Next image">&rarr;</button></div></div>
+        <div class="lightbox oct-image-lightbox hbom-image-lightbox" id="ootdImageLightbox" hidden>
+    <div class="lightbox-backdrop" data-hbom-image-lightbox-close></div>
+    <div class="lightbox-content oct-image-lightbox__content" role="dialog" aria-modal="true" aria-label="Expanded Wearby image" tabindex="-1">
+      <div class="oct-image-lightbox__panel">
+        <div class="oct-image-lightbox__visual">
+          <img class="oct-image-lightbox__image" data-hbom-image-lightbox-image src="" alt="">
+          <button type="button" class="oct-image-lightbox__arrow oct-image-lightbox__arrow--previous" data-hbom-image-lightbox-previous aria-label="Previous image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8"></path></svg></button>
+          <button type="button" class="oct-image-lightbox__arrow oct-image-lightbox__arrow--next" data-hbom-image-lightbox-next aria-label="Next image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 4 8 8-8 8"></path></svg></button>
+        </div>
+        <p class="oct-image-lightbox__caption" data-hbom-image-lightbox-caption aria-live="polite"></p>
+        <div class="oct-image-lightbox__dots" data-hbom-image-lightbox-dots aria-label="Image navigation"></div>
+      </div>
+    </div>
+  </div>
         <nav class="project-pager"><div class="content-container project-pager__inner"><a class="project-pager__link project-pager__prev" href="../hbom"><i class="uil uil-arrow-left" aria-hidden="true"></i><span>Previous Project</span></a></div></nav>
       </div>
     </div>

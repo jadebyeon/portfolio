@@ -5333,84 +5333,8 @@ body.is-settled #heroCopy [data-copy-line] {
   .physical-thumb-grid { grid-template-columns: 1fr; }
 }
 
-/* ---- Lightbox ---- */
-.physical-lightbox {
-  position: fixed;
-  inset: 0;
-  z-index: 999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.15s ease;
-}
-.physical-lightbox[hidden] { display: none; }
-.physical-lightbox.is-open { opacity: 1; }
-.physical-lightbox-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(20, 20, 20, 0.6);
-}
-.physical-lightbox-content {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
-  width: min(90vw, 900px);
-  padding: 0 clamp(2.25rem, 6vw, 3.5rem);
-  box-sizing: border-box;
-}
-.physical-lightbox-img {
-  display: block;
-  max-width: 100%;
-  max-height: 80vh;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  border-radius: 8px;
-}
-.physical-lightbox-caption {
-  color: #fff;
-  font-size: clamp(0.85rem, 1.1vw, 0.95rem);
-  line-height: 1.5;
-  text-align: center;
-  margin: 0;
-  max-width: 60ch;
-}
-.physical-lightbox-close,
-.physical-lightbox-prev,
-.physical-lightbox-next {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: none;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.92);
-  color: var(--title-color);
-  font-size: 1.1rem;
-  cursor: pointer;
-}
-.physical-lightbox-close { top: -0.5rem; right: 0; }
-.physical-lightbox-prev { left: 0; top: 50%; transform: translateY(-50%); }
-.physical-lightbox-next { right: 0; top: 50%; transform: translateY(-50%); }
-.physical-lightbox-close:focus-visible,
-.physical-lightbox-prev:focus-visible,
-.physical-lightbox-next:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px color-mix(in oklab, var(--mint-color) 45%, transparent);
-}
-@media (prefers-reduced-motion: reduce) {
-  .physical-lightbox { transition: none !important; }
-}
-
 /* ===== GENERIC LIGHTBOX (reusable) =====
-   Same pattern as .physical-lightbox above, generalized: centered,
-   capped to 90vw/85vh, closes via backdrop/Esc/close button. Content
+   Centered, capped to 90vw/85vh, closes via backdrop/Esc/close button. Content
    is open-ended (.lightbox-content), not tied to a single image. */
 .lightbox {
   position: fixed;
@@ -5472,11 +5396,10 @@ body.is-settled #heroCopy [data-copy-line] {
   outline: none;
   box-shadow: 0 0 0 3px color-mix(in oklab, var(--mint-color) 45%, transparent);
 }
-.project-page--oct .oct-lightbox-trigger {
-  cursor: zoom-in;
-}
-.project-page--hbom .hbom-lightbox-trigger {
-  cursor: zoom-in;
+/* One pixel-art magnifier for every lightbox trigger across the project
+   pages (OCT, HBOM, Wearby), so the zoom affordance is identical. */
+.project-page :is(.oct-lightbox-trigger, .hbom-lightbox-trigger, .ootd-lightbox-trigger, .physical-thumb) {
+  cursor: url("../img/cursor-zoom-pixel.svg?v=2") 8 8, zoom-in;
 }
 .project-page--oct .oct-lightbox-trigger:focus-visible {
   outline: 3px solid #2457c5;
