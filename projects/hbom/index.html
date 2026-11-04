@@ -124,12 +124,13 @@
        MacBook frame (its screen is 1.6:1, matching the 1440 x 900 recordings). */
     .project-page--hbom .hbom-redesign-figure { margin: var(--hbom-media-space) 0 0; }
     .project-page--hbom .hbom-redesign-figure .mac-mockup { width: 80%; margin: 0 auto; }
+    .project-page--hbom .hbom-redesign-figure--slider { width: 80%; margin: var(--hbom-media-space) auto clamp(2.5rem, 5vw, 3.5rem); }
     .project-page--hbom .hbom-redesign-tabs .hbom-tabs__panel.is-active { display: block; }
     .project-page--hbom .hbom-redesign-tabs .hbom-tabs__panel { margin-top: var(--hbom-media-space); }
-    @media (max-width: 680px) { .project-page--hbom .hbom-redesign-figure .mac-mockup { width: 100%; } }
+    @media (max-width: 680px) { .project-page--hbom .hbom-redesign-figure .mac-mockup, .project-page--hbom .hbom-redesign-figure--slider { width: 100%; } }
     .project-page--hbom .hbom-redesign-figure .figure-caption { margin-bottom: 0; }
     .project-page--hbom .hbom-redesign-figure .figure-caption strong { color: var(--hbom-ink); font-weight: 600; }
-    .project-page--hbom .hbom-before-after { --position: 50%; position: relative; width: 100%; aspect-ratio: 1470 / 835; overflow: hidden; border-radius: 16px; background: #fff; touch-action: none; }
+    .project-page--hbom .hbom-before-after { --position: 50%; position: relative; width: 100%; aspect-ratio: 1470 / 835; overflow: hidden; border-radius: 16px; background: #fff; box-shadow: 0 0 0 1px rgba(36, 35, 41, 0.06), 0 14px 36px rgba(36, 35, 41, 0.14); touch-action: none; }
     .project-page--hbom .hbom-before-after__image { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
     .project-page--hbom .hbom-before-after__after { position: absolute; inset: 0; clip-path: inset(0 0 0 var(--position)); }
     .project-page--hbom .hbom-before-after__line { position: absolute; z-index: 2; top: 0; bottom: 0; left: var(--position); width: 2px; transform: translateX(-50%); background: #fff; pointer-events: none; }
@@ -476,7 +477,7 @@
               <span class="hbom-before-after__label hbom-before-after__label--before" aria-hidden="true">Before</span>
               <span class="hbom-before-after__label hbom-before-after__label--after" aria-hidden="true">After</span>
             </div>
-            <figcaption class="figure-caption">Homepage: from a long intro to choosing a user type or searching</figcaption>
+            <figcaption class="figure-caption">Homepage Redesign</figcaption>
           </figure>
           <div class="hbom-tabs hbom-redesign-tabs" id="hbomRedesignTabs">
             <div class="hbom-tabs__bar" role="tablist" aria-label="Redesigned pages">
