@@ -7075,6 +7075,8 @@ body.project-page .header::before {
   /* The page is already offset by the header height twice (body/main), so
      pull the hero back up under the header to fill the whole first screen. */
   margin-top: calc(-2 * var(--header-height));
+  /* Breathing room between the Memoji and the case-study tiles below. */
+  margin-bottom: clamp(2rem, 4.5vw, 3.75rem);
   /* About the old hero's footprint, so the first case-study tiles peek in
      under it on a laptop screen. */
   min-height: max(540px, 66vh);
@@ -7108,7 +7110,7 @@ body.project-page .header::before {
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
-  gap: 0.9rem;
+  gap: clamp(1.1rem, 1.9vw, 1.6rem);
   width: 100%;
   max-width: 460px;
   /* Below: the stage keeps the height of the finished conversation (set
@@ -7116,7 +7118,7 @@ body.project-page .header::before {
 }
 
 .chat-bubble {
-  --bubble: #0b7bff;
+  --bubble: #0078ff;
   position: relative;
   max-width: 100%;
   box-sizing: border-box;
@@ -7128,35 +7130,32 @@ body.project-page .header::before {
   padding: 0.62em 0.95em 0.66em;
   transform-origin: 0 100%;
 }
-/* Tail: a bubble-colored wedge plus a page-colored cut-out that carves its curve. */
-.chat-bubble::before,
-.chat-bubble::after {
+/* Tail: the exact curve from the iMessage bubble artwork (viewBox 3 84 25 25),
+   used as a mask so it takes the bubble's own color. 1 artwork unit = 0.0432em,
+   and it sits 2.78 units left of / 1.39 units below the bubble's corner. */
+.chat-bubble::before {
   content: "";
   position: absolute;
-  bottom: 0;
-  height: 1em;
-}
-.chat-bubble::before {
-  left: -0.3em;
-  width: 0.6em;
+  left: -0.12em;
+  bottom: -0.06em;
+  width: 1.08em;
+  height: 1.08em;
   background: var(--bubble);
-  border-bottom-right-radius: 0.6em 0.5em;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='3 84 25 25'%3E%3Cpath d='M10.5758 99.4412C9.81601 103.866 5.52525 108.02 3 109C12.697 109 18.9091 105.814 20.4242 103.853L28 106.059L27.2424 84H11.3333V86.9412V89.8824V90.6176C11.3333 92.0882 11.3333 95.0294 10.5758 99.4412Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='3 84 25 25'%3E%3Cpath d='M10.5758 99.4412C9.81601 103.866 5.52525 108.02 3 109C12.697 109 18.9091 105.814 20.4242 103.853L28 106.059L27.2424 84H11.3333V86.9412V89.8824V90.6176C11.3333 92.0882 11.3333 95.0294 10.5758 99.4412Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
 }
-.chat-bubble::after {
-  left: -0.6em;
-  width: 0.6em;
-  background: var(--body-color);
-  border-bottom-right-radius: 0.5em;
-}
+/* Highlight: the artwork's soft translucent band near the top (a 26-unit
+   pill at 30% light gray, blurred, with a faint shadow under it). */
 .chat-bubble__gloss {
   position: absolute;
-  top: 0.22em;
-  left: 0.7em;
-  right: 0.7em;
-  height: 30%;
+  top: 0.3em;
+  left: 0.44em;
+  right: 0.55em;
+  height: 1.12em;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.2);
-  filter: blur(0.26em);
+  background: rgba(217, 217, 217, 0.3);
+  box-shadow: 0 0.35em 0.17em 0.13em rgba(0, 0, 0, 0.1);
+  filter: blur(0.35em);
   pointer-events: none;
 }
 .chat-bubble p {
