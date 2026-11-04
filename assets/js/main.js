@@ -97,11 +97,11 @@
   }
 })();
 
-/*==================== OCT MOCKUP BEFORE/AFTER ====================*/
+/*==================== OCT + HBOM BEFORE/AFTER SLIDER ====================*/
 (function () {
   function init() {
-    document.querySelectorAll('[data-oct-before-after]').forEach(function (comparison) {
-      var range = comparison.querySelector('.oct-before-after__range');
+    document.querySelectorAll('[data-oct-before-after], [data-hbom-before-after]').forEach(function (comparison) {
+      var range = comparison.querySelector('.oct-before-after__range, .hbom-before-after__range');
       if (!range) return;
       range.addEventListener('input', function () {
         comparison.style.setProperty('--position', range.value + '%');

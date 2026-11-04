@@ -120,6 +120,23 @@
     .project-page--hbom .hbom-final-solution .mac-mockup {
       margin: var(--hbom-media-space) auto;
     }
+    /* Future Exploration - Redesign: walkthrough videos reuse the Webflow
+       MacBook frame (its screen is 1.6:1, matching the 1440 x 900 recordings). */
+    .project-page--hbom .hbom-redesign-figure { margin: var(--hbom-media-space) 0 0; }
+    .project-page--hbom .hbom-redesign-figure .mac-mockup { margin: 0 auto; }
+    .project-page--hbom .hbom-redesign-figure .figure-caption { margin-bottom: 0; }
+    .project-page--hbom .hbom-redesign-figure .figure-caption strong { color: var(--hbom-ink); font-weight: 600; }
+    .project-page--hbom .hbom-before-after { --position: 50%; position: relative; width: 100%; aspect-ratio: 1440 / 900; overflow: hidden; border-radius: 16px; background: #f5f6f7; touch-action: none; }
+    .project-page--hbom .hbom-before-after__image { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
+    .project-page--hbom .hbom-before-after__after { position: absolute; inset: 0; clip-path: inset(0 0 0 var(--position)); }
+    .project-page--hbom .hbom-before-after__line { position: absolute; z-index: 2; top: 0; bottom: 0; left: var(--position); width: 2px; transform: translateX(-50%); background: #fff; pointer-events: none; }
+    .project-page--hbom .hbom-before-after__range { position: absolute; z-index: 4; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; }
+    .project-page--hbom .hbom-before-after__handle { position: absolute; z-index: 3; top: 50%; left: var(--position); display: grid; width: 3rem; height: 3rem; place-items: center; transform: translate(-50%, -50%); border-radius: .75rem; background: #fff; color: var(--title-color); box-shadow: 0 .5rem 1.25rem rgba(36,35,41,.16); pointer-events: none; }
+    .project-page--hbom .hbom-before-after__handle::before { content: "↔"; font-size: 1.5rem; line-height: 1; }
+    .project-page--hbom .hbom-before-after__label { position: absolute; z-index: 3; top: 1rem; padding: .35rem .7rem; border-radius: .4rem; background: rgba(255,255,255,.94); color: var(--title-color); font-size: .8rem; font-weight: 700; line-height: 1.2; pointer-events: none; }
+    .project-page--hbom .hbom-before-after__label--before { left: 1rem; }
+    .project-page--hbom .hbom-before-after__label--after { right: 1rem; }
+    .project-page--hbom .hbom-before-after__range:focus-visible ~ .hbom-before-after__handle { outline: 2px solid var(--mint-color); outline-offset: 3px; }
     /* Both comparison exports have excess canvas above and below the
        layouts. Crop them evenly so their visual bounds match. */
     .single-tile.hbom-crop-vertical {
@@ -437,6 +454,56 @@
                    src="../../assets/video/hbom_demo.mp4?v=6"></video>
             <img class="mac-frame" src="../../assets/img/mac-frame.png" alt="NVP Knowledge Hub walkthrough in a browser">
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FUTURE EXPLORATION: REDESIGN -->
+    <section class="project-section project-section--context section-nav-target hbom-final-solution hbom-redesign" id="redesign">
+      <div class="content-container">
+        <p class="project-section__eyebrow">Final Solution</p>
+        <h2 class="section-icon-title project-section__title">Future Exploration - Redesign</h2>
+        <div class="project-section__body">
+          <p>The internship design worked within NVP&rsquo;s existing design system, color palette, and typography, and the design team already had a strong direction. After the internship, I redesigned the pages on my own to see what I could do with more freedom. This is a personal exploration, not the live NVP site.</p>
+          <!-- Homepage before/after slider: enable once the before/after images are added.
+               Styles and script are already in place (.hbom-before-after, data-hbom-before-after).
+          <figure class="hbom-redesign-figure">
+            <div class="hbom-before-after" data-hbom-before-after>
+              <img class="hbom-before-after__image" src="../../assets/img/hbom_home_before.png" alt="Before: the homepage as designed during the internship">
+              <div class="hbom-before-after__after"><img class="hbom-before-after__image" src="../../assets/img/hbom_home_after.png" alt=""></div>
+              <span class="hbom-before-after__line" aria-hidden="true"></span>
+              <input class="hbom-before-after__range" type="range" min="0" max="100" value="50" aria-label="Drag to compare the internship and redesigned homepage">
+              <span class="hbom-before-after__handle" aria-hidden="true"></span>
+              <span class="hbom-before-after__label hbom-before-after__label--before" aria-hidden="true">Before</span>
+              <span class="hbom-before-after__label hbom-before-after__label--after" aria-hidden="true">After</span>
+            </div>
+            <figcaption class="figure-caption"><strong>Homepage.</strong> [One line on what changed and why.]</figcaption>
+          </figure>
+          -->
+          <figure class="hbom-redesign-figure">
+            <div class="mac-mockup">
+              <video class="mac-screen" autoplay muted loop playsinline preload="metadata" aria-label="Redesigned resource library: choosing a user type, topic, and media type"
+                     src="../../assets/video/hbom_walkthrough_home.mp4?v=20261104"></video>
+              <img class="mac-frame" src="../../assets/img/mac-frame.png" alt="" aria-hidden="true">
+            </div>
+            <figcaption class="figure-caption"><strong>Resource library.</strong> Filtering by user type, topic, and media type to narrow the library.</figcaption>
+          </figure>
+          <figure class="hbom-redesign-figure">
+            <div class="mac-mockup">
+              <video class="mac-screen" autoplay muted loop playsinline preload="metadata" aria-label="Redesigned resource detail page"
+                     src="../../assets/video/hbom_walkthrough_resource.mp4?v=20261104"></video>
+              <img class="mac-frame" src="../../assets/img/mac-frame.png" alt="" aria-hidden="true">
+            </div>
+            <figcaption class="figure-caption"><strong>Resource detail.</strong> A resource opens to its summary, download and share actions, and what to do next.</figcaption>
+          </figure>
+          <figure class="hbom-redesign-figure">
+            <div class="mac-mockup">
+              <video class="mac-screen" autoplay muted loop playsinline preload="metadata" aria-label="Redesigned request form for suggesting a missing resource"
+                     src="../../assets/video/hbom_walkthrough_form.mp4?v=20261104"></video>
+              <img class="mac-frame" src="../../assets/img/mac-frame.png" alt="" aria-hidden="true">
+            </div>
+            <figcaption class="figure-caption"><strong>Request form.</strong> Asking for a resource that is not in the library yet.</figcaption>
+          </figure>
         </div>
       </div>
     </section>
