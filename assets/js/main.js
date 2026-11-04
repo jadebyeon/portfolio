@@ -2471,6 +2471,92 @@ var PERSONA_COPY = {
   }
 })();
 
+/*==================== HEADER MENU: GLIDING PILL ====================
+  Work / About / Resume share one highlight pill that sits on the current
+  page's link and glides (stretch and spring, via animatePill) to whichever
+  link is hovered or keyboard-focused, then back when the pointer leaves.
+  Desktop only (the CSS hides the pill, and the phone menu is a plain list).
+  No-ops where the menu has fewer than two links or isn't laid out. */
+(function () {
+  function init() {
+    Array.prototype.forEach.call(document.querySelectorAll('.site-menu'), function (menu) {
+      var links = Array.prototype.slice.call(menu.querySelectorAll('.nav-link'));
+      if (links.length < 2) return;
+
+      var indicator = document.createElement('span');
+      indicator.className = 'site-menu__indicator';
+      indicator.setAttribute('aria-hidden', 'true');
+      menu.insertBefore(indicator, menu.firstChild);
+      menu.classList.add('has-indicator');
+
+      var current = null; // the link the pill is on
+      var slide = null;
+      var ready = false;
+
+      function activeLink() {
+        return links.filter(function (link) { return link.classList.contains('active'); })[0] || null;
+      }
+
+      function box(link) {
+        return { left: link.offsetLeft, width: link.offsetWidth, top: link.offsetTop, height: link.offsetHeight };
+      }
+
+      function moveTo(link, animate) {
+        if (!link || !link.offsetWidth) return;
+        var to = box(link);
+        var rect = indicator.getBoundingClientRect();
+        var menuRect = menu.getBoundingClientRect();
+        var from = { left: rect.left - menuRect.left, width: rect.width };
+        if (slide) { slide.cancel(); slide = null; }
+        indicator.style.top = to.top + 'px';
+        indicator.style.height = to.height + 'px';
+        indicator.style.width = to.width + 'px';
+        indicator.style.transform = 'translateX(' + to.left + 'px)';
+        var moved = current && current !== link;
+        current = link;
+        if (!animate || !ready || !moved || !from.width) return;
+        var run = window.animatePill(indicator, from, { left: to.left, width: to.width });
+        if (!run) return;
+        slide = run;
+        run.onfinish = function () { if (slide === run) slide = null; };
+      }
+
+      function rest() {
+        menu.classList.remove('is-roaming');
+        moveTo(activeLink() || current, true);
+      }
+
+      moveTo(activeLink() || links[0], false);
+      setTimeout(function () { ready = true; }, 400);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { moveTo(current, false); });
+      window.addEventListener('resize', function () { moveTo(current, false); });
+
+      links.forEach(function (link) {
+        link.addEventListener('pointerenter', function (event) {
+          if (event.pointerType === 'touch') return;
+          menu.classList.toggle('is-roaming', link !== activeLink());
+          moveTo(link, true);
+        });
+        link.addEventListener('focus', function () {
+          if (!link.matches(':focus-visible')) return;
+          menu.classList.toggle('is-roaming', link !== activeLink());
+          moveTo(link, true);
+        });
+      });
+      menu.addEventListener('pointerleave', rest);
+      menu.addEventListener('focusout', function () {
+        setTimeout(function () { if (!menu.contains(document.activeElement)) rest(); }, 0);
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
 /*==================== SECTION NAV: SCROLL-SPY ====================
   Reusable per-case section nav (see .section-nav-layout/.section-nav
   in styles.css). Scrolling and keyboard access are native (plain

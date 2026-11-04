@@ -7034,15 +7034,17 @@ body.project-page .mbti-before-after__line {
 body.project-page .site-menu,
 body.project-page .site-menu-toggle { display: none !important; }
 
-/* Project pages: no solid header block or edge line. The logo and section
+/* Project pages and the homepage: no solid header block or edge line. The logo and section
    navigation float over the page, and whatever scrolls up behind them is
    softly blurred (the blur layer fades out toward its bottom edge, so it
    never reads as a bar). */
-body.project-page .header {
+body.project-page .header,
+body.home-page .header {
   background: transparent;
   box-shadow: none;
 }
-body.project-page .header::before {
+body.project-page .header::before,
+body.home-page .header::before {
   content: "";
   position: absolute;
   inset: 0 0 -1.5rem 0;
@@ -7247,4 +7249,74 @@ html:not(.chat-js) .hero-chat [data-chat-typing] { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .chat-dot { animation: none; opacity: 0.8; }
+}
+
+/* Header Resume arrow: same up-right bounce as the footer arrows while the
+   link is hovered or focused (the arrow itself is always visible here). */
+.site-menu .nav-link:hover .nav-link__external,
+.site-menu .nav-link:focus-visible .nav-link__external {
+  animation: nav-arrow-nudge 1100ms ease-in-out infinite;
+}
+@keyframes nav-arrow-nudge {
+  0%, 100% { transform: translate(0, -0.16em); }
+  50% { transform: translate(0.14em, -0.3em); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-menu .nav-link:hover .nav-link__external,
+  .site-menu .nav-link:focus-visible .nav-link__external { animation: none; }
+}
+
+/* Header menu (Work / About / Resume): one highlight pill glides to the
+   hovered or focused link and back to the current page's link, the same
+   motion as the section navigation. Desktop only; the phone menu is a list. */
+.site-menu__indicator { display: none; }
+@media (min-width: 1025px) {
+  .site-menu { position: relative; }
+  .site-menu.has-indicator .site-menu__indicator {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-radius: 999px;
+    background: rgba(36, 35, 41, 0.08);
+    pointer-events: none;
+    transform-origin: 0 50%;
+    will-change: transform, width;
+    transition: background-color 200ms ease;
+  }
+  .site-menu.has-indicator.is-roaming .site-menu__indicator { background: rgba(36, 35, 41, 0.05); }
+  .site-menu.has-indicator .nav-link { position: relative; z-index: 1; }
+  .site-menu.has-indicator .nav-link.active,
+  .site-menu.has-indicator .nav-link:hover { background: transparent; }
+}
+
+/* Footer: the copyright line sits at the left, under "Contact me", as a
+   small caption. */
+.footer__bottom {
+  grid-template-areas:
+    "contact links ."
+    "meta    links .";
+  row-gap: 0.25rem;
+}
+.footer__contact { grid-area: contact; }
+.footer__links { grid-area: links; }
+.footer__meta {
+  grid-area: meta;
+  justify-self: start;
+  text-align: left;
+  font-size: clamp(12px, 0.9vw, 14px);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--text-color-light);
+}
+.footer__meta p { margin: 0; }
+@media (max-width: 768px) {
+  .footer__bottom {
+    grid-template-areas:
+      "contact"
+      "links"
+      "meta";
+  }
 }
