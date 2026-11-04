@@ -238,21 +238,26 @@
 })();
 
 /*==================== ABOUT: MESSAGES + VOICE MEMO ====================
-  The About page's "Click and Drag the Stickers!" hint is a short sent
-  conversation: that message pops in, then a voice memo pops in and the
-  first slides up (same FLIP movement as the homepage hero), and the
-  "Delivered Quietly" caption follows the last message. The voice memo's
-  button plays/pauses its <audio> (when it has a source) while the waveform
-  moves; without a source it just runs the waveform. Reduced-motion
-  visitors get everything at once. No-ops without [data-about-chat]. */
+  The About page's hint is a short conversation to the right of the Memoji,
+  played once like the homepage: typing dots, "Click and Drag the Stickers!"
+  pops in, typing again, then a voice memo pops in as the first slides up
+  (FLIP), and "Delivered Quietly" follows. The voice memo's button plays or
+  pauses its <audio> (when it has a source); while playing, the waveform
+  moves like a voice: new amplitudes enter on the right with a speech-like
+  rhythm (syllable swells, short pauses, jitter) and slide left, smoothed so
+  it never flickers. Without an audio source the button just runs the
+  waveform. Reduced-motion visitors get everything at once and a still
+  waveform. No-ops without [data-about-chat]. */
 (function () {
+  var TYPING_MS = 1300;
+  var GAP_MS = 650;
   var FIRST_MS = 900;
-  var GAP_MS = 1300;
 
   function init() {
     var chat = document.querySelector('[data-about-chat]');
     if (!chat) return;
     var messages = Array.prototype.slice.call(chat.querySelectorAll('[data-chat-message]'));
+    var typing = chat.querySelector('[data-chat-typing]');
     var delivered = chat.querySelector('.chat-delivered');
     if (!messages.length) return;
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -262,26 +267,69 @@
     if (voice) {
       var button = voice.querySelector('[data-voice-play]');
       var audio = voice.querySelector('[data-voice-audio]');
-      var bars = Array.prototype.slice.call(voice.querySelectorAll('[data-voice-wave] span'));
+      var wave = voice.querySelector('[data-voice-wave]');
+      var bars = Array.prototype.slice.call(wave.querySelectorAll('span'));
       var timeEl = voice.querySelector('[data-voice-time]');
+      var rest = bars.map(function (bar) { return parseFloat(bar.style.getPropertyValue('--h')) || 0.5; });
 
       var hasAudio = function () { return !!(audio && (audio.getAttribute('src') || audio.querySelector('source'))); };
       var format = function (seconds) {
         seconds = Math.max(0, Math.round(seconds));
-        return Math.floor(seconds / 60) + ':' + ('0' + (seconds % 60)).slice(-2);
+        return ('0' + Math.floor(seconds / 60)).slice(-2) + ':' + ('0' + (seconds % 60)).slice(-2);
       };
+
+      /* Waveform motion */
+      var levels = rest.slice();
+      var raf = null;
+      var lastPush = 0;
+      var clock = 0;
+      var pauseUntil = 0;
+      var smoothed = 0.4;
+      function nextLevel(now) {
+        // Speech-like envelope: two swells at different rates (syllables and
+        // phrases), an occasional short pause, and random detail on top.
+        var t = now / 1000;
+        var swell = 0.5 + 0.5 * Math.sin(t * 7.3) * (0.6 + 0.4 * Math.sin(t * 1.9 + 1));
+        if (now > pauseUntil && Math.random() < 0.025) pauseUntil = now + 220 + Math.random() * 380;
+        var talking = now > pauseUntil ? 1 : 0.14;
+        var target = (0.18 + 0.82 * swell * (0.45 + 0.55 * Math.random())) * talking;
+        smoothed = smoothed * 0.35 + target * 0.65;
+        return Math.max(0.16, Math.min(1, smoothed));
+      }
+      function frame(now) {
+        raf = window.requestAnimationFrame(frame);
+        if (now - lastPush < 62) return;
+        lastPush = now;
+        levels.shift();
+        levels.push(nextLevel(now));
+        for (var i = 0; i < bars.length; i++) bars[i].style.transform = 'scaleY(' + levels[i].toFixed(3) + ')';
+      }
+      function startWave() {
+        if (reduce || raf) return;
+        levels = rest.slice();
+        raf = window.requestAnimationFrame(frame);
+      }
+      function stopWave() {
+        if (raf) window.cancelAnimationFrame(raf);
+        raf = null;
+        for (var i = 0; i < bars.length; i++) bars[i].style.transform = '';
+      }
+
       var setPlaying = function (on) {
         voice.classList.toggle('is-playing', on);
         button.setAttribute('aria-pressed', on ? 'true' : 'false');
         button.setAttribute('aria-label', on ? 'Pause voice memo' : 'Play voice memo');
+        if (on) startWave(); else stopWave();
       };
       var showProgress = function () {
         if (!audio || !isFinite(audio.duration) || !audio.duration) return;
         var done = audio.currentTime / audio.duration;
+        wave.classList.toggle('has-progress', done > 0);
         bars.forEach(function (bar, i) { bar.classList.toggle('is-played', i / bars.length < done); });
         if (timeEl) timeEl.textContent = format(audio.duration - audio.currentTime);
       };
       var resetProgress = function () {
+        wave.classList.remove('has-progress');
         bars.forEach(function (bar) { bar.classList.remove('is-played'); });
         if (timeEl && audio && isFinite(audio.duration) && audio.duration) timeEl.textContent = format(audio.duration);
       };
@@ -304,11 +352,23 @@
     }
 
     /* ---- the sequence ---- */
-    if (reduce || !chat.animate) {
+    if (reduce || !chat.animate || !typing) {
       messages.forEach(function (m) { m.classList.add('is-shown'); });
       if (delivered) delivered.classList.add('is-shown');
       return;
     }
+
+    // Reserve the finished conversation's height, with the stack anchored at
+    // the bottom, so each new message arrives in place and older ones move up.
+    function measure() {
+      var wasShown = Array.prototype.slice.call(chat.children).map(function (el) { return el.classList.contains('is-shown'); });
+      Array.prototype.slice.call(chat.children).forEach(function (el) { el.classList.add('is-shown'); });
+      typing.classList.remove('is-shown');
+      chat.style.minHeight = '';
+      chat.style.minHeight = chat.offsetHeight + 'px';
+      Array.prototype.slice.call(chat.children).forEach(function (el, i) { el.classList.toggle('is-shown', wasShown[i]); });
+    }
+    measure();
 
     function visible() {
       return Array.prototype.slice.call(chat.children).filter(function (el) { return el.classList.contains('is-shown'); });
@@ -317,6 +377,7 @@
       var before = visible().map(function (el) { return { el: el, top: el.getBoundingClientRect().top }; });
       change();
       before.forEach(function (item) {
+        if (!item.el.classList.contains('is-shown')) return;
         var dy = item.top - item.el.getBoundingClientRect().top;
         if (Math.abs(dy) < 1) return;
         item.el.animate(
@@ -338,11 +399,19 @@
       var message = queue.shift();
       if (!message) return;
       flip(function () {
-        message.classList.add('is-shown');
-        if (delivered) delivered.classList.add('is-shown');
+        chat.insertBefore(typing, message);
+        typing.classList.add('is-shown');
       });
-      pop(message);
-      if (queue.length) setTimeout(next, GAP_MS);
+      pop(typing);
+      setTimeout(function () {
+        flip(function () {
+          typing.classList.remove('is-shown');
+          message.classList.add('is-shown');
+          if (delivered) delivered.classList.add('is-shown');
+        });
+        pop(message);
+        setTimeout(next, GAP_MS);
+      }, TYPING_MS);
     }
     var start = function () { setTimeout(next, FIRST_MS); };
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(start);
@@ -599,16 +668,97 @@
     if (!surface || !window.PointerEvent) return;
 
     var drag = null;
+    // Desktop resting composition. Each position is the sticker's top-left
+    // corner measured from the Memoji, in units of the Memoji's width: dx from
+    // the Memoji's horizontal center, dy down from its top. The Memoji, the
+    // stickers and the messages all scale with the viewport width, so the same
+    // numbers give the same composition on every screen from tablet up.
     var desktopInitialPositions = {
-      // Desktop resting composition, matching the approved 13-inch layout.
-      uofm: { left: 6.5, top: 42 },
-      duke: { left: 17, top: 52 },
-      earth: { left: 80, top: 41 },
-      film: { left: 70, top: 22 },
-      pokemon: { left: 84, top: 70 },
-      birthday: { left: 5, top: 8 },
-      child: { left: 65, top: 63 }
+      birthday: { dx: -0.879, dy: -0.135 },
+      uofm: { dx: -0.9715, dy: 0.2501 },
+      duke: { dx: -0.7528, dy: 0.3475 },
+      earth: { dx: 0.7589, dy: 0.0899 },
+      film: { dx: 0.4845, dy: 0.3235 },
+      pokemon: { dx: 0.7542, dy: 0.5503 },
+      child: { dx: 0.3229, dy: 0.4785 }
     };
+    var hintPosition = { dx: 0.2841, dy: 0.0544 };
+    // Phone composition, in units of the screen width S: x from the left
+    // edge; y down from the Memoji's top (anchor "top", so negative values sit
+    // above it) or down from its bottom (anchor "bottom").
+    var mobileInitialPositions = {
+      birthday: { x: 0.06, y: -0.4, anchor: 'top' },
+      uofm: { x: 0.3, y: -0.45, anchor: 'top' },
+      duke: { x: 0.57, y: -0.27, anchor: 'top' },
+      film: { x: 0.05, y: 0.04, anchor: 'bottom' },
+      child: { x: 0.31, y: 0.09, anchor: 'bottom' },
+      earth: { x: 0.64, y: 0.03, anchor: 'bottom' },
+      pokemon: { x: 0.62, y: 0.27, anchor: 'bottom' }
+    };
+    var stageEl = document.querySelector('.about-avatar-stage');
+    var hintEl = document.querySelector('[data-about-hint]');
+
+    // When the screen is taller than the composition needs, spread the
+    // stickers a little further apart vertically (around the Memoji's center)
+    // so the space above and below the scene stays balanced.
+    function verticalStretch(surfaceRect, stage) {
+      var title = document.querySelector('.about-name');
+      if (!title) return 1;
+      var sceneH = stage.bottom - title.getBoundingClientRect().top;
+      var spare = surfaceRect.height - sceneH - 90;
+      var extra = spare / (0.75 * stage.width);
+      return 1 + Math.max(0, Math.min(0.5, extra * 0.6));
+    }
+
+    // Top edge of an element of height h whose center sits at relative height
+    // `rel` (in Memoji widths, from the Memoji's top), after the stretch.
+    function stretchedTop(stage, surfaceRect, rel, h, stretch) {
+      var u = stage.width;
+      // Items above the Memoji's center stretch less, so nothing creeps up
+      // toward the header on very tall screens.
+      var k = rel < 0.375 ? 1 + (stretch - 1) * 0.35 : stretch;
+      return stage.top - surfaceRect.top + (0.375 + (rel - 0.375) * k) * u - h / 2;
+    }
+
+    function presetXY(name, button, surfaceRect) {
+      if (!stageEl) return null;
+      if (!window.matchMedia('(min-width: 769px)').matches) {
+        var phone = mobileInitialPositions[name];
+        if (!phone) return null;
+        var s = surfaceRect.width;
+        var stageBox = stageEl.getBoundingClientRect();
+        var base = phone.anchor === 'top' ? stageBox.top : stageBox.bottom;
+        return {
+          x: phone.x * s,
+          y: base - surfaceRect.top + phone.y * s
+        };
+      }
+      var preset = desktopInitialPositions[name];
+      if (!preset) return null;
+      var stage = stageEl.getBoundingClientRect();
+      var h = button.offsetHeight;
+      var rel = preset.dy + h / (2 * stage.width);
+      return {
+        x: stage.left + stage.width / 2 - surfaceRect.left + preset.dx * stage.width,
+        y: stretchedTop(stage, surfaceRect, rel, h, verticalStretch(surfaceRect, stage))
+      };
+    }
+
+    function positionHint() {
+      if (!hintEl || !stageEl) return;
+      var surfaceRect = surface.getBoundingClientRect();
+      var stage = stageEl.getBoundingClientRect();
+      if (!window.matchMedia('(min-width: 769px)').matches) {
+        // Upper right of the Memoji.
+        hintEl.style.left = (surfaceRect.width * 0.52) + 'px';
+        hintEl.style.top = (stage.top - surfaceRect.top + surfaceRect.width * 0.01) + 'px';
+        return;
+      }
+      var h = hintEl.offsetHeight;
+      var rel = hintPosition.dy + h / (2 * stage.width);
+      hintEl.style.left = (stage.left + stage.width / 2 - surfaceRect.left + hintPosition.dx * stage.width) + 'px';
+      hintEl.style.top = stretchedTop(stage, surfaceRect, rel, h, verticalStretch(surfaceRect, stage)) + 'px';
+    }
     var mobileStickerOffsetY = {
       earth: -16,
       film: -16,
@@ -631,16 +781,12 @@
       var positions = stickers.map(function (button) {
         var rect = button.getBoundingClientRect();
         var stickerName = button.getAttribute('data-sticker') || button.getAttribute('data-sticker-decorative');
-        var preset = useDesktopLayout && desktopInitialPositions[stickerName];
+        var preset = presetXY(stickerName, button, surfaceRect);
         var mobileOffsetY = useDesktopLayout ? 0 : (mobileStickerOffsetY[stickerName] || 0);
         return {
           button: button,
-          x: preset
-            ? surfaceRect.width * preset.left / 100 + button.offsetWidth * (preset.shiftX || 0)
-            : rect.left - surfaceRect.left,
-          y: preset
-            ? surfaceRect.height * preset.top / 100 + button.offsetHeight * ((preset.drop || 0) - (preset.lift || 0))
-            : rect.top - surfaceRect.top + mobileOffsetY
+          x: preset ? preset.x : rect.left - surfaceRect.left,
+          y: preset ? preset.y : rect.top - surfaceRect.top + mobileOffsetY
         };
       });
 
@@ -653,11 +799,21 @@
 
     function constrainCanvas() {
       var surfaceRect = surface.getBoundingClientRect();
+      var desktop = window.matchMedia('(min-width: 769px)').matches;
       stickers.forEach(function (button) {
         if (!button.classList.contains('is-draggable')) return;
+        // A sticker nobody has moved follows the Memoji as the window resizes;
+        // one the visitor dragged keeps its place on the canvas.
+        var name = button.getAttribute('data-sticker') || button.getAttribute('data-sticker-decorative');
+        var preset = !button.dataset.userMoved ? presetXY(name, button, surfaceRect) : null;
+        if (preset) {
+          setPosition(button, preset.x, preset.y, surfaceRect);
+          return;
+        }
         var rect = button.getBoundingClientRect();
         setPosition(button, rect.left - surfaceRect.left, rect.top - surfaceRect.top, surfaceRect);
       });
+      positionHint();
     }
 
     stickers.forEach(function (button) {
@@ -681,6 +837,7 @@
         var distance = Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY);
         if (distance > 6) drag.moved = true;
         if (!drag.moved) return;
+        button.dataset.userMoved = 'true';
         event.preventDefault();
         var surfaceRect = surface.getBoundingClientRect();
         setPosition(button, event.clientX - surfaceRect.left - drag.offsetX, event.clientY - surfaceRect.top - drag.offsetY, surfaceRect);
@@ -711,8 +868,9 @@
         button.style.position = '';
         button.style.left = '';
         button.style.top = '';
+        delete button.dataset.userMoved;
       });
-      window.requestAnimationFrame(activateCanvas);
+      window.requestAnimationFrame(function () { activateCanvas(); positionHint(); });
     }
 
     function handleCanvasResize() {
@@ -726,7 +884,11 @@
     }
 
     activateCanvas();
+    positionHint();
     window.addEventListener('resize', handleCanvasResize);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () { constrainCanvas(); });
+    }
   })();
 
   if (!overlay || !card || !inner) return;

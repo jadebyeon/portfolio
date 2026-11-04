@@ -2695,6 +2695,29 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 /* Dragging takes the sticker buttons out of normal flow. Reserve the two
    left-sticker slots while keeping their containing block as .about-hero,
    so drag coordinates continue to span the entire illustration. */
+/* From tablet up, the Memoji, the stickers and the messages scale together
+   from one length, --about-u (the Memoji's width). It grows with the viewport
+   width but is also held to the height that is left under the header, so the
+   whole composition (title to lowest sticker) fits with equal space above and
+   below on a 13", 16" or bigger screen. Sticker positions are set in main.js
+   relative to the Memoji. */
+@media (min-width: 769px) {
+  .about-hero {
+    --about-u: max(380px, min(46vw, calc((100vh - var(--header-height) - 72px - 8.8vw) / 0.75)));
+    --about-u: max(380px, min(46vw, calc((100svh - var(--header-height) - 72px - 8.8vw) / 0.75)));
+  }
+  .about-hero.section { align-items: center; }
+  .about-avatar-row { grid-template-columns: minmax(0, 1fr) var(--about-u) minmax(0, 1fr); }
+  .about-hero .about-avatar-stage { max-width: none; }
+  .about-hero .about-sticker--uofm { --sticker-size: calc(var(--about-u) * 0.3068); }
+  .about-hero .about-sticker--duke { --sticker-size: calc(var(--about-u) * 0.3409); }
+  .about-hero .about-sticker--earth { --sticker-size: calc(var(--about-u) * 0.2511); }
+  .about-hero .about-sticker--film { --sticker-size: calc(var(--about-u) * 0.2841); }
+  .about-hero .about-sticker--pokemon { --sticker-size: calc(var(--about-u) * 0.2068); }
+  .about-hero .about-sticker--birthday { --sticker-size: calc(var(--about-u) * 0.2841); }
+  .about-hero .about-sticker--uofm-jade { --sticker-size: calc(var(--about-u) * 0.25); }
+  .about-hero .about-hint { --hint-w: calc(var(--about-u) * 0.4318); }
+}
 @media (min-width: 769px) {
   .about-avatar-gutter--left .about-gutter-stickers {
     min-height: clamp(23rem, 29vw, 31rem);
@@ -2705,19 +2728,17 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 
   /* Put the hint in the left cell of the avatar row, not in a new grid row.
      Its bottom edge therefore follows the avatar stage exactly. */
-  .about-hint {
-    position: relative;
-    grid-column: 1;
-    grid-row: 1;
-    justify-self: end;
-    align-self: end;
-    transform: translate(75%, -638%);
+  /* The messages sit to the right of the Memoji, placed in the same
+     percentage coordinates as the stickers (the hero is their surface). */
+  .about-hero .about-hint {
+    position: absolute;
+    left: 62.5%;
+    top: 24%;
+    --hint-w: clamp(14rem, 19vw, 19rem);
+    aspect-ratio: auto;
   }
   .about-avatar-gutter--left {
     align-self: stretch;
-  }
-  .about-hero .about-hint.is-hidden {
-    transform: translate(calc(75% - 0.5rem), -638%);
   }
 }
 
@@ -7299,15 +7320,11 @@ html:not(.chat-js) .hero-chat [data-chat-typing] { display: none; }
   .site-menu.has-indicator .nav-link:hover { background: transparent; }
 }
 
-/* Footer: the copyright line sits at the left, under "Contact me", as a
-   small caption. */
+/* Footer: the copyright line sits at the left as a small caption, with the
+   links centered. */
 .footer__bottom {
-  grid-template-areas:
-    "contact links ."
-    "meta    links .";
-  row-gap: 0.25rem;
+  grid-template-areas: "meta links .";
 }
-.footer__contact { grid-area: contact; }
 .footer__links { grid-area: links; }
 .footer__meta {
   grid-area: meta;
@@ -7322,7 +7339,6 @@ html:not(.chat-js) .hero-chat [data-chat-typing] { display: none; }
 @media (max-width: 768px) {
   .footer__bottom {
     grid-template-areas:
-      "contact"
       "links"
       "meta";
   }
@@ -7336,35 +7352,40 @@ body.home-page .header::before {
   backdrop-filter: blur(6px);
 }
 
-/* ===== ABOUT: MESSAGES (sent style) =====
-   Same bubble artwork as the homepage hero, mirrored so the tail is on the
-   right. Messages pop in once; the "Delivered Quietly" caption follows the
-   last one. */
+/* ===== ABOUT: MESSAGES =====
+   The same bubbles as the homepage hero (tail on the left), sitting to the
+   right of the Memoji. Messages type in once, then the voice memo; the
+   "Delivered Quietly" caption follows. */
 .about-chat {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  text-align: left; /* the About hero centers its text; messages read left to right */
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  gap: 1.1em;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 0.8em;
   /* Text scales with the box's real width (the old image's text was 5.4% of it). */
   --chat-size: 5.4cqw;
   font-size: var(--chat-size);
 }
-.chat-bubble--sent { transform-origin: 100% 100%; }
-.chat-bubble--sent::before {
-  left: auto;
-  right: -0.12em;
-  transform: scaleX(-1);
-}
-.about-chat .chat-bubble { width: 100%; }
+/* Each bubble is as wide as its own content; the voice memo is the wider one. */
+.about-chat .chat-bubble { width: fit-content; max-width: 100%; }
+.about-chat .chat-bubble--voice { width: 100%; }
 .about-chat .chat-bubble p { white-space: nowrap; }
 .about-chat .chat-bubble strong { font-weight: 700; }
+/* The highlight band is sized for a three-line bubble; on these short
+   bubbles it would wash the blue out, so it is smaller and fainter. */
+.about-chat .chat-bubble__gloss {
+  top: 0.22em;
+  left: 0.8em;
+  right: 0.8em;
+  height: 0.42em;
+  opacity: 0.55;
+  box-shadow: none;
+  filter: blur(0.12em);
+}
 .chat-delivered {
   margin: -0.3em 0 0;
-  text-align: right;
+  text-align: left;
   font-family: var(--body-font);
   font-size: 0.8em;
   font-weight: 600;
@@ -7372,23 +7393,31 @@ body.home-page .header::before {
   color: #8e8e93;
 }
 .chat-js .about-chat [data-chat-message]:not(.is-shown),
+.chat-js .about-chat [data-chat-typing]:not(.is-shown),
 .chat-js .about-chat .chat-delivered:not(.is-shown) { display: none; }
+html:not(.chat-js) .about-chat [data-chat-typing] { display: none; }
 
-/* Voice memo bubble: play/pause, a waveform that moves while it plays, and
-   the time left. */
+/* Voice memo, laid out like an iMessage audio message (proportions measured
+   from the reference, in units of the bubble's width W; 1em = 0.054 W):
+   play button 0.098 W, dense waveform 0.61 W, time and caption 0.04 W. */
 .chat-bubble--voice {
+  display: block;
+  padding: 0.7em 0.8em 0.85em 0.9em;
+  border-radius: 1.2em;
+}
+.voice-row {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 0.7em;
-  padding: 0.5em 0.85em 0.5em 0.5em;
+  gap: 0.65em;
 }
 .voice-play {
   position: relative;
   flex: 0 0 auto;
   display: grid;
   place-items: center;
-  width: 2.1em;
-  height: 2.1em;
+  width: 1.8em;
+  height: 1.8em;
   padding: 0;
   border: 0;
   border-radius: 50%;
@@ -7400,51 +7429,95 @@ body.home-page .header::before {
 .voice-play:hover { transform: scale(1.06); }
 .voice-play:active { transform: scale(0.94); }
 .voice-play:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
-.voice-play__icon { width: 1.05em; height: 1.05em; fill: currentColor; grid-area: 1 / 1; }
-.voice-play__icon--pause { display: none; }
+.voice-play__icon { width: 0.82em; height: 0.82em; fill: currentColor; grid-area: 1 / 1; margin-left: 0.06em; }
+.voice-play__icon--pause { display: none; margin-left: 0; }
 .voice-play[aria-pressed="true"] .voice-play__icon--play { display: none; }
 .voice-play[aria-pressed="true"] .voice-play__icon--pause { display: block; }
 .voice-wave {
   position: relative;
   flex: 1 1 auto;
   min-width: 0;
-  height: 1.7em;
+  height: 1.9em;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.12em;
 }
 .voice-wave span {
   flex: 1 1 0;
-  max-width: 0.16em;
-  height: calc(var(--h) * 100%);
+  max-width: 0.11em;
+  height: 100%;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.5);
-  transform-origin: 50% 50%;
-  transition: background-color 200ms ease;
+  background: #fff;
+  /* The resting shape is each bar's --h; while playing, main.js sets live
+     heights and these transitions smooth them. */
+  transform: scaleY(var(--h, 0.5));
+  transition: transform 120ms linear, opacity 200ms ease;
 }
-.voice-wave span.is-played { background: #fff; }
-.chat-bubble--voice.is-playing .voice-wave span {
-  background: rgba(255, 255, 255, 0.9);
-  animation: voice-bar 720ms ease-in-out infinite alternate;
-  animation-duration: calc(560ms + var(--i) * 23ms);
-  animation-delay: calc(var(--i) * -97ms);
-}
-@keyframes voice-bar {
-  from { transform: scaleY(0.3); }
-  to { transform: scaleY(1.15); }
-}
+.chat-bubble--voice.is-playing .voice-wave span { transition-duration: 90ms, 200ms; }
+/* Once a memo has started, the part not yet played dims. */
+.voice-wave.has-progress span:not(.is-played) { opacity: 0.5; }
 .voice-time {
   flex: 0 0 auto;
-  min-width: 2.4em;
+  min-width: 2.3em;
   text-align: right;
   font-family: var(--body-font);
-  font-size: 0.72em;
+  font-size: 0.74em;
   font-variant-numeric: tabular-nums;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.72);
 }
-.voice-time:empty { display: none; }
+/* (".chat-bubble p" also styles paragraphs, so this needs the extra class to
+   keep its own margin and softer color.) */
+.chat-bubble .voice-caption {
+  margin: 0.6em 0 0;
+  font-family: var(--body-font);
+  font-size: 0.74em;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.52);
+}
 @media (prefers-reduced-motion: reduce) {
-  .chat-bubble--voice.is-playing .voice-wave span { animation: none; }
+  .voice-wave span { transition: none; }
   .voice-play { transition: none; }
+}
+
+/* ===== ABOUT: PHONE COMPOSITION =====
+   Title and subtitle on top, then a cluster of stickers (the ones on the left
+   on a big screen), then the Memoji with the messages tucked against its upper
+   right, then a second cluster (the ones on the right on a big screen). The
+   stickers overlap each other but never the Memoji, the messages or the text,
+   and stay inside the screen. Positions are set in main.js in units of the
+   screen width, so they scale with the phone. */
+@media (max-width: 768px) {
+  .about-hero .about-avatar-row {
+    display: block;
+    margin-top: 0.75rem;
+    padding-top: 46vw;    /* room for the upper sticker cluster */
+    padding-bottom: 44vw; /* room for the lower sticker cluster */
+  }
+  .about-hero .about-avatar-stage {
+    width: 74%;
+    max-width: none;
+    margin: 0 0 0 -12%;   /* the stage has transparent margins; let it tuck toward the edge */
+    transform: none;
+  }
+  .about-hero .about-avatar-gutter--left .about-gutter-stickers,
+  .about-hero .about-avatar-gutter--right .about-gutter-stickers { min-height: 0; }
+  .about-hero .about-hint {
+    position: absolute;
+    left: 52%;
+    top: 0;
+    width: 45vw;
+    max-width: none;
+    margin: 0;
+    transform: none;
+    aspect-ratio: auto;
+    --hint-w: 45vw;
+  }
+  .about-hero .about-chat { --chat-size: max(10px, 5.4cqw); }
+  .about-hero .about-sticker--uofm { --sticker-size: 25vw; }
+  .about-hero .about-sticker--duke { --sticker-size: 27vw; }
+  .about-hero .about-sticker--earth { --sticker-size: 24vw; }
+  .about-hero .about-sticker--film { --sticker-size: 27vw; }
+  .about-hero .about-sticker--pokemon { --sticker-size: 22vw; }
+  .about-hero .about-sticker--birthday { --sticker-size: 25vw; }
+  .about-hero .about-sticker--uofm-jade { --sticker-size: 26vw; }
 }
