@@ -2245,6 +2245,92 @@ var PERSONA_COPY = {
   }
 })();
 
+/*==================== SLIDING PILL MOTION (shared) ====================
+  Stretch-and-spring motion for a highlight pill moving between two
+  boxes: it first stretches across to cover both the old and the new box
+  (squashing slightly), then settles into the new one with a small spring
+  overshoot, ~400ms. Used by the section nav and by every pill tab bar
+  (.hbom-tabs__bar on HBOM/Wearby, .persona-tabs on the homepage). */
+(function () {
+  window.animatePill = function (indicator, from, to) {
+    if (!indicator || !indicator.animate || !from.width) return null;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return null;
+    var spanLeft = Math.min(from.left, to.left);
+    var spanRight = Math.max(from.left + from.width, to.left + to.width);
+    return indicator.animate([
+      { transform: 'translateX(' + from.left + 'px) scaleY(1)', width: from.width + 'px', easing: 'cubic-bezier(0.3, 0, 0.2, 1)' },
+      { transform: 'translateX(' + spanLeft + 'px) scaleY(0.92)', width: (spanRight - spanLeft) + 'px', offset: 0.34, easing: 'cubic-bezier(0.3, 1.12, 0.6, 1)' },
+      { transform: 'translateX(' + to.left + 'px) scaleY(1)', width: to.width + 'px' }
+    ], { duration: 400 });
+  };
+})();
+
+/*==================== PILL TAB BARS: SLIDING HIGHLIGHT ====================
+  Gives every pill tab bar one highlight that slides to the selected tab
+  instead of each tab switching its own background. It watches
+  aria-selected, so it works with the existing tab scripts untouched and
+  responds to clicks, arrow keys, and scripted changes alike. Without JS
+  (or the Web Animations API) the tabs keep their own selected styling. */
+(function () {
+  function init() {
+    Array.prototype.forEach.call(document.querySelectorAll('.hbom-tabs__bar, .persona-tabs'), function (bar) {
+      var tabs = Array.prototype.slice.call(bar.querySelectorAll('[role="tab"]'));
+      if (tabs.length < 2) return;
+
+      var indicator = document.createElement('span');
+      indicator.className = 'pill-indicator';
+      indicator.setAttribute('aria-hidden', 'true');
+      bar.insertBefore(indicator, bar.firstChild);
+      bar.classList.add('has-pill-indicator');
+
+      var targetLeft = null;
+      var targetWidth = null;
+      var slide = null;
+
+      function place(animate) {
+        var active = tabs.filter(function (tab) { return tab.getAttribute('aria-selected') === 'true'; })[0];
+        if (!active || !active.offsetWidth) return;
+        var left = active.offsetLeft;
+        var width = active.offsetWidth;
+        if (targetLeft !== null && Math.abs(left - targetLeft) < 0.5 && Math.abs(width - targetWidth) < 0.5) return;
+
+        var barRect = bar.getBoundingClientRect();
+        var box = indicator.getBoundingClientRect();
+        var from = { left: box.left - barRect.left + bar.scrollLeft - bar.clientLeft, width: box.width };
+        var hadTarget = targetLeft !== null;
+        targetLeft = left;
+        targetWidth = width;
+
+        if (slide) { slide.cancel(); slide = null; }
+        indicator.style.width = width + 'px';
+        indicator.style.transform = 'translateX(' + left + 'px)';
+        if (!animate || !hadTarget) return;
+
+        var run = window.animatePill(indicator, from, { left: left, width: width });
+        if (!run) return;
+        slide = run;
+        run.onfinish = function () { if (slide === run) slide = null; };
+      }
+
+      place(false);
+      var observer = new MutationObserver(function () { place(true); });
+      tabs.forEach(function (tab) { observer.observe(tab, { attributes: true, attributeFilter: ['aria-selected'] }); });
+      if ('ResizeObserver' in window) {
+        var resizeObserver = new ResizeObserver(function () { place(false); });
+        resizeObserver.observe(bar);
+        tabs.forEach(function (tab) { resizeObserver.observe(tab); });
+      }
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { place(false); });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
 /*==================== SECTION NAV: SCROLL-SPY ====================
   Reusable per-case section nav (see .section-nav-layout/.section-nav
   in styles.css). Scrolling and keyboard access are native (plain
@@ -2308,16 +2394,11 @@ var PERSONA_COPY = {
       indicator.style.width = width + 'px';
       indicator.style.transform = 'translateX(' + left + 'px)';
 
-      if (!animate || !settled || !hadTarget || reduceMotion || !indicator.animate || !fromWidth) return;
-      var spanLeft = Math.min(fromLeft, left);
-      var spanRight = Math.max(fromLeft + fromWidth, left + width);
-      slide = indicator.animate([
-        { transform: 'translateX(' + fromLeft + 'px) scaleY(1)', width: fromWidth + 'px', easing: 'cubic-bezier(0.3, 0, 0.2, 1)' },
-        { transform: 'translateX(' + spanLeft + 'px) scaleY(0.92)', width: (spanRight - spanLeft) + 'px', offset: 0.34, easing: 'cubic-bezier(0.3, 1.12, 0.6, 1)' },
-        { transform: 'translateX(' + left + 'px) scaleY(1)', width: width + 'px' }
-      ], { duration: 400 });
-      var thisSlide = slide;
-      slide.onfinish = function () { if (slide === thisSlide) slide = null; };
+      if (!animate || !settled || !hadTarget || !fromWidth) return;
+      var run = window.animatePill(indicator, { left: fromLeft, width: fromWidth }, { left: left, width: width });
+      if (!run) return;
+      slide = run;
+      run.onfinish = function () { if (slide === run) slide = null; };
     }
 
     function setActive(id) {
