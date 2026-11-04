@@ -2351,7 +2351,10 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   width: calc(89.795% + 2px);
   height: calc(95.587% + 2px);
   object-fit: cover;
-  border-radius: 0;
+  /* The video's square corners would poke past the phone's rounded outer
+     silhouette, so round them to the opening's corner radius (about 165px
+     of the 1178 x 2555 opening, fitted from the frame's alpha channel). */
+  border-radius: 14% / 6.46%;
   box-shadow: none;
 }
 
