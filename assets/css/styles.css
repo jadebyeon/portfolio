@@ -6966,14 +6966,13 @@ body.is-settled #heroCopy [data-copy-line] {
 
 /* ===== BEFORE/AFTER SLIDERS: visible divider =====
    The comparison screenshots are mostly white, so the draggable divider
-   (a plain white line) vanished against them. A dark hairline on both
-   sides plus a soft glow keeps it readable on light and dark images. */
+   (a plain white line) vanished against them. The line itself is now dark. */
 body.project-page .oct-before-after__line,
 body.project-page .hbom-before-after__line,
 body.project-page .mbti-before-after__line {
   width: 2px;
-  background: #fff;
-  box-shadow: 0 0 0 1px rgba(36, 35, 41, 0.35), 0 0 14px rgba(36, 35, 41, 0.28);
+  background: #242329;
+  box-shadow: none;
 }
 
 /* ===== PILL TAB BARS: SLIDING HIGHLIGHT =====
