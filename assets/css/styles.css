@@ -3569,7 +3569,7 @@ html {
 
 .nav-link__external {
   display: inline-block;
-  margin-inline-start: 0.08em;
+  margin-inline-start: 0.3rem;
   font-size: 0.78em;
   line-height: 1;
   transform: translateY(-0.16em);
@@ -6964,20 +6964,16 @@ body.is-settled #heroCopy [data-copy-line] {
   }
 }
 
-/* ===== BEFORE/AFTER SLIDERS: visible edge =====
-   The comparison screenshots are mostly white, so a hairline drawn above
-   the images (inset ring on an overlay, ignoring pointer events) marks
-   where each slider ends. */
-.oct-before-after::after,
-.hbom-before-after::after,
-.mbti-before-after::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  border-radius: inherit;
-  box-shadow: inset 0 0 0 1px rgba(36, 35, 41, 0.2);
-  pointer-events: none;
+/* ===== BEFORE/AFTER SLIDERS: visible divider =====
+   The comparison screenshots are mostly white, so the draggable divider
+   (a plain white line) vanished against them. A dark hairline on both
+   sides plus a soft glow keeps it readable on light and dark images. */
+body.project-page .oct-before-after__line,
+body.project-page .hbom-before-after__line,
+body.project-page .mbti-before-after__line {
+  width: 2px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(36, 35, 41, 0.35), 0 0 14px rgba(36, 35, 41, 0.28);
 }
 
 /* ===== PILL TAB BARS: SLIDING HIGHLIGHT =====
@@ -7003,3 +6999,9 @@ body.is-settled #heroCopy [data-copy-line] {
   transition: color 140ms ease;
 }
 .has-pill-indicator > [role="tab"][aria-selected="true"] { background: transparent; }
+
+/* Project pages keep the header minimal: just the logo and name, plus the
+   section navigation pill. The Work / About / Resume menu (and its phone
+   toggle) are for the homepage and About page. */
+body.project-page .site-menu,
+body.project-page .site-menu-toggle { display: none !important; }
