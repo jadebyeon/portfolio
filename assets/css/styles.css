@@ -1239,11 +1239,13 @@ img { max-width: 100%; height: auto; }
      screenshot remains visible along the bottom edge. */
   height: calc(87.5% + 2px);
   display: block;
-  object-fit: cover;
-  /* The screen opening is 1.55:1 and the homepage still is 1.76:1, so
-     about 12% of its width is cropped. 48.5% splits that so the logo and
-     the right-hand nav stay inside the visible area. */
-  object-position: 48.5% 0;
+  /* The screen opening is 1.55:1 and the homepage still is 1.76:1. Fit the
+     whole width so nothing at the sides is cut or hidden by the bezel, top-
+     aligned like a browser window; the leftover strip at the bottom is
+     filled white to match the page. */
+  object-fit: contain;
+  object-position: 50% 0;
+  background: #fff;
 }
 
 /* Wearby's hero is the walkthrough recording inside iPhone16_frame.png,
