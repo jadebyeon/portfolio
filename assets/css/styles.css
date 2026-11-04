@@ -7033,3 +7033,24 @@ body.project-page .mbti-before-after__line {
    toggle) are for the homepage and About page. */
 body.project-page .site-menu,
 body.project-page .site-menu-toggle { display: none !important; }
+
+/* Project pages: no solid header block or edge line. The logo and section
+   navigation float over the page, and whatever scrolls up behind them is
+   softly blurred (the blur layer fades out toward its bottom edge, so it
+   never reads as a bar). */
+body.project-page .header {
+  background: transparent;
+  box-shadow: none;
+}
+body.project-page .header::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 -1.5rem 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(251, 251, 254, 0.5), rgba(251, 251, 254, 0));
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 50%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 50%, transparent 100%);
+}
