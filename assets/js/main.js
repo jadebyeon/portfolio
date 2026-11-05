@@ -278,27 +278,33 @@
         return ('0' + Math.floor(seconds / 60)).slice(-2) + ':' + ('0' + (seconds % 60)).slice(-2);
       };
 
-      /* Waveform motion */
+      /* Waveform motion: like a live voice meter. Each new bar is its own
+         jagged reading (mostly low, often mid, now and then a tall spike,
+         with short silences) and the row slides left, so the shape is spiky
+         rather than a smooth curve. */
       var levels = rest.slice();
       var raf = null;
       var lastPush = 0;
-      var clock = 0;
       var pauseUntil = 0;
-      var smoothed = 0.4;
+      var last = 0.4;
       function nextLevel(now) {
-        // Speech-like envelope: two swells at different rates (syllables and
-        // phrases), an occasional short pause, and random detail on top.
-        var t = now / 1000;
-        var swell = 0.5 + 0.5 * Math.sin(t * 7.3) * (0.6 + 0.4 * Math.sin(t * 1.9 + 1));
-        if (now > pauseUntil && Math.random() < 0.025) pauseUntil = now + 220 + Math.random() * 380;
-        var talking = now > pauseUntil ? 1 : 0.14;
-        var target = (0.18 + 0.82 * swell * (0.45 + 0.55 * Math.random())) * talking;
-        smoothed = smoothed * 0.35 + target * 0.65;
-        return Math.max(0.16, Math.min(1, smoothed));
+        if (now > pauseUntil && Math.random() < 0.03) pauseUntil = now + 200 + Math.random() * 320;
+        var level;
+        if (now < pauseUntil) {
+          level = 0.12 + Math.random() * 0.1;
+        } else {
+          var r = Math.random();
+          if (r < 0.2) level = 0.82 + Math.random() * 0.18;       // tall spike
+          else if (r < 0.55) level = 0.42 + Math.random() * 0.34;  // mid
+          else level = 0.16 + Math.random() * 0.24;                // low
+        }
+        // A touch of memory so it isn't pure static, but far less than before.
+        last = last * 0.12 + level * 0.88;
+        return Math.max(0.12, Math.min(1, last));
       }
       function frame(now) {
         raf = window.requestAnimationFrame(frame);
-        if (now - lastPush < 62) return;
+        if (now - lastPush < 58) return;
         lastPush = now;
         levels.shift();
         levels.push(nextLevel(now));
@@ -674,10 +680,10 @@
     // stickers and the messages all scale with the viewport width, so the same
     // numbers give the same composition on every screen from tablet up.
     var desktopInitialPositions = {
-      birthday: { dx: -0.658, dy: -0.135 },
+      birthday: { dx: -0.65, dy: -0.2207 },
       uofm: { dx: -0.7505, dy: 0.2501 },
       duke: { dx: -0.589, dy: 0.3475 },
-      earth: { dx: 0.9799, dy: 0.0899 },
+      earth: { dx: 0.9128, dy: -0.0822 },
       film: { dx: 0.7055, dy: 0.3235 },
       pokemon: { dx: 0.9752, dy: 0.5503 },
       child: { dx: 0.5439, dy: 0.4785 }
@@ -728,6 +734,16 @@
       return stageEl.getBoundingClientRect().left - surface.getBoundingClientRect().left + 0.069 * phoneUnit();
     }
 
+    // The Memoji stage as laid out (before the big-screen scale-down), as a
+    // rect-like box: a stage is 4:3, so its center sits 0.375 widths below its top.
+    function stageGeometry() {
+      var r = stageEl.getBoundingClientRect();
+      var u = stageEl.offsetWidth;
+      var cx = r.left + r.width / 2;
+      var cy = r.top + r.height / 2;
+      return { left: cx - u / 2, width: u, top: cy - 0.375 * u, bottom: cy + 0.375 * u };
+    }
+
     function presetXY(name, button, surfaceRect) {
       if (!stageEl) return null;
       if (!window.matchMedia('(min-width: 769px)').matches) {
@@ -743,11 +759,17 @@
       }
       var preset = desktopInitialPositions[name];
       if (!preset) return null;
-      var stage = stageEl.getBoundingClientRect();
+      var stage = stageGeometry();
       var h = button.offsetHeight;
       var rel = preset.dy + h / (2 * stage.width);
+      // The presets were laid out with the Memoji shifted left by 0.221 of its
+      // width; if the shift differs (big screens), compensate so the stickers
+      // keep their places on the page.
+      var heroCenter = surfaceRect.left + surfaceRect.width / 2;
+      var shift = (heroCenter - (stage.left + stage.width / 2)) / stage.width;
+      var dx = preset.dx + (shift - 0.221);
       return {
-        x: stage.left + stage.width / 2 - surfaceRect.left + preset.dx * stage.width,
+        x: stage.left + stage.width / 2 - surfaceRect.left + dx * stage.width,
         y: stretchedTop(stage, surfaceRect, rel, h, verticalStretch(surfaceRect, stage))
       };
     }
@@ -762,10 +784,11 @@
         hintEl.style.top = (stage.top - surfaceRect.top + phoneUnit() * 0.01) + 'px';
         return;
       }
+      var box = stageGeometry();
       var h = hintEl.offsetHeight;
-      var rel = hintPosition.dy + h / (2 * stage.width);
-      hintEl.style.left = (stage.left + stage.width / 2 - surfaceRect.left + hintPosition.dx * stage.width) + 'px';
-      hintEl.style.top = stretchedTop(stage, surfaceRect, rel, h, verticalStretch(surfaceRect, stage)) + 'px';
+      var rel = hintPosition.dy + h / (2 * box.width);
+      hintEl.style.left = (box.left + box.width / 2 - surfaceRect.left + hintPosition.dx * box.width) + 'px';
+      hintEl.style.top = stretchedTop(box, surfaceRect, rel, h, verticalStretch(surfaceRect, box)) + 'px';
     }
     var mobileStickerOffsetY = {
       earth: -16,
@@ -3116,6 +3139,59 @@ var PERSONA_COPY = {
         });
       });
     });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+/*==================== FOOTER: NEW-TAB HINTS ====================
+  Same gray message bubble as the Email hint, for the two footer links that
+  open a new tab. LinkedIn and Resume share one bubble position above the
+  link row, centered between the two buttons; only the tail changes sides
+  (lower left for LinkedIn, lower right for Resume). Shown on hover or
+  keyboard focus (CSS). main.js only measures how far each button sits from
+  that shared center. */
+(function () {
+  function init() {
+    var jobs = [
+      { match: /linkedin\.com/i, id: 'footerLinkedinTip', tail: 'left' },
+      { match: /\.pdf(\?|$)/i, id: 'footerResumeTip', tail: 'right' }
+    ];
+    var entries = [];
+    Array.prototype.forEach.call(document.querySelectorAll('.footer__btn[target="_blank"]'), function (link) {
+      var href = link.getAttribute('href') || '';
+      var job = jobs.filter(function (candidate) { return candidate.match.test(href); })[0];
+      if (!job || link.querySelector('.footer__tip')) return;
+      var tip = document.createElement('span');
+      tip.className = 'footer__tip footer__tip--shared footer__tip--tail-' + job.tail;
+      tip.id = job.id;
+      tip.setAttribute('role', 'tooltip');
+      tip.textContent = 'Yes, this will open a new tab';
+      link.appendChild(tip);
+      link.setAttribute('aria-describedby', job.id);
+      entries.push({ link: link, tip: tip, tail: job.tail });
+    });
+    if (entries.length < 2) return;
+
+    // Each button's distance from the midpoint between the two buttons.
+    function measure() {
+      var left = entries.filter(function (e) { return e.tail === 'left'; })[0];
+      var right = entries.filter(function (e) { return e.tail === 'right'; })[0];
+      if (!left || !right) return;
+      var a = left.link.getBoundingClientRect();
+      var b = right.link.getBoundingClientRect();
+      var half = ((b.left + b.width / 2) - (a.left + a.width / 2)) / 2;
+      left.tip.style.setProperty('--tip-dx', half + 'px');
+      right.tip.style.setProperty('--tip-dx', (-half) + 'px');
+    }
+    measure();
+    window.addEventListener('resize', measure);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+    entries.forEach(function (e) { e.link.addEventListener('pointerenter', measure); });
   }
 
   if (document.readyState === 'loading') {

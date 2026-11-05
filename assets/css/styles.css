@@ -2710,7 +2710,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   .about-avatar-row { grid-template-columns: minmax(0, 1fr) var(--about-u) minmax(0, 1fr); }
   /* The Memoji and the messages beside it read as one group; shift the Memoji
      left so the group (its left edge to the messages' right edge) is centered. */
-  .about-hero .about-avatar-stage { max-width: none; left: calc(var(--about-u) * -0.221); }
+  .about-hero .about-avatar-stage { max-width: none; left: calc(var(--about-u) * -0.221); transform: scale(1); }
   .about-hero .about-sticker--uofm { --sticker-size: calc(var(--about-u) * 0.3068); }
   .about-hero .about-sticker--duke { --sticker-size: calc(var(--about-u) * 0.3409); }
   .about-hero .about-sticker--earth { --sticker-size: calc(var(--about-u) * 0.2511); }
@@ -7455,9 +7455,9 @@ html:not(.chat-js) .about-chat [data-chat-typing] { display: none; }
   /* The resting shape is each bar's --h; while playing, main.js sets live
      heights and these transitions smooth them. */
   transform: scaleY(var(--h, 0.5));
-  transition: transform 120ms linear, opacity 200ms ease;
+  transition: transform 70ms linear, opacity 200ms ease;
 }
-.chat-bubble--voice.is-playing .voice-wave span { transition-duration: 90ms, 200ms; }
+.chat-bubble--voice.is-playing .voice-wave span { transition-duration: 55ms, 200ms; }
 /* Once a memo has started, the part not yet played dims. */
 .voice-wave.has-progress span:not(.is-played) { opacity: 0.5; }
 .voice-time {
@@ -7538,7 +7538,8 @@ html:not(.chat-js) .about-chat [data-chat-typing] { display: none; }
 /* Footer Email: a hint to the left of the button on hover or focus, drawn as a
    gray iMessage bubble on two lines with its tail at the lower right, pointing
    at the button (clicking copies the address instead of opening a mail app). */
-.footer__btn--copy { position: relative; }
+.footer__btn--copy,
+.footer__btn[target="_blank"] { position: relative; }
 .footer__tip {
   --tip: #e9e9eb;
   position: absolute;
@@ -7577,12 +7578,41 @@ html:not(.chat-js) .about-chat [data-chat-typing] { display: none; }
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='3 84 25 25'%3E%3Cpath d='M10.5758 99.4412C9.81601 103.866 5.52525 108.02 3 109C12.697 109 18.9091 105.814 20.4242 103.853L28 106.059L27.2424 84H11.3333V86.9412V89.8824V90.6176C11.3333 92.0882 11.3333 95.0294 10.5758 99.4412Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='3 84 25 25'%3E%3Cpath d='M10.5758 99.4412C9.81601 103.866 5.52525 108.02 3 109C12.697 109 18.9091 105.814 20.4242 103.853L28 106.059L27.2424 84H11.3333V86.9412V89.8824V90.6176C11.3333 92.0882 11.3333 95.0294 10.5758 99.4412Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
 }
-.footer__btn--copy:hover .footer__tip,
-.footer__btn--copy:focus-visible .footer__tip {
+.footer__btn:hover > .footer__tip,
+.footer__btn:focus-visible > .footer__tip {
   opacity: 1;
   transform: translateX(0) scale(1);
 }
 .footer__btn--copy.is-copied .footer__tip { opacity: 0; }
+
+/* LinkedIn and Resume: one shared bubble position above the link row, centered
+   between the two buttons (main.js sets --tip-dx, each button's distance from
+   that center). Only the tail differs: it points down at whichever of the two
+   buttons is hovered. */
+.footer__tip.footer__tip--shared {
+  right: auto;
+  left: 50%;
+  bottom: calc(100% + 0.75rem);
+  transform: translate(calc(-50% + var(--tip-dx, 0px)), 4px) scale(0.96);
+  transform-origin: 50% 100%;
+}
+.footer__btn:hover > .footer__tip.footer__tip--shared,
+.footer__btn:focus-visible > .footer__tip.footer__tip--shared {
+  transform: translate(calc(-50% + var(--tip-dx, 0px)), 0) scale(1);
+}
+/* The tail is a small downward pointer, set under the bubble right above the
+   button it belongs to (--tip-dx is how far that button is from the bubble's
+   center), rather than at a corner. */
+.footer__tip.footer__tip--shared::after {
+  right: auto;
+  left: calc(50% - var(--tip-dx, 0px));
+  bottom: -0.72em;
+  width: 1.3em;
+  height: 0.8em;
+  transform: translateX(-50%);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 12' preserveAspectRatio='none'%3E%3Cpath d='M0 0C6 0 9 3 10 12C11 3 14 0 20 0Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 12' preserveAspectRatio='none'%3E%3Cpath d='M0 0C6 0 9 3 10 12C11 3 14 0 20 0Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
 @media (max-width: 768px) {
   /* The Email button sits at the left edge on phones, so there is no room to
      its left: put the hint above it with the tail at the lower left. */
@@ -7599,4 +7629,14 @@ html:not(.chat-js) .about-chat [data-chat-typing] { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .footer__tip { transition: none; }
+}
+
+/* On big screens the Memoji is a touch smaller than the composition's unit
+   (the stickers and messages keep their size). Its shift is recomputed so the
+   Memoji-and-messages group stays centered. */
+@media (min-width: 1280px) {
+  .about-hero .about-avatar-stage {
+    left: calc(var(--about-u) * -0.2315);
+    transform: scale(0.92);
+  }
 }
