@@ -2869,6 +2869,128 @@ var PERSONA_COPY = {
   }
 })();
 
+/*==================== HOMEPAGE HERO: MESSAGES CLOSER TO THE MEMOJI ====================
+  The Memoji sits centered over the left tile and the messages start at the
+  right tile's edge, which left a wide gap between them. This halves the gap
+  by moving the Memoji right and the messages left by a quarter of it each,
+  so the pair stays where it was. The gap is measured from the Memoji's
+  visible right edge (0.9604 of its image width). Desktop layout only. */
+(function () {
+  function init() {
+    var inner = document.querySelector('.hero-chat__inner');
+    var img = inner && inner.querySelector('.hero-chat__memoji img');
+    var stage = inner && inner.querySelector('.hero-chat__stage');
+    if (!img || !stage) return;
+    var compact = window.matchMedia ? window.matchMedia('(max-width: 900px)') : null;
+
+    function update() {
+      inner.style.setProperty('--hero-pull', '0px');
+      if (compact && compact.matches) return;
+      var a = img.getBoundingClientRect();
+      var b = stage.getBoundingClientRect();
+      var gap = b.left - (a.left + a.width * 0.9604);
+      if (gap > 0) inner.style.setProperty('--hero-pull', (gap / 4).toFixed(1) + 'px');
+    }
+
+    update();
+    img.addEventListener('load', update);
+    window.addEventListener('resize', update);
+    window.addEventListener('load', update);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(update);
+    if (window.ResizeObserver) new ResizeObserver(update).observe(img);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+/*==================== FOOTER LINKS: GLIDING PILL ====================
+  Email / LinkedIn / Resume share one highlight pill, like the header menu:
+  it fades in on the first link you hover or focus, glides (stretch and
+  spring, via animatePill) to the next one, and fades out when you leave.
+  Hover devices only; without JS each link keeps its own hover background. */
+(function () {
+  function init() {
+    Array.prototype.forEach.call(document.querySelectorAll('.footer__links'), function (row) {
+      var links = Array.prototype.slice.call(row.querySelectorAll('.footer__btn'));
+      if (links.length < 2) return;
+
+      var indicator = document.createElement('span');
+      indicator.className = 'footer__indicator';
+      indicator.setAttribute('aria-hidden', 'true');
+      row.insertBefore(indicator, row.firstChild);
+      row.classList.add('has-indicator');
+
+      var current = null;
+      var slide = null;
+      var shown = false;
+      var hideTimer = null;
+
+      function place(link, animate) {
+        if (!link || !link.offsetWidth) return;
+        var rect = indicator.getBoundingClientRect();
+        var rowRect = row.getBoundingClientRect();
+        var from = { left: rect.left - rowRect.left, width: rect.width };
+        var to = { left: link.offsetLeft, width: link.offsetWidth };
+        if (slide) { slide.cancel(); slide = null; }
+        indicator.style.top = link.offsetTop + 'px';
+        indicator.style.height = link.offsetHeight + 'px';
+        indicator.style.width = to.width + 'px';
+        indicator.style.transform = 'translateX(' + to.left + 'px)';
+        var moved = current && current !== link;
+        current = link;
+        if (!animate || !shown || !moved || !from.width) return;
+        var run = window.animatePill(indicator, from, to);
+        if (!run) return;
+        slide = run;
+        run.onfinish = function () { if (slide === run) slide = null; };
+      }
+
+      function show(link) {
+        window.clearTimeout(hideTimer);
+        place(link, true);
+        shown = true;
+        row.classList.add('is-active');
+      }
+
+      function hide() {
+        row.classList.remove('is-active');
+        window.clearTimeout(hideTimer);
+        // Once it has faded out, the next entry places it without a glide.
+        hideTimer = window.setTimeout(function () { shown = false; }, 220);
+      }
+
+      links.forEach(function (link) {
+        link.addEventListener('pointerenter', function (event) {
+          if (event.pointerType === 'touch') return;
+          show(link);
+        });
+        link.addEventListener('focus', function () {
+          if (link.matches(':focus-visible')) show(link);
+        });
+        if (window.ResizeObserver) {
+          // The Email label swaps to "Copied!", so keep the pill snug to it.
+          new ResizeObserver(function () { if (shown && current === link) place(link, false); }).observe(link);
+        }
+      });
+      row.addEventListener('pointerleave', hide);
+      row.addEventListener('focusout', function () {
+        window.setTimeout(function () { if (!row.contains(document.activeElement)) hide(); }, 0);
+      });
+      window.addEventListener('resize', function () { if (shown && current) place(current, false); });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
 /*==================== SECTION NAV: SCROLL-SPY ====================
   Reusable per-case section nav (see .section-nav-layout/.section-nav
   in styles.css). Scrolling and keyboard access are native (plain

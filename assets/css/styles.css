@@ -159,7 +159,7 @@ h1, h2, h3, h4, h5,
 
 /* pill-style tag (no hover effect) */
 .portfolio__tags .tag{
-  --mint-color: #1a7a5e;  /* mint outline color */
+  --mint-color: #2457c5;  /* mint outline color */
 
   font-family: var(--body-font);
   display: inline-flex;
@@ -428,7 +428,7 @@ img { max-width: 100%; height: auto; }
 
 /* Mint/turquoise accent for title hover */
 :root{
-  --mint-color: #1a7a5e;  /* tweak if you want it lighter/darker */
+  --mint-color: #2457c5;  /* tweak if you want it lighter/darker */
 }
 
 .text-mint{
@@ -488,7 +488,7 @@ img { max-width: 100%; height: auto; }
 }
 
 .portfolio__tags .tag{
-  --mint-outline: #1a7a5e;
+  --mint-outline: #2457c5;
 
   display: inline-flex;
   align-items: center;
@@ -594,7 +594,7 @@ img { max-width: 100%; height: auto; }
 
 /* hover state – mint */
 .footer__back:hover {
-  color: #064e3b;                     /* dark mint text */
+  color: #1e3a8a;                     /* dark mint text */
 }
 
 .footer__back:hover .footer__back-circle {
@@ -2003,7 +2003,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 
 .project-section .prose ul li a.nav-link:hover{
-  color: #13c4a3;             /* mint hover */
+  color: #2f66d6;             /* mint hover */
 }
 
 /* Project deliverable links: normal text color, mint on hover */
@@ -2020,7 +2020,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 /* Hover state: mint */
 .project-section .prose ul li a.nav-link:hover,
 .project-section .prose ul li a.ext-link-mint:hover {
-  color: #13c4a3;            /* mint */
+  color: #2f66d6;            /* mint */
 }
 
 /* ==================== Project: UU Arts ==================== */
@@ -2627,7 +2627,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
 }
 
 .about-hero {
-  --mint-color: #1a7a5e;
+  --mint-color: #2457c5;
   position: relative;
 }
 
@@ -2710,7 +2710,7 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   .about-avatar-row { grid-template-columns: minmax(0, 1fr) var(--about-u) minmax(0, 1fr); }
   /* The Memoji and the messages beside it read as one group; shift the Memoji
      left so the group (its left edge to the messages' right edge) is centered. */
-  .about-hero .about-avatar-stage { max-width: none; left: calc(var(--about-u) * -0.221); transform: scale(1); }
+  .about-hero .about-avatar-stage { max-width: none; left: calc(var(--about-u) * -0.191); transform: scale(1); }
   .about-hero .about-sticker--uofm { --sticker-size: calc(var(--about-u) * 0.3068); }
   .about-hero .about-sticker--duke { --sticker-size: calc(var(--about-u) * 0.3409); }
   .about-hero .about-sticker--earth { --sticker-size: calc(var(--about-u) * 0.2511); }
@@ -4684,13 +4684,13 @@ body.is-settled #heroCopy [data-copy-line] {
 }
 /* Success variant: same shape, green (what worked, not what's wrong) */
 .alert-statement--success {
-  background: color-mix(in oklab, #16a34a 7%, transparent);
+  background: color-mix(in oklab, #2457c5 7%, transparent);
 }
 .alert-statement--success .alert-statement__icon {
-  background: color-mix(in oklab, #16a34a 15%, transparent);
+  background: color-mix(in oklab, #2457c5 15%, transparent);
 }
 .alert-statement--success .alert-statement__icon i {
-  color: #16a34a;
+  color: #2457c5;
 }
 /* Bulleted-list body, for when an alert-statement holds findings
    instead of a single headline + support line. */
@@ -5014,7 +5014,7 @@ body.is-settled #heroCopy [data-copy-line] {
   border-radius: 10px;
 }
 .swimlane-row--sam {
-  background: rgba(26, 122, 94, 0.08);
+  background: rgba(36, 87, 197, 0.08);
 }
 .swimlane-row-label {
   font-size: 10px;
@@ -5904,7 +5904,7 @@ body.is-settled #heroCopy [data-copy-line] {
 }
 .iteration-solution {
   background: #f0fdf4;
-  border: 1px solid #bbf7d0;
+  border: 1px solid #c7d6f5;
   border-radius: 14px;
   padding: 1.25rem;
   display: flex;
@@ -5921,7 +5921,7 @@ body.is-settled #heroCopy [data-copy-line] {
   text-transform: uppercase;
 }
 .iteration-label--problem { color: #dc2626; }
-.iteration-label--solution { color: #16a34a; }
+.iteration-label--solution { color: #2457c5; }
 .iteration-problem p,
 .iteration-solution p {
   font-size: 0.875rem;
@@ -5969,7 +5969,7 @@ body.is-settled #heroCopy [data-copy-line] {
   background-image: repeating-linear-gradient(to right, var(--text-color-light) 0 4px, transparent 4px 7px);
 }
 .arc-legend-swatch--sam {
-  background: #1a7a5e;
+  background: #2457c5;
 }
 
 /* ===== JOURNEY CHART (static, see the "Journey We Set Out to Change"
@@ -5994,7 +5994,7 @@ body.is-settled #heroCopy [data-copy-line] {
   stroke-dasharray: 6 5;
 }
 .scrubber-line--with {
-  stroke: #1a7a5e;
+  stroke: #2457c5;
 }
 .arc-points circle {
   stroke: #fff;
@@ -6004,17 +6004,17 @@ body.is-settled #heroCopy [data-copy-line] {
   fill: var(--text-color-light);
 }
 .arc-points--with circle {
-  fill: #1a7a5e;
+  fill: #2457c5;
 }
 /* Widest-gap annotation: First contact -> During exam */
 .arc-zone-band {
-  fill: rgba(26, 122, 94, 0.07);
+  fill: rgba(36, 87, 197, 0.07);
 }
 .arc-zone-label {
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.02em;
-  fill: #1a7a5e;
+  fill: #2457c5;
 }
 .journey-chart-takeaway {
   margin: 1.25rem 0 0;
@@ -6511,13 +6511,13 @@ body.is-settled #heroCopy [data-copy-line] {
    Scoped to HBOM so the shared case-study rail, metadata, and problem /
    solution patterns retain their existing appearance elsewhere. The color
    choices are measured against --body-color (#FBFBFE): body text #6A6874
-   is 5.29:1, active/focus forest #064E3B is 9.41:1, and grouping rules
+   is 5.29:1, active/focus forest #1e3a8a is 9.41:1, and grouping rules
    #909099 are 3.06:1. */
 .project-page--hbom {
   --hbom-ink: #242329;
   --hbom-secondary: #5b5966;
   --hbom-body: #6a6874;
-  --hbom-accent: #064e3b;
+  --hbom-accent: #1e3a8a;
   --hbom-rule: #909099;
   --hbom-divider-space: clamp(1rem, 1.25vw, 1rem);
   --hbom-problem-divider-space: calc(var(--hbom-divider-space) + 1rem);
@@ -6651,9 +6651,9 @@ body.is-settled #heroCopy [data-copy-line] {
   pointer-events: none;
 }
 .verdict-badge--priority {
-  background: rgba(26, 122, 94, 0.12);
-  border-color: #1a7a5e;
-  color: #1a7a5e;
+  background: rgba(36, 87, 197, 0.12);
+  border-color: #2457c5;
+  color: #2457c5;
 }
 
 .character-overlay {
@@ -6673,7 +6673,7 @@ body.is-settled #heroCopy [data-copy-line] {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 .character-overlay--sam {
-  background: rgba(26, 122, 94, 0.88); /* mint tint, Sam only */
+  background: rgba(36, 87, 197, 0.88); /* mint tint, Sam only */
 }
 .character-tile.is-open .character-overlay {
   opacity: 1;
@@ -7249,13 +7249,18 @@ body.about-page .header::before {
   height: 0.42em;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.85);
-  animation: chat-typing 1.1s ease-in-out infinite;
+  animation: chat-typing 1.2s ease-in-out infinite both;
 }
-.chat-dot:nth-of-type(2) { animation-delay: 0.15s; }
-.chat-dot:nth-of-type(3) { animation-delay: 0.3s; }
+/* Left to right, each dot a fifth of a cycle behind the one before. The delays
+   are negative so the wave is already running when the bubble pops in (no
+   dead start), and they count the highlight span that comes first in the
+   bubble, so the dots are children 2, 3 and 4. */
+.chat-bubble--typing > .chat-dot:nth-child(2) { animation-delay: -0.36s; }
+.chat-bubble--typing > .chat-dot:nth-child(3) { animation-delay: -0.18s; }
+.chat-bubble--typing > .chat-dot:nth-child(4) { animation-delay: 0s; }
 @keyframes chat-typing {
-  0%, 66%, 100% { transform: translateY(0); opacity: 0.45; }
-  33% { transform: translateY(-0.32em); opacity: 1; }
+  0%, 70%, 100% { transform: translateY(0) scale(0.82); opacity: 0.45; }
+  30% { transform: translateY(-0.26em) scale(1); opacity: 1; }
 }
 
 /* JS is on: bubbles start hidden and main.js shows them in order. */
@@ -7636,7 +7641,39 @@ html:not(.chat-js) .about-chat [data-chat-typing] { display: none; }
    Memoji-and-messages group stays centered. */
 @media (min-width: 1280px) {
   .about-hero .about-avatar-stage {
-    left: calc(var(--about-u) * -0.2315);
+    left: calc(var(--about-u) * -0.2015);
     transform: scale(0.92);
   }
+}
+
+/* Footer links (Email / LinkedIn / Resume): one highlight pill fades in on
+   the hovered or focused link and glides between them, like the header menu. */
+.footer__indicator { display: none; }
+.footer__links.has-indicator { position: relative; }
+.footer__links.has-indicator .footer__indicator {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  border-radius: 999px;
+  background: rgba(36, 35, 41, 0.05);
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: 0 50%;
+  will-change: transform, width;
+  transition: opacity 200ms ease;
+}
+.footer__links.has-indicator.is-active .footer__indicator { opacity: 1; }
+.footer__links.has-indicator .footer__btn { z-index: 1; }
+.footer__links.has-indicator .footer__btn:hover,
+.footer__links.has-indicator .footer__btn:focus-visible { z-index: 2; background: transparent; }
+
+/* Homepage hero: halve the gap between the Memoji and the messages (main.js
+   sets --hero-pull to a quarter of it). Uses `translate` so the bubbles' own
+   pop and slide animations are untouched. */
+@media (min-width: 901px) {
+  .hero-chat__memoji { translate: var(--hero-pull, 0px) 0; }
+  .hero-chat__stage { translate: calc(-1 * var(--hero-pull, 0px)) 0; }
 }
