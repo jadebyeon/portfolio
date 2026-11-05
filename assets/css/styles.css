@@ -2708,7 +2708,9 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
   }
   .about-hero.section { align-items: center; }
   .about-avatar-row { grid-template-columns: minmax(0, 1fr) var(--about-u) minmax(0, 1fr); }
-  .about-hero .about-avatar-stage { max-width: none; }
+  /* The Memoji and the messages beside it read as one group; shift the Memoji
+     left so the group (its left edge to the messages' right edge) is centered. */
+  .about-hero .about-avatar-stage { max-width: none; left: calc(var(--about-u) * -0.221); }
   .about-hero .about-sticker--uofm { --sticker-size: calc(var(--about-u) * 0.3068); }
   .about-hero .about-sticker--duke { --sticker-size: calc(var(--about-u) * 0.3409); }
   .about-hero .about-sticker--earth { --sticker-size: calc(var(--about-u) * 0.2511); }
@@ -2734,7 +2736,6 @@ main.project{ padding-bottom: clamp(80px, 10vh, 160px); }
     position: absolute;
     left: 62.5%;
     top: 24%;
-    --hint-w: clamp(14rem, 19vw, 19rem);
     aspect-ratio: auto;
   }
   .about-avatar-gutter--left {
@@ -7067,12 +7068,14 @@ body.project-page .site-menu-toggle { display: none !important; }
    softly blurred (the blur layer fades out toward its bottom edge, so it
    never reads as a bar). */
 body.project-page .header,
-body.home-page .header {
+body.home-page .header,
+body.about-page .header {
   background: transparent;
   box-shadow: none;
 }
 body.project-page .header::before,
-body.home-page .header::before {
+body.home-page .header::before,
+body.about-page .header::before {
   content: "";
   position: absolute;
   inset: 0 0 -1.5rem 0;
@@ -7344,9 +7347,10 @@ html:not(.chat-js) .hero-chat [data-chat-typing] { display: none; }
   }
 }
 
-/* Homepage only: a lighter blur and a stronger tint, so Work / About /
-   Resume stay readable over the tiles scrolling underneath. */
-body.home-page .header::before {
+/* Homepage and About page: a lighter blur and a stronger tint, so Work /
+   About / Resume stay readable over whatever scrolls underneath. */
+body.home-page .header::before,
+body.about-page .header::before {
   background: linear-gradient(to bottom, rgba(251, 251, 254, 0.92) 0%, rgba(251, 251, 254, 0.78) 55%, rgba(251, 251, 254, 0));
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
@@ -7484,19 +7488,28 @@ html:not(.chat-js) .about-chat [data-chat-typing] { display: none; }
    on a big screen), then the Memoji with the messages tucked against its upper
    right, then a second cluster (the ones on the right on a big screen). The
    stickers overlap each other but never the Memoji, the messages or the text,
-   and stay inside the screen. Positions are set in main.js in units of the
-   screen width, so they scale with the phone. */
+   and stay inside the screen. Everything is sized from one length, --about-m
+   (the composition's width): the screen width, but never so large that the
+   whole composition would not fit between the header and the bottom of the
+   screen, so there is nothing to scroll except the footer. Positions are set
+   in main.js in units of --about-m. */
 @media (max-width: 768px) {
+  .about-hero {
+    --about-m: max(300px, min(100vw, calc((100vh - var(--header-height) - 24px) / 1.7)));
+    --about-m: max(300px, min(100vw, calc((100svh - var(--header-height) - 24px) / 1.7)));
+  }
   .about-hero .about-avatar-row {
     display: block;
     margin-top: 0.75rem;
-    padding-top: 46vw;    /* room for the upper sticker cluster */
-    padding-bottom: 44vw; /* room for the lower sticker cluster */
+    padding-top: calc(var(--about-m) * 0.46);    /* room for the upper sticker cluster */
+    padding-bottom: calc(var(--about-m) * 0.44); /* room for the lower sticker cluster */
   }
   .about-hero .about-avatar-stage {
-    width: 74%;
+    width: calc(var(--about-m) * 0.68);
     max-width: none;
-    margin: 0 0 0 -12%;   /* the stage has transparent margins; let it tuck toward the edge */
+    /* centered with the rest of the composition; the stage has transparent
+       margins, so it may tuck a little past the edge */
+    margin: 0 0 0 calc((100vw - var(--about-m)) / 2 - var(--about-m) * 0.069 - var(--page-gutter));
     transform: none;
   }
   .about-hero .about-avatar-gutter--left .about-gutter-stickers,
@@ -7505,19 +7518,85 @@ html:not(.chat-js) .about-chat [data-chat-typing] { display: none; }
     position: absolute;
     left: 52%;
     top: 0;
-    width: 45vw;
+    width: calc(var(--about-m) * 0.45);
     max-width: none;
     margin: 0;
     transform: none;
     aspect-ratio: auto;
-    --hint-w: 45vw;
+    --hint-w: calc(var(--about-m) * 0.45);
   }
   .about-hero .about-chat { --chat-size: max(10px, 5.4cqw); }
-  .about-hero .about-sticker--uofm { --sticker-size: 25vw; }
-  .about-hero .about-sticker--duke { --sticker-size: 27vw; }
-  .about-hero .about-sticker--earth { --sticker-size: 24vw; }
-  .about-hero .about-sticker--film { --sticker-size: 27vw; }
-  .about-hero .about-sticker--pokemon { --sticker-size: 22vw; }
-  .about-hero .about-sticker--birthday { --sticker-size: 25vw; }
-  .about-hero .about-sticker--uofm-jade { --sticker-size: 26vw; }
+  .about-hero .about-sticker--uofm { --sticker-size: calc(var(--about-m) * 0.25); }
+  .about-hero .about-sticker--duke { --sticker-size: calc(var(--about-m) * 0.27); }
+  .about-hero .about-sticker--earth { --sticker-size: calc(var(--about-m) * 0.24); }
+  .about-hero .about-sticker--film { --sticker-size: calc(var(--about-m) * 0.27); }
+  .about-hero .about-sticker--pokemon { --sticker-size: calc(var(--about-m) * 0.22); }
+  .about-hero .about-sticker--birthday { --sticker-size: calc(var(--about-m) * 0.25); }
+  .about-hero .about-sticker--uofm-jade { --sticker-size: calc(var(--about-m) * 0.26); }
+}
+
+/* Footer Email: a hint to the left of the button on hover or focus, drawn as a
+   gray iMessage bubble on two lines with its tail at the lower right, pointing
+   at the button (clicking copies the address instead of opening a mail app). */
+.footer__btn--copy { position: relative; }
+.footer__tip {
+  --tip: #e9e9eb;
+  position: absolute;
+  bottom: 0.15rem;
+  right: calc(100% + 0.7rem);
+  z-index: 5;
+  padding: 0.5em 0.95em 0.55em;
+  border-radius: 1.2em;
+  background: var(--tip);
+  /* Close to the footer links' gray but darker, so it keeps WCAG AA on the
+     bubble (4.77:1; the links' own #6b7280 would be 3.99:1 here). */
+  color: #5f6672;
+  font-family: var(--body-font);
+  font-size: 0.82rem;
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: 0;
+  white-space: pre;
+  text-align: left;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(6px) scale(0.96);
+  transform-origin: 100% 100%;
+  transition: opacity 180ms ease, transform 220ms cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+/* The same tail curve as the message bubbles, in the bubble's gray. */
+.footer__tip::after {
+  content: "";
+  position: absolute;
+  right: -0.12em;
+  bottom: -0.06em;
+  transform: scaleX(-1);
+  width: 1.08em;
+  height: 1.08em;
+  background: var(--tip);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='3 84 25 25'%3E%3Cpath d='M10.5758 99.4412C9.81601 103.866 5.52525 108.02 3 109C12.697 109 18.9091 105.814 20.4242 103.853L28 106.059L27.2424 84H11.3333V86.9412V89.8824V90.6176C11.3333 92.0882 11.3333 95.0294 10.5758 99.4412Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='3 84 25 25'%3E%3Cpath d='M10.5758 99.4412C9.81601 103.866 5.52525 108.02 3 109C12.697 109 18.9091 105.814 20.4242 103.853L28 106.059L27.2424 84H11.3333V86.9412V89.8824V90.6176C11.3333 92.0882 11.3333 95.0294 10.5758 99.4412Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
+.footer__btn--copy:hover .footer__tip,
+.footer__btn--copy:focus-visible .footer__tip {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+.footer__btn--copy.is-copied .footer__tip { opacity: 0; }
+@media (max-width: 768px) {
+  /* The Email button sits at the left edge on phones, so there is no room to
+     its left: put the hint above it with the tail at the lower left. */
+  .footer__tip {
+    right: auto;
+    left: -0.25rem;
+    bottom: calc(100% + 0.75rem);
+    transform: translateY(4px) scale(0.96);
+    transform-origin: 0 100%;
+  }
+  .footer__tip::after { right: auto; left: -0.12em; transform: none; }
+  .footer__btn--copy:hover .footer__tip,
+  .footer__btn--copy:focus-visible .footer__tip { transform: translateY(0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .footer__tip { transition: none; }
 }

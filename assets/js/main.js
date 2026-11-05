@@ -674,13 +674,13 @@
     // stickers and the messages all scale with the viewport width, so the same
     // numbers give the same composition on every screen from tablet up.
     var desktopInitialPositions = {
-      birthday: { dx: -0.879, dy: -0.135 },
-      uofm: { dx: -0.9715, dy: 0.2501 },
-      duke: { dx: -0.7528, dy: 0.3475 },
-      earth: { dx: 0.7589, dy: 0.0899 },
-      film: { dx: 0.4845, dy: 0.3235 },
-      pokemon: { dx: 0.7542, dy: 0.5503 },
-      child: { dx: 0.3229, dy: 0.4785 }
+      birthday: { dx: -0.658, dy: -0.135 },
+      uofm: { dx: -0.7505, dy: 0.2501 },
+      duke: { dx: -0.589, dy: 0.3475 },
+      earth: { dx: 0.9799, dy: 0.0899 },
+      film: { dx: 0.7055, dy: 0.3235 },
+      pokemon: { dx: 0.9752, dy: 0.5503 },
+      child: { dx: 0.5439, dy: 0.4785 }
     };
     var hintPosition = { dx: 0.2841, dy: 0.0544 };
     // Phone composition, in units of the screen width S: x from the left
@@ -720,17 +720,25 @@
       return stage.top - surfaceRect.top + (0.375 + (rel - 0.375) * k) * u - h / 2;
     }
 
+    // The phone composition's unit (its width, CSS --about-m) and left edge,
+    // recovered from the Memoji stage, which is 0.68 of it and starts 0.069 of
+    // it left of the edge.
+    function phoneUnit() { return stageEl.getBoundingClientRect().width / 0.68; }
+    function phoneLeft() {
+      return stageEl.getBoundingClientRect().left - surface.getBoundingClientRect().left + 0.069 * phoneUnit();
+    }
+
     function presetXY(name, button, surfaceRect) {
       if (!stageEl) return null;
       if (!window.matchMedia('(min-width: 769px)').matches) {
         var phone = mobileInitialPositions[name];
         if (!phone) return null;
-        var s = surfaceRect.width;
+        var m = phoneUnit();
         var stageBox = stageEl.getBoundingClientRect();
         var base = phone.anchor === 'top' ? stageBox.top : stageBox.bottom;
         return {
-          x: phone.x * s,
-          y: base - surfaceRect.top + phone.y * s
+          x: phoneLeft() + phone.x * m,
+          y: base - surface.getBoundingClientRect().top + phone.y * m
         };
       }
       var preset = desktopInitialPositions[name];
@@ -750,8 +758,8 @@
       var stage = stageEl.getBoundingClientRect();
       if (!window.matchMedia('(min-width: 769px)').matches) {
         // Upper right of the Memoji.
-        hintEl.style.left = (surfaceRect.width * 0.52) + 'px';
-        hintEl.style.top = (stage.top - surfaceRect.top + surfaceRect.width * 0.01) + 'px';
+        hintEl.style.left = (phoneLeft() + phoneUnit() * 0.52) + 'px';
+        hintEl.style.top = (stage.top - surfaceRect.top + phoneUnit() * 0.01) + 'px';
         return;
       }
       var h = hintEl.offsetHeight;
@@ -3083,6 +3091,16 @@ var PERSONA_COPY = {
       link.textContent = '';
       link.appendChild(label);
       link.insertAdjacentHTML('beforeend', '<span class="footer__copy-icon" aria-hidden="true"></span>');
+
+      // A small hint on hover/focus: clicking copies the address, it never
+      // opens a mail app.
+      var tip = document.createElement('span');
+      tip.className = 'footer__tip';
+      tip.id = 'footerEmailTip';
+      tip.setAttribute('role', 'tooltip');
+      tip.textContent = "Don't worry! It won\u2019t\nopen Mail app ;)";
+      link.appendChild(tip);
+      link.setAttribute('aria-describedby', tip.id);
 
       link.addEventListener('click', function (event) {
         event.preventDefault();
