@@ -107,6 +107,7 @@
   finished conversation. No-ops on pages without [data-hero-chat]. */
 (function () {
   var TYPING_MS = 1300;
+  var FIRST_MS = 650; // the greeting arrives sooner than the later messages
   var GAP_MS = 650;
 
   function init() {
@@ -115,6 +116,7 @@
     var messages = Array.prototype.slice.call(stage.querySelectorAll('[data-chat-message]'));
     var typing = stage.querySelector('[data-chat-typing]');
     var video = stage.querySelector('video');
+    var delivered = stage.querySelector('.chat-delivered');
     if (!messages.length || !typing) return;
 
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -126,35 +128,45 @@
 
     if (reduce || !stage.animate) {
       messages.forEach(function (m) { m.classList.add('is-shown'); });
+      if (delivered) delivered.classList.add('is-shown');
       playVideo();
       return;
     }
 
-    // Reserve the height of the finished conversation, and size the Memoji
-    // so its top lines up with the top of the last message (the video) once
-    // everything has arrived. Measured with all messages showing.
-    var memoji = document.querySelector('.hero-chat__memoji img');
+    // Reserve the height of the finished conversation, and size the Memoji so
+    // the top of its hair meets the top of the last message (the video) and the
+    // end of its elbow meets that message's bottom. With the avatar box H tall
+    // (artwork 1.0526 H wide, bottom on the box's bottom), the hair top is
+    // 0.0526 H below the box top and the elbow ends 0.1158 H above its bottom,
+    // so H = message height / 0.8316 and the stage sits 0.1158 H above the
+    // bottom. Measured with all messages showing.
+    var memoji = document.querySelector('.hero-chat__avatar');
     var compact = window.matchMedia ? window.matchMedia('(max-width: 900px)') : null;
     function measure() {
       var wasShown = messages.map(function (m) { return m.classList.contains('is-shown'); });
       var typingWasShown = typing.classList.contains('is-shown');
+      var deliveredWasShown = delivered && delivered.classList.contains('is-shown');
       typing.classList.remove('is-shown');
       messages.forEach(function (m) { m.classList.add('is-shown'); });
+      if (delivered) delivered.classList.add('is-shown');
       stage.style.minHeight = '';
       stage.style.minHeight = stage.offsetHeight + 'px';
       if (memoji) {
         memoji.style.height = '';
         memoji.style.width = '';
+        stage.parentNode.style.removeProperty('--hero-elbow');
         if (!(compact && compact.matches)) {
-          var height = memoji.getBoundingClientRect().bottom - messages[messages.length - 1].getBoundingClientRect().top;
+          var height = messages[messages.length - 1].getBoundingClientRect().height / 0.8316;
           if (height > 120) {
-            memoji.style.width = 'auto';
+            memoji.style.width = Math.round(height) + 'px';
             memoji.style.height = Math.round(height) + 'px';
+            stage.parentNode.style.setProperty('--hero-elbow', (height * 0.1158).toFixed(1) + 'px');
           }
         }
       }
       messages.forEach(function (m, i) { m.classList.toggle('is-shown', wasShown[i]); });
       if (typingWasShown) typing.classList.add('is-shown');
+      if (delivered) delivered.classList.toggle('is-shown', Boolean(deliveredWasShown));
     }
     measure();
     var resizeTimer = null;
@@ -175,8 +187,16 @@
     function flip(change) {
       var before = shownBubbles().map(function (el) { return { el: el, top: el.getBoundingClientRect().top }; });
       change();
+      if (stage.dataset.freezeChatLayout === 'true') {
+        delete stage.dataset.freezeChatLayout;
+        return;
+      }
       before.forEach(function (item) {
         if (!item.el.classList.contains('is-shown')) return;
+        // Delivery status gets its own contained insert animation below the
+        // latest reply; translating it across the whole stack looks unlike
+        // iMessage and makes the question appear to jump.
+        if (item.el.classList.contains('chat-delivered')) return;
         var dy = item.top - item.el.getBoundingClientRect().top;
         if (Math.abs(dy) < 1) return;
         item.el.animate(
@@ -206,23 +226,72 @@
       flip(function () {
         typing.classList.remove('is-shown');
         message.classList.add('is-shown');
+        if (!queue.length && delivered) {
+          delivered.classList.add('is-shown');
+          // Leave the delivery label's original footprint in the stack so
+          // moving it below the final reply never shifts the typed question.
+          if (!delivered.dataset.deliverySlot) {
+            var deliverySlot = document.createElement('span');
+            deliverySlot.className = 'chat-delivered-slot';
+            deliverySlot.style.height = delivered.getBoundingClientRect().height + 'px';
+            deliverySlot.style.margin = window.getComputedStyle(delivered).margin;
+            delivered.parentNode.insertBefore(deliverySlot, delivered);
+            delivered.dataset.deliverySlot = 'true';
+          }
+          stage.dataset.freezeChatLayout = 'true';
+          stage.insertBefore(delivered, message.nextSibling);
+          delivered.classList.remove('is-arriving');
+          void delivered.offsetWidth;
+          delivered.classList.add('is-arriving');
+        }
       });
       pop(message);
       if (message.contains(video)) playVideo();
     }
 
-    var queue = messages.slice();
+    function showTypewriter(message, done) {
+      var copy = message.getAttribute('data-chat-typewriter') || '';
+      var output = message.querySelector('[data-chat-typewriter-output]');
+      if (!output) { done(); return; }
+      flip(function () { message.classList.add('is-shown'); });
+      pop(message);
+      output.textContent = '';
+      var index = 0;
+      var tick = function () {
+        output.textContent = copy.slice(0, index);
+        if (index >= copy.length) {
+          message.classList.add('is-typed');
+          window.setTimeout(done, GAP_MS);
+          return;
+        }
+        index += 1;
+        window.setTimeout(tick, 42);
+      };
+      tick();
+    }
+
+    // Messages already marked shown form the settled opening of the
+    // conversation. The typing sequence continues from the first hidden one.
+    var queue = messages.filter(function (message) { return !message.classList.contains('is-shown'); });
+    var firstMessage = !messages.some(function (message) { return message.classList.contains('is-shown'); });
+    if (video && video.closest('[data-chat-message]').classList.contains('is-shown')) playVideo();
     function next() {
       var message = queue.shift();
       if (!message) {
         stage.dataset.chatDone = 'true';
         return;
       }
+      if (message.hasAttribute('data-chat-typewriter')) {
+        showTypewriter(message, next);
+        return;
+      }
+      var typingMs = firstMessage ? FIRST_MS : TYPING_MS;
+      firstMessage = false;
       showTyping(message);
       setTimeout(function () {
         showMessage(message);
         setTimeout(next, GAP_MS);
-      }, TYPING_MS);
+      }, typingMs);
     }
 
     var start = function () { setTimeout(next, 500); };
@@ -2870,34 +2939,33 @@ var PERSONA_COPY = {
 })();
 
 /*==================== HOMEPAGE HERO: MESSAGES CLOSER TO THE MEMOJI ====================
-  The Memoji sits centered over the left tile and the messages start at the
-  right tile's edge, which left a wide gap between them. This halves the gap
-  by moving the Memoji right and the messages left by a quarter of it each,
-  so the pair stays where it was. The gap is measured from the Memoji's
-  visible right edge (0.9604 of its image width). Desktop layout only. */
+  The Memoji circle sits centered over the left tile and the messages start at
+  the right tile's edge, which left a wide gap between them. The gap, measured
+  from the raised hand (it reaches 1.118 of the avatar box's width from its
+  left edge), is cut to a quarter by moving the Memoji right and the messages
+  left by 3/8 of it each, so the pair stays where it was. Desktop only. */
 (function () {
   function init() {
     var inner = document.querySelector('.hero-chat__inner');
-    var img = inner && inner.querySelector('.hero-chat__memoji img');
+    var avatar = inner && inner.querySelector('.hero-chat__avatar');
     var stage = inner && inner.querySelector('.hero-chat__stage');
-    if (!img || !stage) return;
+    if (!avatar || !stage) return;
     var compact = window.matchMedia ? window.matchMedia('(max-width: 900px)') : null;
 
     function update() {
       inner.style.setProperty('--hero-pull', '0px');
       if (compact && compact.matches) return;
-      var a = img.getBoundingClientRect();
+      var a = avatar.getBoundingClientRect();
       var b = stage.getBoundingClientRect();
-      var gap = b.left - (a.left + a.width * 0.9604);
-      if (gap > 0) inner.style.setProperty('--hero-pull', (gap / 4).toFixed(1) + 'px');
+      var gap = b.left - (a.left + a.width * 1.118);
+      if (gap > 0) inner.style.setProperty('--hero-pull', (gap * 0.375).toFixed(1) + 'px');
     }
 
     update();
-    img.addEventListener('load', update);
     window.addEventListener('resize', update);
     window.addEventListener('load', update);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(update);
-    if (window.ResizeObserver) new ResizeObserver(update).observe(img);
+    if (window.ResizeObserver) new ResizeObserver(update).observe(avatar);
   }
 
   if (document.readyState === 'loading') {

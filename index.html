@@ -61,16 +61,23 @@
       <h1 class="visually-hidden" id="heroTitle">Jade Byeon is a product designer with a statistics background.</h1>
       <div class="hero-chat__inner container">
         <div class="hero-chat__memoji" aria-hidden="true">
-          <img src="assets/img/memoji_hi-optimized.png" alt="" width="800" height="720">
+          <span class="hero-chat__avatar"><span class="hero-chat__circle"><img src="assets/img/memoji_hi-optimized.png" alt="" width="800" height="720"></span><img class="hero-chat__pop" src="assets/img/memoji_hi-optimized.png" alt="" width="800" height="720"></span>
         </div>
         <div class="hero-chat__stage" data-hero-chat role="log" aria-label="Introduction messages from Jade">
-          <div class="chat-bubble chat-bubble--text" data-chat-message>
+          <div class="chat-bubble chat-bubble--text is-shown" data-chat-message>
             <span class="chat-bubble__gloss" aria-hidden="true"></span>
-            <p>Hi, I&rsquo;m Jade. I&rsquo;m a product designer with a statistics background.</p>
+            <p>Hi, I&rsquo;m Jade. I design for the users most teams overlook.</p>
+          </div>
+          <p class="chat-delivered is-shown">Delivered</p>
+          <div class="chat-bubble chat-bubble--reply" data-chat-message data-chat-typewriter="How do you work?">
+            <p><span data-chat-typewriter-output></span><span class="chat-typewriter-cursor" aria-hidden="true"></span></p>
           </div>
           <div class="chat-bubble chat-bubble--media" data-chat-message>
             <video class="chat-bubble__video" muted loop playsinline preload="auto" aria-label="A walkthrough of this portfolio" src="assets/video/portfolio_mockup.mp4"></video>
-            <p class="chat-bubble__caption">Me trying out robot demo!</p>
+          </div>
+          <div class="chat-bubble chat-bubble--research" data-chat-message>
+            <span class="chat-bubble__gloss" aria-hidden="true"></span>
+            <p>Research, but make it physical.</p>
           </div>
           <div class="chat-bubble chat-bubble--typing" data-chat-typing aria-hidden="true">
             <span class="chat-bubble__gloss"></span>

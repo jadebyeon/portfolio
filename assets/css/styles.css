@@ -7136,12 +7136,50 @@ body.about-page .header::before {
   display: flex;
   justify-content: center;
 }
-.hero-chat__memoji img {
+/* The Memoji sits in a light-blue circle (the favicon's blue) and pops out of
+   it: everything above the shirt hem (the head, hair and raised arm) is drawn
+   unclipped, and only the bottom follows the circle's curve. The avatar box is
+   square (H, set by main.js so the hair's top meets the video message's top); the
+   Memoji artwork (800 x 720) is scaled to 1.0526 H wide and its bottom meets
+   the circle's bottom. The circle is 0.8816 H, so the artwork keeps its size
+   while the circle is smaller. */
+.hero-chat__avatar {
+  position: relative;
+  flex: none;
   display: block;
-  /* main.js sets the exact size so the Memoji's top meets the video
-     message's top; this is the no-JS fallback. */
   width: min(100%, 328px);
+  aspect-ratio: 1;
+}
+.hero-chat__circle {
+  position: absolute;
+  width: 88.16%;
+  aspect-ratio: 1;
+  left: 5.92%;
+  bottom: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #c0dffa;
+}
+.hero-chat__circle img {
+  position: absolute;
+  display: block;
+  width: 119.4%;
+  max-width: none;
   height: auto;
+  left: 0.75%;
+  top: -7.46%;
+}
+/* The same artwork again on top, unclipped down to the hem of the sleeve
+   (640 of 720 px), so the hand and arm leave the circle. */
+.hero-chat__pop {
+  position: absolute;
+  display: block;
+  width: 105.26%;
+  max-width: none;
+  height: auto;
+  left: 6.58%;
+  top: 5.26%;
+  clip-path: inset(0 0 11.11% 0);
 }
 .hero-chat__stage {
   align-self: center;
@@ -7153,11 +7191,17 @@ body.about-page .header::before {
      text bubble, i.e. ~1.85 text sizes. */
   --chat-size: clamp(0.9rem, 1.4vw, 1.25rem);
   font-size: var(--chat-size);
-  gap: 1.85em;
+  gap: 1.4em;
   width: 100%;
   max-width: 400px;
   /* Below: the stage keeps the height of the finished conversation (set
      by main.js) so bubbles arrive in place and older ones move up. */
+}
+/* Desktop: the last message's bottom edge lines up with the end of the
+   Memoji's elbow (main.js sets --hero-elbow, the elbow's height above the
+   avatar's bottom edge). */
+@media (min-width: 901px) {
+  .hero-chat__stage { align-self: end; margin-bottom: var(--hero-elbow, 0px); }
 }
 
 .chat-bubble {
@@ -7266,6 +7310,7 @@ body.about-page .header::before {
 /* JS is on: bubbles start hidden and main.js shows them in order. */
 .chat-js .hero-chat [data-chat-message]:not(.is-shown),
 .chat-js .hero-chat [data-chat-typing]:not(.is-shown) { display: none; }
+.chat-js .hero-chat .chat-delivered:not(.is-shown) { display: none; }
 /* No JS: keep the finished conversation, drop the typing indicator. */
 html:not(.chat-js) .hero-chat [data-chat-typing] { display: none; }
 
@@ -7280,7 +7325,7 @@ html:not(.chat-js) .hero-chat [data-chat-typing] { display: none; }
   }
   .hero-chat__stage { order: 1; align-self: start; margin-left: 0.9em; width: calc(100% - 0.9em); }
   .hero-chat__memoji { order: 2; justify-content: center; }
-  .hero-chat__memoji img { width: min(62%, 300px); }
+  .hero-chat__avatar { width: min(62%, 300px); }
   .hero-chat__stage { --chat-size: clamp(0.9rem, 3.9vw, 1.2rem); }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -7670,10 +7715,159 @@ html:not(.chat-js) .about-chat [data-chat-typing] { display: none; }
 .footer__links.has-indicator .footer__btn:hover,
 .footer__links.has-indicator .footer__btn:focus-visible { z-index: 2; background: transparent; }
 
-/* Homepage hero: halve the gap between the Memoji and the messages (main.js
-   sets --hero-pull to a quarter of it). Uses `translate` so the bubbles' own
-   pop and slide animations are untouched. */
+/* Homepage hero: shrink the gap between the Memoji (its raised hand) and the
+   messages to a quarter (main.js sets --hero-pull to 3/8 of it for each side). Uses
+   `translate` so the bubbles' own pop and slide animations are untouched. */
 @media (min-width: 901px) {
   .hero-chat__memoji { translate: var(--hero-pull, 0px) 0; }
   .hero-chat__stage { translate: calc(-1 * var(--hero-pull, 0px)) 0; }
+}
+
+/* Homepage only: a compact, editorial chat composition. The header keeps its
+   existing behavior; these rules affect only the Memoji and messages. */
+@font-face {
+  font-family: "Helvetica Now Display";
+  src: url("../fonts/HelveticaNowDisplay-Medium.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+body.home-page {
+  --display-font: "Helvetica Now Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+body.home-page .brand,
+body.home-page .brand__name,
+body.home-page .portfolio__title,
+body.home-page .footer__title {
+  font-family: var(--display-font);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.home.section.hero-chat {
+  min-height: clamp(460px, 55svh, 590px);
+  padding-top: calc(var(--header-height) + clamp(1rem, 3vh, 2rem));
+  margin-bottom: clamp(1rem, 2vw, 1.75rem);
+}
+@media (min-width: 901px) {
+  .home.section.hero-chat {
+    /* Reserve the completed chat's footprint up front so late message/status
+       inserts never reflow the project grid below. */
+    height: clamp(580px, 62svh, 660px);
+    min-height: 0;
+  }
+  .hero-chat__inner {
+    grid-template-columns: minmax(132px, 0.25fr) minmax(0, 0.75fr);
+    align-items: start;
+  }
+  .hero-chat__memoji {
+    align-self: start;
+    justify-content: flex-start;
+    translate: 0 0;
+  }
+  .hero-chat__avatar {
+    width: clamp(108px, 8.5vw, 140px) !important;
+    height: auto !important;
+    margin-top: 0.2rem;
+  }
+  .hero-chat__stage {
+    align-self: start;
+    width: min(100%, 650px);
+    max-width: 650px;
+    margin: clamp(1rem, 2.6vh, 1.75rem) 0 0;
+    translate: 0 0;
+    --chat-size: clamp(0.88rem, 1.05vw, 1rem);
+    gap: 0.85em;
+    justify-content: flex-start;
+  }
+}
+.home-page .chat-bubble--text { max-width: 45em; }
+.home-page .hero-chat__stage { justify-content: flex-start; }
+.home-page .chat-bubble--media {
+  max-width: 500px;
+  /* Matches the room created by the delivery-status row between the
+     greeting and the typed question. */
+  margin-top: 0.7em;
+}
+.home-page .chat-bubble--media {
+  --bubble: transparent;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 1.1em;
+  background: transparent;
+}
+.home-page .chat-bubble--media::before { display: none; }
+.home-page .chat-bubble__video {
+  aspect-ratio: 16 / 7.2;
+  border-radius: 1.1em;
+}
+.home-page .chat-bubble--research { max-width: max-content; }
+.home-page .chat-bubble--reply {
+  --bubble: #ececef;
+  align-self: flex-end;
+  max-width: max-content;
+  padding: 0.55em 0.95em 0.6em;
+  color: var(--title-color);
+}
+.home-page .chat-bubble--reply::before {
+  left: auto;
+  right: -0.12em;
+  transform: scaleX(-1);
+}
+.home-page .chat-delivered {
+  margin: -0.3em 0 0;
+  text-align: left;
+  font-family: var(--body-font);
+  font-size: 0.8em;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #8e8e93;
+}
+.home-page .chat-delivered-slot { display: block; flex: 0 0 auto; }
+.home-page .chat-delivered.is-arriving {
+  overflow: hidden;
+  animation: home-delivered-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes home-delivered-in {
+  from {
+    opacity: 0;
+    max-height: 0;
+    transform: translateY(-7px);
+  }
+  to {
+    opacity: 1;
+    max-height: 1.5em;
+    transform: translateY(0);
+  }
+}
+.home-page .chat-typewriter-cursor {
+  display: inline-block;
+  width: 0.08em;
+  height: 1.05em;
+  margin-left: 0.12em;
+  vertical-align: -0.15em;
+  background: currentColor;
+  animation: chat-typewriter-blink 0.8s step-end infinite;
+}
+.home-page .chat-bubble--reply.is-typed .chat-typewriter-cursor {
+  display: none;
+}
+@keyframes chat-typewriter-blink {
+  50% { opacity: 0; }
+}
+@media (max-width: 900px) {
+  .home.section.hero-chat { min-height: 0; }
+  .hero-chat__stage { gap: 0.7em; }
+  .home-page .chat-bubble--media { max-width: 100%; }
+}
+@media (min-width: 901px) {
+  .home-page .portfolio.section {
+    padding-top: clamp(2.5rem, 4vw, 4.5rem);
+  }
+}
+@media (min-width: 1280px) {
+  .home-page .portfolio__description {
+    max-width: none;
+    white-space: nowrap;
+  }
 }
