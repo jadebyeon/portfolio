@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" />
-  <link rel="stylesheet" href="../../assets/css/styles.css?v=20261104" />
+  <link rel="stylesheet" href="../../assets/css/styles.css?v=20261113-body-pager" />
   <link rel="icon" type="image/png" href="../../assets/img/favicon.png?v=2" />
   <title>Wearby: OOTD Diary Companion</title>
   <meta name="description" content="Wearby, a playful OOTD diary companion for daily reflection, designed and built by Jade Byeon." />
@@ -49,7 +49,7 @@
     .project-page--ootd .ootd-decision-tabs .hbom-tabs__copy .ootd-decision-point { margin: 0; color: var(--ootd-body); font-size: 1rem; line-height: 1.6; }
     .project-page--ootd .ootd-decision-point__label { font-weight: 700; }
     .project-page--ootd .ootd-decision-point__label--challenge { color: #b91c1c; }
-    .project-page--ootd .ootd-decision-point__label--result { color: var(--ootd-accent); }
+    .project-page--ootd .ootd-decision-point__label--result { color: #2e7d32; }
     .project-page--ootd .ootd-decision-point__emoji { display: inline-block; margin-right: 0.4em; }
     .project-page--ootd .ootd-decision-tabs .ootd-decision-visual { width: 100%; margin: var(--block-gap) auto; }
     /* Export canvases carry extra empty space above/below the screens; per-image --trim-* crop it so the text-to-content gap matches the other figures. */
@@ -120,7 +120,7 @@
               <div class="ps-block"><p class="ps-label">Solution</p><p class="ps-text">A companion app where dressing up a character named Ear becomes a daily ritual, turning reflection into play.</p></div>
             </div>
             <div class="project-meta project-meta--details">
-              <div class="meta-item"><div class="meta-label">Project Type</div><ul class="meta-list"><li>Product</li><li>UX/UI</li><li>AI feature</li><li>Physical Design</li></ul></div>
+              <div class="meta-item"><div class="meta-label">Project Type</div><ul class="meta-list"><li>Product Design</li><li>Design System</li><li>Vibe Coding</li></ul></div>
               <div class="meta-item"><div class="meta-label">Team</div><div class="meta-value">1 Designer (me)</div></div>
               <div class="meta-item"><div class="meta-label">Timeline</div><div class="meta-value">Feb 2026 &ndash; May 2026</div></div>
               <div class="meta-item"><div class="meta-label">Tools</div><ul class="meta-list"><li>Figma</li><li>Procreate</li><li>Adobe Photoshop</li><li>Cricut</li><li>Vercel</li><li>Claude Code</li></ul></div>
@@ -201,19 +201,19 @@
           </div>
         </section>
         <section class="project-section project-section--context section-nav-target" id="final-solution">
-          <div class="content-container"><p class="project-section__eyebrow">Deliverable</p><h2 class="section-icon-title project-section__title">Final UI Screens</h2><div class="project-section__body"><p>The interface carries my moodboard&rsquo;s playful direction through a <span class="text-mint">cohesive visual language</span>, refined after feedback on visual craft. Calendar, Past Memories, and Profile extend the core flow into a complete product rather than a single-flow demo.</p><figure class="single-tile-figure ootd-screens"><div class="single-tile"><img src="../../assets/img/ootd_final%20screens.png?v=20261104" alt="Final Wearby UI screens including Calendar, Past Memories, and Profile"></div></figure></div></div>
+          <div class="content-container"><p class="project-section__eyebrow">Deliverable</p><h2 class="section-icon-title project-section__title">Live App</h2><div class="project-section__body"><p>Wearby is live as a working web app that anyone can try. <a href="https://wearby-one.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Try the live app (opens in a new tab)">[Try the live app <span class="external-link-indicator" aria-hidden="true">↗</span>]</a></p><figure class="ootd-final-screens"><div class="ootd-screen-motion" aria-label="Final Wearby interface screens" data-screen-motion>
+              <div class="ootd-screen-motion__viewport"><div class="ootd-screen-motion__track"><ul class="ootd-screen-motion__group"><li><img src="../../assets/img/ootd_screen_01%20Home.png" alt="Wearby Home screen" width="430" height="895" loading="lazy" decoding="async"></li><li><img src="../../assets/img/ootd_screen_02%20Dressup.png" alt="Wearby Dressup screen" width="430" height="895" loading="lazy" decoding="async"></li><li><img src="../../assets/img/ootd_screen_05%20Confirm.png" alt="Wearby Confirm screen" width="430" height="894" loading="lazy" decoding="async"></li><li><img src="../../assets/img/ootd_screen_06%20Records.png" alt="Wearby Records screen" width="430" height="895" loading="lazy" decoding="async"></li><li><img src="../../assets/img/ootd_screen_08%20Calendar.png" alt="Wearby Calendar screen" width="430" height="895" loading="lazy" decoding="async"></li><li><img src="../../assets/img/ootd_screen_09%20Insights.png" alt="Wearby Insights screen" width="430" height="895" loading="lazy" decoding="async"></li></ul></div></div>
+              <button class="ootd-screen-motion__toggle" type="button" aria-label="Pause screen animation" aria-pressed="false"><span aria-hidden="true">Ⅱ</span></button>
+            </div><figcaption class="figure-caption">Final UI Screens</figcaption></figure></div></div>
         </section>
         <section class="project-section project-section--context">
-          <div class="content-container"><p class="project-section__eyebrow">Deliverable</p><h2 class="section-icon-title project-section__title">Design System &amp; Components</h2><div class="project-section__body"><p>Wearby’s visual language pairs a warm palette with <span class="text-mint">DM Sans</span>, soft glass controls, and expressive character states. The motion study below shows the components and their changing states.</p><iframe class="wearby-system-embed" src="../../assets/wearby-system/index.html?v=20261113-fanned-palette" title="Wearby animated design system" loading="lazy"></iframe><p>Clothing items are structured as <span class="text-mint">component sets</span> with variants using <span class="text-mint">auto layout</span>, so outfits can grow without breaking consistency.</p><div class="wearby-component-grid">
+          <div class="content-container"><p class="project-section__eyebrow">Deliverable</p><h2 class="section-icon-title project-section__title">Design System &amp; Components</h2><div class="project-section__body"><p>Wearby’s visual language pairs a warm palette with <span class="text-mint">DM Sans</span>, soft glass controls, and expressive character states. The motion study below shows the components and their changing states.</p><iframe class="wearby-system-embed" src="../../assets/wearby-system/index.html?v=20261113-guide-insets" title="Wearby animated design system" loading="lazy"></iframe><p>Clothing items are structured as <span class="text-mint">component sets</span> with variants using <span class="text-mint">auto layout</span>, so outfits can grow without breaking consistency.</p><div class="wearby-component-grid">
               <iframe class="wearby-component-embed" data-src="../../assets/wearby-closet/index.html?v=20261112-flutter" title="Wearby clothing component library: stickers dressing Ear" loading="lazy" scrolling="no"></iframe>
               <iframe class="wearby-component-embed" data-src="../../assets/wearby-backgrounds/index.html" title="Wearby animated background library" loading="lazy" scrolling="no"></iframe>
             </div></div></div>
         </section>
         <section class="project-section project-section--context">
           <div class="content-container"><p class="project-section__eyebrow">Deliverable</p><h2 class="section-icon-title project-section__title">AI Feature</h2><div class="project-section__body"><p>A fixed closet limited how personal Ear&rsquo;s outfits could feel, so I designed Create with AI. Rather than letting the AI generate images freely, I constrained it to read a photo or description and apply it to existing clothing shapes. This achieved <span class="text-mint">brand coherence</span> while giving users real <span class="text-mint">personalization</span>. I then integrated it through an API to test it in a live build.</p><figure class="single-tile-figure ootd-ai-figure"><div class="single-tile"><img class="ootd-lightbox-trigger" data-ootd-lightbox-group="ideation" src="../../assets/img/ootd_ai.png?v=20261031" alt="AI colors on a Wearby shape: the AI generator creating clothes for Ear from a photo or description" role="button" tabindex="0" aria-label="Open AI feature enlarged"></div><figcaption class="figure-caption">AI colors on a Wearby shape</figcaption></figure></div></div>
-        </section>
-        <section class="project-section project-section--context">
-          <div class="content-container"><p class="project-section__eyebrow">Deliverable</p><h2 class="section-icon-title project-section__title">Vercel</h2><div class="project-section__body"><p>I took Wearby beyond a prototype by building and deploying it on Vercel, so the design was validated in a working product. <a href="https://wearby-one.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Try the live app (opens in a new tab)">[Try the live app<span class="external-link-indicator" aria-hidden="true">↗</span>]</a></p></div></div>
         </section>
         <section class="project-section project-section--context">
           <div class="content-container"><p class="project-section__eyebrow">Deliverable</p><h2 class="section-icon-title project-section__title">Physical Companion</h2><div class="project-section__body"><p>The digital experience extends into a pocket-sized physical diary: a sealed envelope as the first surprise, 30 daily prompt cards, and an outfit/background sticker system that mirrors the app's dress-up flow. A QR code hidden on the closing page reveals the digital companion as a second, later surprise.</p><figure class="physical-thumb-grid" aria-label="Wearby physical companion prototype">
@@ -280,5 +280,6 @@
   <script src="../../assets/js/main.js"></script>
   <script src="../../assets/js/reveal.js"></script>
   <script src="../../assets/js/wearby-embeds.js"></script>
+  <script src="../../assets/js/wearby-screens.js?v=20261113-screen-reference"></script>
 </body>
 </html>

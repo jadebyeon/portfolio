@@ -111,7 +111,7 @@ body{padding:20px 20px 64px}
 .accessibility{grid-column:3;grid-row:1;align-items:center;justify-content:center;padding:32px 12px 10px;gap:0}
 .target-demo{display:flex;flex-direction:column;align-items:center;width:104px;gap:0}
 .target-visual{display:grid;place-items:center;width:66px;height:66px;margin-top:4px}
-.touch-target{position:relative;display:grid;place-items:center;width:44px;height:44px;min-width:44px;min-height:44px;padding:0;border:0;border-radius:0;background:#6f8f7233;transform:scale(1.5);color:#4b7153}
+.touch-target{position:relative;display:grid;place-items:center;width:44px;height:44px;min-width:44px;min-height:44px;padding:0;border:0;border-radius:0;background:#6f8f7233;transform:scale(1.5);color:#9a8d8b}
 .touch-target::before{content:'';position:absolute;inset:8px;background:#fcfaf6;pointer-events:none}
 .touch-target svg{position:relative;width:18px;height:18px;stroke-width:2;animation:target-save 4.8s linear infinite;transform-origin:center}
 .touch-target:focus-visible{outline:2px solid #3f6044;outline-offset:4px}
@@ -137,9 +137,9 @@ body{padding:20px 20px 64px}
 }
 
 /* Warm presentation surfaces with Wearby component colors. */
-html,body{background:#eee8df}
-.cell,.typography,.palette,.navigation,.accessibility{background:#fcfaf6;box-shadow:inset 0 0 0 1px #24232908}
-.letter{color:#fcfaf6;-webkit-text-fill-color:#fcfaf6}
+html,body{background:#f4f3f1}
+.cell,.typography,.palette,.navigation,.accessibility{background:#fff;box-shadow:none}
+.letter{color:#fff;-webkit-text-fill-color:#fff}
 .touch-target::before{background:#fcfaf6}
 .navigation nav{background:rgba(245,240,232,.55);border:1px solid rgba(255,255,255,.6);-webkit-backdrop-filter:blur(26px) saturate(170%);backdrop-filter:blur(26px) saturate(170%);box-shadow:0 6px 20px #4a3e3d08}
 .specimen-title{color:#8f8281}
@@ -151,3 +151,14 @@ body{display:flex;flex-direction:column;padding:20px 20px 16px}
 .board{order:0}
 .tile-motion{position:static;order:1;flex:none;align-self:flex-start;width:32px;height:32px;margin:8px 0 0}
 @media(max-width:650px){body{padding:16px}}
+
+/* Match Wearby's icon/label stack inside its 44px minimum-height control. */
+.touch-target{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
+.touch-target::before{inset:auto;left:8px;top:1.5px;width:28px;height:24px;background:#f8f7f5}
+.save-state-label{position:relative;margin:0;min-width:0;height:14px;flex:none;font-size:10.5px;line-height:14px}
+
+/* Balance the green guide around the white icon tile and the label:
+   4.5px above the white tile, 4.5px below the label. */
+.target-visual{height:70.5px}
+.touch-target{height:47px;min-height:47px;padding:3px 0 0}
+.touch-target::before{left:8px;top:4.5px;width:28px;height:24px;background:#fff}
