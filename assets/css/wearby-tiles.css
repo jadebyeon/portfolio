@@ -1,0 +1,27 @@
+html, body { background: #f4f3f1; }
+.tile-motion {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #e3e1dd;
+  color: #55514e;
+  cursor: pointer;
+  font: 15px/1 sans-serif;
+  letter-spacing: 0;
+}
+.tile-motion:hover { background: #d8d5d0; }
+.tile-motion:focus-visible { outline: 2px solid #55514e; outline-offset: 4px; }
+.stage { top: 50%; }
+.card img { max-width: none; max-height: none; flex: none; }
+.confetti { position: absolute; inset: 0; z-index: 20; overflow: hidden; pointer-events: none; }
+.confetti-piece { position: absolute; top: -6%; opacity: 0; }
+.confetti-piece.slant { clip-path: polygon(18% 0,100% 0,82% 100%,0 100%); }
+@media (prefers-reduced-motion: reduce) { .confetti { display: none; } }

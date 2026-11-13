@@ -9,6 +9,11 @@
   <title>Wearby: OOTD Diary Companion</title>
   <meta name="description" content="Wearby, a playful OOTD diary companion for daily reflection, designed and built by Jade Byeon." />
   <style>
+    .wearby-component-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--block-gap); margin:24px 0; }
+    .wearby-component-embed { display:block; width:100%; height:100%; min-width:0; aspect-ratio:1/1; border:0; border-radius:20px; background:#f4f3f1; }
+    @media(max-width:700px) { .wearby-component-grid { grid-template-columns:1fr; } }
+    .wearby-system-embed { display:block; width:100%; height:391px; border:0; border-radius:20px; margin:24px 0; }
+    @media(max-width:700px) { .wearby-system-embed { height:554px; } }
     .project-page--ootd {
       --ootd-ink: #242329; --ootd-secondary: #5b5966; --ootd-body: #6a6874;
       --ootd-accent: #2457c5; --ootd-rule: #909099; --ootd-divider-space: 1rem;
@@ -55,8 +60,7 @@
     .ootd-character-pair__caption { margin: 0.5rem 0 0; color: var(--text-color-light); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; text-align: center; text-transform: uppercase; }
     .ootd-character-pair__arrow { color: var(--ootd-accent); font-size: clamp(1.25rem, 2.5vw, 1.75rem); font-weight: 700; line-height: 1; }
     .project-page--ootd .project-section__body > figure.ootd-ai-figure { width: 80%; }
-    /* ootd_ai.png carries ~7% of its width as empty canvas above the diagram; trim most of it so the text-to-image gap matches the other figures. */
-    .ootd-ai-figure img { margin-top: -4.8%; }
+    .ootd-ai-figure img { display: block; width: 100%; height: auto; margin: 0; object-fit: contain; }
     .ootd-screens img { display: block; width: auto; max-width: 100%; max-height: 75vh; margin: 0 auto; }
     .project-page--ootd .ootd-reflection-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(2rem, 4vw, 4rem); align-items: start; }
     .project-page--ootd .project-section__body .ootd-reflection-column__label { margin: 0 0 1rem; padding: 0.75rem 1rem; border-radius: 0.375rem; background: rgba(36, 35, 41, 0.04); color: var(--ootd-ink); font-size: 0.75rem; font-weight: 600; line-height: 1.2; text-align: center; letter-spacing: 0.04em; }
@@ -200,7 +204,10 @@
           <div class="content-container"><p class="project-section__eyebrow">Deliverable</p><h2 class="section-icon-title project-section__title">Final UI Screens</h2><div class="project-section__body"><p>The interface carries my moodboard&rsquo;s playful direction through a <span class="text-mint">cohesive visual language</span>, refined after feedback on visual craft. Calendar, Past Memories, and Profile extend the core flow into a complete product rather than a single-flow demo.</p><figure class="single-tile-figure ootd-screens"><div class="single-tile"><img src="../../assets/img/ootd_final%20screens.png?v=20261104" alt="Final Wearby UI screens including Calendar, Past Memories, and Profile"></div></figure></div></div>
         </section>
         <section class="project-section project-section--context">
-          <div class="content-container"><p class="project-section__eyebrow">Deliverable</p><h2 class="section-icon-title project-section__title">Design System &amp; Components</h2><div class="project-section__body"><p>I built a scalable design system in Figma on a <span class="text-mint">4px grid</span> with <span class="text-mint">WCAG AA</span> verified color pairings and a two-typeface hierarchy.</p><figure class="single-tile-figure"><div class="single-tile"><img class="ootd-lightbox-trigger" data-ootd-lightbox-group="final-solution" src="../../assets/img/ootd:designSystem.png?v=20261031" alt="Wearby design system with color tokens, components, and typography scale" role="button" tabindex="0" aria-label="Open design system enlarged"></div></figure><p>Clothing items are structured as <span class="text-mint">component sets</span> with variants using <span class="text-mint">auto layout</span>, so outfits can grow without breaking consistency.</p><figure class="single-tile-figure"><div class="single-tile"><img class="ootd-lightbox-trigger" data-ootd-lightbox-group="final-solution" src="../../assets/img/ootd:component.png" alt="Wearby Figma component library and clothing component variants" role="button" tabindex="0" aria-label="Open component library enlarged"></div></figure></div></div>
+          <div class="content-container"><p class="project-section__eyebrow">Deliverable</p><h2 class="section-icon-title project-section__title">Design System &amp; Components</h2><div class="project-section__body"><p>Wearby’s visual language pairs a warm palette with <span class="text-mint">DM Sans</span>, soft glass controls, and expressive character states. The motion study below shows the components and their changing states.</p><iframe class="wearby-system-embed" src="../../assets/wearby-system/index.html?v=20261113-fanned-palette" title="Wearby animated design system" loading="lazy"></iframe><p>Clothing items are structured as <span class="text-mint">component sets</span> with variants using <span class="text-mint">auto layout</span>, so outfits can grow without breaking consistency.</p><div class="wearby-component-grid">
+              <iframe class="wearby-component-embed" data-src="../../assets/wearby-closet/index.html?v=20261112-flutter" title="Wearby clothing component library: stickers dressing Ear" loading="lazy" scrolling="no"></iframe>
+              <iframe class="wearby-component-embed" data-src="../../assets/wearby-backgrounds/index.html" title="Wearby animated background library" loading="lazy" scrolling="no"></iframe>
+            </div></div></div>
         </section>
         <section class="project-section project-section--context">
           <div class="content-container"><p class="project-section__eyebrow">Deliverable</p><h2 class="section-icon-title project-section__title">AI Feature</h2><div class="project-section__body"><p>A fixed closet limited how personal Ear&rsquo;s outfits could feel, so I designed Create with AI. Rather than letting the AI generate images freely, I constrained it to read a photo or description and apply it to existing clothing shapes. This achieved <span class="text-mint">brand coherence</span> while giving users real <span class="text-mint">personalization</span>. I then integrated it through an API to test it in a live build.</p><figure class="single-tile-figure ootd-ai-figure"><div class="single-tile"><img class="ootd-lightbox-trigger" data-ootd-lightbox-group="ideation" src="../../assets/img/ootd_ai.png?v=20261031" alt="AI colors on a Wearby shape: the AI generator creating clothes for Ear from a photo or description" role="button" tabindex="0" aria-label="Open AI feature enlarged"></div><figcaption class="figure-caption">AI colors on a Wearby shape</figcaption></figure></div></div>
@@ -272,5 +279,6 @@
 <div class="footer__links"><a href="mailto:jadebyeonj@gmail.com" class="footer__btn" aria-label="Email">Email</a><a href="https://www.linkedin.com/in/jadebyeon/" target="_blank" rel="noopener noreferrer" class="footer__btn" aria-label="LinkedIn">LinkedIn</a><a href="../../assets/pdf/Jade_Resume.pdf" target="_blank" rel="noopener noreferrer" class="footer__btn" aria-label="Resume (opens in a new tab)">Resume</a></div><div class="footer__meta"><p>Jade Byeon © 2026</p></div></div></div></footer>
   <script src="../../assets/js/main.js"></script>
   <script src="../../assets/js/reveal.js"></script>
+  <script src="../../assets/js/wearby-embeds.js"></script>
 </body>
 </html>

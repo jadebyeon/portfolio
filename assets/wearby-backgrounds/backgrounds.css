@@ -1,0 +1,13 @@
+@font-face{font-family:DM Sans;src:url(../wearby-system/dm-sans.woff2);font-weight:100 1000;font-display:swap}*{box-sizing:border-box}body{margin:0;background:#e5e8de;color:#69735f;font:500 11px 'DM Sans',sans-serif;padding:20px;min-height:100svh}header{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:9px;letter-spacing:.16em}button{font:inherit;letter-spacing:0;background:none;border:0;color:inherit;padding:8px;cursor:pointer}button:focus-visible{outline:2px solid #6f8f72;outline-offset:3px}main{height:calc(100svh - 80px);min-height:440px;display:grid;place-items:center;overflow:hidden}.deck{position:relative;width:min(58vw,260px);aspect-ratio:2/3;perspective:1100px}.deck img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:20px;box-shadow:0 10px 30px #343b2d15;transform-origin:50% 80%;will-change:transform,opacity;backface-visibility:hidden}@media(prefers-reduced-motion:reduce){.deck img{will-change:auto}}
+
+/* Leave room for the outgoing card to slide behind the deck. */
+.deck{width:min(44vw,240px)}
+
+html,body{height:100%;overflow:hidden}
+body{padding:16px}
+main{height:calc(100% - 32px);min-height:0}
+.deck{width:min(44vw,240px,36svh)}
+
+/* Keep the entire moving fan inside the tile, including outgoing cards. */
+main{height:100%;overflow:visible}
+.deck{width:min(36vw,180px,33svh)}

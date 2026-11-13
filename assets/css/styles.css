@@ -7737,7 +7737,6 @@ body.home-page {
 }
 body.home-page .brand,
 body.home-page .brand__name,
-body.home-page .portfolio__title,
 body.home-page .footer__title {
   font-family: var(--display-font);
   font-weight: 500;
@@ -7870,4 +7869,54 @@ body.home-page .footer__title {
     max-width: none;
     white-space: nowrap;
   }
+}
+
+/* The portrait carries the portfolio's exact theme blue. */
+.home-page .hero-chat__circle { background: #2457c5; }
+/* Keep the original pose, with a small 2% lowering to bury the image edge.
+   Only the lower shirt is masked in the overlay; the raised arm stays free. */
+.home-page .hero-chat__circle img { top:-5.19%; }
+.home-page .hero-chat__pop { top:7.26%;clip-path:inset(0 0 13.25% 0); }
+
+/* Restore the homepage's serif project titles. */
+body.home-page .portfolio__title{font-family:'Lora',serif;font-weight:500;line-height:1.15;letter-spacing:-.01em}
+/* Optical alignment inside the About voice memo's circular control. */
+.about-page .voice-play__icon{position:relative;left:-.5px;margin-left:0;width:.9em;height:.9em}
+
+body.home-page .brand__name{font-family:'Lora',serif;font-weight:600;letter-spacing:.2px;line-height:1.2}
+
+/* Leave a visible next step below the introduction on desktop. */
+@media (min-width:901px) {
+  .home-page .home.section.hero-chat { height:clamp(510px,calc(100svh - 160px),620px); }
+  .home-page .portfolio.section { padding-top:24px; }
+  .home-page .portfolio__content:nth-child(-n+2).reveal-up { opacity:1;transform:none; }
+}
+@media (min-width:901px) and (max-height:760px) {
+  .home-page .hero-chat__stage { gap:.65em;margin-top:16px; }
+  .home-page .chat-bubble--media { max-width:420px; }
+}
+
+/* Simple inline illustrations; the words and icons stay still. */
+.home-page .hero-keyword{display:inline-flex;align-items:baseline;gap:.27em;white-space:nowrap;color:inherit;font:inherit}
+.hero-keyword__text{display:inline-block}
+.hero-keyword__icon{display:inline-flex;align-self:center;width:1.15em;height:1.15em;flex:none}
+.hero-keyword__icon svg{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.research-find{display:none}
+.home-page :is(.chat-bubble--text,.chat-bubble--research){--bubble:#0078ff;background:#0078ff;box-shadow:none;filter:none}
+
+/* Flat iMessage surfaces, including typing indicators and voice messages. */
+.home-page .chat-bubble--typing,
+.about-page .about-chat .chat-bubble {
+  --bubble:#0078ff;
+  background:#0078ff;
+  box-shadow:none;
+  filter:none;
+}
+.home-page .chat-bubble__gloss,
+.about-page .about-chat .chat-bubble__gloss { display:none; }
+
+/* A smaller visible disc without shrinking the voice memo's hit area. */
+.about-page .voice-play { background:transparent;isolation:isolate; }
+.about-page .voice-play::before {
+  content:'';position:absolute;inset:.16em;border-radius:50%;background:#fff;z-index:-1;
 }
