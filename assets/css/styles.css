@@ -128,7 +128,7 @@ h1, h2, h3, h4 { color: var(--title-color); font-weight: var(--font-semi-bold); 
 
 h1, h2, h3, h4, h5,
 .home__title, .brand, .hero-title,
-.footer__title, .project__title, .portfolio__title {
+.project__title, .portfolio__title {
   font-family: var(--display-font);
 }
 
@@ -506,7 +506,7 @@ img { max-width: 100%; height: auto; }
   line-height: 1;
 }
 
-/*==================== FOOTER – LET'S TALK ====================*/
+/*==================== FOOTER ====================*/
 
 .footer {
   background-color: var(--body-color);
@@ -543,17 +543,6 @@ img { max-width: 100%; height: auto; }
 
 /* Match the site's editorial title face without the old display-only
    tracking treatment. */
-.footer__title {
-  margin: 0;
-  font-family: var(--display-font);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0;
-  font-size: clamp(3rem, 7vw, 5.5rem);
-  line-height: 1;
-  color: rgba(15, 23, 42, 0.06);  
-  white-space: nowrap;   /* very light gray */
-}
 
 /* BACK TO TOP pill + circle on the right */
 
@@ -802,10 +791,6 @@ img { max-width: 100%; height: auto; }
     margin-top: 1rem;
   }
 
-  .footer__title {
-    font-size: clamp(3rem, 16vw, 4.5rem);
-    white-space: normal;  
-  }
 }
 
 
@@ -7728,24 +7713,6 @@ html:not(.chat-js) .about-chat [data-chat-typing] { display: none; }
 
 /* Homepage only: a compact, editorial chat composition. The header keeps its
    existing behavior; these rules affect only the Memoji and messages. */
-@font-face {
-  font-family: "Helvetica Now Display";
-  src: url("../fonts/HelveticaNowDisplay-Medium.woff2") format("woff2");
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-}
-body.home-page {
-  --display-font: "Helvetica Now Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-body.home-page .brand,
-body.home-page .brand__name,
-body.home-page .footer__title {
-  font-family: var(--display-font);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-}
 .home.section.hero-chat {
   min-height: clamp(460px, 55svh, 590px);
   padding-top: calc(var(--header-height) + clamp(1rem, 3vh, 2rem));
@@ -7953,4 +7920,17 @@ body.home-page .brand__name{font-family:'Lora',serif;font-weight:600;letter-spac
   .home-page .hero-chat__memoji{order:0;justify-content:center;align-self:start;translate:0 0}
   .home-page .hero-chat__avatar{width:84px!important;height:84px!important;margin:0}
   .home-page .hero-chat__stage{order:1;width:100%;max-width:100%;margin:0;translate:0 0;--chat-size:clamp(.88rem,3.7vw,1rem);gap:.7em}
+}
+
+/* Lighter Inter emphasis on laptop and desktop screens. */
+@media (min-width:1024px) {
+  .site-menu .nav-link.active,
+  body.project-page .section-nav .section-nav__link.is-active,
+  body.project-page .project .project-section h2,
+  body.project-page .project .project-section h3,
+  body.project-page .project-meta--details .meta-label,
+  body.project-page .problem-solution-row .ps-label,
+  body.project-page .hbom-tabs__tab[aria-selected="true"] {
+    font-weight:600;
+  }
 }
